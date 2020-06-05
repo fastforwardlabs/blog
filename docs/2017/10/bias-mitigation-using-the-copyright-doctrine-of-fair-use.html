@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Bias Mitigation Using the Copyright Doctrine of Fair Use</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Oct 26, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Bias Mitigation Using the Copyright Doctrine of Fair Use</h1>
+  <p>Pirating a copyrighted song, video, or e-book to listen to the song, watch the movie, or read the book is an infringement of copyright (which can be severely fined). So how about pirating a song, video, or e-book to <em>train</em> machine learning models?</p>
+<p>NYU Teaching and Research Fellow Amanda Levendowski proposes <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3024938">a legal approach to reducing bias in machine learning models</a>. Biased data leads to <a href="https://arxiv.org/abs/1607.06520">biased models</a>, she argues, and use of existing public domain data, most of which is over 70 years old, introduces biases from a time before, e.g., the civil rights movement or the feminist movement of the mid-20th century. The copyright doctrine of <em>fair use</em> can reduce bias by allowing wider access to copyrighted training data - an interesting and novel proposal.</p>
+<p><img src="/images/2017/10/Screen_Shot_2017_10_10_at_10-1507644713217.11" alt=""></p>
+<h5 id="word-embeddings-numerical-representations-of-language-are-biased-while-words-like-he-vs-she-or-wife-vs-husband-are-gendered-words-and-should-fall-on-opposite-ends-on-the-gender-axis-x-words-like-brilliant-should-not-image-taken-from-bolukbasi-et-alhttpsarxivorgpdf160706520pdf">Word embeddings (numerical representations of language) are biased. While words like &ldquo;he&rdquo; vs. &ldquo;she&rdquo; or &ldquo;wife&rdquo; vs. &ldquo;husband&rdquo; are gendered words and should fall on opposite ends on the &ldquo;gender axis&rdquo; (x). Words like &ldquo;brilliant&rdquo; should not (image taken from <a href="https://arxiv.org/pdf/1607.06520.pdf">Bolukbasi et al.</a>).</h5>
+<p>Fair use is a legal doctrine that operates as a defense to copyright infringement. This century-old exception essentially gives a get-out-of-jail free card to copiers who would otherwise be liable for copyright infringement. Fair use doctrine permits the copying of copyrighted material on the grounds that the type of copying is beneficial to the public and not unreasonably harmful to the copyright holder.</p>
+<p>Courts have not yet ruled on fair use in the machine learning context, though it seems likely that they will need to soon. And once courts have ruled on a few such cases, those rulings will set a precedent for subsequent similar situations. If the precedent allows fair use, machine learning researchers will have the freedom to use copyrighted material with little fear of infringement liability.</p>
+<p>Levendowski argues: (1) use of copyrighted materials to train machine learning models should be considered fair use and (2) the resulting availability of these copyrighted materials as training data will help mitigate bias in the models trained with that data.</p>
+<p>Levendowski steps through each factor in the legal test for fair use and makes good arguments for why machine learning model training should be fair use.  The strongest of these points is that the use is transformative, i.e., it is not used for its primary purpose. For example, a copyrighted music recording was made to be sold and listened to by humans, perhaps over the radio or on a smartphone. Using that same recording to train a model would be a very different use, and one that advances our understanding of music. Courts have held that this weighs in favor of fair use. Also notable is the argument that the copyright owners are not harmed by the use. Using the recording in the example above does not prevent the copyright holder from selling or licensing the recording.</p>
+<p><img src="/images/2017/10/1_rUzuHpOqB8q1cRjsl65rmw-1507556618126.jpeg" alt=""></p>
+<h5 id="a-neural-net-model-trained-on-romance-novels-generates-captions-for-imageshttpsmediumcomsamimgenerating-stories-about-images-d163ba41e4ed-fair-use-might-remove-bias-but-it-surely-entertains-we-recommend-you-check-out-the-authors-alternate-model-trained-on-taylor-swift-lyrics">A neural net model trained on romance novels generates <a href="https://medium.com/@samim/generating-stories-about-images-d163ba41e4ed">captions for images</a>; <em>fair use</em> might remove bias, but it surely entertains (we recommend you check out the authors&rsquo; alternate model trained on Taylor Swift lyrics).</h5>
+<p>We find Levendowski&rsquo;s fair use analysis persuasive from a legal standpoint, but the benefits, though real, are overstated. Applying fair use may <em>reduce</em> bias, but it would be very unlikely to <em>fix</em> it (as suggested by the title <em>How Copyright Law Can Fix AI&rsquo;s Implicit Bias Problem</em>). There&rsquo;s no reason to believe, for example, that a set of recent textbooks would contain any less bias than Wikipedia (data used already during model training).</p>
+<p>Bias has many origins, some rooted in legal and social practices. To reduce bias in machine learning models, we need to change these practices. We hope that the federal courts, which will inevitably be faced with these copyright infringement lawsuits, will consult and heed Levendowski&rsquo;s analysis.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

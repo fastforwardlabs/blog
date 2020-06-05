@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>The Danger and Promise of Adversarial Samples</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 29, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>The Danger and Promise of Adversarial Samples</h1>
+  <p>Adversarial samples are inputs designed to fool a model: they are inputs created by applying perturbations to example inputs in the dataset such that the perturbed inputs result in the model outputting an <em>incorrect</em> answer with <em>high</em> confidence. Often, perturbations are so small that they are imperceptible to the human eye — they are inconspicuous.</p>
+<p>Adversarial samples are a concern in a world where algorithms make decisions that affect lives: imagine an imperceptibly altered stop sign that the otherwise high-accuracy image recongnition algorithm of a self-driving car misclassifies as <a href="https://arxiv.org/abs/1707.03501">a toilet</a>. Curiously and concerningly, the same adversarial example is often misclassified by a variety of classifiers with different architectures trained on different subsets of data. Attackers can use their own model to generate adversarial samples to fool models they did not build.</p>
+<p><img src="/images/2017/09/Screen_Shot_2017_09_13_at_9-1505322932035.59" alt=""></p>
+<h5 id="accessorize-to-a-crime-paperhttpdlacmorgcitationcfmdoid29767492978392-a-pair-of-physical-eyeglasses-to-fool-facial-recognition-systems-impersonators-carrying-out-the-attack-are-shown-in-the-top-row-and-corresponding-impersonation-targets-in-the-bottom-row-including-milla-jovovich">Accessorize to a crime (<a href="http://dl.acm.org/citation.cfm?doid=2976749.2978392">paper</a>), a pair of (physical) eyeglasses to fool facial recognition systems. Impersonators carrying out the attack are shown in the top row and corresponding impersonation targets in the bottom row (including Milla Jovovich).</h5>
+<p>But adversarial samples are useful, too. They inform us about the inner workings of models by giving us an inuition for what aspects of model input matter for model output (cf. <a href="http://proceedings.mlr.press/v70/koh17a.html">influence functions</a>). In case of adversarial examples, aspects of model input matter for model output that should <em>not</em> matter. Adversarial samples can help expose weaknesses of models. Combined with fast and efficient methods for generation of adversarial examples, such as the <a href="https://arxiv.org/abs/1412.6572">Fast Sign</a>, <a href="https://arxiv.org/abs/1607.02533">Iterative</a>, and <a href="https://arxiv.org/abs/1312.6199">L-BFGS method</a>, adversarial samples can help train neural networks to be <a href="https://arxiv.org/abs/1412.6572">less vulnerable to adversarial attack</a>.</p>
+<p><img src="/images/2017/09/Screen_Shot_2017_09_13_at_10-1505322973486.02" alt=""></p>
+<h5 id="the-model-is-fooled-by-the-distractor-sentence-in-blue-paperhttpsarxivorgabs170707328">The model is fooled by the (distractor) sentence (in blue) (<a href="https://arxiv.org/abs/1707.07328">paper</a>).</h5>
+<p>Adversarial samples will inform the direction of research within the community. Adversarial samples are a consequence of <a href="https://arxiv.org/abs/1412.6572">models being too linear</a>. Linear models are easier to optimize but they lack the capacity to resist adversarial perturbation. Ease of optimization has come at the cost of models that are easily misled. This motivates the development of optimization procedures that are able to train models whose behavior is more locally stable &hellip; and less vulnerable to attack.</p>
+<p><img src="/images/2017/09/Screen_Shot_2017_09_13_at_10-1505323059576.04" alt=""></p>
+<h5 id="self-driving-cars-analyze-images-from-varying-distances-and-viewpoints-a-recent-paperhttpsarxivorgabs170703501-shows-that-current-methods-for-generation-of-adversarial-samples-generate-samples-that-only-fool-models-at-certain-distances-and-from-certain-viewing-angels-or-maybe-not--that-claim-is-already-being-challengedhttpsblogopenaicomrobust-adversarial-inputs">Self-driving cars analyze images from varying distances and viewpoints. A recent <a href="https://arxiv.org/abs/1707.03501">paper</a> shows that current methods for generation of adversarial samples generate samples that only fool models at certain distances and from certain viewing angels. Or maybe not &hellip; that claim is <a href="https://blog.openai.com/robust-adversarial-inputs/">already being challenged</a>.</h5>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

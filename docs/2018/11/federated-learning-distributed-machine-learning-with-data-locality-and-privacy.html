@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Federated learning: distributed machine learning with data locality and privacy</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Federated learning: distributed machine learning with data locality and privacy</h1>
+  <p>We’re excited to release <em>Federated Learning</em>, the latest report and prototype from Cloudera Fast Forward Labs.</p>
+<p>Federated learning makes it possible to build machine learning systems without direct access to training data. The data remains in its original location, which helps to ensure privacy and reduces communication costs.</p>
+<p>This article is about the technical side of federated learning.</p>
+<p>If you’d like to learn more:</p>
+<ul>
+<li>Read about the business and product side of federated learning on the <a href="http://vision.cloudera.com/an-introduction-to-federated-learning/">Cloudera VISION blog</a></li>
+<li>Explore our interactive federated learning prototype, <a href="https://turbofan.fastforwardlabs.com/">Turbofan Tycoon</a></li>
+<li><a href="https://www.cloudera.com/more/events/webinars/federated_learning.html">Register for our webinar</a> (Thursday, November 15, 2018)</li>
+<li>Get access to the full 85 page report and advising time with the Fast Forward Labs team by <a href="https://www.cloudera.com/about/services-and-support/fast-forward-labs.html">becoming a Cloudera Fast Forward Labs client</a></li>
+</ul>
+<h2 id="the-federated-learning-setting">The federated learning setting</h2>
+<p>Two things define the federated learning setting.</p>
+<p>First, the training data cannot be moved away from its source. The reasons for this constraint can include privacy concerns (I don’t want share my baby photos), regulatory impediments (HIPAA, GDPR, etc.), and practical engineering blockers (the network connection is expensive, slow or unreliable, or the data is too large).</p>
+<p><img src="/images/editor_uploads/2018-11-14-214557-ff09_07.png" alt=""></p>
+<h5 id="federated-learning-helps-when-the-data-cannot-be-moved">Federated learning helps when the data cannot be moved.</h5>
+<p>Sometimes we can work around this data locality constraint with proxy data that approximates the behavior of the real data. But almost by definition, proxy data is not as good as the real thing. For example, if you want to train a language model for smartphones, it’s better to train on language typed on smartphones than, for example, the Wikipedia corpus.</p>
+<p>Second, in the federated learning setting, each source of potential training data can in principle be different from every other. In other words, the distributions of data on each source are non-IID, and the amount of data at each source can be very different.</p>
+<p>In <a href="http://vision.cloudera.com/an-introduction-to-federated-learning/">our article on the Cloudera blog</a>, we describe concrete use cases that often have these characteristics: smartphones, healthcare, and predictive maintenance. In this post, we focus on the technical solution.</p>
+<h2 id="federated-averaging">Federated averaging</h2>
+<p>&ldquo;Federated learning&rdquo; refers to a family of algorithms that attempt to solve machine learning problems in the setting described above. They differ in important details, but share the basic idea: a server coordinates a network of nodes, each of which has training data. The nodes each train a local model, and it is that model which they share with the server.</p>
+<p>Let’s be more specific by describing federated averaging, perhaps the simplest form of federated learning. This algorithm was <a href="https://arxiv.org/abs/1602.05629">published by a Google team in 2016</a>.</p>
+<p><img src="/images/editor_uploads/2018-11-14-214805-ff09_09.png" alt="A diagram of federated learning. First, nodes receive the model from server and start training. Then, Nodes send their partially trained models to the server. The server takes those models and combines them to make a federated model. That federated model is sent back down to the nodes. Those models can be trained further locally as the cycle repeats."></p>
+<p>The server first sends each node an instruction to train a model of a particular type, such as a linear model, a support vector machine, or, in the case of deep learning, a particular network architecture.</p>
+<p>On receiving this instruction, each node trains the model on its subset of the training data. In general, training a model requires many iterations of an algorithm (such as gradient descent), but in federated learning, the nodes train their models for only a few iterations. In that sense, each node’s model is partially trained after following the server’s instruction. The nodes then send their partially trained models (but not the training data) back to the server.</p>
+<p>The server combines the partially trained models to form a federated model. One way to combine the models is to take the average of each coefficient, weighting by the amount of training data available on the corresponding node.</p>
+<p>The combined federated model is then transmitted back to the nodes, where it replaces their local models and is used as the starting point for another round of training. After several rounds, the federated model converges to a good global model. From round to round, the nodes can acquire new training data. Some nodes may even drop out, and others may join.</p>
+<p>And crucially, the server never has direct access to the training data. By moving models rather than training data, federated learning helps to ensure privacy and minimizes communication costs.</p>
+<h2 id="turbofan-tycoon">Turbofan Tycoon</h2>
+<p>Every Cloudera Fast Forward Labs report comes with a prototype. This interactive prototype provides an immediate, intuitive way to understand what the technology can (and cannot!) do. And, in building it, we learn the technical details which we include in the report, and figure out best practices that help us to more effectively advise our clients.</p>
+<p>The prototype for our report on Federated Learning is <a href="https://turbofan.fastforwardlabs.com/">Turbofan Tycoon</a>. In it, you play the owner of a factory that wants to do a better job of maintaining its turbofan engines. Your options are:</p>
+<ul>
+<li>A corrective maintenance strategy (i.e., waiting for the engines to fail)</li>
+<li>A preventative maintenance strategy (i.e., maintaining each engine at a fixed time, hopefully some time before it fails)</li>
+<li>A local predictive maintenance machine learning model, trained only on your failed engines</li>
+<li>A federated predictive maintenance machine learning model, trained on the collective data of 80 factories (including yours), using federated learning</li>
+</ul>
+<p>Spoiler alert: the optimal strategy is federated learning, and the ROI relative to the alternatives huge! <a href="https://turbofan.fastforwardlabs.com/">We hope you enjoy exploring it</a>.</p>
+<p><img src="/images/editor_uploads/2018-11-14-214853-ff09_browser.png" alt="A screenshot of the prototype Turbofan Tycoon."></p>
+<p>To train the federated model, we wrote an implementation of federated averaging in about 100 lines of PyTorch. This implementation is a <em>simulation</em> of federated learning in the sense that no real network communication takes place. The server and the nodes all exist on one machine. However, it is an algorithmically faithful implementation: the server and nodes communicate only by sending copies of their models to each other.</p>
+<p>This approach made it possible for us to experiment rapidly with very large numbers of nodes, without getting bogged down in network issues. And despite the simplification, we can reproduce many of the practical challenges that a real network would face (stragglers, dropped connections, etc.). The models trained on each node (and the federated model that is their average) are simple feed-forward neural networks with one hidden layer. We give more details in the report.</p>
+<h2 id="privacy">Privacy</h2>
+<p>By leaving the training data at its source, federated learning plugs the most obvious and gaping security hole in distributed machine learning. But it is important to be clear that it is not a silver bullet.</p>
+<p><img src="/images/editor_uploads/2018-11-14-214957-ff09_20.png" alt=""></p>
+<h5 id="it-can-be-possible-to-infer-information-about-the-data-on-a-node-from-the-models-it-sends-to-the-server">It can be possible to infer information about the data on a node from the models it sends to the server</h5>
+<p>That’s because it is sometimes possible to infer things about the training data from a model. This problem is not unique to federated learning—any time you share the predictions of a trained model ,you open up this possibility. However, it is worth considering in detail in the context of federated learning for two reasons: first, preserving privacy is one of federated learning’s main goals; second, by distributing training among (potentially untrustworthy) participants, federated learning opens up new attack vectors.</p>
+<p>The most indirect way to infer information about the training data requires only the ability to query the model several times. Anyone with indirect access to the model via an API can attempt to attack it in this way. This attack vector is not unique (or any more dangerous) in federated learning. (See, for example,<a href="https://arxiv.org/abs/1610.05820"> Membership Inference Attacks Against Machine Learning Models</a> and<a href="https://dl.acm.org/citation.cfm?id=2813677"> Model Inversion Attacks that Exploit Confidence Information and Basic Countermeasures</a>).</p>
+<p>The usual protection against this attack is <em>differential privacy</em>. Differential privacy is a large and mathematically formal field with applications far beyond machine learning. But in a production machine learning context, the application of differential privacy generally means that the server adds noise to the model before allowing users to query it. For a modern, accessible, ML-oriented introduction to differential privacy, check out <a href="http://www.cleverhans.io/privacy/2018/04/29/privacy-and-machine-learning.html">Privacy and Machine Learning: Two Unexpected Allies</a>.</p>
+<p>In a federated learning setting where the server and nodes are justified in trusting each other, this type of attack is the only concern. But if the server or nodes are not trustworthy, other kinds of attacks are possible.</p>
+<p><img src="/images/editor_uploads/2018-11-14-215038-ff09_27.png" alt=""></p>
+<h5 id="training-data-left-can-be-reconstructed-right-by-a-malicious-node-images-taken-from--deep-models-under-the-gan-information-leakage-from-collaborative-deep-learninghttpsarxivorgabs170207464-by-briland-hitaj-giuseppe-ateniese-and-fernando-perez-cruz">Training data (left) can be reconstructed (right) by a malicious node (images taken from <a href="https://arxiv.org/abs/1702.07464"> &ldquo;Deep Models Under the GAN: Information Leakage from Collaborative Deep Learning&rdquo;</a> by Briland Hitaj, Giuseppe Ateniese, and Fernando Perez-Cruz).</h5>
+<p>For example, the server must be able to directly inspect the node’s model in order to average it. But for certain classes of model, the mere fact that a weight has changed tells you a particular feature was present in the training data. For example, suppose a model takes a bag of words as features, and the tenth word in the vocabulary is &ldquo;dumplings.&rdquo; If a node returns a model where the tenth coefficient of the model has changed, the server or an intermediary may be able to infer that the word &ldquo;dumplings&rdquo; was present in the training data on that node.</p>
+<p>This attack is more difficult to carry out against modern (and more complex) models in practice. The risk can be mitigated by differential privacy (again) or secure aggregation. The differential privacy approach has each node add noise to its model before sharing it with the server (see, e.g., <a href="https://arxiv.org/abs/1805.10559">Communication-Efficient and Differentially-Private Distributed SGD</a>) <a href="https://eprint.iacr.org/2017/281">Secure aggregation protocols</a> make it possible for the server to compute the average of the node models using encrypted copies which it does not have the ability to decrypt. Both these approaches add communication and computation overhead, but that may be a trade-off worth making in highly sensitive contexts.</p>
+<p><a href="https://www.cloudera.com/more/events/webinars/federated_learning.html">In our webinar</a>, we’ll be learning more about these issues from Andrew Trask of <a href="https://www.openmined.org/">OpenMined</a> and Eric Tramel of <a href="https://owkin.com/">Owkin</a>.</p>
+<h2 id="personalization">Personalization</h2>
+<p>In &ldquo;regular&rdquo; federated learning, the server’s goal is to use the data on every node to train a single global model, but in situations where a node plans to apply the model (not just contribute to its creation), it will usually care much more that the model captures the patterns in its data than any other node’s data. For example, if I’m a node in a network that is training a model that will help write emails that are more likely to receive replies, I care more that the model works for me than if it works for anyone else.</p>
+<p>If the global model has an appropriately flexible architecture and was trained on lots of good training data, then it may be better than any local model trained on a single node because of its ability to capture many idiosyncrasies and generalize to new patterns. But it is true that, in principle and sometimes in practice, the user’s goal (local performance) can be in tension with the server’s (global performance).</p>
+<p>Resolving this tension is the goal of research into personalization. In<a href="https://arxiv.org/abs/1705.10467"> Federated Multi-Task Learning</a>, Virginia Smith and collaborators frame personalization as a multi-task problem where each user’s model is a task, but there exists a structure that relates the tasks. Virginia will also be joining us for <a href="https://www.cloudera.com/more/events/webinars/federated_learning.html">our webinar</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Federated learning makes it easier, safer, and cheaper to apply machine learning in the world’s most regulated, competitive, and profitable industries. It’s also an area of very active current research, with open problems in privacy, security, personalization, and other areas.</p>
+<p>In this article, we’ve only scratched the surface. Our report goes into much more detail, and covers issues not mentioned here (including systems and networking issues, libraries and frameworks, and practical recommendations based on our experience building Turbofan Tycoon). We hope you <a href="https://www.cloudera.com/more/events/webinars/federated_learning.html">join the webinar</a>, <a href="https://turbofan.fastforwardlabs.com/">explore the prototype</a>, and <a href="https://www.cloudera.com/about/services-and-support/fast-forward-labs.html">get in touch</a> if you’re interested in working together.</p>
+<p><em>Update:  You can watch the recorded webinar <a href="https://www.cloudera.com/more/events/webinars/federated_learning.html">here</a>.</em></p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Breakthroughs in transfer learning for natural language processing</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 29, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Breakthroughs in transfer learning for natural language processing</h1>
+  <p>One of the most exciting parts of our jobs at Cloudera Fast Forward Labs is <a href="https://www.cloudera.com/products/fast-forward-labs-research/fast-forward-labs-research-reports.html">our work</a> on applied machine learning research. Through this research we see and work with some of the most exciting developments in machine learning, deep learning, and AI, but - as with any field that has been overhyped - we sift through a lot of noise. By noise, we generally mean research that is too immature to be of practical use, or research that follows one or more of the <a href="https://arxiv.org/pdf/1807.03341.pdf">troubling trends in machine learning</a>.</p>
+<p>The research we get really excited about hits a sweet spot of delivering new capabilities that are of practical use to general data science teams. That’s why we’re particularly excited about developments in transfer learning, a technique that allows anyone from ML beginner to expert to deploy state-of-the-art models on challenging tasks like computer vision and NLP. Specifically, there have been several recent results which indicate that transfer learning will have huge impacts in NLP, similar to what we’ve observed in computer vision.</p>
+<h3 id="transfer-learning-makes-deep-learning-accessible-to-everyone">Transfer learning makes deep learning accessible to everyone</h3>
+<p>Transfer learning exploits the idea that many machine learning tasks are related to each other, and so the skills required to do well on one task are often transferable to other tasks. This is similar to how humans who learn to throw a baseball do not need to completely re-learn the mechanics of throwing to also throw a football, or how skills developed in learning to speak one foreign language would also be useful in learning another foreign language. Consider some of the common tasks that we might be interested in doing in the field of computer vision:</p>
+<p><img src="/images/2018/07/task_dict_v-1532535013679.jpg" alt=""></p>
+<h5 id="various-computer-vision-tasks-image-credit-taskonomyhttpsgithubcomstanfordvltaskonomytreemastertaskbank">Various computer vision tasks. Image credit: <a href="https://github.com/StanfordVL/taskonomy/tree/master/taskbank">Taskonomy</a>.</h5>
+<ul>
+<li>Object detection - is there a tv in this image? A bed? A couch?</li>
+<li>Scene detection - what type of room is this?</li>
+<li>Semantic segmentation - locate objects in the image</li>
+<li>Depth estimation - estimate the depth of objects in a 2D image</li>
+</ul>
+<p>Intuitively, we know that these tasks require similar capabilities. Being able to pick out which pixels belong to the same object, as in semantic segmentation, is undoubtedly useful in depth estimation, since pixels belonging to one object should have the same or similar depths. Training a single model to do well on any of these tasks from scratch is difficult and requires extensive expertise; however, once such a model exists, we can take that model and transfer the knowledge it contains to our related task, without having to go through the complex and <a href="http://www.fast.ai/2018/07/12/auto-ml-1/">brittle process</a> of training a model from scratch.</p>
+<p>This gives way to a general strategy: for some family of related tasks, e.g. computer vision tasks, train a model from scratch on a generic task that has plentiful data. That trained model can be applied to related tasks with minimal changes, since it already has much of the general knowledge required for this family of tasks. In computer vision, this generic task has traditionally been training an object detection model on the Imagenet dataset, which is a highly curated dataset of over 14 million images. Classification models trained on Imagenet <a href="https://arxiv.org/abs/1311.2901">tend to learn general features</a> like how to detect shapes, edges, and higher level objects that are almost always helpful in related computer vision tasks. Training these models from scratch is difficult, requiring both advanced hardware and expertise, but the important thing is that anyone can take the result and use it to do very cool things - for free!</p>
+<p>Transfer learning is not a new idea, but it has grown in popularity and importance because of the deep learning boom. Deep learning and transfer learning are a good match for several reasons:</p>
+<ul>
+<li>Transfer learning needs tasks that share the same types of inputs, which is more common when working with raw/unstructured data (text, audio, images)</li>
+<li>Transfer learning eliminates need to train deep models from scratch, which is difficult, time consuming, and notoriously hard to reproduce</li>
+<li>Deep learning is generally extremely data hungry, but transfer learning enables application of deep learning models to small data</li>
+</ul>
+<h3 id="discovering-nlps-imagenet">Discovering NLP&rsquo;s Imagenet</h3>
+<p>Transfer learning helps solve some of the biggest and most prohibitive problems with deep learning, but it has, until recently, mostly been limited to the domain of computer vision. Fortunately, we’re starting to see some breakthroughs in transfer learning in the field of natural language processing. One of the keys to transfer learning is to identify a generic task, with plenty of quality data, that allows us to train from-scratch models that will then transfer well to related tasks. In computer vision this is the Imagenet task, but in NLP there wasn’t an obvious solution, until now. Several recent papers (including <a href="https://arxiv.org/abs/1801.06146">Universal Language Model Fine-tuning for Text Classification</a> and <a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">Improving Language Understanding
+by Generative Pre-Training</a>) have shown that language modeling - predicting the next word in a sequence of text - is well-suited as this generic task. They show that next-word prediction forces a model to learn long-term dependencies, hierarchical relations, and sentiment, which are all useful for other NLP tasks. They go on to present results where a pre-trained model is transferred to other tasks, and can beat well established benchmarks in natural language inference, question and answering, sentiment classification, and others. This led one NLP researcher to declare that <a href="https://thegradient.pub/nlp-imagenet/">“NLP’s Imagenet moment has arrived.”</a></p>
+<p>Transfer learning has been extremely important in lowering the barrier to entry for deep learning in computer vision and there is no reason to think it won’t do the same for NLP. This is exciting, in particular because raw text is often the largest source of available data for many businesses. Nearly every organization can make use of better algorithmic tools for understanding natural language, and we seem to be on the cusp of a revolution in NLP!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

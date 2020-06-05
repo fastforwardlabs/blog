@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>The Business Case for Machine Learning Interpretability</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 7, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>The Business Case for Machine Learning Interpretability</h1>
+  <p>Last week we launched the latest prototype and report from our machine
+intelligence R&amp;D team:
+<a href="http://blog.fastforwardlabs.com/2017/08/02/interpretability.html"><em>Interpretability</em></a>.</p>
+<p>Our prototype shows how new ideas in interpretability research can be used to
+extract actionable insights from black-box machine learning models; our report
+describes breakthroughs in interpretability research and places them in a
+commercial, legal and ethical context. This research is relevant to anyone who
+designs systems using machine learning, from engineers and data scientists to
+business leaders and executives who are considering new product opportunities.</p>
+<p>We will host a <a href="https://mlinterpretability.splashthat.com/">public webinar on
+interpretability</a> on September 6
+2017, where we&rsquo;ll be joined by guests Patrick Hall (Senior Data Scientist at
+H2O, co-author of <a href="https://www.oreilly.com/ideas/ideas-on-interpreting-machine-learning">Ideas on Interpreting Machine
+Learning</a>)
+and Sameer Singh (Assistant Professor of Computer Science at UC Irvine,
+co-creator of <a href="https://github.com/marcotcr/lime">LIME</a>, a model-agnostic tool
+for extracting explanations from black box machine learning models). There will
+be lots of opportunities for the audience to ask questions, so we hope you&rsquo;ll
+<a href="https://mlinterpretability.splashthat.com/">join us</a>!</p>
+<p>In this post we&rsquo;re going to look at the business case for interpretability.
+What advantages are there to building interpretable machine learning systems?</p>
+<h2 id="the-power-of-interpretability">The Power of Interpretability</h2>
+<p>A model you can interpret is one you, regulators, and society can more easily
+trust to be safe and nondiscriminatory. A model whose decisions can be
+explained opens up the possibility of new kinds of intelligent products. An
+accurate model that is also interpretable can offer insights that can be used
+to change real-world outcomes for the better. And a model you can interpret and
+understand is one you can more easily improve. Let&rsquo;s look at these in more
+detail.</p>
+<h2 id="enhancing-trust">Enhancing Trust</h2>
+<p>If we are to trust a machine learning model to perform accurately, and to be
+safe and non-discriminatory, it is important that we understand it.</p>
+<p><img src="/images/2017/08/asthma.png" alt="Asthma and pneumonia"></p>
+<p>A <a href="http://people.dbmi.columbia.edu/noemie/papers/15kdd.pdf">paper by Rich Caruana and
+colleagues</a> gives a
+powerful example of the danger of deploying a model you do not understand. They
+describe a model that recommended whether patients with pneumonia should be
+admitted to hospital or treated as outpatients. This model was interpretable,
+and it was immediately obvious by inspection that the model had acquired a
+lethal tendency to view pneumonia patients who also have asthma as low-risk.
+This was wrong, of course. Asthma patients with a pulmonary infection
+should be admitted to hospital. In fact they often are, and this was the
+problem. Such treatment makes their prognosis better, and this pattern was
+present in the historical training data.</p>
+<p>This problem was only spotted because the model was interpretable. We discuss
+what makes a model interpretable in more detail in the report. Similar risks
+lurk in any model applied in the real world.</p>
+<h2 id="satisfying-regulations">Satisfying Regulations</h2>
+<p>In many industries and jurisdictions, the application of algorithms is
+constrained by legal regulations. Even when it&rsquo;s not, it should be constrained
+by ethical concerns.</p>
+<p><img src="/images/2017/08/regulations.png" alt="Asthma and pneumonia"></p>
+<p>It is extremely difficult to satisfy regulations or ethical concerns if the
+model is uninterpretable. For example, the US Fair Credit Reporting Act
+requires that agencies disclose &ldquo;all of the key factors that adversely affected the credit score
+of the consumer in the model used, the total number of which shall not exceed
+4.&rdquo; It&rsquo;s difficult to satisfy this regulation if your credit model is a deep
+neural network. Difficult, but as we show in the report, thanks to new
+research, not impossible!</p>
+<h2 id="explaining-decisions">Explaining Decisions</h2>
+<p>Some kinds of interpretability allow you to offer automated explanations for
+individual decisions. A model that makes a prediction is useful, but a model
+that tells you why the prediction was made is even more powerful. Our prototype
+product, Refractor, demonstrates this. It offers explanations for the
+reasons customers are predicted to leave a subscription business. This allows
+the user to identify both global weaknesses in the product, and individual
+complaints. Most excitingly, it raises the possibility of intervening to change
+outcomes.</p>
+<p><img src="/images/2017/08/actions.png" alt="Explaining predictions"></p>
+<p>Refractor is built on top of <a href="https://github.com/marcotcr/lime">LIME</a>, a
+model-agnostic tool that can be applied to a trained black-box model, so data
+scientists don&rsquo;t need to change the way they build their models to apply this
+technique. Our report describes our application in conceptual and technical
+terms, and looks closely at how it could be deployed in a business.</p>
+<h2 id="improving-the-model">Improving the Model</h2>
+<p>Finally, interpretability makes for models that simply work better. Debugging
+an uninterpretable, black-box model is time consuming, and relies at least in
+part on trial-and-error. Debugging an interpretable model, however, is easier
+because glaring problems stand out. Having insight into the attributes that are
+likely causing trouble can motivate a theory about how the model works, which
+saves time when tracking down problems.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The future is algorithmic. White-box models and techniques for making black-box
+models interpretable offer a safer, more productive, and ultimately more
+collaborative relationship between humans and intelligent machines. We are just
+at the beginning of the conversation about interpretability and will see the
+impact over the coming years.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

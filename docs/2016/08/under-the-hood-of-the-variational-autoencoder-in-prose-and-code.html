@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Under the Hood of the Variational Autoencoder (in Prose and Code)</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      whitepaper
+      
+    </span>
+  </h5>
+  <h1>Under the Hood of the Variational Autoencoder (in Prose and Code)</h1>
+  <h5 id="the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona">The <!-- raw HTML omitted -->Variational<!-- raw HTML omitted --> <!-- raw HTML omitted -->Autoencoder<!-- raw HTML omitted --> (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In <!-- raw HTML omitted -->Part I<!-- raw HTML omitted --> of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—<!-- raw HTML omitted -->“machines that imagine and reason.”<!-- raw HTML omitted --></h5>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>from functional import compose, partial
+import numpy as np
+import tensorflow as tf</p>
+<pre><code>
+&lt;p&gt;One perk of these models is their modularity—VAEs are naturally amenable to swapping in whatever encoder/decoder architecture is most fitting for the task at hand: &lt;a href=&quot;https://arxiv.org/abs/1502.04623&quot;&gt;recurrent&lt;/a&gt; &lt;a href=&quot;https://arxiv.org/abs/1511.06349&quot;&gt;neural&lt;/a&gt; &lt;a href=&quot;https://arxiv.org/abs/1412.6581&quot;&gt;networks&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/1411.5928&quot;&gt;convolutional&lt;/a&gt; and &lt;a href=&quot;https://arxiv.org/abs/1503.03167&quot;&gt;deconvolutional&lt;/a&gt; networks, etc.&lt;/p&gt;
+&lt;p&gt;For our purposes, we will model the relatively simple &lt;a href=&quot;http://yann.lecun.com/exdb/mnist/&quot;&gt;MNIST&lt;/a&gt; dataset using densely-connected layers, wired symmetrically around the hidden code.&lt;/p&gt;
+
+```python
+class Dense():
+    &quot;&quot;&quot;Fully-connected layer&quot;&quot;&quot;
+    def __init__(self, scope=&quot;dense_layer&quot;, size=None, dropout=1.,
+                 nonlinearity=tf.identity):
+        # (str, int, (float | tf.Tensor), tf.op)
+        assert size, &quot;Must specify layer size (num nodes)&quot;
+        self.scope = scope
+        self.size = size
+        self.dropout = dropout # keep_prob
+        self.nonlinearity = nonlinearity
+
+    def __call__(self, x):
+        &quot;&quot;&quot;Dense layer currying, to apply layer to any input tensor `x`&quot;&quot;&quot;
+        # tf.Tensor -&amp;gt; tf.Tensor
+        with tf.name_scope(self.scope):
+            while True:
+                try: # reuse weights if already initialized
+                    return self.nonlinearity(tf.matmul(x, self.w) + self.b)
+                except(AttributeError):
+                    self.w, self.b = self.wbVars(x.get_shape()[1].value, self.size)
+                    self.w = tf.nn.dropout(self.w, self.dropout)
+    ...
+</code></pre><!-- raw HTML omitted -->
+<pre><code>i.e. composed = composeAll([f, g, h])
+     composed(x) # == f(g(h(x)))
+&quot;&quot;&quot;
+# adapted from https://docs.python.org/3.1/howto/functional.html
+return partial(functools.reduce, compose)(*args)
+</code></pre>
+<pre><code>
+&lt;p&gt;Now that we’ve defined our model primitives, we can tackle the VAE itself.&lt;/p&gt;
+&lt;p&gt;Keep in mind: the TensorFlow computational graph is cleanly divorced from the numerical computations themselves. In other words, a &lt;code&gt;tf.Graph&lt;/code&gt; wireframes the underlying skeleton of the model, upon which we may hang values only within the context of a &lt;code&gt;tf.Session&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Below, we initialize class &lt;code&gt;VAE&lt;/code&gt; and activate a session for future convenience (so we can initialize and evaluate tensors within a single session, e.g. to persist weights and biases across rounds of training).&lt;/p&gt;
+&lt;p&gt;Here are some relevant snippets, cobbled together from the &lt;a href=&quot;https://github.com/fastforwardlabs/vae-tf/blob/master/vae.py&quot;&gt;full source code&lt;/a&gt;:&lt;/p&gt;
+
+```python
+class VAE():
+    &quot;&quot;&quot;Variational Autoencoder
+
+    see: Kingma &amp;amp; Welling - Auto-Encoding Variational Bayes
+    (https://arxiv.org/abs/1312.6114)
+    &quot;&quot;&quot;
+    DEFAULTS = {
+        &quot;batch_size&quot;: 128,
+        &quot;learning_rate&quot;: 1E-3,
+        &quot;dropout&quot;: 1., # keep_prob
+        &quot;lambda_l2_reg&quot;: 0.,
+        &quot;nonlinearity&quot;: tf.nn.elu,
+        &quot;squashing&quot;: tf.nn.sigmoid
+    }
+    RESTORE_KEY = &quot;to_restore&quot;
+
+    def __init__(self, architecture, d_hyperparams={}, meta_graph=None,
+                 save_graph_def=True, log_dir=&quot;./log&quot;):
+        &quot;&quot;&quot;(Re)build a symmetric VAE model with given:
+
+         * architecture (list of nodes per encoder layer); e.g.
+           [1000, 500, 250, 10] specifies a VAE with 1000-D inputs, 10-D latents,
+           &amp;amp; end-to-end architecture [1000, 500, 250, 10, 250, 500, 1000]
+
+         * hyperparameters (optional dictionary of updates to `DEFAULTS`)
+        &quot;&quot;&quot;
+        self.architecture = architecture
+        self.__dict__.update(VAE.DEFAULTS, **d_hyperparams)
+        self.sesh = tf.Session()
+
+        if not meta_graph: # new model
+            handles = self._buildGraph()
+            ...
+            self.sesh.run(tf.initialize_all_variables())
+</code></pre><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<pre><code>    # encoding / &quot;recognition&quot;: q(z|x)
+    encoding = [Dense(&quot;encoding&quot;, hidden_size, dropout, self.nonlinearity)
+                # hidden layers reversed for function composition: outer -&amp;gt; inner
+                for hidden_size in reversed(self.architecture[1:-1])]
+    h_encoded = composeAll(encoding)(x_in)
+
+    # latent distribution parameterized by hidden encoding
+    # z ~ N(z_mean, np.exp(z_log_sigma)**2)
+    z_mean = Dense(&quot;z_mean&quot;, self.architecture[-1], dropout)(h_encoded)
+    z_log_sigma = Dense(&quot;z_log_sigma&quot;, self.architecture[-1], dropout)(h_encoded)
+</code></pre>
+<pre><code>
+&lt;p&gt;Here, we build a pipe from &lt;code&gt;x_in&lt;/code&gt; (an empty placeholder for input data &lt;span class=&quot;math inline&quot;&gt;\(x\)&lt;/span&gt;), through the sequential hidden encoding, to the corresponding distribution over latent space—the variational approximate posterior, or hidden representation, &lt;span class=&quot;math inline&quot;&gt;\(z \sim q_\phi(z|x)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;As observed in lines &lt;code&gt;14&lt;/code&gt; - &lt;code&gt;15&lt;/code&gt;, latent &lt;span class=&quot;math inline&quot;&gt;\(z\)&lt;/span&gt; is distributed as a multivariate &lt;a href=&quot;http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2465539/figure/fig1/&quot;&gt;normal&lt;/a&gt; with mean &lt;span class=&quot;math inline&quot;&gt;\(\mu\)&lt;/span&gt; and diagonal covariance values &lt;span class=&quot;math inline&quot;&gt;\(\sigma^2\)&lt;/span&gt; (the square of the “sigma” in &lt;code&gt;z_log_sigma&lt;/code&gt;) directly parameterized by the encoder: &lt;span class=&quot;math inline&quot;&gt;\(\mathcal{N}(\mu, \sigma^2I)\)&lt;/span&gt;. In other words, we set out to “explain” highly complex observations as the consequence of an unobserved collection of simplified latent variables, i.e. independent Gaussians. (This is dictated by our choice of a conjugate spherical Gaussian prior over &lt;span class=&quot;math inline&quot;&gt;\(z\)&lt;/span&gt;—see &lt;a href=&quot;http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html&quot;&gt;Part I&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;Next, we sample from this latent distribution (in practice, &lt;a href=&quot;https://arxiv.org/abs/1312.6114&quot;&gt;one draw is enough&lt;/a&gt; given sufficient minibatch size, i.e. &amp;gt;100). This method involves a trick—can you figure out why?—that we will explore in more detail later.&lt;/p&gt;
+```python
+        z = self.sampleGaussian(z_mean, z_log_sigma)
+</code></pre><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># decoding / &#34;generative&#34;: p(x|z)</span>
+        decoding <span style="color:#f92672">=</span> [Dense(<span style="color:#e6db74">&#34;decoding&#34;</span>, hidden_size, dropout, self<span style="color:#f92672">.</span>nonlinearity)
+                    <span style="color:#66d9ef">for</span> hidden_size <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>architecture[<span style="color:#ae81ff">1</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#75715e"># assumes symmetry</span>
+        <span style="color:#75715e"># final reconstruction: restore original dims, squash outputs [0, 1]</span>
+        decoding<span style="color:#f92672">.</span>insert(<span style="color:#ae81ff">0</span>, Dense( <span style="color:#75715e"># prepend as outermost function</span>
+            <span style="color:#e6db74">&#34;reconstruction&#34;</span>, self<span style="color:#f92672">.</span>architecture[<span style="color:#ae81ff">0</span>], dropout, self<span style="color:#f92672">.</span>squashing))
+        x_reconstructed <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>identity(composeAll(decoding)(z), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x_reconstructed&#34;</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># ops to directly explore latent space</span>
+        <span style="color:#75715e"># defaults to prior z ~ N(0, I)</span>
+        z_ <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder_with_default(tf<span style="color:#f92672">.</span>random_normal([<span style="color:#ae81ff">1</span>, self<span style="color:#f92672">.</span>architecture[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]),
+                                         shape<span style="color:#f92672">=</span>[None, self<span style="color:#f92672">.</span>architecture[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]],
+                                         name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latent_in&#34;</span>)
+        x_reconstructed_ <span style="color:#f92672">=</span> composeAll(decoding)(z_)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sampleGaussian</span>(self, mu, log_sigma):
+        <span style="color:#e6db74">&#34;&#34;&#34;Draw sample from Gaussian with given shape, subject to random noise epsilon&#34;&#34;&#34;</span>
+        <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;sample_gaussian&#34;</span>):
+            <span style="color:#75715e"># reparameterization trick</span>
+            epsilon <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>random_normal(tf<span style="color:#f92672">.</span>shape(log_sigma), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;epsilon&#34;</span>)
+            <span style="color:#66d9ef">return</span> mu <span style="color:#f92672">+</span> epsilon <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>exp(log_sigma) <span style="color:#75715e"># N(mu, sigma**2)</span>
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#a6e22e">@staticmethod</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossEntropy</span>(obs, actual, offset<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-7</span>):
+        <span style="color:#e6db74">&#34;&#34;&#34;Binary cross-entropy, per training example&#34;&#34;&#34;</span>
+        <span style="color:#75715e"># (tf.Tensor, tf.Tensor, float) -&amp;gt; tf.Tensor</span>
+        <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;cross_entropy&#34;</span>):
+            <span style="color:#75715e"># bound by clipping to avoid nan</span>
+            obs_ <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>clip_by_value(obs, offset, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> offset)
+            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>tf<span style="color:#f92672">.</span>reduce_sum(actual <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>log(obs_) <span style="color:#f92672">+</span>
+                                  (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> actual) <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> obs_), <span style="color:#ae81ff">1</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#a6e22e">@staticmethod</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kullbackLeibler</span>(mu, log_sigma):
+        <span style="color:#e6db74">&#34;&#34;&#34;(Gaussian) Kullback-Leibler divergence KL(q||p), per training example&#34;&#34;&#34;</span>
+        <span style="color:#75715e"># (tf.Tensor, tf.Tensor) -&amp;gt; tf.Tensor</span>
+        <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;KL_divergence&#34;</span>):
+            <span style="color:#75715e"># = -0.5 * (1 + log(sigma**2) - mu**2 - sigma**2)</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>reduce_sum(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> log_sigma <span style="color:#f92672">-</span> mu<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span>
+                                        tf<span style="color:#f92672">.</span>exp(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> log_sigma), <span style="color:#ae81ff">1</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># reconstruction loss: mismatch b/w x &amp;amp; x_reconstructed</span>
+        <span style="color:#75715e"># binary cross-entropy -- assumes p(x) &amp;amp; p(x|z) are iid Bernoullis</span>
+        rec_loss <span style="color:#f92672">=</span> VAE<span style="color:#f92672">.</span>crossEntropy(x_reconstructed, x_in)
+
+        <span style="color:#75715e"># Kullback-Leibler divergence: mismatch b/w approximate posterior &amp;amp; imposed prior</span>
+        <span style="color:#75715e"># KL[q(z|x) || p(z)]</span>
+        kl_loss <span style="color:#f92672">=</span> VAE<span style="color:#f92672">.</span>kullbackLeibler(z_mean, z_log_sigma)
+
+        <span style="color:#75715e"># average over minibatch</span>
+        cost <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reduce_mean(rec_loss <span style="color:#f92672">+</span> kl_loss, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cost&#34;</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># optimization</span>
+        global_step <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(<span style="color:#ae81ff">0</span>, trainable<span style="color:#f92672">=</span>False)
+        <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;Adam_optimizer&#34;</span>):
+            optimizer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>AdamOptimizer(self<span style="color:#f92672">.</span>learning_rate)
+            tvars <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>trainable_variables()
+            grads_and_vars <span style="color:#f92672">=</span> optimizer<span style="color:#f92672">.</span>compute_gradients(cost, tvars)
+            clipped <span style="color:#f92672">=</span> [(tf<span style="color:#f92672">.</span>clip_by_value(grad, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), tvar) <span style="color:#75715e"># gradient clipping</span>
+                    <span style="color:#66d9ef">for</span> grad, tvar <span style="color:#f92672">in</span> grads_and_vars]
+            train_op <span style="color:#f92672">=</span> optimizer<span style="color:#f92672">.</span>apply_gradients(clipped, global_step<span style="color:#f92672">=</span>global_step,
+                                                 name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;minimize_cost&#34;</span>) <span style="color:#75715e"># back-prop</span>
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#66d9ef">return</span> (x_in, dropout, z_mean, z_log_sigma, x_reconstructed,
+                z_, x_reconstructed_, cost, global_step, train_op)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train</span>(self, X, max_iter<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>inf, max_epochs<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>inf, cross_validate<span style="color:#f92672">=</span>True,
+              verbose<span style="color:#f92672">=</span>True, save<span style="color:#f92672">=</span>False, outdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./out&#34;</span>, plots_outdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./png&#34;</span>):
+        <span style="color:#66d9ef">try</span>:
+            err_train <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+            now <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>isoformat()[<span style="color:#ae81ff">11</span>:]
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;------- Training begin: {} -------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(now))
+
+            <span style="color:#66d9ef">while</span> True:
+                x, _ <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>next_batch(self<span style="color:#f92672">.</span>batch_size)
+                feed_dict <span style="color:#f92672">=</span> {self<span style="color:#f92672">.</span>x_in: x, self<span style="color:#f92672">.</span>dropout_: self<span style="color:#f92672">.</span>dropout}
+                fetches <span style="color:#f92672">=</span> [self<span style="color:#f92672">.</span>x_reconstructed, self<span style="color:#f92672">.</span>cost, self<span style="color:#f92672">.</span>global_step, self<span style="color:#f92672">.</span>train_op]
+                x_reconstructed, cost, i, _ <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>sesh<span style="color:#f92672">.</span>run(fetches, feed_dict)
+
+                err_train <span style="color:#f92672">+=</span> cost
+
+                <span style="color:#66d9ef">if</span> i<span style="color:#f92672">%</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> verbose:
+                    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;round {} --&amp;gt; avg cost: &#34;</span><span style="color:#f92672">.</span>format(i), err_train <span style="color:#f92672">/</span> i)
+
+                <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">=</span> max_iter <span style="color:#f92672">or</span> X<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>epochs_completed <span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">=</span> max_epochs:
+                    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;final avg cost (@ step {} = epoch {}): {}&#34;</span><span style="color:#f92672">.</span>format(
+                        i, X<span style="color:#f92672">.</span>train<span style="color:#f92672">.</span>epochs_completed, err_train <span style="color:#f92672">/</span> i))
+                    now <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>isoformat()[<span style="color:#ae81ff">11</span>:]
+                    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;------- Training end: {} -------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(now))
+                    <span style="color:#66d9ef">break</span>
+</code></pre></div><!-- raw HTML omitted -->
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

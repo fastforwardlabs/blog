@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>A Symbiotic Relationship: Knowledge Graphs &amp; Machine Learning</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jan 29, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>A Symbiotic Relationship: Knowledge Graphs &amp; Machine Learning</h1>
+  <p>For the past decade, humans have unknowingly come to depend on Knowledge Graphs on a daily basis. From personalized shopping recommendations to intelligent assistants and user-friendly search results, many of these accepted (and expected) features have come to fruition through the exploitation of knowledge graphs. Despite their longstanding conceptual and practical existence, knowledge graphs were just added to the <em>Gartner Hype Cycle for Emerging Technologies</em> in 2018 and have continued to garner attention as an area of active research and development for their distinct ability to represent real-world relationships.</p>
+<p>In this article, we&rsquo;ll take a high-level look at what knowledge graphs are and explore a few ways they interact with the field of machine learning.</p>
+<h3 id="what-is-a-knowledge-graph">What is a knowledge graph?</h3>
+<p>With all the hype comes confusion. In its simplest form, a knowledge graph is a set of data points linked by relations that describe a real-world domain. A cursory Google search will result in a myriad of explanations, but I believe there are a few core concepts that characterize a knowledge graph implementation.</p>
+<p><img src="/images/2020/01/cypher_graph-1579272372494.png" alt="cypher_graph_v1"></p>
+<h5 id="image-credithttpss3amazonawscomdevassetsneo4jcomwp-contentuploadscypher_graph_v1jpg"><a href="https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads/cypher_graph_v1.jpg">Image Credit</a></h5>
+<ul>
+<li><strong>It&rsquo;s a graph -</strong> Contrary to traditional data stores, knowledge graphs are composed not only of entities, but also connections between each entity. In a graph network, these entities are called <em><strong>Nodes</strong></em> or <em><strong>Vertices</strong></em> and are connected together via <em><strong>Edges</strong></em> or <em><strong>Links</strong></em>. Graph data structures excel at modeling one-to-many relationships.</li>
+<li><strong>It provides context -</strong> Knowledge graphs glean semantic meaning by design - namely, the <em>meaning of the data</em> is implicitly encoded in the data representation itself, making it easy to query and explore. In the example above, we can quickly interpret that <em><strong>Jennifer</strong></em> is a <em><strong>Person</strong></em> who <em><strong>works for</strong></em> a <em><strong>Company</strong></em> called <em><strong>Neo4j</strong></em> because of the inherent directional metadata structure.</li>
+<li><strong>It&rsquo;s intelligent -</strong> Knowledge graphs are built from dynamic, logical constructs <em><strong>- ontologies -</strong></em> that by default possess a framework supportive of inference. Regardless of the specific entities in the graph, the entity-to-entity connections hold fundamental meaning.</li>
+</ul>
+<h4 id="a-familiar-example">A Familiar Example</h4>
+<p>A concrete and relatable application of knowledge graph technology is demonstrated by <em>Google&rsquo;s Knowledge Graph</em> which was launched in 2012 and has become a relied upon feature for all Google search users.</p>
+<p><img src="/images/2020/01/alex_ferguson-1579272142395.png" alt="image-20200115163856787"></p>
+<p>When searching for a specific person, Google provides users a side panel that contains relevant information surrounding the entity/subject in the query. This quick insight is made possible by Google&rsquo;s Knowledge Graph - a pre-populated knowledge base of connected facts relating people, places, and things. Because the graph structure effectively represents this type of data by design, the facts seen above can be easily called upon to provide contextual insight.</p>
+<h3 id="intersection-of-machine-learning-and-knowledge-graphs">Intersection of Machine Learning and Knowledge Graphs</h3>
+<p>Now that we have established a baseline intuition of what knowledge graphs are, let&rsquo;s take a look at ways machine learning and knowledge graphs support each other.</p>
+<h4 id="getting-knowledge-into-a-knowledge-graph">Getting knowledge into a knowledge graph</h4>
+<p>Because knowledge graphs preserve relational information (and are therefore more complex than traditional data representations), the data they take in demands a more refined state. Specifically, the edges between nodes must be established and then wrangled into a complementary form <em>before</em> populating a graph.</p>
+<p><img src="/images/2020/01/manual_graph-1579272546736.png" alt="image-20200114132132253"></p>
+<p>Let&rsquo;s imagine a hand-crafted graph describing characteristics of Sir Alex Ferguson as seen above. Defining these entities and relationships is a simple endeavor for anyone knowledgeable of the English Premier League (EPL) and organizing the connections upfront allows the graph to be efficiently queried later on. But what happens if we want to create subgraphs for every manager in the EPL? Or every soccer manager in the world? Or every professional sports manager that ever existed?</p>
+<p>Manually identifying all of these relationships by hand is not scalable. This is where machine learning and Natural Language Processing (NLP) offer intelligent solutions to automatically curate raw data into useable facts. The general techniques involved include sentence segmentation, part of speech tagging, dependency parsing, word sense disambiguation, entity extraction, entity resolution, and entity linking applied to corpuses of both structured and unstructured data.</p>
+<p><img src="/images/2020/01/joe_burrow-1579272452103.png" alt="image-20200114162031150"></p>
+<p>The simplified example above is intended to highlight the general NLP process on a single sentence. In practice, organizations use more advanced, <a href="https://searchnewscentral.com/blog/2018/10/19/constucting-knowledge-bases-with-context-clouds/">patented systems</a> built on these underlying techniques to automatically extract information, resolve conflicting entities, and populate millions of entities into production knowledge graphs.</p>
+<h4 id="getting-richer-knowledge-out-of-a-knowledge-graph">Getting <em>richer</em> knowledge out of a knowledge graph</h4>
+<p><em>&ldquo;Increasingly we&rsquo;re learning that you can make better predictions about people by getting all the information from their friends and their friends&rsquo; friends than you can from the information you have about the person themselves.&quot;</em></p>
+<p>​														- James Fowler, <em><a href="https://www.amazon.com/dp/B002OFVO5Y/">Connected</a></em></p>
+<p>The quote above poses a justified, but unconventional approach to predictive modeling. Traditional machine learning focuses on modeling tabular data that inherently cannot represent all of the cascading relationships found within networks and knowledge graphs. This often means data scientists are left trying to abstract, simplify, and even leave out predictive relationships baked into a knowledge graph&rsquo;s structure. But what if features of every node in a knowledge graph could be derived from the context of all the nodes and edges around them?</p>
+<p>There are few different methods for making use of connected features in machine learning, but a main area of attention is <em><strong>Knowledge Graph Embeddings (KGE)</strong></em>. The goal of KGE&rsquo;s is to learn a fixed vector space representation of any given node in a graph based on its nearby connections. Drawing a quick parallel to the <em><strong>Word2Vec</strong></em> algorithm (and concept of word embeddings) - where we learn a fixed vector representation for every word in a corpus based on nearby words - helps to frame the concept of KGEs. Specifically, the <em><strong><a href="https://snap.stanford.edu/node2vec/">Node2Vec</a></strong></em> model expands upon ideas from Word2Vec by first randomly traversing subgraphs for each node in a network to build a large number of sequences [sentences]. Once we have a body of graph sequences [corpus], we can utilize Word2Vec methodology as it applies to text sequences to produce graph node embeddings.</p>
+<p>Ultimately by learning embedding representations from the full context of a knowledge graph, we can extract deeply rich features to be used in downstream tasks. A few uses are:</p>
+<ul>
+<li><strong>Link prediction</strong> - Can we find nodes that are likely connected or are about to be connected? (For example, a graph of <em>products</em> and <em>customers</em> connected by <em>orders</em> could be used to predict (and thus recommend) which new products should likely be connected to which new customers.)</li>
+<li><strong>Supervised modeling</strong> - Embeddings can be fed as input features to supervised models for classification tasks.</li>
+</ul>
+<p><img src="/images/2020/01/better_ml-1579272303642.png" alt="image-20200114175148278"></p>
+<h5 id="image-credithttpsgoneo4jcomrs710-rrc-335imagesneo4j-ai-graph-technology-white-paper-en-uspdf_ga274744181561798761578945914-16455843091578945914"><a href="https://go.neo4j.com/rs/710-RRC-335/images/Neo4j-ai-graph-technology-white-paper-EN-US.pdf?_ga=2.7474418.156179876.1578945914-1645584309.1578945914">Image Credit</a></h5>
+<h3 id="final-thoughts">Final Thoughts</h3>
+<p>Knowledge graphs are an effective tool for modeling interconnected, real-world scenarios while retaining contextual details that are not easily captured with traditional data structures. In this article, we explored two examples that demonstrate the symbiotic relationship between knowledge graphs and machine learning, which only scratches the surface of the intersection between the two technologies. Additional concepts - like <a href="https://blog.fastforwardlabs.com/newsletters/2019-10-24-client.html">Graph Neural Networks</a> and ML driven Entity Resolution - stand as exciting areas of research and application.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

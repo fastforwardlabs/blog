@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Rise of the Low-Code ML toolboxes</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>May 29, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Rise of the Low-Code ML toolboxes</h1>
+  <p>We&rsquo;ve written previously about the rapid growth and adoption of ML tools in the <a href="https://blog.fastforwardlabs.com/2017/11/30/the-promise-of-automated-machine-learning-automl.html">AutoML</a> family.  Specifically, we broke down AutoML into 4 categories:</p>
+<ul>
+<li>Citizen Data Science / ML</li>
+<li>Efficient Data Science / ML</li>
+<li>Learning to Learn</li>
+<li>Transfer Learning</li>
+</ul>
+<p>Advancement has been especially rapid in tools designed to make Data Science/ML more efficient, and in learning to automate/optimize model architecture design.  While these frameworks and tools have continued to mature, their prominence has unveiled another set of challenges.  Even when using automation, building out useful, semi-custom deep learning models takes a lot of code!  Popular libraries like TensorFlow and Pytorch offer incredible power in that data scientists (who also happen to be experienced software developers) have the ability to tailor model architectures granularly to fit specific use cases.  However, all of that power comes at a cost, and that cost can include hundreds of lines of code&ndash;and all of the technical debt that comes with it.  Add in the need to programmatically implement many iterations of experiments, and one could easily end up maintaining a highly complex codebase simply to train, test, and experiment with a single deep learning model.</p>
+<p><img src="/images/2019/05/markus_spiske_109588_unsplash-1556815976857.jpg" alt=""></p>
+<h5 id="photo-by-markus-spiskehttpsunsplashcomphotosxekxe_vr0ecutm_sourceunsplashutm_mediumreferralutm_contentcreditcopytext-on-unsplashhttpsunsplashcomsearchphotoscodeutm_sourceunsplashutm_mediumreferralutm_contentcreditcopytext">Photo by <a href="https://unsplash.com/photos/xekxE_VR0Ec?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Markus Spiske</a> on <a href="https://unsplash.com/search/photos/code?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></h5>
+<p>To address this challenge, a new genre of ML capabilities has surfaced, pioneered by what we like to call &lsquo;Low-Code ML Toolboxes.&rsquo; Projects like the Allen Institute&rsquo;s <a href="https://allennlp.org/tutorials">AllenNLP</a>, <a href="https://www.fast.ai/">fast.ai</a> and Uber&rsquo;s [Ludwig] (<a href="https://uber.github.io/ludwig/">https://uber.github.io/ludwig/</a>) seek to abstract much of the programming complexity inherent to building deep learning models, while preserving the above-mentioned power of libraries such as Pytorch and TensorFlow.  These toolboxes are not limited to AutoML applications. As a result, they address codebase management challenges for many types of ML projects.</p>
+<p>These projects advertise themselves as a way to make deep learning much easier to accomplish and more accessible to the masses, and while this is technically true, it&rsquo;s important to point out that in this case we aren&rsquo;t talking about GUI-based approaches to ML/DL such as <a href="https://lobe.ai/">Lobe</a>, <a href="https://www.knime.com/">KNIME</a> or even building lambda function-based models.  Instead, tools in this category seek to holistically reduce the programming load of data scientists by providing higher level text-based interface with which to specify a model&rsquo;s configuration.</p>
+<p>Both Ludwig and AllenNLP leverage the JSON format as a way to allow for custom configuration of a model architecture/approach, while still enforcing a standard structure, which is needed in order to provide abstraction.  Ludwig offers YAML as the primary user interface, which is then used to generate JSON model specifications.  AllenNLP uses jsonnet for the same purpose.  Ludwig does also feature a programmatic <a href="https://uber.github.io/ludwig/api/">API</a>, and many of AllenNLP&rsquo;s core capabilities can easily be integrated/extended to existing software projects.</p>
+<p>Fast.ai takes a different approach, relying heavily still on its users to develop models directly in Python.  However, through both the library&rsquo;s built in functions, as well as the project&rsquo;s well documented DS practices, management of the codebase supporting a model is much simpler.</p>
+<p>These projects are also showing high levels of adoption with the older AllenNLP <a href="https://github.com/allenai/allennlp">Github</a> boasting over 100 contributors and 6,000 stars.  Ludwig, though only recently released, has nearly 4,500 stars at the time of this article and has strong support within Uber&rsquo;s extended AI community.  Because fast.ai is also paired with a human learning course, it also boasts a large community (over 13,000 stars and hundreds of contributors).</p>
+<h3 id="why-low-code">Why low-code?</h3>
+<p>Increasing Data Scientist productivity is the primary benefit of low-code ML tools, but not the only one.  In addition to making it faster to experiment, these tools also seek to provide a repeatable and structured way to capture experiment results as well.  Both toolchains automatically log the details of each training run into a pre-specified directory/file hierarchy.  Once one is comfortable with this structure it&rsquo;s easy to pinpoint key moments in the experimentation process for further analysis or configuration.</p>
+<p>In addition, since these low-code toolboxes are essentially built on top of well-maintained deep learning libraries (PyTorch and Tensorflow), it&rsquo;s easy to take advantage of other adjacent capabilities like <a href="https://github.com/tensorflow/tensorboard">TensorBoard</a> to visualize/inspect models.</p>
+<h3 id="possible-pitfalls">Possible Pitfalls</h3>
+<p>As discussed above, the developers of low-code ML tools make a lot of assumptions about how these tools will be used.  These assumptions are wide ranging, due to the level of abstraction provided.  One of the most important assumptions concerns how input data will be structured and preprocessed.  For example, Ludwig&rsquo;s standard toolchain expects data to be formatted into CSV, and currently only supports a limited number of datatypes and preprocessing functions.  While it is of course possible to extend the supported datatypes and preprocessing steps, you will need to write some code to do so.  Users who lack this skillset or become complacent during the experiment design process might run into trouble here.</p>
+<p>A primary component of many modern deep learning approaches is transfer learning (TL).  The benefits of this technique are plentiful and <a href="https://blog.fastforwardlabs.com/2018/08/29/breakthroughs-in-transfer-learning-for-nlp.html">well-documented</a>.  However, there is an inherent tradeoff to employing TL: it&rsquo;s sometimes impossible to know exactly on what and how someone else&rsquo;s model was trained, and thus very difficult to be sure if that model (or any derivative models) are fair, without inspection. Though the lack of automatic in-depth fairness analysis is not unique to the low-code toolboxes we are exploring, it&rsquo;s worth noting that just because experimentation and training processes are easier, one shouldn&rsquo;t assume the outputs are fair.</p>
+<h3 id="parting-thoughts">Parting thoughts</h3>
+<p>There are <em>still</em> no tools which replace a solid conceptual foundation in ML and software development. However, for experienced practitioners, low-code toolboxes can help make the data science process much easier and faster.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

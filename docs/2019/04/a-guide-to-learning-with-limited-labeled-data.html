@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>A Guide to Learning with Limited Labeled Data</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 2, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      featured post
+      
+    </span>
+  </h5>
+  <h1>A Guide to Learning with Limited Labeled Data</h1>
+  <p>We are excited to release <em>Learning with Limited Labeled Data</em>, the latest report and prototype from Cloudera Fast Forward Labs.</p>
+<p>Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. Our report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly.</p>
+<p>Active learning makes it possible to build applications using a small set of labeled data, and enables enterprises to leverage their large pools of unlabeled data. In this blog post, we explore how active learning works. (For a higher level introduction, please see <a href="https://blog.fastforwardlabs.com/2019/03/20/learning-with-limited-labeled-data.html">our previous blogpost</a>.)</p>
+<h2 id="the-active-learning-loop">The active learning loop</h2>
+<p>Active learning takes advantage of the collaboration between humans and machines to smartly select a small subset of datapoints for which to obtain labels. It is an iterative process, and ideally access is available to some initial labels to start. These initial labels allow a human to build a baseline machine learning model, and use it to predict outputs for all the unlabeled datapoints. The model then looks through all its predictions, flags the one with which it has the most difficulty, and requests a label for it. A human steps in to provide the label, and the newly labeled data is combined with the initial labeled data to improve the model. Model performance is recorded, and the process repeats.</p>
+<p><img src="/images/2019/03/fig_15-1553784931001.png" alt=""></p>
+<h5 id="_the-active-learning-loop_"><em>The active learning loop</em></h5>
+<h2 id="how-to-select-datapoints">How to select datapoints</h2>
+<p>At the heart of active learning is a machine (<em>learner</em>) that requests labels
+for datapoints that it finds particularly hard to predict. The learner follows a
+<em>strategy</em>, and uses it to identify these datapoints. To evaluate the
+effectiveness of the strategy, a simple approach for choosing datapoints needs
+to be defined. A good starting point is to remove the intelligence of the
+learner; the datapoints are chosen independently of what the learner thinks.</p>
+<h3 id="random-sampling">Random sampling</h3>
+<p>When we take the learner out of the picture, what is left is a pool of unlabeled
+data and some labeled data from which a model can be built. To improve the
+model, the only reasonable option is to randomly start labeling more data. This
+strategy is known as <em>random sampling</em>, and selects unlabeled datapoints from
+the pool according to no particular criteria. You can think of it as being akin
+to picking a card from the top of a shuffled deck, then reshuffling the deck without the
+previously chosen card and repeating the action. Because the learner does not help with the
+selection process, random sampling is also known as <em>passive learning</em>.</p>
+<p><img src="/images/2019/03/fig_19-1553784863589.png" alt=""></p>
+<h5 id="_random-sampling-is-like-picking-the-top-card-from-a-shuffled-deck_"><em>Random sampling is like picking the top card from a shuffled deck</em></h5>
+<h3 id="uncertainty-sampling">Uncertainty sampling</h3>
+<p>A slightly more complex strategy is to select datapoints that the model is
+uncertain about. In <em>uncertainty sampling</em>, the learner looks at all unlabeled
+datapoints and surfaces the ones about which it is uncertain. Labels are then
+provided by a human, and fed back into the model to refine it.</p>
+<p>But how do we quantify uncertainty? One way is to use the <em>distance between the
+datapoint and the decision boundary</em>. Datapoints far away from the decision
+boundary are safe from changes in the decision boundary. This implies that the
+model has high certainty in these classifications.  Datapoints close to the
+boundary, however, can easily be affected by small changes in the boundary. The
+model (learner) is not certain about them; a slight shift in the decision
+boundary will cause them to be classified differently. The <em>margin sampling</em> strategy
+therefore dictates that we surface the datapoint closest to the boundary and
+obtain a label for it.</p>
+<p>There are many other selection strategies that can be used with active
+learning. Our report explores some of them in detail.</p>
+<h2 id="when-to-stop">When to stop</h2>
+<p>Because active learning is an iterative process, when should we stop? Each label comes with a cost of acquisition - the amount of money and time it takes to acquire the label. With this cost in mind, the stopping criteria can either be static or dynamic. A static criteria sets a budget limit or performance target in the beginning. A dynamic criteria looks at the incremental gain in performance over each round of active learning and stops when it is no longer worthwhile to acquire more labels (the incremental performance plateaus).</p>
+<p><img src="/images/2019/03/fig_9-1553784742213.png" alt=""></p>
+<h5 id="_stopping-criteria-for-active-learning_"><em>Stopping criteria for active learning</em></h5>
+<h2 id="does-it-work-for-deep-learning">Does it work for deep learning?</h2>
+<p>Deep learning introduces a couple of wrinkles that make direct application of
+active learning ineffective. The most obvious issue is that adding a single
+labeled datapoint does not have much impact on deep learning models, which train
+on batches of data. In addition, because the models need to be retrained until
+convergence after each point is added, this can become an expensive undertaking &ndash;
+especially when viewed in terms of the performance improvement vs. acquisition
+cost (time and money) trade-off. One straightforward solution is to select a
+very large subset of datapoints to label. But depending on the type of
+heuristics used, this could result in correlated datapoints. Obtaining labels
+for these datapoints is not ideal &ndash; datapoints that are independent and diverse
+are much more effective at capturing the relationship between input and output.</p>
+<p>The second problem is that existing criteria used to help select datapoints do
+not translate to deep learning easily. Some require computation that does not
+scale to models with high-dimensional parameters. These approaches are rendered
+impossible with deep learning. For the criteria that are computationally viable,
+reinterpretation under the light of deep learning is necessary.</p>
+<p>In our report, we take the idea of uncertainty and examine it in the context of
+deep learning.</p>
+<h2 id="practical-considerations">Practical considerations</h2>
+<p>Active learning sounds tempting - with this approach, it is possible to build
+applications previously constrained by lack of labeled data. But active learning
+is not a silver bullet.</p>
+<h3 id="choosing-a-learner-and-a-strategy">Choosing a learner and a strategy</h3>
+<p>Active learning relies on a small subset of labeled data at the beginning to
+choose both the learner and strategy. The learner is used to make predictions
+for all the unlabeled data and the strategy selects the datapoints that are
+difficult. Choosing a learner (or model) for any machine learning problem is
+difficult, but it is made even more difficult with active learning for two
+reasons. First, the choice of a learner needs to be made very early on when we
+only have a small subset of labeled data. Second, the learner is not just used
+to make predictions, it is used in conjunction with the strategy to surface
+datapoints that will help refine itself. This tight feedback loop amplifies the
+effect of a wrong learner.</p>
+<p>In addition, some selection strategies result in a labeled dataset that is
+biased. Margin sampling, for example, surfaces datapoints right around the
+decision boundary to be labeled. Most datapoints far from the boundary might not
+even be used in building the model, resulting in a labeled dataset that may not be
+representative of the entire pool of unlabeled data.</p>
+<h3 id="human-biases">Human biases</h3>
+<p>Because a human needs to step in to provide labels, this restricts the type of
+use cases to which active learning can be applied. Humans can label images and
+annotate text, but we cannot tell if a financial transaction is fraudulent just
+by looking at the data.</p>
+<p>In addition, the data that requires human labeling is by definition more
+difficult. Under these circumstances, it is easy for a human to inject his own
+bias and judgement when making labeling decisions.</p>
+<h3 id="a-pause-between-iterations">A pause between iterations</h3>
+<p>When applying active learning in real life, surfaced datapoints will need to be
+sent to a human for labeling. The next round of active learning cannot proceed
+until the newly labeled datapoints are ready.</p>
+<p>The length of time between each active learning iteration varies depending on
+who provides the label. In a research scenario, a data scientist who builds the
+model and also creates labels will be able to iterate through each round of
+active learning quickly. In a production scenario, an outsourced labeling team
+will need more time for data exchange and label (knowledge) transfer to occur.</p>
+<p>For active learning to be successful, the pause between iterations should be as
+small as practically possible. In addition to considering different types of
+labeling workforce, an efficient pipeline needs to be set up. This pipeline
+should include a platform for exchanging unlabeled datapoints, a user interface
+for creating labels, and a platform for transferring the labeled datapoints.</p>
+<h2 id="active-learner">Active Learner</h2>
+<p><img src="/images/2019/04/clip0-1554230510947.gif" alt="A GIF showing the Active Learner prototype"></p>
+<h5 id="we-built-the-active-learner-prototypehttpsactivelearnerfastforwardlabscom-to-accompany-this-report">We built the <a href="https://activelearner.fastforwardlabs.com/">Active Learner prototype</a> to accompany this report.</h5>
+<p>Every Cloudera Fast Forward Labs report comes with a prototype. We don&rsquo;t just
+write about a new exciting capability in machine learning; we also experiment with
+it to understand what it can and cannot do.</p>
+<p>The prototype for our report on Learning with Limited Labeled Data is called Active
+Learner. It is a tool that sheds light on and provides intuition for how and why
+active learning works. The prototype allows one to visualize the process of
+active learning over different types of datasets and selection strategies. <a href="https://activelearner.fastforwardlabs.com/">We hope you
+enjoy exploring it</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Active learning makes it possible to build machine learning models with a small
+set of labeled data. It offers one way for enterprises to leverage their large
+pools of unlabeled data for building new products, but it is not the only
+solution to learning with limited labeled data.</p>
+<p>Our report goes into much more detail (including strategies specific to deep
+learning, resources and recommendations for setting up an active learning
+production environment, and technical and ethical implications). Join our
+<a href="https://www.cloudera.com/about/events/webinars/learning_with_limited_labeled_data.html?utm_medium=organicsocial&amp;utm_source=blog&amp;utm_campaign=ml&amp;src=organicsocial&amp;cid=70134000001YifA&amp;utm_content=FF10_Blog_AMER_Webinar_2019-04-03">webinar</a> to learn more, <a href="https://activelearner.fastforwardlabs.com/">explore the
+prototype</a> and <a href="https://www.cloudera.com/products/fast-forward-labs-research.html">get in
+touch</a> if you
+are interested in accessing the full report (which is available by subscription
+to our research and advising services).</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

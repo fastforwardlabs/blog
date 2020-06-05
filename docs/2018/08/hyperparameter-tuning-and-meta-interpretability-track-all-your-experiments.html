@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Hyperparameter Tuning and Meta-Interpretability: Track All Your Experiments!</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 29, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Hyperparameter Tuning and Meta-Interpretability: Track All Your Experiments!</h1>
+  <p>From random forest to neural networks, many modern machine learning algorithms involve a number of parameters that have to be fixed before training the
+algorithm. These parameters, in contrast to the ones learned by the algorithm
+during training, are called hyperparameters. The performance of a model on a
+task given data depends on the specific values of these hyperparameters.</p>
+<p>Hyperparamter tuning is the process of determining the hyperparameter values
+that maximize model performance on a task given data. The tuning of
+hyperparameters is done by machine learning experts, or increasingly, software
+packages (e.g., <a href="http://hyperopt.github.io/hyperopt/">HyperOpt</a>,
+<a href="https://automl.github.io/auto-sklearn/stable/">auto-sklearn</a>,
+<a href="https://github.com/automl/SMAC3">SMAC</a>). The aim of these libraries is to turn
+hyperparameter tuning from a &ldquo;black art&rdquo;, requiring expert expertise and
+sometimes brute-force search, into a reproducible science - reducing the need for
+expert knowledge, whilst keeping computational complexity at bay (e.g.,<a href="http://papers.nips.cc/paper/4522-practical-bayesian-optimization">Snoek,
+Larochelle, &amp; Adams;
+2012</a>).</p>
+<p>Traditionally, hyperparameter tuning is done using grid search. Grid search
+requires that we choose a set of values for each hyperparameter and evaluate
+every possible combination of hyperparameter values. Grid search suffers from
+the <em>curse of dimensionality</em>; the number of joint values grows exponentially
+with the number of hyperparameters.</p>
+<p>In 2012, <a href="http://www.jmlr.org/papers/v13/bergstra12a.html">Bergstra and Bengio</a>
+showed that random hyperparameter search is more efficient than grid search, a
+perhaps counter-intuitive result. This is because only a few hyperparameters
+tend to really matter for the performance of a model on a task given data.
+Grid search tends to spend more time in regions of the hyperparameter space
+that are low-performing compared to random search. What&rsquo;s more, random search
+allows one to easily add more experiments that explore even more sets of
+hyperparameter values without (expensive) adjustment of the grid (most
+recently, <a href="https://papers.nips.cc/paper/4443-algorithms-for-hyper-parameter-optimization.pdf">sequential
+approaches</a>
+have shown great promise).</p>
+<p><img src="/images/2018/07/Screen_Shot_2018_07_31_at_11_01_41_AM-1533049344437.png" alt=""></p>
+<h5 id="grid-left-and-random-right-search-for-nine-experiments-with-random-search-all-nine-trials-explore-distinct-values-of-the-hyperparameters-random-search-is-more-efficient-picture-taken-from-bergstra-and-bengio-2012">Grid (left) and random (right) search for nine experiments. With random search, all nine trials explore distinct values of the hyperparameters. Random search is more efficient. (Picture taken from Bergstra and Bengio, 2012)</h5>
+<p>If only a few hyperparameter values really matter, for a given model on a task
+given data, what are those parameters and what are their values? Current
+software libraries for hyperparameter tuning do not tend to discriminate
+important from unimportant hyperparameters and/or do not expose important
+parameters and their values. This limits insights into the workings of a
+model - which is important for a variety of reasons, as we explain in depth in
+our report on <a href="http://blog.fastforwardlabs.com/2017/08/02/interpretability.html">model
+interpretability</a>;
+interpretability allows us to verify, for example, that a model gives high
+quality predictions for the right, and not the wrong, reasons.</p>
+<p>A series of recent papers tackles this <em>&ldquo;meta-interpretability&rdquo; problem</em>: what
+hyperparameters matter for model performance on a task given data? In
+<a href="https://arxiv.org/abs/1710.04725"><em>Hyperparameter Importance Across
+Datasets</em></a>, Jan van Rijn and Frank Hutter
+first evaluate a model on a task given data and a set of randomly chosen
+hyperparameters to assess model performance. They then use these
+hyperparameters as inputs to a model, a so-called surrogate model, that they
+train to predict the oberved performance. Given a trained surrogate model, they
+predict model performance for hyperparameters not previously included in their
+experiments. Finally, they conduct an analysis of variance (ANOVA) to determine
+how much of the predicted model performance by the surrogate model can be
+explained by each hyperparameter or combination of hyperparameters. To draw
+conclusions across data sets, a more generalizable result, the authors repeat
+this procedure across several data sets. For random forests, for example, they
+find that only the <code>minimum samples per leaf</code> and the <code>maximum numbers of features</code> really matter. This finding is consistent with expert knowledge,
+which is great: it validates the method; we can use it to study more
+complex models for which we have no such intuition yet while it helps beginners
+to get started.</p>
+<p>Using a related approach also based on surrogate models, Philipp Probst, Bernd
+Bischl, and Anne-Laure Boulesteix
+<a href="https://arxiv.org/abs/1802.09596">demonstrate</a> that some default values of
+hyperparameters as set by software packages (e.g., scikit-learn) lie
+outside the range of hyperparameter values that tend to yield optimal model
+performance across tasks and data; we can use solutions to the
+meta-interpretability problem to define better default values, or to define
+prior distributions for even more efficient random hyperparameter search
+(Bergtra and Bengio sample from a uniform distribution which we can replace by
+a &ldquo;more informed&rdquo; distribution).</p>
+<p>Within organizations, these results suggest that one should track and store the
+results of hyperparameter tuning - not only the set of parameters that result in
+the best performing model, but <em>all</em> results. These results can be used to
+train surrogate models that allow us insight into the importance of
+hyperparameter values and increase the efficiency of hyperparameter tuning by
+defining sensible default values (or distributions) for the classes of problems
+tackled by data teams at these organizations.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

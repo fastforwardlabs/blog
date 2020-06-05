@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Convolve all the things</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>May 31, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Convolve all the things</h1>
+  <p>While deep learning can be applied generally, much of the excitement around it has stemmed from significant breakthroughs in two main areas: computer vision and natural language processing. Practitioners have typically applied convolutional neural networks (CNNs) to spatial data (e.g. images) and recurrent neural networks (RNNs) to sequence data (e.g. text). However, a <a href="https://arxiv.org/pdf/1803.01271.pdf">recent research paper</a> has shown that convolutional neural networks are not only capable of performing well on sequential data tasks, but they have inherent advantages over recurrent networks and may be a better default starting point.</p>
+<p>CNNs were designed originally to take advantage of spatial structure in the input data; for example, a pixel in an image is strongly related to nearby pixels. Sequence data also exhibits a “spatial” structure of sorts, where a particular word is strongly related to surrounding words. The observation is not new, though, and CNNs have been successfully applied to tasks involving sequences for decades. These applications have traditionally been things like sentiment or topic classification, where the output has the freedom to inspect every element in the input sequence. Until fairly recently, CNNs were not popular choices for tasks which involve mapping an input sequence to an output sequence (e.g., time series forecasting).</p>
+<p>Vanilla CNNs applied to sequence forecasting have two pitfalls - the output incorporates input from both the past and the future, and they struggle to “see” or “remember” events in the distant past. Luckily, there are solutions for these two shortcomings: <em>causal convolutions</em> and <em>dilated convolutions</em>, respectively. A causal convolution adjusts the convolution kernel to only look at data in the past:</p>
+<p><img src="/images/2018/04/CausalConv-1524689210501.jpg" alt=""></p>
+<p>while dilated convolutions introduce gaps that allow the output to incorporate information from the distant past:</p>
+<p><img src="/images/2018/04/DilatedCausalConv-1524689251611.jpg" alt=""></p>
+<p>CNNs that have been modified for use in temporal domains are called temporal convolutional networks or TCNs. One of the main benefits of using TCNs for sequence modeling tasks is that the convolutions can be computed in parallel since the output at a given timestep does not need to wait for previous timesteps. This is in contrast to an RNN, where each prediction must wait for all previous predictions. One potential downside to TCNs is that they do not encode the history of the sequence in a single hidden state like RNNs do, but instead require the entire input sequence to generate predictions.</p>
+<p>The authors of the paper present results that show that simple TCNs can beat popular recurrent architectures at sequence modeling tasks that have traditionally only used recurrent networks. While it would be counter-productive to declare a winner, it may be time to question our assumptions and consider TCNs as a first-class citizen for sequence modeling. If you’ve had success with using convolutional networks for time series or sequence modeling, we’d love to hear more about it!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Fine-tuning for Natural Language Processing</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Dec 18, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Fine-tuning for Natural Language Processing</h1>
+  <p>2018 was a fun and exciting year for natural language processing. A series of papers put forth powerful new ideas that improve the way machines understand and work with language. They challenge the <a href="http://ruder.io/nlp-imagenet/">standard way of using pretrained word embeddings like word2vec</a> to initialize the first layer of a neural net, while the rest is trained on data of a particular task. Instead, these papers propose better embeddings (feature-based approach) and pre-trained models that can be fine-tuned for a supervised downstream task (fine-tuning approach).</p>
+<p>Under feature-based approaches, where fixed features, in the form of vectors, are extracted from the pre-trained model, <a href="https://arxiv.org/abs/1802.05365">ELMo</a> provides contextualized embeddings for a word. For example, the word <em>bank</em> in &ldquo;I want to deposit money into a <em>bank</em>&rdquo; and &ldquo;I want to run by the river <em>bank</em>&rdquo; means different things. ELMo allows the word &ldquo;bank&rdquo; to have multiple embeddings depending on the context in which it is used. Under fine-tuning approaches, <a href="https://arxiv.org/abs/1810.04805">BERT</a>, <a href="https://arxiv.org/abs/1801.06146">ULM-FiT</a> and <a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">OpenAI GPT (pdf)</a> propose various model architectures that are pre-trained on a language model objective (i.e., predict the next word). Among these models, BERT stands out because it provides representations that are jointly conditioned on both left and right context in all layers. In other words, it is deeply bidirectional, as opposed to ELMo (shallow bidirectional) and OpenAI GPT (one direction, left to right).</p>
+<p><img src="/images/2018/12/Screen_Shot_2018_12_07_at_12_03_44_PM-1544202300577.png" alt="BERT is bidirectional in all layers and uses a bidirectional Transformer. OpenAI GPT uses a left-to-right Transformer. ELMo concatenates two independently trained left-to-right and right-to-left LSTMs. Image credit"></p>
+<p>BERT&rsquo;s architecture is based on a bidirectional <a href="https://arxiv.org/abs/1706.03762">Transformer encoder</a>. (We will not go into details of the Tranformer, but the paper is worth a read!) BERT&rsquo;s input representation is able to represent a single text sentence or a pair of text sentences (the reason will become apparent later on). Each token, or loosely, each word is represented by the summation of its word embedding, a learned positional embedding, and a learned segment embedding. The word embedding used in the paper is WordPiece embeddings. The positional embedding captures the order of the word in the sequence (or sentence). The learned segment embedding associates certain tokens with a particular sentence since the input can be a pair of text sentences.</p>
+<p>BERT is not trained using a traditional left-to-right or right-to-left language model. In these approaches, the model is asked to predict the next word, given what it has seen so far either from the left or right. ELMo, for example, trains two models, one left-to-right, the other right-to-left, and concatenates them together. This results in a shallow bidirectional model. It is impossible to train a deep bidirectional model like a normal language model because that would create cycles where words can indirectly &ldquo;see themselves.&rdquo; The prediction then becomes trivial. To overcome this, BERT trains using two clever unsupervised prediction tasks. First, it masks a percentage of words from the input and asks the model to predict these masked words from the context. An example would be to ask the model to predict <em>[MASK1] = hairy</em> from the input <em>&ldquo;my dog is [MASK1]</em>&rdquo;. The second task teaches BERT to understand the relationship between two text sentences by pre-training a binarized next sentence prediction task (see image). This ability is not captured by language modeling, but is important for many important downstream tasks (e.g. Question Answering).</p>
+<p><img src="/images/2018/12/Screen_Shot_2018_12_07_at_12_03_58_PM-1544202515836.png" alt="Next sentence prediction task Image credit"></p>
+<p>Once BERT is pretrained, task-specific models are formed by adding one additional output layer, so a minimal number of parameters need to be learned from scratch. As an example, a classifier composed of a simple feed forward neural network and a softmax layer can be added to BERT for spam detectionn. This is akin to transfer learning for image recognition. Many of us at CFFL are excited about this capability, and some of our thoughts are captured in this <a href="https://blog.fastforwardlabs.com/2018/08/29/breakthroughs-in-transfer-learning-for-nlp.html">previous newsletter article</a>. BERT can also be used as a feature extractor. By concatenating various hidden layers of the pretrained Transformer, the authors show that the best performing combination is only 0.3 F1 behind fine-tuning the entire model for named entity recognition task. BERT is open sourced, and we cannot wait to see it being used to solve problems outside of the research space!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

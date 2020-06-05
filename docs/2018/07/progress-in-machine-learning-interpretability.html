@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Progress in machine learning interpretability</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jul 31, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Progress in machine learning interpretability</h1>
+  <p>Our goal when we do research is to address capabilities and technologies that
+we expect to become production-ready in one to two years. That focus on
+fast-moving areas means that new algorithmic ideas sometimes come along that
+allow our clients to extend or improve upon the work in our reports.</p>
+<p>We published our report on machine learning interpretability last year. The technical focus of our report was LIME, a tool that computes locally
+correct explanations of a model&rsquo;s behaviour. If a model is good, LIME&rsquo;s
+explanations can offer completely new insights. (We saw this in our prototype,
+which models customer churn using traditional machine learning techniques, but
+then uses LIME to say precisely what it is about a customer that makes them a
+churn risk.) And if a model is bad, LIME can help you understand why.</p>
+<p>This all sounds great, but we had to leave three issues unresolved in our
+report. Progress since last year has begun to address those concerns.</p>
+<p><img src="/images/2018/07/lime-1530894622923.png" alt=""></p>
+<h5 id="lime-explanations-of-sentiment-classification-not-is-a-positive-word-in-one-example-but-not-in-another-image-credit-anchorshttpshomescswashingtonedumarcotcraaai18pdf">LIME explanations of sentiment classification. &ldquo;Not&rdquo; is a positive word in one example, but not in another. Image credit: <a href="https://homes.cs.washington.edu/~marcotcr/aaai18.pdf">Anchors</a>.</h5>
+<p>Firstly, LIME&rsquo;s explanations are local. For example, a LIME explanation may
+(correctly) tell you that &ldquo;This movie is not bad&rdquo; has positive sentiment
+because it contains the word &ldquo;not.&rdquo; But because LIME&rsquo;s explanations are local,
+a user is not generally entitled to conclude from this that the word &ldquo;not&rdquo;
+always indicates positive sentiment. This makes sense: the presence of &ldquo;not&rdquo; in
+&ldquo;this movie is not very good&rdquo; does not tell you its sentiment is positive! But
+how local is &ldquo;local&rdquo;? How similar to the original sentence does a new sentence
+need to be for LIME&rsquo;s explanation to apply?</p>
+<p><img src="/images/2018/07/anchor-1530894675267.png" alt=""></p>
+<h5 id="anchors-explanations-of-sentiment-classification-not-is-a-positive-word-in-combination-with-bad-image-credit-anchorshttpshomescswashingtonedumarcotcraaai18pdf">Anchors explanations of sentiment classification. &ldquo;Not&rdquo; is a positive word in combination with &ldquo;bad.&rdquo; Image credit: <a href="https://homes.cs.washington.edu/~marcotcr/aaai18.pdf">Anchors</a>.</h5>
+<p>The creators of LIME offer an answer to this question in the form of <a href="https://homes.cs.washington.edu/~marcotcr/aaai18.pdf"><em>Anchors:
+High-Precision Model-Agnostic Explanations</em>(PDF,
+2.7MB)</a>.&rdquo; Anchors works
+like LIME in that it probes the behaviour of the black-box model by perturbing
+the original example. But it takes a very different approach to constructing a
+human-friendly explanation. Rather than fit a locally correct linear model
+(which raises the question: how local?), it constructs a set of rules. For the
+&ldquo;this movie is not bad&rdquo; example above, the rule might be &ldquo;sentence contains
+&lsquo;not&rsquo; <em>and</em> &lsquo;bad&rsquo;&rdquo;. Such black and white rules are easier for many people to
+understand than quantitative weights. And they implicitly define locality: if
+the sentence doesn&rsquo;t contain &ldquo;not&rdquo; or &ldquo;bad,&rdquo; the rule (and the explanation)
+doesn&rsquo;t apply. The <a href="https://github.com/marcotcr/anchor">Anchors code is publicly
+available</a>.</p>
+<p><img src="https://raw.githubusercontent.com/slundberg/shap/master/docs/artwork/boston_instance.png" alt=""></p>
+<h5 id="shaphttpsgithubcomslundbergshap-explanation-of-a-prediction-for-a-model-of-the-boston-house-price-dataset"><a href="https://github.com/slundberg/shap">SHAP</a> explanation of a prediction for a model of the Boston house price dataset.</h5>
+<p>Secondly, LIME&rsquo;s choice of perturbation strategy and its local linear model are
+heuristics &ndash; which is to say they feel a little arbitrary, and it&rsquo;s reasonable
+to wonder whether they are optimal in practice. In <a href="http://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions.pdf">A Unified Approach to
+Interpreting Model
+Predictions</a>
+Lundberg and Lee carefully define what we mean by optimal, and show that LIME
+is a specific example of a more general class of explanation tools they call
+&ldquo;additive feature attribution methods.&rdquo; This class includes the classical
+&ldquo;Shapley&rdquo; feature importance measure familiar to economists, and
+<a href="https://github.com/kundajelab/deeplift">DeepLIFT</a>, a neural network
+interpretability tool. They unify this class in a provably optimal way they
+call <a href="https://github.com/slundberg/shap">SHAP</a>. The code is public, and is
+<a href="https://arxiv.org/abs/1802.03888">highly optimized</a> for the particular case of
+tree-based methods such as XGboost. One thing we really like about SHAP is that
+the built-in visualization tools are very nice! This seemingly minor point is
+surprisingly important to the adoption of new tools, and we&rsquo;re glad to see
+these authors spend time on this aspect of their code.</p>
+<p>Finally, how do we <em>test</em> explanations? How do we know whether an explanation
+is evidence of a problem with the model or a surprising insight? Patrick Hall
+and colleagues at <a href="https://www.h2o.ai/">H2O.ai</a> sum up the current situation very well in a new
+article for O&rsquo;Reilly <a href="https://www.oreilly.com/ideas/testing-machine-learning-interpretability-techniques">Testing machine learning interpretability
+techniques</a>.
+The conclusion is: &ldquo;use more than one type of tool to explain your machine
+learning models, and look for consistent results across different explanatory
+methods.&rdquo; We agree, and we&rsquo;re glad to see new options such as Anchors and SHAP
+that make this easy!</p>
+<p>So, a year after our report, machine learning interpretability remains not only
+a very useful business capability, but a vibrant area of research.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Mobile Behavioural Authentication</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 27, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Mobile Behavioural Authentication</h1>
+  <p>As mobile devices become central to our personal and professional lives, their
+security is more and more important. Passcodes in particular can be lost (or
+forcibly surrendered) to law enforcement. Recent research has focussed on
+behavioural authentication based on patterns of user interaction. This could
+provide an unintrusive authentication method that operates during normal use.</p>
+<p><img src="/images/2017/02/mobileauth.png" alt="Mobile authentication"></p>
+<h5 id="figure-from-touchalytics-on-the-applicability-of-touchscreen-input-as-a-behavioral-biometric-for-continuous-authenticationhttpsarxivorgabs12076231">Figure from <a href="https://arxiv.org/abs/1207.6231">Touchalytics: On the Applicability of Touchscreen Input as a Behavioral Biometric for Continuous Authentication</a></h5>
+<p>Research in this field addresses two problems. Is it possible to grant access
+based on the way a user interacts with a phone? This is <strong>gating interaction</strong>.
+And once access is granted, can a system continuously monitor use in the
+background, requesting reauthentication through a gating system when suspicious
+activity is detected? This is <strong>continuous interaction</strong>.</p>
+<h2 id="data-acquisition">Data Acquisition</h2>
+<p>To use touch dynamics for authentication, you first have to establish a
+benchmark of normal user behavior. Current research does this by having
+subjects type a fixed text or perform gestures on a smartphone. This is
+repeated a few times to capture variation in behavior. Some researchers run
+controlled experiments while others try to mirror real life usage scenarios. As
+an example, <a href="http://ieeexplore.ieee.org/document/6459891/">Tao Feng and
+collaborators</a> recruited 40
+subjects to perform common gestures such as zooming and spread.</p>
+<p>The raw data obtained from the touch display can then be used directly or
+massaged to obtain timing, spatial and motion features. The extracted features
+are used to generate a unique user representation. Machine learning classifiers
+are then used to authenticate a user.</p>
+<h2 id="features">Features</h2>
+<p>When a touch event occurs on a screen, the operating system records sensor
+information, which can be accessed through the phone&rsquo;s API. The API also
+reports timestamps, which can be manipulated to provide information on <a href="http://dl.acm.org/citation.cfm?id=2933015">dwell
+and flight time</a> (time the finger
+stays on a virtual key, and time between presses), and spatial features such as
+touch size, pressure, and position. Touch size and pressure are normalized
+values and are usually used without manipulation. On the other hand, position
+can be used raw or manipulated to provide information on speed, angle, and
+distance.</p>
+<p>The phone&rsquo;s accelerometer and gyroscope provide yet more user-specific
+information. The accelerometer measures movement in three dimensions, while the
+gyroscope measures the rotation.</p>
+<p>For gating authentication, many researchers use timing as the only feature, but
+some combine timing with spatial and motion information. <a href="https://arxiv.org/abs/1207.6231">Mario Frank and
+collaborators</a> propose 30 features based on
+strokes for continuous authentication. A stroke is a trajectory encoded as a
+sequence of vectors with location, timestamp, pressure, area occluded by the
+finger, orientation of the finger, and orientation of the phone. <a href="http://ieeexplore.ieee.org/document/6459891/">Tao Feng and
+collaborators</a> complement strokes
+with zooming motions and finger motion sensor data from a digital glove.</p>
+<h2 id="machine-learning">Machine Learning</h2>
+<p>The collected features can then be used to train a machine learning system and
+classify future users. <a href="http://dl.acm.org/citation.cfm?id=2933015">Gating</a> and
+<a href="http://ieeexplore.ieee.org/document/7503170/">continuous</a> authentication
+research use algorithms like clustering, decision trees, Support Vector
+Machines (SVMs), and neural networks. For example, <a href="https://arxiv.org/abs/1207.6231">Mario Frank and
+collaborators</a> used SVMs and clustering,
+specifically k nearest neighbor (kNN), as classifiers. During training, the
+SVMs constructs a hyperplane to separate out the user and everyone else. The
+hyperparameters of its radial basis function (a real-valued function which
+measures distance) are tuned using standard crossvalidation techniques. The kNN
+classifier looks at each new observation, finds the k nearest training
+examples, and determines the label of the majority of those k neighbors. The
+new observation is then assigned that label. SVM takes time to train but only
+stores the decision hyperplane. kNN is quick, but but must store all training
+observations and labels. Both storage and CPU are at a premium in a mobile
+device, but experimental results show that the SVM generally outperforms the
+kNN for this use case.</p>
+<h2 id="metrics">Metrics</h2>
+<p>False acceptance rate (FAR) and false rejection rate (FRR) are the usual
+performance metrics for probabilistic authentication systems. FAR is the
+fraction of intruders that are incorrectly authenticated. FRR is the fraction
+of authentic users that are incorrectly rejected. A system with high FAR is
+very insecure while one with high FRR is overly sensitive. In a continuous
+authentication system, high FRR means that valid users need to reauthenticate
+too often.</p>
+<p>The point where FAR and FRR are equal is known as the Equal Error Rate (ERR).
+Ideally both FAR and FRR should be low. But when that&rsquo;s not possible, you can
+tune the classifier to prioritise one or the other, depending on the
+application.</p>
+<h2 id="whats-next">What&rsquo;s next?</h2>
+<p>It&rsquo;s currently possible to build a touch-based authentication system with an
+ERR of less than 5% (see reviews by <a href="http://dl.acm.org/citation.cfm?id=2933015">Teh et
+al.</a> and <a href="http://ieeexplore.ieee.org/document/7503170/">Patel et
+al.</a>). For gating authentication
+purposes this is too high, but it could be appropriate for continuous
+authentication.</p>
+<p>We think the most useful next step would be the release of large, public
+datasets. Current datasets are small and mostly proprietary which makes
+progress slow and difficult to measure. Large public datasets would likely
+require collaboration between academia and device manufacturers. And it&rsquo;s time
+to start thinking about performance not just in terms of accuracy but also
+computational expense. If you think your phone&rsquo;s battery drains quickly today,
+wait until you&rsquo;ve got a neural network running in the background all the time!
+Finally — and perhaps most interestingly — the trade off between usability,
+security and privacy needs to be better understood from a product and user
+point of view.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

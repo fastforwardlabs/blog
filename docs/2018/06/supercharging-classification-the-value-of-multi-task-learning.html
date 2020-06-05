@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Supercharging Classification - The Value of Multi-task Learning</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 26, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Supercharging Classification - The Value of Multi-task Learning</h1>
+  <p>Today&rsquo;s machines can identify objects in photographs, predict loan repayments or
+defaults, write short summaries of long articles, or recommend movies you may
+like. Up until now, machines have achieved mastery through laser-like focus; most
+machine learning algorithms today train models to master one task, and one task only.
+We are excited to introduce <strong>multi-task learning</strong> in our upcoming
+<a href="https://www.cloudera.com/content/dam/www/marketing/resources/webinars/Multi-task-learning-recorded-webinar.png.landing.html">webinar</a>,
+report, and prototype. Multi-task learning is an approach to machine learning
+that goes beyond single-task approaches and supercharges classification by
+allowing algorithms to master more than one task at once and in parallel.</p>
+<p>The basic idea in multi-task learning is that learning several tasks at once
+allows models to benefit from relationships between tasks for improved
+performance (alongside other benefits we will cover in the webinar and report). At
+an intuitive level, this makes sense. A child learning to read is supported by
+learning the shapes of letters and learning how to talk. Similarly, a machine
+learning model that is learning to understand language benefits from learning
+to identify parts of speech while concurrently learning to identify the
+semantic role words play in a sentence.</p>
+<p><img src="/images/2018/06/02_03-1530032857031.png" alt=""></p>
+<h5 id="multi-task-learning-can-improve-the-prediction-of-two-variables-eg-risk-factor-and-white-blood-cell-countat-the-same-time-that-it-improves-overall-performance">Multi-task Learning can improve the prediction of two variables (e.g. &ldquo;risk factor&rdquo; and &ldquo;white blood cell count&rdquo;)at the same time that it improves overall performance.</h5>
+<p>Recently, multi-task learning was shown to improve the prediction of diabetic
+retinopathy. A team at <a href="https://ai.google/research/teams/brain">Google Brain</a>,
+using ophthalmology databases that store thousands of retinal images, was
+able to train a <a href="https://arxiv.org/abs/1708.09843">multi-task neural network</a>
+to predict a variety of diagnostic attributes, from trivially easy (&lsquo;left&rsquo; or
+&lsquo;right&rsquo; eye) to surprisingly difficult (&lsquo;male&rsquo; or &lsquo;female&rsquo; patient), in addition
+to the main task: the prediction of diabetic retinopathy. The outcome? Even
+trained ophthalmologists were surprised by the network&rsquo;s performance. The
+prediction of the diabetic retinopathy task benefited from the addition of other tasks,
+showing that seemingly less important tasks can be added to a
+single-task algorithm (turning it into a multi-task algorithm) to support a
+primary, difficult task.</p>
+<p>Similarly,
+<a href="https://arxiv.org/abs/1703.07771">researchers</a> have improved the ability of a model trained on hospital records to predict patient
+mortality by adding length-of-stay as a second target variable.
+Agronomists have improved soil chemistry detection by training a
+<a href="http://www.mdpi.com/2072-4292/9/11/1099">model</a> to learn multiple chemical
+signatures simultaneously. <a href="http://bons.ai">Roboticists</a>, in a twist on concept
+learning, have trained a robotic arm  with MTL to satisfy both intermediate and
+end goals concurrently in a way that better supports that end goal.
+<a href="http://www.enlitic.com">Radiologists</a> have used images labeled as &lsquo;normal&rsquo; or
+&lsquo;abnormal&rsquo; alongside pixel-level labels for regions-of-interest that show the
+location of the abnormality to improve disease detection from imagery. And,
+under the hood, <a href="https://www.nature.com/articles/nature16961">AlphaGo</a> is using
+multi-task learning. Thus, multi-task learning has proven value in many practical
+settings.</p>
+<p>Multi-task learning works only if tasks are related, of course, and not all
+tasks are. If unrelated tasks are included, they may degrade the performance of
+multi-task models. Tasks are likely related if they are drawn from the same
+domain. The startup
+<a href="https://blog.cardiogr.am/screening-for-hypertension-and-sleep-apnea-with-deepheart-416c9bc03efc">Cardiogr.am</a>
+trained a multi-task model to predict hypertension and sleep apnea from data
+recorded by wearable heart rate sensors, and found beneficial effects.  These
+beneficial effects may be rooted in shared biology; the autonomic nervous
+system links your heart with your brain, stomach, esophagus, liver, intestines,
+pancreas, and, importantly, your blood vessels. The algorithm likely learned
+heart rate variability as a predictive feature for both tasks; two independent
+studies showed associations between <a href="https://www.ncbi.nlm.nih.gov/m/pubmed/14581296/#fft">heart rate variability and
+hypertension</a> and <a href="https://link.springer.com/article/10.1007%2FBF02345072">heart
+rate variabiliy and sleep
+apnea</a>. Their results
+highlight one of the fundamental benefits of multi-task learning: multi-task
+models learn, in unsupervised fashion, the relation between tasks and extract
+features that can support not just one but all tasks. Models trained to learn
+these more abstract features tend to generalize better to new data and
+(related) tasks. In &ldquo;machine-learning speak,&rdquo; multi-task learning prevents
+overfitting and helps with model transfer.</p>
+<p>Multi-task learning also offers a potential savings in processing time, power,
+and training data. Multi-task learning is a way of training a model to do more
+than one thing at a time; it can also be used to do the same thing for more
+than one set of data. Using multi-task learning in such a way allows for <em>data
+augmentation</em>: learning from several smaller datasets what one would otherwise
+need a single large dataset to do. While a single-task model might be able to
+find meaningful patterns in a large clinical data set (as long as the clinical
+data was collected under a single protocol), a multi-task model can find
+meaningful patterns across data collected under multiple protocols.</p>
+<p>Given the value of a multi-task approach, we are likely to see more applications of multi-task learning across a range of industries and uses cases.  Already, we have seen the following:</p>
+<ul>
+<li><a href="https://arxiv.org/abs/1708.09843">Medical Imagery</a> - Disease detection from medical imagery can be made more accurate with less data.</li>
+<li><a href="https://arxiv.org/abs/1709.05932">Aerial Imagery</a> - More accurate structure footprints can be learned using multi-task learning, facilitating property value estimates.</li>
+<li><a href="http://www.mdpi.com/2072-4292/9/11/1099">Agriculture</a> - In-field spectroscopy detects multiple chemical profiles at once, and has made precision farming more efficient.</li>
+<li><a href="https://arxiv.org/abs/1703.00564">Drug Discovery</a> - The ability of compounds to bind to several different kinds of receptor sites can be predicted concurrently.</li>
+<li><a href="">Genomics</a> - Using multi-task learning for data augmentation allows for learning across multiple cohorts of research subjects, which can ensure that any findings generalize better to a broader population.</li>
+<li><a href="https://arxiv.org/abs/1703.07771">Healthcare</a> - models trained by multi-task learning outperformed several (though <em>not all</em>) single-task learning models at predicting hospital stay length, mortality rate, disease phenotype (specific medical problem), and decompensation (organ failure).</li>
+<li><a href="https://bons.ai/">Robotics</a> - multi-task learning enables learning complex operations as multiple, related, tasks that eventually culminate in a final goal for a robotic device.</li>
+<li><a href="http://www.aclweb.org/anthology/E17-1015">Natural Language Processing</a> - multi-task learning has improved the detection of mental health issues based on social media data.</li>
+</ul>
+<p>We invite anyone interested in supercharging their classification algorithms
+using multi-task learning to our upcoming
+<a href="https://www.cloudera.com/content/dam/www/marketing/resources/webinars/Multi-task-learning-recorded-webinar.png.landing.html">webinar</a>.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

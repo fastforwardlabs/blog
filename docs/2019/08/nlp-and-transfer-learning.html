@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>NLP and Transfer Learning</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 28, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>NLP and Transfer Learning</h1>
+  <h2 id="nlp-and-transfer-learning">NLP and Transfer Learning</h2>
+<p>Natural language processing just took a leap forward with the release of new high-quality language models combined with transfer learning. As you know, at Cloudera Fast Forward Labs, we have been researching this leap forward and have just finished a <a href="https://blog.fastforwardlabs.com/2019/07/17/new-research-transfer-learning-for-natural-language-processing.html">new report on the topic</a>.</p>
+<p>These new NLP models rely on deep neural networks, which are data hungry and compute intensive to train. Various research groups trained these new models with tremendous amounts of data and compute power. They are also aware of the sequential nature of language, i.e., the flow of words and sentences, and the context in which words appear. These models have a much more nuanced understanding of language than prior approches, and they&rsquo;re now available for anyone to use:</p>
+<ul>
+<li><a href="https://github.com/google-research/bert">BERT (Google)</a></li>
+<li><a href="https://github.com/allenai/allennlp/blob/master/tutorials/how_to/elmo.md">ELMo (AllenNLP / UW Computer Science and Engineering)</a></li>
+<li><a href="http://nlp.fast.ai/">ULMFiT (available through fast.ai libraries)</a></li>
+<li><a href="https://openai.com/blog/better-language-models/">GPT-2 (OpenAI)</a></li>
+</ul>
+<p>These models are very powerful, but they are limited, at least facially, to the task for which they were trained. Specifically, they are trained to generate language, i.e., predict the next words following an input prompt. Training a model for this task is straightforward because any text is self-labeling - that is: any text can be used as input data because the next word is always known, so the model can guess the next word and then check the next word to see whether it was correct.</p>
+<p>Training models for other tasks requires data that is harder to obtain. For example, sentiment analysis - the task of predicting how an author feels based on their writing - would require writing samples labeled with the author&rsquo;s actual opinion. Labeling this data requires a human to read the text and make their own assessment of the author&rsquo;s feeling about the subject (positive, negative, or neutral). This training data is very expensive to create.</p>
+<p>The technique of transfer learning adapts recently-released pre-trained language models for other tasks. Transfer learning uses the pre-trained models&rsquo; extensive understanding of language and applies it to new tasks with relatively little training data. So a pre-trained model can be adapted to the task of sentiment analysis with very little labeled sentiment data.</p>
+<p>The chart below shows the accuracy of several models predicting sentiment as a function of how many labeled training examples each model was shown. For example, a naive Bayes support vector machine and a word vector model (both older technologies) scored around 50% accuracy &ndash; about the same as guessing &ndash; when shown 100 training examples. Two of the newer pre-trained models, BERT and ULMFiT, adapted for sentiment analysis, are 85% accurate with the same 100 training examples.</p>
+<p><img src="/images/editor_uploads/2019-08-08-164145-NLP_Comparison.png" alt=""></p>
+<p>Not only do the pre-trained models work with fewer labeled examples, they also work better than the older technologies at any number of labeled examples.</p>
+<p>These models permit higher performance with less data, and they are easier to use than traditional deep learning models, so they don&rsquo;t require a data scientist with NLP specialization. They can also be adapted to any natural language task. Here are some examples of these tasks:</p>
+<ul>
+<li>Customer service - routing customer phone calls or emails based on what the customer says they want</li>
+<li>Marketing - understanding public opinions about a new product or service</li>
+<li>Document management - understanding what information a document contains</li>
+<li>Search - looking for answers to questions within text data</li>
+</ul>
+<p>So with pre-trained models and transfer learning, many NLP tasks are now accessible without a great deal of labeled data, without an NLP PhD on staff, and without special computer hardware.  This opens up dozens of possibilities.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

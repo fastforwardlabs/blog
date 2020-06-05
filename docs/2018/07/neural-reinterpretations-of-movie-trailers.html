@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Neural reinterpretations of movie trailers</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jul 31, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Neural reinterpretations of movie trailers</h1>
+  <p>In his latest project, artist and coder Mario Klingemann uses a neural network to match archival movie footage with the content of recent movie trailers. He regularly posts the resulting “neural reinterpretations” on <a href="https://twitter.com/quasimondo">his Twitter</a>. The results are technically impressive. They’re also a fascinating view into how to explore the creative possibilities of a machine learning technique.</p>
+<p>Looking through Klingemann’s tweets you can trace his explorations:</p>
+<p>![A screenshot from Klingemann&rsquo;s video of similar scene classification. A 3x3 grid shows several similar looking scenes. Some have planes, others are mostly blank, some have spare drawings of squares.]({{ site.github.url}}/images/editor_uploads/2018-06-26-144731-Screen_Shot_2018_06_25_at_10_45_15_AM.png)</p>
+<h5 id="mario-klingemanns-neural-scene-classifier-grouping-scenes-it-finds-similar">Mario Klingemann&rsquo;s neural scene classifier grouping scenes it finds similar.</h5>
+<ul>
+<li>Early in the explorations he posted <a href="https://twitter.com/quasimondo/status/1006485457713197056">clusters of similar frames and clips in a 3x3 grid</a>.</li>
+<li>He then experiments with compilations, like <a href="https://twitter.com/quasimondo/status/1006570368751099904">scenes of water flowing (and other scenes the model thinks look similar to water)</a>.</li>
+<li>Then he adds an element of interactivity, using <a href="https://twitter.com/quasimondo/status/1006835734223970304">his webcam as the source against which to match the archival footage</a>.</li>
+<li>He tries using the matches to create <a href="https://twitter.com/quasimondo/status/1006996750429761536">new reaction gifs</a>.</li>
+</ul>
+<p>![On the left is a shot of Brad Pitt from Fight Club; on the right is a man holding a telephone with a similar expression from the archive footage.]({{ site.github.url}}/images/editor_uploads/2018-06-26-144942-Screen_Shot_2018_06_25_at_10_46_42_AM.png)</p>
+<h5 id="a-neural-reinterpretation-of-the-fight-club-trailer-with-the-original-footage-on-the-left-and-the-matched-on-the-right">A neural reinterpretation of the Fight Club trailer, with the original footage on the left and the matched on the right.</h5>
+<ul>
+<li>Then he moves into the trailer reinterpretations, with both stand-alone reinterpreted versions (<a href="https://twitter.com/quasimondo/status/1010189455997784065">Fight Club</a>) and side-by-side versions (<a href="https://twitter.com/quasimondo/status/1010191619042238465">Fight Club side-by-side</a>).</li>
+<li>He does <a href="https://twitter.com/quasimondo/status/1010983581475360768">another version of the Fight Club trailer</a> using a tool that allows him to select from several algorithm-supplied suggestions:</li>
+</ul>
+<p>The movie trailer reinterpretations are a great showcase for the technique for a couple of reasons:</p>
+<ol>
+<li>
+<p>Trailers are made up of short clips. This gives the algorithm lots of shots at finding interesting matches (every cut is a new example). If it was instead focused on a 2 minute long continuous scene, you wouldn’t get to see nearly as many matches. Also the fact that the cuts are often timed to the music makes the reinterpreted content appear more connected to the audio of the trailer.</p>
+</li>
+<li>
+<p>Films have a built up vocabulary of what different shots mean, like a close-up of a face to signal intense feelings. Film-makers employ these patterns consciously. As film watchers, we may not think about scene types explicitly, but we do build up associations and expectations with different framing, movements, and styles. The side-by-side reinterpretations make this referential language more visible by showing us two examples at a time, helping us notice the similarity the machine has identified. We can then often extrapolate even further into “ah, right, that’s another one of those &lsquo;vehicles rushing by&rsquo; shots” that you normally don’t consciously note. This takes the trailers from technical demos into artistic territory.</p>
+</li>
+</ol>
+<p>![A screenshot of the video by Memo Atken. On the left is a blanket being scrunched up by hands; on the right is an image that looks like a painting of waves, where the shape of the waves matches the position of the hands and blanket.]({{ site.github.url}}/images/editor_uploads/2018-06-26-145050-Screen_Shot_2018_06_25_at_10_47_09_AM.png)</p>
+<h5 id="a-still-from-learning-to-see-gloomy-sunday-by-memo-atken">A still from &ldquo;Learning to see: Gloomy Sunday&rdquo; by Memo Atken</h5>
+<p><a href="https://vimeo.com/260612034">&ldquo;Learning to see: Gloomy Sunday&rdquo;</a> by Memo Akten explores similarity in a different, fascinating way. He has a model trained on specific types of art that interpret his webcam photos and generate new images: for example, a sheet becomes waves. Like in the trailer reinterpretations, what takes this beyond technical demo is how suggestive the association can be. The machine&rsquo;s ability to identify similarity between a sheet and a wave gives us an understanding that we can then apply outside of the context of the video. It’s a suggestive analogy that opens out so that the viewer can build upon it and make their own connections.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

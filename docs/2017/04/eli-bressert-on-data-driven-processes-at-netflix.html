@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Eli Bressert on Data-Driven Processes at Netflix</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      interview
+      
+    </span>
+  </h5>
+  <h1>Eli Bressert on Data-Driven Processes at Netflix</h1>
+  <h5 id="despite-their-best-intentions-companies-often-struggle-to-develop-processes-that-provide-data-driven-decisions-through-partnership-across-the-business-netflix-stands-out-as-a-company-that-excels-at-deeply-integrating-its-data-science-teams-into-all-aspects-of-the-company-we-spoke-with-eli-bresserthttpstwittercomastrobiased-manager-data-engineering-and-analytics-at-netflix-to-learn-more-about-how-they-create-the-culture-and-processes-to-support-and-sustain-that-integration">Despite their best intentions, companies often struggle to develop processes that provide data-driven decisions through partnership across the business. Netflix stands out as a company that excels at deeply integrating its data science teams into all aspects of the company. We spoke with <a href="https://twitter.com/astrobiased">Eli Bressert</a>, Manager, Data Engineering and Analytics at Netflix, to learn more about how they create the culture and processes to support and sustain that integration.</h5>
+<p><strong>Tell us about your background. What did you study?</strong></p>
+<p>I started out studying philosophy as an undergrad in Utrecht, with a desire to understand the basic roots of human knowledge. Taking courses in the history and philosophy of science, I discovered Karl Popper (<a href="https://plato.stanford.edu/entries/popper/">known for his theory of falsifiability</a> in scientific discourse) and Thomas Kuhn (<a href="https://plato.stanford.edu/entries/thomas-kuhn/">known for his work on scientific revolutions</a>), who inspired me to shift into science. The transition was tough, as math programs are strong in the Netherlands, so I had to play catch up and teach myself partial differential equations. That catch up turned into a great benefit where I fell in love in maths as well (double majored in astro and maths). But it was worth it, and I ended up focusing in astrophysics. My thirst to get my hands dirty observing the cosmos led me to Hawaii, which houses<a href="http://www.imiloahawaii.org/61/astronomical-observatories"> 13 large telescopes on Maunakea</a>, one of the highest mountains in the world! It was crazy up there. There were nights with 10 -14 feet snow blizzards, and we had to brave the elements to put coolant in  the telescopes. Thinking back to it always reminds me of the<a href="https://www.youtube.com/watch?v=CXmp1hLK0tY"> scene in The Empire Strikes Back</a> where Luke Skywalker falls over sideways in the blizzard.  At any rate, working with telescopes is intense – it’s being on the edge of physical human capability.</p>
+<p><img src="/images/2017/04/b1509_w11.jpg" alt="X-ray image of a pulsar"></p>
+<h5 id="an-x-ray-image-of-a-pulsarhttpchandraharvardeduphoto2009b1509-eli-made-while-working-at-the-chandra-space-telescope">An <a href="http://chandra.harvard.edu/photo/2009/b1509/">X-ray image of a pulsar</a> Eli made while working at the Chandra Space Telescope.</h5>
+<p><strong>Astrophysics is a common gateway to data science: two members of the Fast Forward Labs research team followed the same path. How did you transition from astrophysics to data science?</strong></p>
+<p>After Hawaii, my wife and I moved to Boston, where I worked on making images from the <a href="http://chandra.harvard.edu/about/axaf_mission.html">Chandra Space Telescope</a> for popular news outlets like CNN or BBC News. This involved learning color theory to transform spectra we cannot physically perceive (gamma, x-ray, or infrared) into aesthetically pleasing palettes to make space images interpretable. I quickly realized that I could automate most of my work with Python, so my path to Python enlightenment began. In a span of six years I ended up writing two well known astronomy packages with my astro-partner-in-crime (Tom Robitaille), wrote my PhD thesis, and wrote the <a href="http://shop.oreilly.com/product/0636920020219.do">O’Reilly book about SciPy and NumPy</a>. And the final experience was the gateway drug that made me consider startups. The first startup that I worked with as an advisor was authorea.com, an online service to collaborate in LaTex and simplify the complexity of writing mathematical manuscripts. I loved the energy of the startup world, and joined the Insight Data Science program to give me a nudge into the professional world.</p>
+<p><strong>We work closely with Insight, and<a href="http://blog.fastforwardlabs.com/2016/08/26/exploring-deep-learning-on-satellite-data.html"> have mentored fellows</a> on deep learning projects. What aspect of the experience was most valuable for you?</strong></p>
+<p>I had already spent years developing technical data science skills, so considered Insight to be means to accelerate my network to find a great job.<a href="https://www.linkedin.com/in/jakeklamka/"> Jake Klamka</a> and his team are highly connected, and I wanted broad exposure to companies across the Bay Area. Moreover, the Insight program has an added benefit: the alumni cohorts usually become good friends and help each other grow collectively as their careers progress. I had the chance to learn from experienced practitioners like <a href="https://twitter.com/mrogati">Monica Rogati</a> and <a href="https://twitter.com/hmason">Hilary Mason</a> and ended up leading a research for Stitch Fix (see a <a href="http://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric.html">previous blog interview</a> with Stitch Fix Chief Algorithms Officer <a href="https://twitter.com/ericcolson">Eric Colson</a>).</p>
+<p><strong>Many consider Netflix to be the poster child for a data-driven company. Is that fact or fiction?</strong></p>
+<p>It’s fact: Netflix is incredibly data driven. Many people are shocked when they join the company because we don’t make any product changes without first analyzing data. We have multiple departments that use data in different ways. The platform team focuses on infrastructure and tools, Data Engineering &amp; Analytics focuses on data engineering, ETL, and analytics, which offers self-service tools to business teams so they can make decisions autonomously. The Science and Algorithms team focuses on predictive modeling, algorithm research/prototyping, and experimentation (A/B testing). The Product Analytics team has developed an <a href="http://techblog.netflix.com/2016/04/its-all-about-testing-netflix.html">in-house A/B testing platform, Ignite</a>, to get the right insights in front of the right people and provide easy-to-consume visualizations so users can view outputs on daily basis. I’m just mentioning a subset of how many teams are involved in the data space, so there’s a lot more!</p>
+<p><img src="/images/2017/04/bressert-slide.png" alt="Slide reading &ldquo;Maximizing value of data product&rdquo; with three items: self-service tools, analytics, a/b testing"></p>
+<h5 id="key-components-for-maximizing-the-value-of-a-data-product-from-elis-talk-data-over-matterhttpswwwyoutubecomwatchvpfly0n-hjyo">Key components for maximizing the value of a data product. From Eli’s talk <a href="https://www.youtube.com/watch?v=pFly0N-hjYo">Data Over Matter</a>.</h5>
+<p><strong>What’s are a few examples of data-driven product decisions?</strong></p>
+<p>One example is customer retention. We track behaviors of customers on our site and test to see if different onboarding experiences, like creating profiles and suggesting movies users may enjoy, are correlated with longer term retention. Before going through with these onboarding changes, we performed A/B tests and really made sure what we changed would have an impact. A simple and illustrative example is the color of a button on the sign-up page. We might start with a hypothesis, drawn from color theory, that a green button will lead to more signups than a red button. If we identify a correlation to support this hypothesis, we’ll A/B test the various button colors, but won’t commit to the roll out until we feel there’s a causal relationship. This is a joint effort between DEA, engineers, PMs, and Science &amp; Algorithms team and more.</p>
+<p><strong>Data science projects often fall short because they don’t deliver as much value as hoped for to the business. How do you make sure your data efforts stay relevant at Netflix?</strong></p>
+<p>Data teams at Netflix are organized to make sure we’re very tightly aligned with the company at large. This keeps us efficient (so we don’t get lost on dead end projects) and helps us hone judgment on where to focus our attention and what kinds of questions to ask about our data. Many data science and engineering friends at other companies have told me that business people view them as holding purely technical, rather than strategic roles. Netflix is such a successful data company precisely because data has been built into the culture and operations from day one, and leadership exposes the data team to the big picture, strategic questions. We’ll then orient our work to start exploring questions that are relevant to Netflix in the near and long term future, running some lightweight experiments and even deep analyses to draft memos for the leadership team communicating our early conclusions. These memos can be immensely impactful as a vehicle to get leadership on board to make changes suggested by our analyses. It’s all about scaling multiple levels of communication: memos to tell the high-level, big-picture story, a dashboard to provide additional insights, and the ability for users to dig deeper into the analytics if they like to probe and question the results.</p>
+<p><img src="/images/2017/04/bressert-slide-culture.png" alt="Slide reading &ldquo;Netflix Culture: Freedom and Responsibility&rdquo;"></p>
+<h5 id="part-of-the-netflix-culture-is-making-sure-people-feel-invested-in-their-work-and-clear-in-their-responsibilities-from-elis-talk-data-over-matterhttpswwwyoutubecomwatchvpfly0n-hjyo">Part of the Netflix culture is making sure people feel invested in their work and clear in their responsibilities. From Eli’s talk <a href="https://www.youtube.com/watch?v=pFly0N-hjYo">Data Over Matter</a>.</h5>
+<p><strong>Do you ever see tensions between different stakeholders on data teams? If so, how do you resolve them?</strong></p>
+<p>I’ve seen some confusion arise when there’s redundancy between two teams or ambiguity regarding who is responsible for what. I think it’s really important to give teams a north star, a goal they are aiming towards, as opposed to micromanaging their every move directly. To attract strong talent, and keep passion alive, it’s important that people feel they really own their work, and are working towards a rewarding goal. We filter for passion in our interview process and only bring on folks who are completely enthusiastic and passionate for the specific role they’re taking on, be that data science, analytics, or engineering. That said, we also hire for diversity, with some people bringing 15 years of experience in data engineering, and others just out of a PhD program. Again, the key is to make sure everyone has their north star, and then let their specific talents filter,emerge and grow.</p>
+<p><strong>What emerging machine learning capabilities are most exciting to you?</strong></p>
+<p>I’m curious to see how research in Gaussian processes (which Ryan Adams does a good job<a href="http://www.thetalkingmachines.com/blog/2016/1/28/openai-and-gaussian-processes"> introducing on Talking Machines</a>) develops. They used to be quite hard to scale, but I’ve seen a few papers recently that promise to change that. They’re extremely interpretable models that can used in many different ways. In deep learning, I’m most excited by game-playing algorithms like AlphaGo or<a href="https://www.cmu.edu/news/stories/archives/2017/january/AI-beats-poker-pros.html"> Libratus</a> given how they replicate probabilistic and strategic thinking. There are so many problems that we couldn’t resolve deterministically that are being unlocked by new probabilistic techniques.</p>
+<p><strong>You’re an avid reader, averaging a book per week. Any recent reads you’d recommend to others?</strong></p>
+<p>I loved<a href="https://en.wikipedia.org/wiki/The_Dark_Forest"> Liu Cixin’s The Dark Forest</a>, the sequel to<a href="https://en.wikipedia.org/wiki/The_Three-Body_Problem"> The Three-Body Problem</a>. There’s some pretty hard physics in there, and I find Cixin’s environmentalist critique extremely intriguing: Is the <a href="https://www.quora.com/What-is-the-Dark-Forest-Theory-of-the-cosmos-which-is-a-response-to-the-Fermi-Paradox">dark forest theory</a> really the reality that we’re facing in our Universe? Last but not least, the third book in the series (Death’s End) has one of the best descriptions of 4D space ever written in a sci-fi novel. A must read by all means!</p>
+<h5 id="for-more-on-data-science-at-netflix-be-sure-to-check-out-elis-talk-data-over-matter---innovating-the-next-generation-of-data-products-at-netflixhttpswwwyoutubecomwatchvpfly0n-hjyo">For more on data science at Netflix be sure to check out Eli’s talk <a href="https://www.youtube.com/watch?v=pFly0N-hjYo">Data Over Matter - Innovating the Next Generation of Data Products at Netflix</a>.</h5>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

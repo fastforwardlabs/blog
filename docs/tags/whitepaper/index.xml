@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>whitepaper on Blog</title>
+    <link>https://fastforwardlabs.github.io/hugo_blog/tags/whitepaper.html</link>
+    <description>Recent content in whitepaper on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 May 2016 17:09:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/whitepaper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Evaluating Summarization Systems</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/05/evaluating-summarization-systems.html</link>
+      <pubDate>Mon, 23 May 2016 17:09:13 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/05/evaluating-summarization-systems.html</guid>
+      <description>We’re excited for tomorrow’s online discussion about automatic text summarization! You can register here. During the event, Mohamed AlTantawy, CTO of Agolo, will explain the tech behind their summarization tool. In this blog post, he describes how his team evaluates the quality of summaries produced by their system. Join us tomorrow to learn more and ask questions about the approach! Rouge Readability  “The market is maturing,” and opening retail stores in India helps “form the building blocks” for the firm in the country, he said.</description>
+    </item>
+    
+    <item>
+      <title>Probabilistic Programming for Anomaly Detection</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/05/probabilistic-programming-for-anomaly-detection.html</link>
+      <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/05/probabilistic-programming-for-anomaly-detection.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Making a Case for Machine Learning to Legal Departments</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/04/making-a-case-for-machine-learning-to-legal-departments.html</link>
+      <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/04/making-a-case-for-machine-learning-to-legal-departments.html</guid>
+      <description>Since we released our text summarization resources, the legal technology community has shown interestin leveraging summarization technology to support litigation document review, deposition digests, and contract analysis. Data scientist interest to use machine learning to mine legal document corpuses and support legal strategy was also one factor motivating our summarization research. The time is therefore ripe for data scientists to apply new text analytics capabilities for legal use cases. But to be effective, data scientists must first understand how lawyers think: what problems they’re trying to solve, how their processes are structured, and, perhaps most importantly, what fears may hinder the adoption of new technologies.</description>
+    </item>
+    
+    <item>
+      <title>Assessing Data Science Maturity</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/04/assessing-data-science-maturity.html</link>
+      <pubDate>Fri, 15 Apr 2016 18:07:33 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/04/assessing-data-science-maturity.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machines and Metaphors</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/02/machines-and-metaphors.html</link>
+      <pubDate>Tue, 16 Feb 2016 16:35:11 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/02/machines-and-metaphors.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;h5 id=&#34;this-is-a-guest-post-by-a-hrefhttpwwwgenekogancomgene-kogana-an-artist-and-programmer-who-applies-emerging-technology-into-artistic-and-expressive-contexts-and-teaches-courses-and-workshops-on-topics-related-to-code-and-art&#34;&gt;This is a guest post by &lt;!-- raw HTML omitted --&gt;Gene Kogan&lt;!-- raw HTML omitted --&gt;, an artist and programmer who applies emerging technology into artistic and expressive contexts, and teaches courses and workshops on topics related to code and art.&lt;/h5&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>When Dog Is Enough: Using Hypernyms To Improve Neural Network Predictions</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2015/11/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</link>
+      <pubDate>Tue, 17 Nov 2015 16:35:14 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/11/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>Machine Learning in Retail: Consumer Privacy Implications</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</link>
+      <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>Machine Learning Applications in Fashion Retail</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2015/08/machine-learning-applications-in-fashion-retail.html</link>
+      <pubDate>Wed, 19 Aug 2015 18:08:14 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/08/machine-learning-applications-in-fashion-retail.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;h5 id=&#34;this-is-the-first-of-two-articles-about-recent-developments-in-fashion-technology-part-two-will-focus-on-implications-for-consumer-privacy&#34;&gt;This is the first of two articles about recent developments in fashion technology. Part two will focus on implications for consumer privacy.&lt;/h5&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>Why Now? Some Preconditions for Technology Innovations</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2015/08/why-now-some-preconditions-for-technology-innovations.html</link>
+      <pubDate>Fri, 14 Aug 2015 18:57:31 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/08/why-now-some-preconditions-for-technology-innovations.html</guid>
+      <description>This is French how painter Nicolas Poussin represents Cedalion providing sight to the blind Orion, a mythological pair associated with each generation’s progress over its predecessors. </description>
+    </item>
+    
+    <item>
+      <title>On Stirling Engines and Orchids: A Prelude to Deep Learning</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2015/08/on-stirling-engines-and-orchids-a-prelude-to-deep-learning.html</link>
+      <pubDate>Fri, 07 Aug 2015 19:08:04 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/08/on-stirling-engines-and-orchids-a-prelude-to-deep-learning.html</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

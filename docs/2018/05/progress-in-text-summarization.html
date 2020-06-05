@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Progress in text summarization</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>May 2, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Progress in text summarization</h1>
+  <p>We published our report on text summarization in 2016. Since then, we&rsquo;ve
+enjoyed helping our clients make use of techniques such as topic modeling,
+document embedding, and recurrent neural networks to deal with text that ranges
+in scope from product reviews to insurance documents to call transcripts to news.</p>
+<p>Our goal when we do research is to address capabilities and technologies that
+we expect to become production-ready in one to two years. That focus on
+fast-moving areas means that new algorithmic ideas sometimes come along that
+allow our clients to extend or improve upon the work in our reports. Prompted in
+part by Yue Dong&rsquo;s March 2018 <em><a href="https://arxiv.org/abs/1804.04589">Survey on Neural Network-Based Summarization
+Methods</a></em>, we thought we&rsquo;d take some time to
+describe the developments in text summarization since our report was published.</p>
+<p>Put simply: there&rsquo;s bad news and there&rsquo;s good news.</p>
+<p>The bad news is that we still don&rsquo;t think <em>abstractive</em> summarization is ready
+for production prime time. <em>Extractive</em> summarization involves selecting a few
+passages from a document or corpus and stitching them together to form a
+summary. As we discuss in our report, <a href="http://blog.fastforwardlabs.com/2016/04/11/new-tools-to-summarize-text.html">this is a tough
+problem</a>.
+But <em>abstractive</em> summarization is harder still. Not only must you identify the
+salient ideas, but you must also generate new text that expresses those ideas
+concisely.</p>
+<p><img src="/images/editor_uploads/2018-10-19-160814-pointer_gen.png" alt=""></p>
+<h5 id="pointer-network-for-summarization-credit-abigail-see-and-collaboratorshttpwwwabigailseecom20170416taming-rnns-for-better-summarizationhtml">Pointer network for summarization. Credit: <a href="http://www.abigailsee.com/2017/04/16/taming-rnns-for-better-summarization.html">Abigail See and collaborators</a></h5>
+<p>There has been considerable progress along these lines. The current state of
+the art is 2017&rsquo;s attention-based pointer networks, e.g. <a href="http://www.abigailsee.com/2017/04/16/taming-rnns-for-better-summarization.html">work from Abigail See
+and collaborators at Stanford and Google
+Brain</a>
+and <a href="https://einstein.ai/research/your-tldr-by-an-ai-a-deep-reinforced-model-for-abstractive-summarization">Salesforce Research&rsquo;s work lead by Romain
+Paulus</a>.</p>
+<p>However, those authors would concede what <a href="https://arxiv.org/abs/1803.07038">Noah Weber and collaborators showed
+last month</a>: in practice, these abstractive
+networks work by &ldquo;mostly, if not entirely, copying over phrases, sentences, and
+sometimes multiple consecutive sentences from an input paragraph, effectively
+performing extractive summarization.&rdquo; So, for now at least, you get the training
+data requirements and engineering complexity of cutting-edge deep learning
+without the practical performance increase. Which is not to say academic work
+on abstractive summarization is at a dead end; we look forward to reporting on the
+inevitable breakthroughs in a year or two.</p>
+<p>In the meantime, we promised good news!</p>
+<p><img src="/images/editor_uploads/2018-10-19-160922-b11i8uw.png" alt=""></p>
+<h5 id="extractive-summarization-with-reinforcement-learning-credit-shashi-narayan-and-collaboratorshttpsarxivorgabs180208636">Extractive summarization with reinforcement learning. Credit: <a href="https://arxiv.org/abs/1802.08636">Shashi Narayan and collaborators</a></h5>
+<p>The good news is a couple of really nice papers that make concrete improvements
+to <em>extractive</em> summarization. Both are from the same Edinburgh group. <a href="https://arxiv.org/abs/1704.04530">Neural
+Extractive Summarization with Side
+Information</a> (2017) takes advantage of a very
+natural heuristic that was used in classical summarization algorithms: titles
+and image captions are particularly strong signals of the important ideas in a
+document. This heuristic is incorporated into an attention-based
+encoder-decoder network, and they get <a href="http://kinloch.inf.ed.ac.uk/sidenet.html">really nice extractive
+results</a>. If your source documents
+have that kind of structure, this approach is worth investigating. More
+ambitiously, in <a href="https://arxiv.org/abs/1802.08636">Ranking Sentences for Extractive Summarization with
+Reinforcement Learning</a> (2018) the same group
+recasts extractive summarization as a reinforcement learning task. Unusually,
+they learn to <em>rank</em> sentences in the source document rather than score them in isolation, which they argue results in more coherent (and less verbose) overall
+summaries.</p>
+<p>So, two years after our report, text summarization remains not only a useful
+business capability, but a very vibrant area of research.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

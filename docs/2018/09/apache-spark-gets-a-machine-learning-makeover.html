@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Apache Spark gets a machine learning makeover</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 28, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Apache Spark gets a machine learning makeover</h1>
+  <h3 id="machine-learning-on-spark-an-abridged-history">Machine learning on Spark: an abridged history</h3>
+<p><a href="https://spark.apache.org/">Apache Spark</a> - the cluster computing framework
+that&rsquo;s been throwing shade at MapReduce since 2011 - has always been a bit
+remarkable, because it bridged the divide between data engineering and data
+science. One of the great promises of Spark was that it would be easy,
+trivial almost, to scale machine learning and data science to arbitrarily
+large data. Seven years later, Spark has made its place in data science, but
+perhaps not in the way we originally hoped.</p>
+<p>Spark&rsquo;s big contribution was that it delivered a very elegant API for dealing
+with distributed collections of data, termed <em>Resilient Distributed Datasets</em>
+(RDDs). Compared to alternatives at the time, it was simple to use that API
+to write certain machine learning algorithms, and since those algorithms were
+built on RDDs; you got fault tolerance and scale for free. It wasn&rsquo;t long
+until a machine learning library built on RDDs was born: <a href="https://spark.apache.org/docs/latest/ml-guide.html">MLlib</a>.</p>
+<p>Implementing performant, scalable machine learning algorithms in MLlib wasn&rsquo;t
+<em>quite</em> as easy as just expressing the logic using RDD transformations, but in
+some cases it worked quite well. Spark, and by extension MLlib, work well
+when algorithms can be expressed in parallel, independent tasks that each
+work on independent chunks of data. Accordingly, MLlib has seen success and
+adoption with linear models, K-means clustering, decision trees, and some
+others. But some algorithms, most notably deep learning, are difficult to
+express using Spark.</p>
+<p>In comparison to linear models, optimizing deep learning algorithms over
+distributed collections requires frequent communication between tasks.
+Further, deep learning is <em>slow</em>, if you don&rsquo;t use a framework that has been
+heavily optimized for that exact use case. Tensorflow, PyTorch, MXNet, etc.
+all leverage accelerated hardware and heavily optimized C/C++ code to achieve
+reasonable efficiency. All this is to say that Spark and deep learning aren&rsquo;t
+a very good match.  So why are we talking about it?</p>
+<p>Deep learning needs data (big data!) and that data often needs to be accessed
+through or pre-processed by Spark. That data is also messy and is probably
+stored across many datasets in many different storage platforms. Spark makes
+reading, aggregating, and joining these datasets less awful. So even if Spark
+isn&rsquo;t heavily optimized for machine learning, the data that feeds these
+algorithms often goes through Spark first. This reality led many developers
+to ponder, &ldquo;what if we could combine the heavily optimized ML/DL frameworks
+into Spark?&rdquo; And with that, the family of XOnSpark libraries came to be.</p>
+<p><img src="/images/editor_uploads/2018-09-19-194511-XOnSpark.png" alt=""></p>
+<p>But Spark hasn&rsquo;t made it very easy to combine these other libraries, most of
+which are written in a combination of Python and C++, with Spark. There are
+three main shortcomings:</p>
+<ul>
+<li>Moving data between Spark processes (JVM) and Python processes is inefficient</li>
+<li>Spark task scheduling doesn&rsquo;t take GPUs into account</li>
+<li>Deep learning tasks need to constantly communicate gradient/weight updates between them, which is a Spark anti-pattern</li>
+</ul>
+<h3 id="project-hydrogen-makes-spark-play-nice-with-other-ml-frameworks">Project Hydrogen makes Spark play nice with other ML frameworks</h3>
+<p>To address each of these issues, the open source community for Spark is
+undertaking a new initiative, dubbed <em>Project Hydrogen</em>, which is
+broken up into three main chunks, each designed to solve one of these
+shortcomings:</p>
+<ul>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-24374">Barrier scheduling</a></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-24615">Accelerator aware scheduling</a></li>
+<li><a href="https://issues.apache.org/jira/browse/SPARK-24579">Data interchange using Apache Arrow</a></li>
+</ul>
+<p>The goal of Project Hydrogen is to make it easy and efficient to build deep learning workflows that can run end to end in Spark. This is exciting!</p>
+<p>Spark and deep learning can&rsquo;t ignore each other, and that probably won&rsquo;t
+change any time soon. Because of the current complexities, it&rsquo;s best to avoid
+distributing deep learning training when possible. But we&rsquo;re excited to
+see investment into scaling deep learning with Spark. There are so many great
+libraries for doing heavily optimized machine learning - PyTorch, Tensorflow,
+XGBoost, LightGBM - that it&rsquo;s hugely beneficial to be able to scale these
+up with Spark.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

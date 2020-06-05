@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>The Algorithms Behind Probabilistic Programming</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jan 30, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>The Algorithms Behind Probabilistic Programming</h1>
+  <p>We recently <a href="http://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html">introduced our report on probabilistic
+programming</a>. The accompanying prototype allows you to explore the <a href="http://fastforwardlabs.github.io/pre/">past and
+future of the New York residential real estate
+market</a>.</p>
+<p>This post gives a feel for the content in our report by introducing the algorithms and technology that make probabilistic programming possible. We&rsquo;ll dive even deeper into these algorithms in conversation with <a href="http://stan.fit/">the Stan Group</a> Tuesday, February 7 at 1 pm ET/10am PT. Please <a href="https://www.eventbrite.com/e/introduction-to-probabilistic-programming-tickets-31160610224">join us</a>!</p>
+<h2 id="bayesian-inference">Bayesian Inference</h2>
+<p>Probabilistic programming enables us to construct and fit <a href="http://www.kdnuggets.com/2016/11/how-bayesian-inference-works.html">probabilistic models</a> in code. At its essence, Bayesian inference is a principled way to draw conclusions from incomplete or
+imperfect data, by interpreting data in light of prior knowledge of probabilities. As pretty much all real-world data is incomplete or imperfect in
+some way, it&rsquo;s an important (and old!) idea.</p>
+<p>Bayesian inference might be the way to go if you:</p>
+<ul>
+<li>want to make use of institutional knowledge (suspicions, beliefs, logical
+certainties) about the quantities you want to measure and predict, rather
+than learn solely from the data</li>
+<li>have several different datasets that you want to learn from</li>
+<li>need to quantify the probability of all possibilities, not just determine
+which is most likely</li>
+<li>want to do online learning (i.e., continually update your model as data
+arrives)</li>
+<li>want to do active learning (i.e., gather more information until your
+predictions reach some threshold of confidence)</li>
+<li>want to use data to decide if a more complicated model is justified</li>
+<li>need to explain your decisions to customers or regulators</li>
+<li>want to use a single model to answer several questions</li>
+<li>have sparse data with a shared or hierarchical structure</li>
+</ul>
+<p>Many — perhaps most — analytics and product problems are like this. And the
+central idea of Bayesian inference is centuries old. Why, then, do relatively few
+data analysts, data scientists, and machine learning engineers use the
+approach?</p>
+<h2 id="the-algorithmic-building-blocks">The Algorithmic Building Blocks</h2>
+<p>The problem is that, until recently, the algorithms that make product and business problems
+tractable using Bayesian methods have been difficult to implement and computationally
+expensive to run. Probabilistic programming systems abstract away many of these difficulties by baking inference algorithms in as building blocks of the language. Morever, these algorithms are robust, so don&rsquo;t require
+problem-specific hand-tuning.</p>
+<p>One powerful example is sampling from an arbitrary probability distribution, which we need to do often (and efficiently!) when doing inference. The brute force approach, rejection sampling, is problematic because acceptance rates are low: as only a tiny fraction of attempts generate successful samples, the algorithms are slow and inefficient. See <a href="https://jeremykun.com/2015/04/06/markov-chain-monte-carlo-without-all-the-bullshit/">this post by Jeremey Kun</a> for further details.</p>
+<p>Until recently, the main alternative to this naive approach was <a href="https://jeremykun.com/2015/04/06/markov-chain-monte-carlo-without-all-the-bullshit/">Markov Chain
+Monte Carlo
+sampling</a>
+(of which <a href="http://michaeljflynn.net/2015/06/01/my-favorite-algorithm-metropolis-hastings/">Metropolis
+Hastings</a>
+and Gibbs sampling are well-known examples). If you used Bayesian inference in
+the 90s or early 2000s, you may remember BUGS (and WinBUGS) or JAGS, which used
+these methods. These remain popular teaching tools (see e.g. <a href="https://www.stat.auckland.ac.nz/~brewer/stats331.pdf">STATS331 by
+Brendon Brewer</a>, our
+favorite elementary introduction to Bayesian data analysis). But MCMC samplers
+are often too slow for problems with rich structure or internet-scale data.</p>
+<p>Bayesian inference research in the last 5-10 years has therefore focused on
+two new approaches that use clever ideas to make sure the sampler spends more
+time in regions of high probability, raising efficiency. Those are
+<strong>Hamiltonian Monte Carlo</strong> and <strong>Variational inference</strong>.</p>
+<h2 id="hamiltonian-monte-carlo-and-the-no-u-turn-sampler">Hamiltonian Monte Carlo and the No U-Turn Sampler</h2>
+<p><a href="https://arxiv.org/abs/1701.02434">Hamiltonian Monte Carlo</a> (HMC) treats the
+probability distribution as a physical surface. It uses an elegant and
+computationally efficient <a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics">idea from 19th-century physics</a> to explore that
+surface using calculus, as if under the influence of gravity. This method doesn&rsquo;t work
+for discrete parameters, but the user doesn&rsquo;t need to differentiate functions by hand.</p>
+<p><img src="http://fastforwardlabs.github.io/report_images/ff05/3-06.png" alt=""></p>
+<p>To use HMC, you need to tune a sensitive hyperparameter, which makes its
+application expensive and error-prone. The invention of the <a href="https://arxiv.org/abs/1111.4246">No U-Turn
+Sampler</a> (NUTS), a robust algorithm that tunes
+this parameter automatically, was crucial for making probabilistic
+programming useful and practical.</p>
+<h2 id="variational-inference-and-automatic-differentation">Variational Inference and Automatic Differentation</h2>
+<p><a href="https://arxiv.org/abs/1601.00670">Variational inference</a> (VI) samples from a
+distribution by building a simple approximation of the distribution. That
+approximation is so simple that it can be sampled from directly, entirely
+circumventing the need for approximate sampling algorithms like MCMC or HMC.</p>
+<p><img src="http://fastforwardlabs.github.io/report_images/ff05/3-08.png" alt=""></p>
+<p>To do this, we start with simple distributions that we understand well (e.g.,
+Gaussians) and perturb them until they match the real distribution from which
+we want to sample. The bulk of this work is done by <a href="http://sebastianruder.com/optimizing-gradient-descent/">stochastic gradient descent (SGD)</a>. Given its widespread use in machine learning (e.g., it&rsquo;s used to train deep neural networks), SGD is well
+understood and optimized.</p>
+<p>Converting a probabilistic model from a sampling approach to VI used to
+require complex math, making it hard for non-experts. <a href="https://arxiv.org/abs/1603.00788">Automatic
+Differentiation Variational Inference</a> solves
+this problem by using <strong>automatic differentation</strong> (having computers take exact derivatives of arbitrary functions) to differentiate functions
+at the CPU instruction level, allowing a probability distribution to be
+explored efficiently.</p>
+<h2 id="probabilistic-programming-languages">Probabilistic Programming Languages</h2>
+<p>ADVI and HMC with NUTS are the two fundamental algorithmic innovations that
+have made <strong>probabilistic programming</strong> possible. Their inclusion in leading
+probabilistic programming environments (which can be traced back to
+<a href="https://goodmorningeconomics.wordpress.com/2010/11/16/the-promise-of-bayesian-statistics-pt-2/">these</a>
+<a href="http://andrewgelman.com/2010/11/18/derivative-base/">two</a>
+blog posts from 2010) makes inference a one-liner. The end user doesn&rsquo;t need to
+tune parameters or differentiate functions by hand. And because they&rsquo;re built
+on Hamiltonian Monte Carlo or variational inference, they&rsquo;re fast.</p>
+<p>But fast and robust algorithms are not all that&rsquo;s required to make Bayesian
+inference a practical proposition. Probabilistic programming languages also
+make life simpler by providing a concise syntax to define generative
+models using a library of built-in probability distributions. Probabilistic
+concepts are primitive objects defined in the core language. Specifying the
+model is therefore a <em>declarative</em> problem for the user, who declares what is
+known to be true and lets the language figure out how to derive conclusions.</p>
+<p>The most popular probabilistic programming tools are <a href="http://mc-stan.org/">Stan</a> and
+<a href="http://pymc-devs.github.io/pymc3/">PyMC3</a>. <a href="http://edwardlib.org/">Edward</a> is a newcomer gaining
+a lot of attention. Stan experts <a href="https://about.me/ericnovik">Eric Novik</a> and <a href="http://syclik.com/">Daniel Lee</a> will walk us through how Stan works and what problems they&rsquo;ve used it to solve in our <a href="https://www.eventbrite.com/e/introduction-to-probabilistic-programming-tickets-31160610224">online event February 7</a>.</p>
+<p>For more on PyMC3 see <a href="http://blog.fastforwardlabs.com/2017/01/11/thomas-wiecki-on-probabilistic-programming-with.html">our interview with Thomas
+Wiecki</a>
+a PyMC3 core developer (and Director of Data Science at Quantopian). We also
+enjoyed <a href="http://stronginference.com/pymc3-release.html">Chris Fonnesbeck&rsquo;s blog
+post</a> that accompanied the recent
+official release of PyMC3.</p>
+<p>In the report we go into more detail on the strengths and weaknesses of these
+two languages, and discuss some of the many other options. Whichever language you use, the claim of probabilistic programming - that it
+hides the complexity of Bayesian inference - is more true than ever.</p>
+<p>– <a href="https://twitter.com/mikepqr">Mike</a></p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

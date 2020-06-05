@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Learning from Real-World Models: The Mississippi Basin Model and Machine Learning</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>May 26, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Learning from Real-World Models: The Mississippi Basin Model and Machine Learning</h1>
+  <p>Model-building has a venerable history that long predates parallel processing, python, and perceptrons. Physical, scale models and maps have helped humans think through complex processes and ambitious endeavors, from the rigging of a pharoah&rsquo;s <a href="http://www.touregypt.net/images/touregypt/boat.jpg">pleasure yacht</a> to the <a href="https://upload.wikimedia.org/wikipedia/commons/b/bf/Plotting_Table.jpg">Battle of Britain</a> by reducing the complexity of the real world to the most important, salient features that affect a problem, and by bringing disconnected, distant phenomena into view from a single perspective. And yet, with the release of packages and platforms that make it ever easier to build, train, and deploy models, it is easy to lose track of what goes into a successful model, what the relationship is between model and #reality, and how the models we build and use every day are the inheritors of a storied tradition that offers plenty of lessons from the past for present.</p>
+<p><img src="/images/2017/06/Plotting_Table.jpg" alt=""></p>
+<p>That is why we were so excited to stumble (we were admittedly off the beaten path) upon <a href="https://placesjournal.org/article/the-scale-of-nature-modeling-the-mississippi-river/">this recent article</a> published in Places Journal by <a href="https://placesjournal.org/author/kristi-dykema-cheramie/">Kristi Dykema Cheramie</a>, a professor of landscape architecture at LSU. In her article, she tells us about a 200-acre scale model of the entire Mississippi River drainage system that the Army Corps of Engineers built to help design and manage flood control systems throughout the entire river system. It includes major tributaries, levees, locks and dams, and the surrounding terrain. What is fascinating about this model is not just the history of the project, which began after a period of unexpectedly severe Depression-era flood events, or the economic realities and political machinations that glossed it as both important to the nation&rsquo;s GDP and crucial for the national defense - did you ever wonder how flood control became the Army Corps of Engineers&rsquo; job? - but the individual design decisions that went into this model, and what that tells us about building machine learning models today.</p>
+<p><img src="/images/2017/06/basin_model.jpg" alt=""></p>
+<h3 id="lesson-1---scope-matters">Lesson 1 - Scope Matters</h3>
+<p>In discussing large-scale models, it&rsquo;s difficult to avoid mentioning Jorge Luis Borges&rsquo;s thought experiment about a 1:1 scale map from &ldquo;On Exactitude in Science&rdquo;:</p>
+<blockquote>
+<p>“In time, . . . the cartographers guilds struck a map of the empire whose size was that of the empire, and which coincided point for point with it. The following generations, who were not so fond of the study of cartography as their forebears had been, saw that that vast map was useless, and not without some pitilessness was it, that they delivered it up to the inclemencies of sun and winters. In the deserts of the west, there are tattered ruins of that map, inhabited by animals and beggars, in all the land there is no other relic of the disciplines of geography.”</p>
+</blockquote>
+<p>The point we take from Borges (and from Cheramie) is that no model can be a complete recapitulation of the real world. Instead, we bracket off parts of the world, model those parts, and use the insights it gives us to make interventions in the world. The Army Corps couldn&rsquo;t model the entire Missippi Basin drainage system either. They could only follow tributaries so far upstream before having to make generalized assumptions about the inputs to the system they modeled. They also couldn&rsquo;t model all the outputs - their model doesn&rsquo;t extend past Baton Rouge, let alone out into the Gulf of Mexico.</p>
+<p>Similarly, the inputs for computer models are the outputs of other processes not captured by the model itself, and so the outputs of a model are only as valid as the understanding of the conditions that feed into it. If a minor creek jumps its bank upstream from region modeled by the Mississippi Basin Model, it could have downstream effects that the model could never capture. If the conditions that produce the data points we use to feed our model change, so too can the validity of our model change. The success of projects like <a href="https://medium.com/@karpathy/alphago-in-context-c47718cb95a5">AlphaGo</a> rely on modeling closed systems, e.g. the game of Go, which is why AI for games are (relatively) easy and applied, real-world AI is much harder. Machine learning is great at predicting the future when the future resembles the past, but it takes a lot more to predict the lay of the land when the ground shifts under our feet.</p>
+<h3 id="lesson-2---materials-matter">Lesson 2 - Materials Matter</h3>
+<p>In building their Mississippi Basin Model, the Army Corps had to approximate the &ldquo;real world&rdquo; with the materials they had at their disposal. The engineers shaped and textured concrete, installed brass plugs, and accordion-folded sheet metal to approximate the incredibly complex effects of trees, sand, clay, roads, and crops on the speed, direction, and volume of water passing over the landscape in high-water conditions. They had to develop a measure of &ldquo;frictional resistance&rdquo; to translate between the real world of rocks and trees and the model world of concrete and metal. In computer modeling, the proxies we choose to represent the real world are just as important. We don&rsquo;t know where people are, necessarily, but we do have a great degree of confidence about where their GPS-enabled phones are. Similarly, another example of this comes from the world of computer vision, where attempts to produce soccer highlights from video struggled with following the ball (exciting moments are more likely the closer the ball is to the goal). Eventually, one team discovered that players tend to follow the ball, and players are easier to track, so the players became a useful proxy for addressing a harder question.</p>
+<p><img src="/images/2017/06/fluvial_geomorphology.jpg" alt=""></p>
+<p>It is from these approximations of reality that we&rsquo;re able to train the coefficients of our models, and so, importantly, the proxies we choose are the materials that shape how inputs relate to outputs. The models themselves have a material affect on outputs, too. If we assume that inputs are linear, and put them in to a linear model, they will produce a linear output. If the relationship between inputs and outputs is not actually linear, then the model will not fit, in every sense of the word. The Mississippi Basin Model had to pick and choose what it could approximate, and reduce everything else to coefficients. Wetlands disappeared form the model, as did evaporation and siltation. The lesson Cheramie draws from this is that &ldquo;it doesn&rsquo;t matter how much territory the model covers if it relies on the amputation of inconvenient complexities to be manageable. The simulation becomes thin.&rdquo; Computer models can manage a great deal more complexity than physical models, but the crucial complexity that data scientists should pay careful attention to is the material relationship between the reality we hope to model and the proxies we choose to represent that reality. Neural networks with external memory, that learn to remember and recollect, are attempts to build <a href="http://www.nature.com/news/google-s-ai-reasons-its-way-around-the-london-underground-1.20784">&ldquo;context awareness&rdquo;</a> and long-term memory into neural networks. This can be understood as an attempt to model a larger chunk of the world, to bring in more materials without having to explicitly declare every variable worth considering.</p>
+<h3 id="lesson-3---scale-matters">Lesson 3 - Scale Matters</h3>
+<p>The actual Mississippi  Basin is, generally speaking, a broad and flat expanse of land and the flow of water across the landscape is a function of elevation change. The Mississippi Basin Model was built with an exaggerated y-axis to make this effect of elevation readily apparent. And yet, the choice of scale has an effect on how the model works, but also how it is understood.</p>
+<p><img src="/images/2017/06/topo_map.jpg" alt=""></p>
+<p>Cheramie points out that while those worked most closely with the model on the ground could readily convert the model&rsquo;s scale units in their heads, visitors to the site, who made actual policy decisions in part based on demonstrations they saw while there, were less likely to be able to do so. We&rsquo;ve all seen bad graphs and problematic visualizations that suffer from misleading scales or <a href="http://imgur.com/gallery/HZe4vKy">truncated axes</a>, but poorly chosen units can also cause more embarassing (and costly) <a href="http://www.cnn.com/TECH/space/9909/30/mars.metric.02/">failures</a> too. The lesson that scale matters should remind us that how we choose our the scale at which our model operates, how we sample reality, and how present our findings to those that use them require careful consideration, and should be chosen with as much care as any other aspect of the modeling process.</p>
+<p>Cheramie points out that the physical model of the river system was inevitably supplanted by a computer model in the 1970s, in fact it was last used to ground-truth the computer version of itself, but it still exists&hellip; hidden behind encroaching forests in a public park.</p>
+<p>If you want to fly over the site of the Mississippi River Basin Model yourself - and if you&rsquo;re anything like us you probably do - you can find it <a href="https://www.google.com/maps/place/Clinton,+MS/@32.3063942,-90.3181508,526m/data=!3m1!1e3!4m5!3m4!1s0x86284ad8d8cb88a9:0xa0744b41f993bb13!8m2!3d32.3415342!4d-90.3217585">here</a>. Oh, and apparently the folks at 99% Invisible found this story compelling, too. We recommend giving their <a href="http://99percentinvisible.org/episode/americas-last-top-model/">podcast</a> a listen. Special thanks to <a href="https://www.linkedin.com/in/friederikeschueuer">Friederike</a> for her contributions (and links) to this post!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Enterprise Grade ML</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Enterprise Grade ML</h1>
+  <p>At Cloudera Fast Forward, one of the mechanisms we use to tightly couple
+machine learning research with application is through <a href="https://www.cloudera.com/about/services-and-support/fast-forward-labs.html">application development
+projects</a> for both internal and external clients. The problems we tackle in these
+projects are wide ranging and cut across various industries; the end goal is a
+production system that translates data into business impact.</p>
+<h3 id="what-is-enterprise-grade-machine-learning">What is Enterprise Grade Machine Learning?</h3>
+<p>Enterprise grade ML, a term mentioned in <a href="https://arxiv.org/abs/1909.00084">a paper put forth by
+Microsoft</a>, refers to ML applications where
+there is a high level of scrutiny for data handling, model fairness, user
+privacy, and debuggability. While toy problems that data scientists solve on
+laptops using a csv dataset could be intellectually challenging, they are not
+enterprise grade machine learning problems.</p>
+<h3 id="the-current-state-of-enterprise-grade-ml">The current state of Enterprise Grade ML</h3>
+<p>In many of our projects, the most difficult portion is understanding the
+business problem and defining a mathematical version that can be solved with the
+data that is available. Sometimes this mathematical version is not what the
+business stakeholders imagined it to be - this version might only partially
+solve the original business problem due to data realities. Very often, the
+business problem is broken down into smaller subproblems. The output of these
+subproblems then feed into a thin layer of business logic/rules to arrive at a
+final model output.</p>
+<p>Once the problem is clearly defined, and data is flowing properly into the
+modeling environment, building a model is rather straightforward. When model
+building becomes convoluted, it can be taken as an indicator of an incorrect
+problem formulation. There are various ways to approach model building (feature
+creation, model selection, experimentation) ranging from fully custom approaches
+to highly automated processes. We are partial to the old-school
+Python-leveraging-packages approach but can envision the usefulness of AutoML if
+a data scientist has strong intuition about the business problem and solid
+understanding of the dataset.</p>
+<p>In deployment (via containers or spark applications, for example), governance
+becomes paramount, especially in regulated environments. Data lineage, data
+versioning, model versioning, model explainability, model monitoring are all
+front and center.</p>
+<p>Today, we very often need to stitch together ad hoc tools to accomplish all the
+above. What does the future look like?  <a href="https://arxiv.org/abs/1909.00084">A recent paper</a> outlines a 10-year
+prediction for enterprise-grade ML. Along the lines of <a href="https://medium.com/@karpathy/software-2-0-a64152b37c35">Software
+2.0</a>, the authors view
+ML models as software derived from data. Most of us in the ML space would agree
+with this view, and would also acknowledge that even though ML is software, in
+today&rsquo;s practice we don&rsquo;t yet (always) adopt known best practices in software
+development.</p>
+<h3 id="future-state-for-enterprise-grade-ml">Future state for Enterprise-Grade ML</h3>
+<p>The authors look to the future from three perspectives: i) model
+development/training ii) model scoring and iii) model management/governance.</p>
+<p><img src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" alt="Reference architecture for canonical data science lifecycle (Flock) src"></p>
+<h5 id="reference-architecture-for-canonical-data-science-lifecycle-flock-image-source-httpsarxivorgabs190900084">Reference architecture for canonical data science lifecycle (Flock). Image Source: <a href="https://arxiv.org/abs/1909.00084">https://arxiv.org/abs/1909.00084</a></h5>
+<p>On model development/training, they believe training and development work will
+move to the cloud, either private or public. This is consistent with our
+observations.</p>
+<p>On governance, the authors believe that all data, including deployed models (to
+be thought of as derived data) and inferences made using them will need to be
+robustly governed. This is something we attempt to do in our current projects -
+capture code that trained the model, training data that went into it, model
+inference results - albeit in an ad hoc/brittle way, depending on existing
+architecture.</p>
+<p>The most interesting viewpoint (to me) is their perspective on model
+scoring. Because machine learning models are software artifacts derived from
+data, the dual nature of software artifacts and derived data suggests that the
+boundary between the data world and the modeling world will be fuzzy. The
+authors believe that inference pipelines will be close to data, and inference on
+data stored in a database management system should be done as an extension of
+the query runtime. In other words, models should be represented as first-class
+data types in a database management system. To investigate this, they
+&ldquo;integrated ONNX Runtime (a performance-focused inference engine for ONNX)
+within SQL server and developed an in-database cross-optimizer between SQL and
+ML to enable optimizations across hybrid relational and ML expressions.&rdquo; Early
+results indicate that in-database management system inference is very promising.</p>
+<p>As ML adoption quickens within enterprises and ML drives many business
+decisions, the attention will shift to effects of these models. To reach a state
+where ML models are defensible (privacy, security, interpretability, speed)
+without much technical debt, the DB community and the ML community will both
+shape the future of these ML end-to-end pipelines.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

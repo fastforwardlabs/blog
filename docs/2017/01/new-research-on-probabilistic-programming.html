@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>New Research on Probabilistic Programming</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jan 18, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>New Research on Probabilistic Programming</h1>
+  <p><img src="https://68.media.tumblr.com/cbe0007d3ac0cdaaf70d6c4d25978e83/tumblr_inline_ojzf3jTBUF1ta78fg_540.png" alt="image"></p>
+<p>We&rsquo;re excited to release the latest research from our machine intelligence R&amp;D team! </p>
+<p>This report and prototype explore probabilistic programming, an emerging programming paradigm that makes it easier to construct and fit Bayesian inference models in code. It&rsquo;s advanced statistics, simplified for data scientists looking to build models fast.</p>
+<p>Bayesian inference has been popular in scientific research for a long time. The statistical technique allows us to encode expert knowledge into a model by stating prior beliefs about what we think our data looks like. These prior beliefs are then updated in light of new data, providing not one prediction, but a full distribution of likely answers with baked-in confidence rates. This allows us to asses the risk of our decisions with more nuance.</p>
+<p>Bayesian methods lack widespread commercial use because they&rsquo;re tough to implement. But probabilistic programming reduces what used to take months of thorny statistical sampling into an afternoon of work.</p>
+<p>This will further expand the utility of machine learning. Bayesian models aren&rsquo;t black boxes, a criterion for regulated industries like healthcare. Unlike deep learning networks, they don&rsquo;t require large, clean data sets or large amounts of GPU processing power to deliver results. And they bridge human knowledge with data, which may lead to breakthroughs in areas as diverse as <a href="http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html">anomaly detection</a> and <a href="http://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html">music analysis</a>. </p>
+<p>Our work on probabilistic programming includes two prototypes and a report that teaches you:</p>
+<ul>
+<li>How Bayesian inference works and where it&rsquo;s useful</li>
+<li>Why probabilistic programming is becoming possible now</li>
+<li>When to use probabilistic programming and what the code looks like</li>
+<li>What tools and languages exist today and how they compare</li>
+<li>Which vendors offer probabilistic programming products</li>
+</ul>
+<p>Finally, as in all our research, we predict where this technology is going, and applications for which it will be useful in the next couple of years.</p>
+<h2 id="probabilistic-real-estate-prototype">Probabilistic Real Estate Prototype</h2>
+<p>One powerful feature of probabilistic programming is the ability to build hierarchical models, which allow us to group observations together and learn from their similarities. This is practical in contexts like user segmentation: individual users often shares tastes with other users of the same sex, age group, or location, and hierarchical models provide more accurate predictions about individuals by leveraging learnings from the group.</p>
+<p><img src="https://68.media.tumblr.com/1af64c0928793e79071e487732c1a594/tumblr_inline_ojzf6gWDhT1ta78fg_540.png" alt="image"></p>
+<p>We explored using probabilistic programming for hierarchical models in our <a href="http://fastforwardlabs.github.io/pre">Probabilistic Real Estate</a> prototype. This prototype predicts future real estate prices across the New York City boroughs. It enables you to input your budget (say $1.6 million) and shows you the probability of finding properties in that price range across different neighborhoods and future time periods.</p>
+<p>Hierarchical models helped make predictions in neighborhoods with sparse pricing data. In our model, we declared that apartments are in neighborhoods and neighborhoods are in boroughs; on average, apartments in one neighborhood are more similar to others in the same location than elsewhere. By modeling this way, we could learn about the West Village not only from the West Village, but also from the East Village and Brooklyn. That means, with little data about the West Village, we could use data from the East Village to fill in the gaps! </p>
+<p>Many companies suffer from imperfect, incomplete data. These types of inferences can be invaluable to improve predictions based on real-world dependencies.</p>
+<p>Play around with <a href="http://fastforwardlabs.github.io/pre">the prototype</a>! You&rsquo;ll see how the color gradients give you an intuitive sense for what probability distributions look like in practice.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

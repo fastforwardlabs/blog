@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Algorithmic Cookery &amp; Happy Thanksgiving</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Nov 22, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Algorithmic Cookery &amp; Happy Thanksgiving</h1>
+  <p>As you are preparing for your Thanksgiving meal, just <em>know</em> that a robotic arm is holding the spoon at the Institute for Culinary Education (ICE); progress is relentless. <em>&ldquo;The Chef Watson cookbook is a revolutionary display of the creative collaboration of man and machine.&quot;</em> <a href="https://www.ice.edu/about-us/brand-at-ice/ibm-cognitive-cooking-with-chef-watson-partnership">Cognitive Cooking with Chef Watson</a>, culinary and <em>cognitive</em> creativity <a href="https://www.ibmchefwatson.com/community">at your fingertips</a>. Perhaps you should try the Acorn Squash Meat Roast &hellip; with English Breakfast Tea.</p>
+<p>Jeopardy! It is <a href="http://www.nytimes.com/2011/02/17/science/17jeopardy-watson.html">so 2011</a>. In 2017, there is (of course) <a href="https://www.dailydot.com/unclick/neural-network-recipe-generator/">a neural network trained to generate recipes</a> developed by <a href="http://aiweirdness.com/aboutme">Janelle Shane</a>. Try the <em>Pears Or To Garnestmeam</em> or the <em>Shanked Whipping Peanuts</em>:</p>
+<p><img src="/images/2017/11/shanked_whipping_peanuts-1511370088418.jpg" alt=""></p>
+<h5 id="image-credit-the-daily-dothttpswwwdailydotcomunclickneural-network-recipe-generator">Image Credit: <a href="https://www.dailydot.com/unclick/neural-network-recipe-generator/">The Daily Dot</a></h5>
+<p>For the literary-minded, Janelle recommends training the neural network first on the works of your favorite author before feeding it recipes. Here is what happens when you use the works of H. P. Lovecraft:</p>
+<blockquote>
+<p>Bake at 350 degrees for 30 to 32 minutes. Test corners to see if done, as center will seem like the next horror of Second House.</p>
+<p>Whip ½ pint of heavy cream. Add 4 Tbsp. brandy or rum to possibly open things that will never be wholly reported.</p>
+</blockquote>
+<p>The algorithm adds a helpful note:</p>
+<blockquote>
+<p>NOTE:  As this is a tart rather than a cheesecake, you should be disturbed.</p>
+</blockquote>
+<p>Indeed.</p>
+<p>Eager to cook your own recipes with <a href="https://github.com/karpathy/char-rnn">char-RNNs</a> (i.e., multilayer recurrent neural networks with a character-level language models)? The code is available <a href="https://gist.github.com/nylki/1efbaa36635956d35bcc">here</a>. Do androids dream of cooking electric pies?</p>
+<p>If you&rsquo;ve done your shopping already, take a quick picture of your haul and let the algorithm <a href="http://im2recipe.csail.mit.edu/">im2recipe</a> serve you cooking instructions. The algorithm developers collected 1m cooking recipes and 800k food images, the largest publicly available collection of recipe data, and trained a neural network to find a joint embedding of recipes and images, a multi-modal embedding that puts words and images in the same multidimensional embedding space. This embedding allows to retrieve a recipe given an image and an image given a recipe. More importantly, it allows arithmetic with chicken pizza:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">v(chicken_pizza) <span style="color:#f92672">-</span> v(pizza) <span style="color:#f92672">+</span> v(lasagna) <span style="color:#f92672">=</span> v(chicken_lasagna)
+</code></pre></div><p><img src="/images/2017/11/arithmetics_sm_image_1-1511372024415.png" alt=""></p>
+<h5 id="you-can-now-compute-your-next-meal-image-credit-mithttpim2recipecsailmitedu">You can now compute your next meal (Image Credit: <a href="http://im2recipe.csail.mit.edu/">MIT</a>).</h5>
+<p>In 2017, <a href="https://arxiv.org/abs/1709.03856">&ldquo;we can embed that&rdquo;</a> truly is the new <a href="https://www.youtube.com/watch?v=yYey8ntlK_E">&ldquo;we can pickle that.&quot;</a> (Pro-tip: challenge it with your left-overs.)</p>
+<p>In the days after Thanksgiving, perhaps try the algorithm for <a href="https://www.theatlantic.com/science/archive/2015/11/algorithm-creates-diets-that-work-for-you/416583/">personalized diet meal planning</a> or <a href="http://eatwithava.com/">AVA</a>, your intelligent nutrition bot focused on your happiness.</p>
+<p>(You&rsquo;re welcome!)</p>
+<p>Finally, you will be pleased to know that the Association for Computing Machinery (ACM) holds a yearly workshop with the appetizing title <a href="https://dl.acm.org/citation.cfm?id=3106668&amp;picked=prox&amp;CFID=1003587697&amp;CFTOKEN=19498186"><em>Multimedia for Cooking and Eating Activities</em></a>. We have high hopes for Thanksgiving 2018!</p>
+<p>We, the entire team at Cloudera Fast Forward Labs, wish you a Happy Thanksgiving.</p>
+<p><em>Cover image credit: Photo by <a href="https://www.shutterstock.com/image-photo/futuristic-robot-concept-electrical-wire-hairstyle-434970346?src=T_7B6fTKy7ufDO77AVnNvg-1-50">Besjunior/Shutterstock</a></em></p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

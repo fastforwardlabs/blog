@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Probabilistic programming: an annotated bibliography</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Oct 2, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Probabilistic programming: an annotated bibliography</h1>
+  <p>Earlier this year we launched a research report on <a href="http://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html">probabilistic
+programming</a>,
+an emerging programming paradigm that makes it easier to describe and train
+probabilistic models. The Bayesian probabilistic approach to model building and
+inference has <a href="http://blog.fastforwardlabs.com/2017/01/30/the-algorithms-behind-probabilistic-programming.html">many advantages in practical data
+science</a>,
+including the ability to quantify risk (a superpower in industries like finance
+and insurance) and the ability to insert institutional knowledge (which is
+particularly useful when data is scarce). The rise of probabilistic programming
+languages has made it a more practical technique for time-constrained working
+data scientists.</p>
+<p><img src="/images/2017/09/ff05.gif" alt=""></p>
+<p>If that sounds great to you, and you&rsquo;re looking to learn more, the first thing
+you can do is — <a href="https://www.cloudera.com/about/services-and-support/fast-forward-labs.html">work with us</a>! We&rsquo;ll
+be glad to discuss our report, relevant use cases in your industry,
+and next steps to incorporate this approach into your data science work.</p>
+<p>But you might also enjoy this list of our favorite resources for learning how
+to do Bayesian inference and build probabilistic programming systems. These are
+the books, papers and tutorials we found most useful when conducting our
+research.</p>
+<h3 id="practical-books">Practical books</h3>
+<p>If you&rsquo;re just starting out then we recommend either <a href="https://sites.google.com/site/doingbayesiandataanalysis/">Doing Bayesian Data
+Analysis</a> by John
+Kruschke, or <a href="http://camdavidsonpilon.github.io/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/">Probabilistic Programming and Bayesian Methods for
+Hackers</a>
+by Cameron Davidson-Pilon.</p>
+<p>Krushke&rsquo;s book uses R and Stan (and a language
+called JAGS, that is really only used for teaching these days). Davidson-Pilon
+uses Python and PyMC. Choose between these books based on your language
+preferences. If you don&rsquo;t have a language preference, we at Fast Forward Labs
+recommend Davidson-Pilon&rsquo;s book, which is available online, and in particular
+<a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers#pymc3">the PyMC3
+edition</a>
+(there are some important differences between PyMC3 and previous versions).</p>
+<h3 id="theoretical-books">Theoretical books</h3>
+<p>The practical books above cover the basics of the theoretical and mathematical
+side, but if you&rsquo;d like a deeper dive into why we do what we do, we recommend
+<a href="https://global.oup.com/academic/product/data-analysis-9780198568322?cc=us&amp;lang=en&amp;">Data Analysis: A Bayesian
+Tutorial</a>
+by Sivia and Skilling. It&rsquo;s a relatively short and extremely clear book. For an
+even shorter introduction, we love <a href="https://www.stat.auckland.ac.nz/~brewer/stats331.pdf">Brendon Brewer&rsquo;s lecture notes for STATS
+331</a>.</p>
+<p>If your background is in economics or life sciences, you may prefer <a href="http://www.stat.columbia.edu/~gelman/arm/">Data
+Analysis Using Regression and Multilevel/Hierarchical
+Models</a> by Gelman and Hill. If your
+background is in physics or engineering, you may prefer <a href="http://www.physik.uzh.ch/~psaha/pda/">Principals of Data
+Analysis</a> by Prasenjit Saha (which is
+available free online).</p>
+<h3 id="research">Research</h3>
+<p>If you&rsquo;d like a reading list of research papers, there is no better place to
+start than the <em>excellent</em> <a href="https://psyarxiv.com/ph6sw/">annotated
+bibliography</a> published last year by Alexander Etz
+and colleagues. Their notes place the research in a historical and conceptual
+context, so this is in a sense the <em>least</em> technical document in this list. But
+the papers they discuss are academic research, so you&rsquo;ll be grappling with some
+big ideas, including our favorite</p>
+<blockquote>
+<p>The probability that a person is dead (i.e., data) given that a shark has
+bitten the person’s head off (i.e., theory) is 1. However, given that a
+person is dead, the probability that a shark has bitten this person’s head
+off is very close to zero&rdquo;.</p>
+</blockquote>
+<p>If you&rsquo;re interested in the algorithmic and computational cutting edge
+(Hamiltonian Monte Carlo, variational methods, etc.) then we have <a href="http://blog.fastforwardlabs.com/2017/01/30/the-algorithms-behind-probabilistic-programming.html">a blog post
+that links to a selection of important
+papers</a>.</p>
+<h3 id="tutorials-and-articles">Tutorials and articles</h3>
+<p>Finally, here are a selection of shorter and/or use-case specific practical
+articles we&rsquo;ve found interesting and useful:</p>
+<ul>
+<li><a href="http://austinrochford.com/posts/2015-10-05-bayes-survival.html">Bayesian Survival Analysis in Python with
+PyMC3</a>, and
+indeed any of the <a href="http://austinrochford.com/posts.html">posts on Austin Rochford&rsquo;s
+blog</a></li>
+<li><a href="http://www.arbylon.net/publications/text-est.pdf">Parameter estimation for text
+analysis</a> by Gregor
+Heinrich, which is first and foremost a great topic modeling tutorial, but
+almost accidentally a great introduction to Bayesian inference.</li>
+<li><a href="https://arxiv.org/abs/1008.4686">Data analysis recipes: Fitting a model to
+data</a> by Hogg, Bovy and Lang, a deep
+article about an extremely simple problem (linear regression) that somehow
+also manages to be funny!</li>
+</ul>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

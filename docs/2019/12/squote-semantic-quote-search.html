@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Squote - semantic quote search</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Dec 24, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Squote - semantic quote search</h1>
+  <p>Here in the (virtual) Fast Forward lab, we’re currently deep in the topic selection process for FF13. While one or two of our research engineers take the lead for each report, we work through several rounds of discussion and debate about the merits and demerits of topics on our collective radar as a team. Part of that process is dreaming up potential prototype applications.</p>
+<p>Our multi-talented designer/dev <a href="https://twitter.com/grantcuster">Grant</a> proposed a prototype: given a block of text, find a relevant quote.</p>
+<p>It tickled my brain in the right way, and I decided to try and build it. When doing speculative work, there is some wisdom in trying to fail fast, and - thanks entirely to the hard work of other people - I had something working a few hours later. So continuing a theme of “staying up late hacking with pre-trained models,” we offer you  <a href="http://squote.xyz/">squote.xyz</a> , a semantic search tool for quotes.</p>
+<p><img src="/images/editor_uploads/2019-10-31-191907-squote_better.gif" alt=""></p>
+<p>The premise is that given a block of text - say the body of an email, or a paragraph from an essay - Squote should return you a semantically related quote. By “semantically related” I mean “has a similar embedding under BERT, measured with cosine similarity.”  The result is that entering some text about mountains might also return you some text about hills. However, entering a short specific phrase will not necessarily return a block of text containing that phrase: we compare whole text embedding of the input to the whole text embedding of the quote (the whole text embedding being taken here as the mean of the contextual word embeddings). As such, the presence of other words in the quote may reduce its similarity to a phrase it contains.</p>
+<p>Useful search is complex and hard, and Squote is intended only as a minimally viable demonstration. Conveniently for the sake of this story, on precisely the same day I put together Squote, Google announced the use of BERT in their search engine in the blog post <a href="https://www.blog.google/products/search/search-language-understanding-bert">Understanding searches better than ever before</a>. Not having had quite the same development investment as Google&rsquo;s search engine, Squote certainly doesn’t always produce a quote that is obviously relevant. At the least though, it’s usually entertaining to ponder why it returned what it did. We hope you have some fun with it.</p>
+<p>For those interested, the source is available for your perusal, use, and modification at <a href="https://github.com/cjwallace/squote">cjwallace/squote</a>. Squote is built entirely in python (including the interface) on three open source projects. Essentially all the functionality was provided “out-the-box” by these projects.</p>
+<ul>
+<li><a href="https://github.com/hanxiao/bert-as-service">BERT-as-a-Service</a> is exactly what it sounds like! This repo allows you to host the BERT model as a micro-service, and provides a python client that can communicate with the service through a simple API. This reduces getting a state-of-the-art sentence embedding (a length 768 vector) to a simple function call in your python app.</li>
+<li><a href="https://github.com/facebookresearch/faiss">FAISS</a> is a library for similarity search and clustering of vector representations. While it’s easy enough to define L2 or cosine similarity in pure python, when matching against embedding vectors representing a corpus of 75,000 quotes, it’s nice to know that someone else has thought about indexing that efficiently. After two native library installs, usage was incredibly straightforward through the python library (thanks to a prebuilt version at <a href="https://github.com/onfido/faiss_prebuilt">faiss_prebuilt</a>).</li>
+<li><a href="https://streamlit.io/">Streamlit</a> is a new library for building interactive machine learning tools with python. It’s spiritually somewhere between RShiny and ObservableHQ, staying in pure python but incorporating a kind of reactive flow - when an input is updated, the output is regenerated without any explicit code to trigger it. It only took a few minutes to feel comfortable with the basic model of Streamlit, and I’ll definitely be keeping it in my toolbox.</li>
+</ul>
+<p>The pace of advancement in natural language technology has increased substantially over the past 18 months, and seems impossible to keep up. However, I believe there are hundreds of useful natural language applications that could be built with what is rapidly becoming commodity technology (and maybe some fine tuning)! Happy building!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

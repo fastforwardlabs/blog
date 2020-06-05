@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>PyTorch for Recommenders 101</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>PyTorch for Recommenders 101</h1>
+  <p>Recommenders, generally associated with e-commerce, sift though a huge inventory
+of available items to find and recommend ones that a user will like. Different
+from search, recommenders rely on historical data to tease out user
+preference. How does a recommender accomplish this? In this post we explore
+building simple recommendation systems in <a href="http://pytorch.org/">PyTorch</a> using
+the <a href="https://grouplens.org/datasets/movielens/100k/">Movielens 100K data</a>, which
+has 100,000 ratings (1-5) that 943 users provided on 1682 movies.</p>
+<h2 id="matrix-factorization">Matrix Factorization</h2>
+<p><img src="/images/editor_uploads/2018-04-11-175944-02_07.png" alt="Diagram of a simple recommendation system. It moves from Step 1: User, to Step 2: Connected Factors, to Step 3: Recommended items based on the connected factors."></p>
+<p>We first build a traditional recommendation system based on <a href="https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf">matrix
+factorization</a>. The
+input data is an interaction matrix where each row represents a user and each
+column represents an item. The rating assigned by a user for a particular item
+is found in the corresponding row and column of the interaction matrix. This
+matrix is generally large but sparse; there are many items and users but a
+single user would only have interacted with a small subset of items. Matrix
+factorization decomposes this larger matrix into two smaller matrices - the
+first one maps users into a set of factors and the second maps items into the
+same set of factors. Multiplying these two smaller matrices together gives an
+approximation to the original matrix, with values for empty elements
+inferred. To predict a rating for a user-item pair, we simply multiply the row
+representing the user from the first matrix with the column representing the
+item from the second matrix.</p>
+<p>In PyTorch we can implement a version of matrix factorization by using the
+embedding layer to &ldquo;map&rdquo; users into a set of factors. The number of factors
+determine the size of the embedding vector. Similarly we map items into their
+own embedding layer. Both user and item embeddings have the same size. To
+predict a user-item rating, we multiply the user embeddings with item embeddings
+and sum to obtain one number. The following code draws from <a href="https://github.com/EthanRosenthal/torchmf/blob/master/torchmf.py">Ethan Rosenthal&rsquo;s
+work on matrix factorization in
+PyTorch</a>.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">from</span> torch.autograd <span style="color:#f92672">import</span> Variable
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MatrixFactorization</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, n_users, n_items, n_factors<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>):
+        super()<span style="color:#f92672">.</span>__init__()
+	<span style="color:#75715e"># create user embeddings</span>
+        self<span style="color:#f92672">.</span>user_factors <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Embedding(n_users, n_factors,
+                                               sparse<span style="color:#f92672">=</span>True)
+	<span style="color:#75715e"># create item embeddings</span>
+        self<span style="color:#f92672">.</span>item_factors <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Embedding(n_items, n_factors,
+                                               sparse<span style="color:#f92672">=</span>True)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, user, item):
+    	<span style="color:#75715e"># matrix multiplication</span>
+        <span style="color:#66d9ef">return</span> (self<span style="color:#f92672">.</span>user_factors(user)<span style="color:#f92672">*</span>self<span style="color:#f92672">.</span>item_factors(item))<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(self, user, item):
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>forward(user, item)
+
+</code></pre></div><p>To fit the matrix factorization model we need to pick a loss function and an
+optimizer. In this example we use the average squared distance between the
+prediction and the actual value as a loss function, this is known as
+mean-squared error. We then try to minimize this loss by using stochastic
+gradient descent. The code below shows how the model is fitted in four steps: i)
+pass in a user-item pair, ii) forward pass to compute the predicted rating, iii)
+compute the loss, and iv) backpropagate to compute gradients and update the
+weights.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model <span style="color:#f92672">=</span> MatrixFactorization(n_users, n_items, n_factors<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>)
+loss_fn <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MSELoss() 
+optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>SGD(model<span style="color:#f92672">.</span>parameters(),
+                            lr<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-6</span>)
+
+<span style="color:#66d9ef">for</span> user, item <span style="color:#f92672">in</span> zip(users, items):
+    <span style="color:#75715e"># get user, item and rating data</span>
+    rating <span style="color:#f92672">=</span> Variable(torch<span style="color:#f92672">.</span>FloatTensor([ratings[user, item]]))
+    user <span style="color:#f92672">=</span> Variable(torch<span style="color:#f92672">.</span>LongTensor([int(user)]))
+    item <span style="color:#f92672">=</span> Variable(torch<span style="color:#f92672">.</span>LongTensor([int(item)]))
+
+    <span style="color:#75715e"># predict</span>
+    prediction <span style="color:#f92672">=</span> model(user, item)
+    loss <span style="color:#f92672">=</span> loss_fn(prediction, rating)
+
+    <span style="color:#75715e"># backpropagate</span>
+    loss<span style="color:#f92672">.</span>backward()
+
+    <span style="color:#75715e"># update weights</span>
+    optimizer<span style="color:#f92672">.</span>step()
+</code></pre></div><p>We train this model on the Movielens dataset with ratings scaled between [0, 1]
+to help with convergence. Applied on the test set, we obtain a root mean-squared
+error(RMSE) of 0.66. This means that on average, the difference between our
+prediction and the actual value is 0.66!</p>
+<h2 id="dense-feedforward-neural-network">Dense Feedforward Neural Network</h2>
+<p>Given the underwhelming performance of our matrix factorization model, we try a
+simple feedforward recommendation system instead. The input to this neural
+network is a pair of user and item represented by their IDs. Both user and item
+IDs first pass through an embedding layer. The output of the embedding layer,
+which are two embedding vectors, are then concatenated into one and passed into
+a linear network. The output of the linear network is one dimensional -
+representing the rating for the user-item pair. The model is fit the same way as
+the matrix factorization model and uses the standard PyTorch approach of forward
+passing, computing the loss, backpropagating and updating weights.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
+<span style="color:#f92672">from</span> torch.autograd <span style="color:#f92672">import</span> Variable
+<span style="color:#f92672">from</span> torch <span style="color:#f92672">import</span> nn
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DenseNet</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, n_users, n_items, n_factors, H1, D_out):
+        <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        Simple Feedforward with Embeddings
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        super()<span style="color:#f92672">.</span>__init__()
+   	<span style="color:#75715e"># user and item embedding layers</span>
+        self<span style="color:#f92672">.</span>user_factors <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Embedding(n_users, n_factors,
+                                               sparse<span style="color:#f92672">=</span>True)
+        self<span style="color:#f92672">.</span>item_factors <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Embedding(n_items, n_factors,
+                                               sparse<span style="color:#f92672">=</span>True)
+   	<span style="color:#75715e"># linear layers</span>
+        self<span style="color:#f92672">.</span>linear1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(n_factors<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>, H1)
+        self<span style="color:#f92672">.</span>linear2 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(H1, D_out)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, users, items):
+        users_embedding <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>user_factors(users)
+        items_embedding <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>item_factors(items)
+	<span style="color:#75715e"># concatenate user and item embeddings to form input</span>
+        x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat([users_embedding, items_embedding], <span style="color:#ae81ff">1</span>)
+        h1_relu <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>linear1(x))
+        output_scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>linear2(h1_relu)
+        <span style="color:#66d9ef">return</span> output_scores
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(self, users, items):
+        <span style="color:#75715e"># return the score</span>
+        output_scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>forward(users, items)
+        <span style="color:#66d9ef">return</span> output_scores
+
+</code></pre></div><p>Once again, we train this model on the Movielens dataset with ratings scaled
+between [0, 1] to help with convergence. Applied on the test set, we obtain a
+root mean-squared error(RMSE) of 0.28, a substantial improvement!</p>
+<h2 id="sequence-based-recommendation-system">Sequence based Recommendation System</h2>
+<p>Finally we build a recommendation system that takes into account the sequence of
+item interactions. The heart of this is a Long Short-Term Memory (LSTM) cell, a
+variant of Recurrent Neural Networks (RNN) with faster convergence and better
+long term memory. The input to this system is a history of item interactions and
+their corresponding ratings. In the following example of an input, we show a
+sequence of item interaction of length 10 (arbitrarily chosen) and the
+corresponding rating. Elements in the first array correspond to items(movies),
+and elements in the second array correspond to ratings. We see that, for
+example, movie 209 has a rating of 4, and movie 32 has a rating of 5. Sequences
+shorter than 10 are padded with zeros.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">2</span>]: training_data[<span style="color:#ae81ff">0</span>]
+Out[<span style="color:#ae81ff">2</span>]: 
+(array([<span style="color:#ae81ff">209</span>,  <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">189</span>, <span style="color:#ae81ff">242</span>, <span style="color:#ae81ff">171</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">256</span>,   <span style="color:#ae81ff">5</span>,  <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">102</span>], dtype<span style="color:#f92672">=</span>int32),
+ array([<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], dtype<span style="color:#f92672">=</span>int32))
+</code></pre></div><p>Items are passed through an embedding layer before going into the LSTM. The
+output of the LSTM is then fed into a linear layer with an output dimension of
+one. The LSTM has 2 hidden states, one for short term memory and one for long
+term. Both states need to be initialized.</p>
+<p>PyTorch expects LSTM inputs to be a three dimensional tensor. The first
+dimension is the length of the sequence itself, the second represents the number
+of instances in a mini-batch, the third is the size of the actual input into the
+LSTM. Using our training data example with sequence of length 10 and embedding
+dimension of 20, input to the LSTM is a tensor of size 10x1x20 when we do not
+use mini batches. For a mini-batch size of 2, each forward pass will have two
+sequences, and the input to the LSTM needs to have a dimension of 10x2x20. LSTMs
+take variable input sequence lengths but for batch training purposes the input
+data is generally processed(with padding if necessary) to have a fixed length.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
+<span style="color:#f92672">from</span> torch.autograd <span style="color:#f92672">import</span> Variable
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LSTMRating</span>(nn<span style="color:#f92672">.</span>Module):
+
+    <span style="color:#66d9ef">def</span> __init__(self, embedding_dim, hidden_dim, num_items, num_output):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>hidden_dim <span style="color:#f92672">=</span> hidden_dim
+        self<span style="color:#f92672">.</span>item_embeddings <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Embedding(num_items, embedding_dim)
+        self<span style="color:#f92672">.</span>lstm <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>LSTM(embedding_dim, hidden_dim)
+        self<span style="color:#f92672">.</span>linear <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(hidden_dim, num_output)
+        self<span style="color:#f92672">.</span>hidden <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>init_hidden()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init_hidden</span>(self):
+    	<span style="color:#75715e"># initialize both hidden layers</span>
+        <span style="color:#66d9ef">return</span> (Variable(torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, self<span style="color:#f92672">.</span>hidden_dim)),
+                Variable(torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, self<span style="color:#f92672">.</span>hidden_dim)))
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, sequence):
+        embeddings <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>item_embeddings(sequence)
+        output, self<span style="color:#f92672">.</span>hidden <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>lstm(embeddings<span style="color:#f92672">.</span>view(len(sequence), <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>),
+                                        self<span style="color:#f92672">.</span>hidden)
+        rating_scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>linear(output<span style="color:#f92672">.</span>view(len(sequence), <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+        <span style="color:#66d9ef">return</span> rating_scores
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(self, sequence):
+        rating_scores <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>forward(sequence)
+        <span style="color:#66d9ef">return</span> rating_scores
+
+</code></pre></div><p>Once the neural network is defined, we fit the training data using stochastic
+gradient descent with a mean squared error loss function.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">embedding_dim <span style="color:#f92672">=</span> <span style="color:#ae81ff">64</span>
+hidden_dim <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>
+n_output <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#75715e"># add one to represent padding when there is not enough history</span>
+model <span style="color:#f92672">=</span> LSTMRating(embedding_dim, hidden_dim, n_items<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, n_output)
+loss_fn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>MSELoss()
+optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>SGD(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>)
+
+<span style="color:#66d9ef">for</span> sequence, target_ratings <span style="color:#f92672">in</span> training_data:
+    model<span style="color:#f92672">.</span>zero_grad()
+    <span style="color:#75715e"># initialize hidden layers</span>
+    model<span style="color:#f92672">.</span>hidden <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>init_hidden()
+    <span style="color:#75715e"># convert sequence to PyTorch variables</span>
+    sequence_var <span style="color:#f92672">=</span> Variable(torch<span style="color:#f92672">.</span>LongTensor(sequence<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;int64&#39;</span>)))
+    <span style="color:#75715e"># forward pass</span>
+    ratings_scores <span style="color:#f92672">=</span> model(sequence_var)
+    target_ratings_var <span style="color:#f92672">=</span> Variable(torch<span style="color:#f92672">.</span>FloatTensor(target_ratings<span style="color:#f92672">.</span>astype(<span style="color:#e6db74">&#39;float32&#39;</span>)))
+    <span style="color:#75715e"># compute loss</span>
+    loss <span style="color:#f92672">=</span> loss_fn(ratings_scores, target_ratings_var)
+    <span style="color:#75715e"># backpropagate</span>
+    loss<span style="color:#f92672">.</span>backward()
+    <span style="color:#75715e"># update weights</span>
+    optimizer<span style="color:#f92672">.</span>step()
+
+</code></pre></div><p>Similar to other models, we train the LSTM-based model on the Movielens dataset
+with ratings scaled between [0, 1] to help with convergence. Applied on the test
+set, we obtain a root mean-squared error(RMSE) of 0.43 - the LSTM model
+underperforms the dense feed forward network.</p>
+<h2 id="post-amble">Post-amble</h2>
+<p>The models discussed in this post are basic building blocks for a recommendation
+system in PyTorch. There are no bells and whistles and we did not attempt to
+fine tune any hyperparameters. Our first pass result suggests that the dense
+network performs best, followed by the LSTM network and finally the matrix
+factorization model. The root mean-squared error (RMSE) are 0.28, 0.43 and 0.66
+respectively on the Movielens 100K dataset with ratings scaled between [0,
+1]. We thought PyTorch was fun to use; models can be built and swapped out
+relatively easily. When we did encounter errors, most of them were triggered by
+incorrect data types.</p>
+<p>For more on recommendations, please see our <a href="https://www.cloudera.com/products/fast-forward-labs-research.html">Semantic Recommendations report</a>,
+where we focus on how machines can better understand content!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

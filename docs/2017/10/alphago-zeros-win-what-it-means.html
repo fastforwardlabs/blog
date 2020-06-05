@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>AlphaGo Zero&#39;s win, what it means</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Oct 26, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>AlphaGo Zero&#39;s win, what it means</h1>
+  <p>In an almost Freudian twist, a play on <a href="http://www.gutenberg.org/files/41214/41214-h/41214-h.htm"><em>Vatermord</em></a> by an artificial intelligence, <a href="https://deepmind.com/blog/alphago-zero-learning-scratch/">AlphaGo Zero</a> has dethroned its &ldquo;parent,&rdquo; AlphaGo.</p>
+<p>In March 2016, AlphaGo <a href="https://www.theatlantic.com/technology/archive/2016/03/the-invisible-opponent/475611/">defeated 18-time world Go champion Lee Sedol</a>. At the <a href="https://events.google.com/alphago2017/">Future of Go Summit in May 2017</a>, AlphaGo prevailed against China&rsquo;s top Go players including Ke Jie, who was considered to be the world&rsquo;s best Go player.</p>
+<p>AlphaGo&rsquo;s reign was short lived. On October 18th 2017, in a tournament to which human players were not invited, AlphaGo Zero beat AlphaGo.</p>
+<h2 id="whats-cool-about-alphago-zero-and-what-isnt">What&rsquo;s cool about AlphaGo Zero, and what isn&rsquo;t</h2>
+<p>Shortly after AlphaGo&rsquo;s success in May 2016, <a href="http://cs.stanford.edu/people/karpathy/">Andrej Karpathy</a> (Director of AI at Tesla) wrote an <a href="https://medium.com/@karpathy/alphago-in-context-c47718cb95a5">insightful post</a> explaining why AlphaGo is cool, and, largely, why it isn&rsquo;t:</p>
+<blockquote>
+<p><em>AlphaGo is a narrow AI system that can play Go and that’s it. The ATARI-playing agents from DeepMind do not use the approach taken with AlphaGo. The Neural Turing Machine has little to do with AlphaGo. The Google data center improvements definitely do not use AlphaGo. The Google Search engine is not going to use AlphaGo. Therefore, AlphaGo does not generalize to any problem outside of Go [&hellip;].</em></p>
+</blockquote>
+<p>AlphaGo was successful because its DeepMind creators studied the game Go and uncovered (at least) seven characteristics (or &ldquo;conveniences&rdquo;) of the game Go, which they then exploited to build an expert AI game-playing agent.</p>
+<p><em>All but one</em> of these characteristics are still at the heart of the success of AlphaGo Zero. Unlike Alpha Go, trained on human game-playing data <em>and</em> through playing against itself, AlphaGo Zero learns <em>only</em> through self-play. Therefore, AlphaGo Zero does not rely on readily available human game-playing data, and - since data on human behavior is not be available for most real-world problems - for moving beyond the world of games, removing <em>that</em> requirement is great.</p>
+<p>But, AlphaGo Zero still relies on other characteristics of Go: most importantly, the <em>access to a perfect simulator</em> (the game itself) and (relatively) <em>short games with clear wins and losses</em>. AlphaGo Zero does not have to worry about today&rsquo;s weather (and make it a part of its simulator); self-driving cars do. Complex decisions have outcomes far beyond the time-horizon of a typical game of Go. In life, there are rarely clear winners and clear losers. AlphaGo Zero, like AlphaGo, is still a narrow AI system.</p>
+<p>Karpathy updated his post last week:</p>
+<blockquote>
+<p><em>Update Oct 18, 2017: AlphaGo Zero was announced. This post refers to the previous version. 95% of it still applies.</em></p>
+</blockquote>
+<p>Yes.</p>
+<p>We encourage you to read <a href="https://spectrum.ieee.org/transportation/self-driving/the-big-problem-with-selfdriving-cars-is-people">Rodney Brooks&rsquo; quite amusing account</a> of all the things self-driving cars have to worry about (like being bullied by humans).</p>
+<h2 id="okay-now-whats-cool">Okay, now what&rsquo;s cool</h2>
+<p>AlphaGo Zero <em>is</em> cool. AlphaGo has two neural networks, one trained to generate a distribution over likely Go moves and one to generate an evaluation for each move (i.e., how likely it is to lead to a win). AlphaGo Zero has only <em>one</em> neural network trained on a dual objective (move <em>and</em> evaluation prediction) (see <a href="https://www.nature.com/nature/journal/v550/n7676/full/nature24270.html">the Nature paper</a>); this is a neat application of <a href="https://arxiv.org/abs/1706.05098">multi-task learning</a>.</p>
+<p>AlphaGo Zero uses a tweaked, simplified, and very clever <a href="http://jeffbradberry.com/posts/2015/09/intro-to-monte-carlo-tree-search/">Monte Carlo Tree Search</a> (MCTS) that relies on the (single) neural network to evaluate positions and sample moves; the neural network guides the MCTS (and therefore MCTS improves with neural network training).</p>
+<p>AlphaGo zero also uses a <a href="https://arxiv.org/abs/1512.03385">residual learning framework</a>, a framework that makes it easier to train very deep networks.</p>
+<p>So, AlphaGo Zero (like AlphaGo) is a <em>very clever combination</em> of <em>known components</em> to achieve a goal better than any known solution for a <em>well-understood problem</em>: it&rsquo;s cool. And, it follows the (secret) recipe for any successful machine learning or AI product; a thorough understanding of the problem is as important as a good grasp of the tech.</p>
+<p>The <em>real awesomeness of AlphaGo Zero</em>, however, is the reduction in computational complexity and required compute power for training due to algorithmic advances and (as so often) hardware improvements. After just three days of self-play training on 4 TPUs, AlphaGo Zero defeated AlphaGo. (For comparison, the first generation of the AlphaGo lineage needed 176 GPUs.) Compute power can be a real bottleneck; the reduction in compute power is impressive.</p>
+<p><img src="/images/2017/10/AlphaGo20Efficiency_width_1500-1508465583728.png" alt=""></p>
+<h5 id="image-credit-google-deepmindhttpsdeepmindcomblogalphago-zero-learning-scratch">Image Credit: <a href="https://deepmind.com/blog/alphago-zero-learning-scratch/">Google DeepMind</a>.</h5>
+<p>The approach taken by AlphaGo Zero may help solve other problems that are <em>structurally similar</em> to Go (i.e., problems that share characteristics of the game Go). Other games come to mind, and the DeepMind researchers suggest structured problems like protein folding, <a href="https://deepmind.com/blog/deepmind-ai-reduces-google-data-centre-cooling-bill-40/">reducing energy consumption</a>, or searching for revolutionary new materials. The application of AlphaGo Zero to these problems won&rsquo;t be trivial.</p>
+<h2 id="whats-interesting">What&rsquo;s interesting</h2>
+<p>Through pure self-play without any guidance by human game playing data, AlphaGo Zero learned moves and strategies known to Go players:</p>
+<blockquote>
+<p><em>AlphaGo Zero rapidly progressed from entirely random moves towards a sophisticated understanding of Go concepts, including</em> <strong>fuseki</strong> <em>(opening)</em>, <strong>tesuji</strong> <em>(tactics)</em>, <strong>life-and-death</strong>, <strong>ko</strong> <em>(repeated board situations)</em>, <strong>yose</strong> <em>(endgame)</em>, <strong>capturing races</strong>, <strong>sente</strong> <em>(initiative)</em>, <strong>shape</strong>, <strong>influence</strong> <em>and</em> <strong>territory</strong>, <em>all discovered from first principles.</em></p>
+</blockquote>
+<p>But what comes easy to humans may not come as easily to an AI:</p>
+<blockquote>
+<p><em>Surprisingly,</em> <strong>shicho</strong> <em>(‘ladder’ capture sequences that may span the whole board) — one of the first elements of Go knowledge learned by humans — were only understood by AlphaGo Zero much later in training.</em></p>
+</blockquote>
+<p>Human Go players may have developed, or stumbled across, strategies to compensate for limits in the brain&rsquo;s compute power (e.g., limited <a href="http://www.sciencedirect.com/science/article/pii/S0079742108604521">working memory</a>). Comparing the machine&rsquo;s to human play may yield insights into the development of strategies for complex games.</p>
+<p>Not all the moves the systems learned to make were components of known strategies; it is likely that Go masters will study the moves of AlphaGo Zero to inform their own strategies and future chances of winning.</p>
+<p>Rather poetically, Andy Okun and Andrew Jackson from the <a href="http://www.usgo.org/">American Go Association</a> describe the (possible) exchange between human and artificially intelligent AI masters as <a href="https://www.nature.com/nature/journal/v550/n7676/pdf/550336a.pdf">&ldquo;a conversation&rdquo;</a>):</p>
+<blockquote>
+<p><em>Go players, coming from so many nations, speak to each other with their moves, even when they do not share an ordinary language. They share ideas, intuitions and, ultimately, their values over the board — not only particular openings or tactics, but whether they prefer chaos or order, risk or certainty, and complexity or simplicity. The time when humans can have a meaningful conversation with an AI has always seemed far off and the stuff of science fiction. But for Go players, that day is here.</em></p>
+</blockquote>
+<p>AlphaGo Zero, welcome!</p>
+<h2 id="parting-thoughts">Parting thoughts</h2>
+<p>The DeepMind researchers characterize Go (in their paper introducing AlphaGo Zero) as belonging to one of the &ldquo;most challenging domains in terms of human intellect.&rdquo; While convenient, a solution is all the more impressive when the problem is extremely difficult. Aren&rsquo;t there more important problems for us to solve, more challenging problems?</p>
+<p><img src="/images/2017/10/gallery_6-1508465225174.jpg" alt=""></p>
+<h5 id="the-number-of-possible-configurations-on-the-go-board-is-greater-than-the-number-of-atoms-in-the-universe-according-to-the-alphago-moviehttpswwwalphagomoviecom-but-complexity-is-more-than-combinatorics">The number of possible configurations on the Go board is greater than the number of atoms in the universe, according to the <a href="https://www.alphagomovie.com/">AlphaGo Movie</a>, but complexity is more than combinatorics.</h5>
+<p>Complexity is more than combinatorics, the number of possible states in the world (in that sense, and in that sense only, Go is a complex game). As F. Scott Fitzgerald once said:</p>
+<blockquote>
+<p><em>The test of a first-rate intelligence is the ability to hold two opposed ideas in mind at the same time and still retain the ability to function.</em></p>
+</blockquote>
+<p>AlphaGo Zero, alongside its other artificially intelligent companions, would suffer; they need a black or white world.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

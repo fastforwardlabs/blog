@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Machines in Conversation</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Dec 12, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      guest post
+      
+    </span>
+  </h5>
+  <h1>Machines in Conversation</h1>
+  <p><img src="http://68.media.tumblr.com/692d44e33b12223b1e7fb77bb122ec99/tumblr_inline_oi327sddi71ta78fg_540.png" alt=""></p>
+<h5 id="we-at-fast-forward-labs-have-long-been-interested-in-speech-recognition-technologies-this-yearsa-hrefhttpswwworeillycomideasan-overview-of-the-bot-landscapechatbot-crazeahas-seen-growing-interest-in-machines-that-interface-with-users-in-friendly-accessible-language-bots-however-only-rarely-understand-the-complexity-of-colloquial-conversation-many-practical-customer-service-bots-are-trained-on-a-very-constrained-set-of-queries-i-lost-my-password-thats-why-were-excited-to-highlight-a-hrefhttpswwwgridspacecomgridspacea-a-san-francisco-based-startupthat-provides-products-services-and-an-a-hrefhttpsapigridspacecomscriptstryeasy-to-use-apiafocused-on-making-human-to-human-conversation-analyzable-by-machines-gridspace-co-founders-a-hrefhttpswwwlinkedincominevan-macmillan-60716b71evan-macmillana-and-a-hrefhttpswwwlinkedincominscodary-anthony-scodarya-share-their-thoughts-and-demo-their-api-below-catch-them-this-week-at-the-a-hrefhttpwwwslt2016orgieee-workshop-on-spoken-language-technologya-slt-in-san-diego">We at Fast Forward Labs have long been interested in speech recognition technologies. This year’s <!-- raw HTML omitted -->chatbot craze<!-- raw HTML omitted --> has seen growing interest in machines that interface with users in friendly, accessible language. Bots, however, only rarely understand the complexity of colloquial conversation: many practical customer service bots are trained on a very constrained set of queries (”I lost my password”). That’s why we’re excited to highlight <!-- raw HTML omitted -->Gridspace<!-- raw HTML omitted -->, a San Francisco-based startup that provides products, services, and an <!-- raw HTML omitted -->easy-to-use API<!-- raw HTML omitted --> focused on making human-to-human conversation analyzable by machines. Gridspace Co-Founders <!-- raw HTML omitted -->Evan Macmillan<!-- raw HTML omitted --> and <!-- raw HTML omitted --> Anthony Scodary<!-- raw HTML omitted --> share their thoughts and demo their API below. Catch them this week at the <!-- raw HTML omitted -->IEEE Workshop on Spoken Language Technology<!-- raw HTML omitted --> (SLT) in San Diego!</h5>
+<p>When most people think about speech systems, they think about virtual assistants like Siri and Alexa, which parse human speech intended for a machine. Extracting useful information from human-to-machine speech is a challenge. Virtual assistants must decode speech audio with a high degree of accuracy and map a complex tree of possible natural language queries, called an ontology, to distinguish one-word differences in similar yet distinct requests.</p>
+<p>But compared to processing human-to-human speech, current virtual assistants have it easy! Virtual assistants work with a restricted set of human-to-machine speech requests (i.e. “Call Mom!” or “Will it rain tomorrow?”) and process only a few seconds of speech audio at a time. Virtual assistants also get the benefit of relatively slow and clear speech audio to process. After all, the user knows she is only speaking with a machine.</p>
+<p>Today, most of our spoken conversations don’t involve machines, but they soon could. A big hurdle to making machines capable of processing more types of conversation, specifically natural conversations we have with other people, is called natural language understanding (NLU).The jump between NLU for human-to-machine conversations to NLU for long human-to-human conversations is non-trivial, but it’s a challenge we chose to tackle at Gridspace.</p>
+<h2 id="gridspace-sift-api">Gridspace Sift API</h2>
+<p>The <!-- raw HTML omitted -->Gridspace Sift API<!-- raw HTML omitted --> provides capabilities specifically tailored to long-form, human-to-human speech. The transcription and speech signal analysis pipeline has been trained on tens of thousands of hours of noisy, distorted, and distant speech signals of organic, colloquial human speech. The downstream natural language processing capabilities, which perform tasks like phrase matching, <!-- raw HTML omitted -->topic modelling<!-- raw HTML omitted -->, entity extraction, and classification, were all designed to accept noisy transcripts and signals.</p>
+<p>The following examples can all be run in the <!-- raw HTML omitted -->Sift hosted script browser environment<!-- raw HTML omitted -->, in which the full API (and handling of asynchronous events like speech or telephone calls) is accessed through short snippets of javascript.</p>
+<p>For example, let’s say we want to call restaurants to get the wait times. You could prompt restaurants to enter the wait time into a keypad, but you’ll likely  have a low success rate. However, by using natural human recordings and allowing the restaurants to respond with natural language, a response rate of over 30% is achievable. This response rate could be even higher if you exclude restaurants that operate an IVR (interactive voice response) system. In the JavaScript sketch below (the full example can be viewed and run <!-- raw HTML omitted -->here<!-- raw HTML omitted -->), we call a list of restaurants, greet whoever answers the phone, and then ask for a wait time:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">gs</span>.<span style="color:#a6e22e">onStart</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>() {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">waitTimes</span> <span style="color:#f92672">=</span> {}
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">restaurant</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">NUMBERS</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">number</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">NUMBERS</span>[<span style="color:#a6e22e">restaurant</span>];
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">restaurant</span>);
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">number</span>);
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">conn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">gs</span>.<span style="color:#a6e22e">createPhoneCall</span>(<span style="color:#a6e22e">number</span>);
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">trans</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#a6e22e">MAX_TRANS</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span>) {
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Try &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">j</span>);
+      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">j</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Saying hello...&#34;</span>);
+        <span style="color:#a6e22e">newTrans</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">getFreeResponse</span>({<span style="color:#e6db74">&#34;promptUrl&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;http://apicdn.gridspace.com/examples/assets/hi_there.wav&#34;</span>});
+      } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Asking for the wait time...&#34;</span>);
+        <span style="color:#a6e22e">newTrans</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">getFreeResponse</span>({<span style="color:#e6db74">&#34;promptUrl&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;http://apicdn.gridspace.com/examples/assets/wait_time.wav&#34;</span>});
+      }
+      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">newTrans</span>) {
+        <span style="color:#a6e22e">trans</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">newTrans</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span>;
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">j</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">gt</span>; <span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">trans</span>.<span style="color:#a6e22e">indexOf</span>(<span style="color:#e6db74">&#39;minute&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">trans</span>.<span style="color:#a6e22e">indexOf</span>(<span style="color:#e6db74">&#39;wait&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+          <span style="color:#66d9ef">break</span>;
+        }
+      }
+    }
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Saying thank you...&#34;</span>);
+    <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">play</span>(<span style="color:#e6db74">&#34;http://apicdn.gridspace.com/examples/assets/thanks.wav&#34;</span>);
+    <span style="color:#a6e22e">waitTimes</span>[<span style="color:#a6e22e">restaurant</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">trans</span>;
+    <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">hangUp</span>();
+  }
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">waitTimes</span>);
+}
+</code></pre></div><p>As soon as we hear the word ‘minute’, we thank them and hang up. The results of each restaurant are simply printed to the console.</p>
+<!-- raw HTML omitted -->
+<p>In our experiments, about one in three restaurants provide a response, but this basic  example can be easily improved upon (and we encourage you to try!).</p>
+<p>One glaring problem is the crudeness of the parser (we simply look for the word ‘minute’ and call it a day). In the next example (the full sketch is <!-- raw HTML omitted -->here<!-- raw HTML omitted -->), we listen in on a simulated conference call, wherein status updates for different employees are extracted.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">QUERIES</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;~~&#39;status&#39; then ~~&#39;{name:employee}&#39; then (~~&#39;good&#39; or ~~&#39;bad&#39; or ~~&#39;late&#39; or ~~&#39;complete&#39;)&#34;</span>];
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">BEEP</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://apicdn.gridspace.com/examples/assets/alert.wav&#39;</span>;
+
+<span style="color:#a6e22e">gs</span>.<span style="color:#a6e22e">onIncomingCall</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">connection</span>) {
+  <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">joinConference</span>(<span style="color:#e6db74">&#39;Conference&#39;</span>, {
+    <span style="color:#a6e22e">onScan</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">scan</span>, <span style="color:#a6e22e">conversation</span>) {
+      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">QUERIES</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">topMatch</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">scan</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">0</span>];
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">topMatch</span>) {<span style="color:#66d9ef">continue</span>;};
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">match</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">topMatch</span>[<span style="color:#e6db74">&#39;match&#39;</span>];
+        <span style="color:#a6e22e">conversation</span>.<span style="color:#a6e22e">playToAll</span>(<span style="color:#a6e22e">BEEP</span>);
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Status update: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">match</span>);
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">topMatch</span>.<span style="color:#a6e22e">extractions</span>) {
+          <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;For employee: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">topMatch</span>.<span style="color:#a6e22e">extractions</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">value</span>);
+        }
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;\n&#34;</span>);
+      }
+    },
+    <span style="color:#a6e22e">scanQueries</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">QUERIES</span>,
+  });
+};
+</code></pre></div><p>In this example, instead of simply looking for exact words, we scan for approximate matches for status reports and names. This fuzzy natural language extraction allows for soft rephrasing and extraction of general concepts like numbers, names, dates, and times. Even if the conversation lasts for hours, each time a status update is detected, a sound is played, and the employee status is parsed. This entire behavior is implemented in just a couple lines of JavaScript.</p>
+<p>In the <!-- raw HTML omitted -->Sift API hosted script environment<!-- raw HTML omitted -->, you’ll find a wide array of other examples including <!-- raw HTML omitted -->automated political polling<!-- raw HTML omitted -->, <!-- raw HTML omitted -->deep support call analysis<!-- raw HTML omitted -->, <!-- raw HTML omitted -->an FAA weather scraper<!-- raw HTML omitted -->, and <!-- raw HTML omitted -->interactive voice agents<!-- raw HTML omitted -->. Each example is only a couple dozen lines long and demonstrates a broad spectrum of speech analysis capabilities.</p>
+<p>While there is still much work to done in the area of conversational speech processing, we are excited about what is already possible. Human-to-human speech systems can now listen, learn and react to increasingly complex patterns in long-form conversational speech. For businesses and developers, these advancements in speech processing mean more structured data and the opportunity to build new kinds of voice applications.</p>
+<p>– Evan Macmillan and Anthony Scodary, Co-Founders, Gridspace</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

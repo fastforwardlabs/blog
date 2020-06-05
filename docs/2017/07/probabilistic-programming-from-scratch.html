@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Probabilistic programming from scratch</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Jul 5, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Probabilistic programming from scratch</h1>
+  <h5 id="this-article-contains-highlights-from-a-series-of-three-interactive-video-tutorialshttpswwwsafaribooksonlinecomsearchquery22probabilistic20programming20from20scratch22extended_publisher_datatruehighlighttrueis_academic_institution_accountfalsesourceuserinclude_assessmentsfalseinclude_coursestrueinclude_oriolestrueinclude_playliststruepublisherso27reilly20media2c20incfieldtitlesortrelevanceutm_sourceoreillyutm_mediumnewsiteutm_campaignprobabilistic-programming-from-scratch-top-cta-orioles-link-on-probabilistic-programming-from-scratch-published-on-oreilly-safari-login-required">This article contains highlights from a series of <a href="https://www.safaribooksonline.com/search/?query=%22Probabilistic%20Programming%20from%20Scratch%22&amp;extended_publisher_data=true&amp;highlight=true&amp;is_academic_institution_account=false&amp;source=user&amp;include_assessments=false&amp;include_courses=true&amp;include_orioles=true&amp;include_playlists=true&amp;publishers=O%27Reilly%20Media%2C%20Inc.&amp;field=title&amp;sort=relevance&amp;utm_source=oreilly&amp;utm_medium=newsite&amp;utm_campaign=probabilistic-programming-from-scratch-top-cta-orioles-link">three interactive video tutorials</a> on probabilistic programming from scratch published on O&rsquo;Reilly Safari (login required).</h5>
+<h5 id="if-youre-interested-in-the-business-case-for-probabilistic-programming-the-fast-forward-labs-reporthttpblogfastforwardlabscom20170118new-research-on-probabilistic-programminghtml-discusses-it-in-detail-and-compares-modern-industrial-strength-systems-like-stan-and-pymc3-please-get-in-touchmailtocfflclouderacom-if-youre-interested-in-working-with-us">If you&rsquo;re interested in the business case for probabilistic programming the <a href="http://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html">Fast Forward Labs report</a> discusses it in detail, and compares modern industrial strength systems like Stan and PyMC3. Please <a href="mailto:cffl@cloudera.com">get in touch</a> if you&rsquo;re interested in working with us.</h5>
+<h5 id="this-article-is-available-as-a-jupyter-notebookhttpsgithubcomfastforwardlabsprobabilistic-programming-from-scratch">This article is <a href="https://github.com/fastforwardlabs/probabilistic-programming-from-scratch">available as a Jupyter Notebook</a>.</h5>
+<p>Real-world data is almost always incomplete or inaccurate in some way. This means that the uncertain conclusions we draw from it are only meaningful if we can answer the question: how uncertain?</p>
+<p>One way to do this is using Bayesian inference. But, while Bayesian inference is conceptually simple, it can be analytically and computationally difficult in practice. Probabilistic programming is a paradigm that abstracts away some of this complexity.</p>
+<p>There are many probabilistic programming systems. Perhaps the most advanced is <a href="http://mc-stan.org/">Stan</a>, and the most accessible to non-statistician programmers is <a href="https://pymc-devs.github.io/pymc3/">PyMC3</a>. At Fast Forward Labs we recently shared with our clients a <a href="http://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html">detailed report on the technology and uses of probabilistic programming in startups and enterprises</a>.</p>
+<p>But in this article, rather than use either of these advanced comprehensive systems, we&rsquo;re going to build our own extremely simple system from scratch.</p>
+<p>We&rsquo;ll write clear, functional Python 3. We&rsquo;ll use generators to build up a pipeline that will allow us to answer concrete questions. We won&rsquo;t use any libraries (except for random number generation and plotting). And I&rsquo;ll go easy on the mathematics. The code will be slow compared to Stan and PyMC3, but hopefully you&rsquo;ll understand every line.</p>
+<p>This &ldquo;from scratch&rdquo; approach follows in the footsteps of Joel Grus&rsquo;s book <a href="http://shop.oreilly.com/product/0636920033400.do">Data Science from Scratch</a>, and Jake
+VanderPlas&rsquo;s PyCon talk <a href="https://www.youtube.com/watch?v=Iq9DzN6mvYA">Statistics for Hackers</a>. I recommend both! In his talk, Jake said, &ldquo;if you can write a for loop, you can do statistical analysis&rdquo;. That isn&rsquo;t always true (good luck implementing <a href="https://arxiv.org/abs/1603.00788">ADVI</a> with a for loop). But when it is true, we can focus on the big, fundamental ideas without getting lost in algebraic or computational details.</p>
+<h2 id="an-ab-test">An A/B test</h2>
+<p>Let&rsquo;s take a specific data analysis problem: a simple A/B test for a website. Suppose our site has two layouts. During our test, 4% of visitors to layout A convert (i.e., buy something, sign up for the mailing list, whatever), and 5% to layout B convert. Clearly, layout B is better, so we should use that layout, right?</p>
+<p>But what if I tell you it was a very small test?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n_visitors_a <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>  <span style="color:#75715e"># number of visitors shown layout A</span>
+n_conv_a <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>        <span style="color:#75715e"># number of vistors shown layout A who converted</span>
+
+n_visitors_b <span style="color:#f92672">=</span> <span style="color:#ae81ff">40</span>
+n_conv_b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><p>Are you still sure B is better? And what if it&rsquo;s going to cost us $1 million to change the layout if we get this decsion wrong. Are you sure enough? If not, how much more data would you need?</p>
+<p>To answer these questions, we need to quantify exactly how confident we are that layout B is better, given the slice of data we do have.</p>
+<h2 id="a-simple-algorithm-for-bayesian-inference">A simple algorithm for Bayesian inference</h2>
+<p>We can do that using Bayesian inference. Bayesian inference is a method for updating your knowledge about the world with the information you learn during an experiment. It derives from a simple equation called Bayes&rsquo;s Rule. In its most advanced and efficient forms, it can be used to solve huge problems. But we&rsquo;re going use a specific, simple inference algorithm called Approximate Bayesian Computation (ABC), which is barely a couple of lines of Python:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">posterior_sampler</span>(data, prior_sampler, simulate):
+    <span style="color:#e6db74">&#39;&#39;&#39;Yield samples from the posterior by Approximate Bayesian Computation.&#39;&#39;&#39;</span>
+    <span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> prior_sampler:
+        <span style="color:#66d9ef">if</span> simulate(p) <span style="color:#f92672">==</span> data:
+            <span style="color:#66d9ef">yield</span> p
+</code></pre></div><p>This function turns the <em>prior</em> distribution into the <em>posterior</em>. What does that mean?</p>
+<p>I talk about these distributions in more detail in <a href="https://www.safaribooksonline.com/search/?query=%22Probabilistic%20Programming%20from%20Scratch%22&amp;extended_publisher_data=true&amp;highlight=true&amp;is_academic_institution_account=false&amp;source=user&amp;include_assessments=false&amp;include_courses=true&amp;include_orioles=true&amp;include_playlists=true&amp;publishers=O%27Reilly%20Media%2C%20Inc.&amp;field=title&amp;sort=relevance&amp;utm_source=oreilly&amp;utm_medium=newsite&amp;utm_campaign=probabilistic-programming-from-scratch-top-cta-orioles-link">the video tutorials</a>, but for this article, the rough idea is sufficient: samples from the prior distribution are our best guesses of the values of the unknown parameter of our system. In the case of an A/B test, this is the conversion fraction of a layout. These guesses are made before we do the experiment.</p>
+<p>Samples from the posterior distribution, meanwhile, are guesses of the same parameters made <em>after</em> the experiment, in the light of the data we gathered. Once you have the posterior, you can answer concrete questions about the implications of the data, such as how likely it is that layout B is better, given our data.</p>
+<p>In the function above, the <code>prior_sampler</code> argument is a generator that yields samples from the prior. We run the function <code>simulate</code> on a single sample from the prior. This <em>simulates</em> the experiment, <em>assuming</em> the prior sample is correct. We then compare the simulated outcome to the real outcome (<code>data</code>). If these agree, the sample from the prior can be used as a sample from the posterior. If not, we try again with another sample from the prior, until they do agree.</p>
+<p>After we run a lot of simulations using lots of samples from the prior, we&rsquo;ll have a good idea of which values were most likely to produce the observations we in fact saw, and are therefore most likely to be correct.</p>
+<h2 id="using-the-sampler">Using the sampler</h2>
+<p>And that&rsquo;s the whole algorithm. Abstracted away in that little <code>posterior_sampler</code> generator function, it&rsquo;s an extremely lightweight probabilistic programming system.</p>
+<p>Let&rsquo;s use it to finish our A/B test, starting with layout A. We need to prepare three arguments: <code>data</code>, <code>prior_sampler</code> and <code>simulate</code>. We already have the <code>data</code> for our A/B test. Let&rsquo;s now write a function that simulates the conversion of <code>n_visitors</code> visitors to a website with known probability <code>p</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> random
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">simulate_conversion</span>(p, n_visitors):
+    <span style="color:#e6db74">&#39;&#39;&#39;Return number of vistors who convert, given conversion fraction p.&#39;&#39;&#39;</span>
+    outcomes <span style="color:#f92672">=</span> (random<span style="color:#f92672">.</span>random() <span style="color:#f92672">&lt;</span> p <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_visitors))
+    <span style="color:#66d9ef">return</span> sum(outcomes)
+</code></pre></div><p>Here&rsquo;s what happens when we run this function a few times to simulate 100 visitors converting with probability 0.1:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> simulate_conversion(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">100</span>), simulate_conversion(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">100</span>), simulate_conversion(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">100</span>)
+(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>)
+</code></pre></div><p>Effectively, this function runs a fake A/B test in which we already know the conversion fraction. Here&rsquo;s how it works. The <code>random</code> function returns a random floating point number between 0 and 1. That number will be smaller than <code>p</code> with probability equal to <code>p</code>. We use a generator expression to do this <code>n_visitors</code> times. <code>outcomes</code> is then an iterable of booleans, <code>True</code> if that trial was a success (i.e. the ith visitor converted) and <code>False</code> if not. Finally we take advantage of the fact that the <code>sum</code> of an iterable of booleans is equal to the number of <code>True</code> elements it contains.</p>
+<p>We use a generator comprehension in this function because <code>n_visitors</code> could potentially be very large, and we want to do these calculations lazily and avoid holding the
+outcome for each visitor in memory simultaneously. (If Python generators are new to you, I recommend you <a href="https://www.youtube.com/watch?v=EnSu9hHGq5o">watch</a> or <a href="https://nedbatchelder.com/text/iter.html">read</a> Ned Batchelder&rsquo;s fantastic PyCon 2013 talk, &ldquo;How To Loop Like a Native&rdquo; for an introduction. If you&rsquo;re not using generators, you&rsquo;re not using the full power of Python. I talk about them much more in the video tutorials.)</p>
+<p>Finally we need <code>prior_sampler</code>. This should be a generator that yields a large (potentially infinite) number of guesses for the conversion fraction of a layout. Suppose we&rsquo;ve never used layout A. Logically we know that it must be somewhere between 0 and 100%, but other than that we have no idea. This generator captures that idea:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uniform_prior_sampler</span>():
+    <span style="color:#e6db74">&#39;&#39;&#39;Yield random numbers in interval (0, 1).&#39;&#39;&#39;</span>
+    <span style="color:#66d9ef">while</span> True:
+        <span style="color:#66d9ef">yield</span> random<span style="color:#f92672">.</span>random()
+</code></pre></div><p>Let&rsquo;s write a quick <code>take</code> function that will allow us to peek at a few samples from this generator.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> itertools
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">take</span>(n, iterable):
+    <span style="color:#e6db74">&#34;Return first n items of the iterable as a list.&#34;</span>
+    <span style="color:#66d9ef">return</span> list(itertools<span style="color:#f92672">.</span>islice(iterable, n))
+</code></pre></div><p>We can use this to draw 3 samples from our &ldquo;uniform&rdquo; prior sample like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> take(<span style="color:#ae81ff">3</span>, uniform_prior_sampler())
+[<span style="color:#ae81ff">0.8943997782145745</span>, <span style="color:#ae81ff">0.9196888444316101</span>, <span style="color:#ae81ff">0.6267420468068673</span>]
+</code></pre></div><p>Now we&rsquo;re ready to run <code>posterior_sampler</code> to create an object that will
+yield up samples from the posterior distribution for layout A&rsquo;s conversion
+fraction:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">posterior_a_sampler <span style="color:#f92672">=</span> posterior_sampler(
+    data<span style="color:#f92672">=</span>n_conv_a,
+    prior_sampler<span style="color:#f92672">=</span>uniform_prior_sampler(),
+    simulate<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> p: simulate_conversion(p, n_visitors_a)
+)
+</code></pre></div><p>(The <code>lambda</code> function here bakes in the number of visitors for layout A into the simulate argument. This is &ldquo;partial eveluation&rdquo;. We could also have used <code>functools.partial</code> for this.)</p>
+<p>To get a few samples from the posterior, we can use <code>take</code> again:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> take(<span style="color:#ae81ff">3</span>, posterior_a_sampler)
+[<span style="color:#ae81ff">0.03810094949124154</span>, <span style="color:#ae81ff">0.067278098392767</span>, <span style="color:#ae81ff">0.05786540496383208</span>]
+</code></pre></div><p>These are three guesses for the unknown conversion fraction of layout A. They are all around 4% percent. That&rsquo;s consistent with the fact that we had four conversions from 100 visitors. But note they are not exactly 4%. We can build up a picture of their distribution by getting thousands of samples from <code>posterior_sampler</code> and plotting a histogram.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a_samples <span style="color:#f92672">=</span> take(<span style="color:#ae81ff">10000</span>, posterior_a_sampler)
+
+abbins <span style="color:#f92672">=</span> [i<span style="color:#f92672">/</span><span style="color:#ae81ff">200.0</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">50</span>)]          <span style="color:#75715e"># 50 bins between 0 and 0.25</span>
+plt<span style="color:#f92672">.</span>hist(a_samples, bins<span style="color:#f92672">=</span>abbins, normed<span style="color:#f92672">=</span>True)  <span style="color:#75715e"># normed=True gives a probability density function</span>
+plt<span style="color:#f92672">.</span>xlim(<span style="color:#ae81ff">0</span>, max(abbins));
+</code></pre></div><p><img src="/images/2017/07/output_20_0.png" alt="png"></p>
+<h5 id="this-is-the-posterior-distribution-for-the-conversion-fraction-of-layout-a-its-a-full-picture-of-our-knowledge-after-the-experiment">This is the posterior distribution for the conversion fraction of layout A. It&rsquo;s a full picture of our knowledge after the experiment.</h5>
+<p>The posterior distribution is the object we use to answer concrete questions about our knowledge after an experiment. We can, for example, use this one to say how likely it is that layout A&rsquo;s conversion fraction is greater than 10%. We can do this by measuring the fraction of <code>a_samples</code> for which that is true:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> sum(a <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.1</span> <span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> a_samples)<span style="color:#f92672">/</span>len(a_samples)
+<span style="color:#ae81ff">0.0202</span>
+</code></pre></div><p>Again, we&rsquo;re using the fact that the sum of an iterable of booleans is equal the number of true elements.</p>
+<p>This tells us there&rsquo;s a 2% chance layout A&rsquo;s conversion fraction is greater than 10% (or equivalently, we can be 98% certain it&rsquo;s less than 10%).</p>
+<h2 id="completing-the-ab-test">Completing the A/B test</h2>
+<p>To complete the A/B test, however, we also need the posterior for layout B.</p>
+<p>Let&rsquo;s suppose that layout B is not brand new. We do have a rough idea of its conversion fraction before we conduct the experiment. Perhaps we think it&rsquo;s 6%, plus or minus a couple of per cent. In this case, uniform_prior_sampler is not appropriate, but something like this would work well:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">normal_prior_sampler</span>(mu<span style="color:#f92672">=</span><span style="color:#ae81ff">0.06</span>, sigma<span style="color:#f92672">=</span><span style="color:#ae81ff">0.02</span>):
+    <span style="color:#e6db74">&#39;&#39;&#39;Yield stream of samples from N(mu, sigma) in interval (0, 1).&#39;&#39;&#39;</span>
+    <span style="color:#66d9ef">while</span> True:
+        x <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>normalvariate(mu, sigma)
+        <span style="color:#66d9ef">if</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>:
+            <span style="color:#66d9ef">yield</span> x
+</code></pre></div><p>Mathematically, this function samples from a normal distribution with a known mean and standard deviation, and support in the interval (0, 1). Conceptually, though, it&rsquo;s easier to plot a histogram, and compare this prior to the uniform prior we used for layout A.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>hist(take(<span style="color:#ae81ff">100000</span>, uniform_prior_sampler()), bins<span style="color:#f92672">=</span>abbins, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;A&#39;</span>, normed<span style="color:#f92672">=</span>True)
+plt<span style="color:#f92672">.</span>hist(take(<span style="color:#ae81ff">100000</span>, normal_prior_sampler()), bins<span style="color:#f92672">=</span>abbins, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;B&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, normed<span style="color:#f92672">=</span>True)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Prior distributions&#39;</span>)
+plt<span style="color:#f92672">.</span>xlim(<span style="color:#ae81ff">0</span>, max(abbins))
+plt<span style="color:#f92672">.</span>legend();
+</code></pre></div><p><img src="/images/2017/07/output_26_0.png" alt="png"></p>
+<h5 id="the-guesses-for-layout-b-are-concentrated-around-6-which-captures-our-prior-knowledge">The guesses for layout B are concentrated around 6%, which captures our prior knowledge.</h5>
+<p>Now we have the prior sampler for layout B we can make its posterior sampler and take some samples.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">posterior_b_sampler <span style="color:#f92672">=</span> posterior_sampler(
+    data<span style="color:#f92672">=</span>n_conv_b,
+    prior_sampler<span style="color:#f92672">=</span>normal_prior_sampler(),
+    simulate<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> p: simulate_conversion(p, n_visitors_b)
+)
+b_samples <span style="color:#f92672">=</span> take(<span style="color:#ae81ff">10000</span>, posterior_b_sampler)
+</code></pre></div><p>Let&rsquo;s visualize the two sets of posterior samples directly.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>hist(a_samples, bins<span style="color:#f92672">=</span>abbins, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;A&#39;</span>, normed<span style="color:#f92672">=</span>True)
+plt<span style="color:#f92672">.</span>hist(b_samples, bins<span style="color:#f92672">=</span>abbins, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;B&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, normed<span style="color:#f92672">=</span>True)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Posterior distributions&#39;</span>)
+plt<span style="color:#f92672">.</span>xlim(<span style="color:#ae81ff">0</span>, max(abbins));
+plt<span style="color:#f92672">.</span>legend();
+</code></pre></div><p><img src="/images/2017/07/output_30_0.png" alt="png"></p>
+<h5 id="note-the-histogram-for-layout-b-is-to-the-right-of-that-for-layout-a-this-is-telling-us-that-layout-b-is-probably-better-than-layout-a">Note the histogram for layout B is to the right of that for layout A. This is telling us that layout B is probably better than layout A.</h5>
+<p>And we&rsquo;re finally in a position to answer the original question: how confident can we be that layout B is better?</p>
+<p>In this simple case, we can do this by making pairwise comparisons between the two lists of estimates and measuring the fraction of pairs for which the estimated conversion fraction of B is bigger than that for A.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> sum(b <span style="color:#f92672">&gt;</span> a <span style="color:#66d9ef">for</span> a, b <span style="color:#f92672">in</span> zip(a_samples, b_samples))<span style="color:#f92672">/</span>len(a_samples)
+<span style="color:#ae81ff">0.659</span>
+</code></pre></div><p>And that&rsquo;s it! Given the data and our prior beliefs, we are 66% sure that layout B is better than A.</p>
+<p>If a mistake is going to cost us $1 million, this probably isn&rsquo;t confident enough. We need to run a bigger A/B test before making this business decision. If we collect more data, however, we&rsquo;ll quickly run into one of the limitations of ABC: it&rsquo;s slow. Change the data and rerun this code to see for yourself.</p>
+<p>Approximate Bayesian Computation is slow and in some ways crude. There are often <a href="http://blog.fastforwardlabs.com/2017/01/30/the-algorithms-behind-probabilistic-programming.html">better options</a>. But it&rsquo;s not cheating. In the tutorials, I show how to speed it up for more realistic problems.</p>
+<h2 id="next-steps">Next steps</h2>
+<p>This article hopefully helped you to form a mental model of the relationship between the prior and the posterior distributions. This should leave you in good shape to look deeper into probabilistic programming and inference.</p>
+<p>Log in to O&rsquo;Reilly Safari and check out the three tutorials for a deeper video and text discussion, interactive code examples, exercises, and ideas for where to go next:</p>
+<ul>
+<li><a href="https://www.safaribooksonline.com/oriole/probabilistic-programming-from-scratch-1-a-b-testing-with-approximate-bayesian-computation">Part 1: A/B Testing with Approximate Bayesian Computation</a></li>
+<li><a href="https://www.safaribooksonline.com/oriole/probabilistic-programming-from-scratch-2-bayes-theorem-and-online-learning">Part 2: Bayes&rsquo; Theorem and Online Learning</a></li>
+<li><a href="https://www.safaribooksonline.com/oriole/probabilistic-programming-from-scratch-3-improving-algorithmic-performance-and-online-learning">Part 3: Improving Algorithmic Performance and PyMC3</a></li>
+</ul>
+<p>The <a href="http://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html">Fast Forward Labs report</a>, meanwhile, discusses the business case for probabilistic programming in detail, and compares modern industrial strength systems like Stan and PyMC3. Please <a href="cffl@cloudera.com">get in touch</a> if you&rsquo;re interested in working with us.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

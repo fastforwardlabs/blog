@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Probabilistic Cookies!</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      fast forward food labs
+      
+    </span>
+  </h5>
+  <h1>Probabilistic Cookies!</h1>
+  <p>In the spirit of Valentine&rsquo;s Day, we at Fast Forward Labs thought it would be fun to bake cookies for our sweethearts. Being DIY nerds, we thought we&rsquo;d math it up a bit.</p>
+<p>We used python to generate probability distributions and matplotlib to check our distributions. Then we wrote a python function to generate a SCAD file defining three-dimensional shapes from the distributions. Using <a href="http://www.openscad.org/">OpenSCAD</a>, an open-source CAD program, we checked the 3D models and exported them to STL files for printing. We used a 5th Generation <a href="https://www.makerbot.com/replicator/">MakerBot Replicator</a> to print our 3D models. And we baked cookies. Here&rsquo;s one of our office dogs (and my best friend), Dogface, admiring the results.</p>
+<p><img src="/images/editor_uploads/2018-02-15-204703-DogfaceWithCookies1200.jpg" alt=""></p>
+<p>There were a number of challenges involved in generating 3D models and printing them. Here&rsquo;s how the basic process went.</p>
+<p>We chose a beta distribution for our first prototype because it&rsquo;s well behaved for purposes of making a 3D printed object.</p>
+<ul>
+<li>A beta distribution only has values from 0 to 1. This gives us a fixed-width shape to work with. (Compare a Gaussian distribution, which has long tails on both sides and thus may not normalize to a good shape across 0 to 1.)</li>
+<li>The area under the curve of a beta distribution is necessarily 1, which helps keep the shape from getting too eccentric while allowing flexibility in choice of parameters, and thus a wider range of shapes.</li>
+<li>If you take two beta distributions, put them x-axis to x-axis, and squint, they look a bit like a heart.</li>
+</ul>
+<p>We created a beta distribution in python.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> beta
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+
+<span style="color:#75715e"># choose enough points to have a relatively smooth curve without </span>
+<span style="color:#75715e"># creating so many facets that the 3D printer is slow</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># choose an odd number so there is a definitive peak to the curve</span>
+numpoints <span style="color:#f92672">=</span> <span style="color:#ae81ff">35</span>
+
+<span style="color:#75715e"># set up linspace</span>
+X <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, numpoints)
+
+<span style="color:#75715e"># beta distribution parameters</span>
+a, b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1.6</span>
+
+<span style="color:#75715e"># get beta distribution array</span>
+betadist <span style="color:#f92672">=</span> beta<span style="color:#f92672">.</span>pdf(X, a, b)
+</code></pre></div><p>And plotted that distribution with some suitable parameters.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># turn off the axes so we only see the curve</span>
+plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+
+<span style="color:#75715e"># plot the curve itself</span>
+plt<span style="color:#f92672">.</span>plot(X, betadist)
+</code></pre></div><p><img src="/images/editor_uploads/2018-02-15-174748-betadistplot.png" alt=""></p>
+<p>Once we found a set of parameters that we liked, we used the points in the distribution in python to create an OpenSCAD-formatted SCAD file. A SCAD file is a readable text file that contains a combination of points in space that define shapes and instructions to manipulate those shapes. We made two 2D copies of the distribution, sized one up a bit, and centered them together. We extruded them both into 3D, one linear, and the other with a slight &ldquo;cone&rdquo; projection. This gave us one relatively thin edge for piercing cookie dough. Then we subtracted one shape from the other to make a hollow in the larger shape. Rendered in 3D in OpenSCAD, it looks like this:</p>
+<p><img src="/images/editor_uploads/2018-02-15-175332-SCAD_Beta_with_Taper.png" alt=""></p>
+<p>Note that the 3D model looks more eccentric than the python-generated plot. This is because the plot had axes of differing scales.</p>
+<p>With a 3D model in hand, it was time to print a physical object. We exported our SCAD object into a stereolithography (STL) file, which we then imported into <a href="https://www.makerbot.com/download-print/">MakerBot&rsquo;s printing software</a>.</p>
+<p><img src="/images/editor_uploads/2018-02-15-180914-MakerBot_Render.png" alt=""></p>
+<p>We made a final print file and extruded our first prototypes at <a href="http://nycresistor.com">NYC Resistor</a> our friendly neighborhood hackerspace. 3D printing can take a while for large shapes, so we started out small.</p>
+<p><img src="/images/editor_uploads/2018-02-15-173237-IMG_20180207_154319.jpg" alt=""></p>
+<p>Here are the first results (we had begun tinkering with a Gaussian distribution at that point):</p>
+<p><img src="/images/editor_uploads/2018-02-15-204811-IMG_20180205_170725_1200.jpg" alt=""></p>
+<p>Of course these first test shapes are too small for cookies. After a lot of tinkering and refinement, we ended up with beta, Gaussian, and Poisson distribution shapes scaled up for cookie size (about 100mm high).</p>
+<p>We <a href="http://www.inkatrinaskitchen.com/best-sugar-cookie-recipe-ever/">made some cookie dough</a> and got to business.</p>
+<p><img src="/images/editor_uploads/2018-02-15-204722-IMG_20180208_091928_1200.jpg" alt=""></p>
+<p>Note that the Poisson distribution (printed in white) has big solid areas at the top. This makes it more of a cookie-dough perturber than a cookie cutter. Those solid areas are an artifact of my own ignorance of OpenSCAD. The &ldquo;clever&rdquo; OpenSCAD <code>scale()</code> approach I had been using was a hack; I later learned that the <code>offset()</code> function is the correct solution.</p>
+<p>OpenSCAD issues aside, the cookies turned out fine. Here are some of the results, some decorated with axes and histograms.</p>
+<p><img src="/images/editor_uploads/2018-02-15-204937-IMG_20180208_153153_1200.jpg" alt=""></p>
+<p>If you feel inclined to give it a shot yourself, <a href="https://github.com/fastforwardlabs/probabilistic-cookie-cutters">here&rsquo;s a jupyter notebook</a> with some code to get you started.</p>
+<p>Happy Valentine&rsquo;s Day from Fast Forward Labs!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

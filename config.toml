@@ -1,7 +1,8 @@
-baseURL = "http://example.org/"
+baseURL = "https://fastforwardlabs.github.io/hugo_blog"
 languageCode = "en-us"
 title = "Blog"
 Paginate = 12
 uglyurls = true
+publishDir = "docs"
 [permalinks]
   "/" = "/:year/:month/:title/"

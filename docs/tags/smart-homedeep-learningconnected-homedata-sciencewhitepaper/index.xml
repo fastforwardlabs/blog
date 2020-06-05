@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>smart home,deep learning,connected home,data science,whitepaper on Blog</title>
+    <link>https://fastforwardlabs.github.io/hugo_blog/tags/smart-homedeep-learningconnected-homedata-sciencewhitepaper.html</link>
+    <description>Recent content in smart home,deep learning,connected home,data science,whitepaper on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Aug 2016 16:09:29 +0000</lastBuildDate>
+    
+	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/smart-homedeep-learningconnected-homedata-sciencewhitepaper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Giving Speech a Voice in the Home</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/08/giving-speech-a-voice-in-the-home.html</link>
+      <pubDate>Thu, 18 Aug 2016 16:09:29 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/08/giving-speech-a-voice-in-the-home.html</guid>
+      <description>This is a guest post by Sean Lorenz, the Founder &amp;amp; CEO of SENTER, a Boston-based startup using sensors and data science to support healthcare in the home. Sean explains how techniques from computational neuroscience can help make the smart home smarter and describes the speech recognition hurdles developers have to overcome to realize smart home potential.  Lack of protocol agreement, with increasing local protocol alliances. Lack of intelligence. IFTTTis great for early adopter techies, but my cookie-baking 62-year-old midwestern mom is never going to create a rule to combine her Philips Hue lights and SmartThings motion sensors to perform an automated action.</description>
+    </item>
+    
+  </channel>
+</rss>

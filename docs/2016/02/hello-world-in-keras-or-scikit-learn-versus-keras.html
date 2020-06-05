@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</h1>
+  <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> sklearn.cross_validation <span style="color:#f92672">import</span> train_test_split
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegressionCV
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.models <span style="color:#f92672">import</span> Sequential
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.layers.core <span style="color:#f92672">import</span> Dense, Activation
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.utils <span style="color:#f92672">import</span> np_utils
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> iris <span style="color:#f92672">=</span> sns<span style="color:#f92672">.</span>load_dataset(<span style="color:#e6db74">&#34;iris&#34;</span>)
+<span style="color:#f92672">&gt;&gt;&gt;</span> iris<span style="color:#f92672">.</span>head()
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> sns<span style="color:#f92672">.</span>pairplot(iris, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;species&#39;</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> X <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>values[:, <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4</span>]
+<span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>values[:, <span style="color:#ae81ff">4</span>]
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> train_X, test_X, train_y, test_y <span style="color:#f92672">=</span> train_test_split(X, y, train_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> lr <span style="color:#f92672">=</span> LogisticRegressionCV()
+<span style="color:#f92672">&gt;&gt;&gt;</span> lr<span style="color:#f92672">.</span>fit(train_X, train_y)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> pred_y <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(test_X)
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Test fraction correct (Accuracy) = {:.2f}&#34;</span><span style="color:#f92672">.</span>format(lr<span style="color:#f92672">.</span>score(test_X, test_y)))
+<span style="color:#75715e"># Test fraction correct (Accuracy) = 0.83</span>
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">setosa
+versicolor
+setosa
+virginica
+<span style="color:#f92672">...</span>
+</code></pre></div><!-- raw HTML omitted -->
+<pre><code>setosa versicolor virginica
+     1          0         0
+     0          1         0
+     1          0         0
+     0          0         1
+</code></pre><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">one_hot_encode_object_array</span>(arr):
+    <span style="color:#e6db74">&#39;&#39;&#39;One hot encode a numpy array of objects (e.g. strings)&#39;&#39;&#39;</span>
+    uniques, ids <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(arr, return_inverse<span style="color:#f92672">=</span>True)
+    <span style="color:#66d9ef">return</span> np_utils<span style="color:#f92672">.</span>to_categorical(ids, len(uniques))
+
+<span style="color:#f92672">&gt;&gt;&gt;</span> train_y_ohe <span style="color:#f92672">=</span> one_hot_encode_object_array(train_y)
+<span style="color:#f92672">&gt;&gt;&gt;</span> test_y_ohe <span style="color:#f92672">=</span> one_hot_encode_object_array(test_y)
+</code></pre></div><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> model <span style="color:#f92672">=</span> Sequential()
+<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">16</span>, input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">4</span>,)))
+<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;sigmoid&#39;</span>))
+<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">3</span>))
+<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;softmax&#39;</span>))
+<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;categorical_crossentropy&#39;</span>, optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>fit(train_X, train_y_ohe, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> loss, accuracy <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_X, test_y_ohe, show_accuracy<span style="color:#f92672">=</span>True, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Test fraction correct (Accuracy) = {:.2f}&#34;</span><span style="color:#f92672">.</span>format(accuracy))
+
+<span style="color:#75715e"># Test fraction correct (Accuracy) = 0.99</span>
+</code></pre></div><!-- raw HTML omitted -->
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

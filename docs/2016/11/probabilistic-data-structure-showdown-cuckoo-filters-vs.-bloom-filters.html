@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Nov 23, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      whitepaper
+      
+    </span>
+  </h5>
+  <h1>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</h1>
+  <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Traditional Bloom filters do not support deletions because hashing is lossy and irreversible. That means, deletions require the entire filter to be rebuilt. But what if we want to delete items seen in the past, like certain tweets in the Twitter example above? The counting Bloom filter was introduced to solve this problem. To support deletions, counting Bloom filters extend buckets in traditional Bloom filters from single bit values to n-bit counters. Here, insertions increment rather than set Bloom filter indices.<!-- raw HTML omitted --><!-- raw HTML omitted -->Cuckoo filter<!-- raw HTML omitted --><!-- raw HTML omitted -->The Cuckoo filter is an alternative to the Bloom filter when one requires support for deletions. They were introduced in <!-- raw HTML omitted -->2014<!-- raw HTML omitted --> by Fan et. al. Like the counting Bloom filter, Cuckoo filters provide insert, delete, and lookup capabilities. However, Cuckoo filters use different underlying data structures and different insertion procedures than Bloom filters.<!-- raw HTML omitted --><!-- raw HTML omitted -->The Cuckoo filter consists of a <!-- raw HTML omitted -->Cuckoo hash table<!-- raw HTML omitted --> that stores the &lsquo;fingerprints’ of items inserted. The fingerprint of an item is a bit string derived from the hash of that item. A cuckoo hash table consists of an array of buckets where an item to be inserted is mapped to two possible buckets based on two hash functions. Each bucket can be configured to store a variable number of fingerprints. Typically, a Cuckoo filter is identified by its fingerprint and bucket size. For example, a (2,4) Cuckoo filter stores 2 bit length fingerprints and each bucket in the Cuckoo hash table can store up to 4 fingerprints. Following the above <!-- raw HTML omitted -->paper<!-- raw HTML omitted -->, we implemented the cuckoo filter in <!-- raw HTML omitted -->python<!-- raw HTML omitted -->. Below, we initialize an example cuckoo filter and test simple inserts and deletions. We also implement a counting Bloom filter to compare performance.<!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> cuckoofilter <span style="color:#f92672">import</span> CuckooFilter
+c_filter <span style="color:#f92672">=</span> CuckooFilter(<span style="color:#ae81ff">10000</span>, <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#specify capacity and fingerprint size</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">c_filter<span style="color:#f92672">.</span>insert(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in c_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> c_filter))
+<span style="color:#75715e"># James in c_filter == True</span>
+
+c_filter<span style="color:#f92672">.</span>remove(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in c_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> c_filter))
+<span style="color:#75715e"># James in c_filter == False</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> cuckoofilter <span style="color:#f92672">import</span> CountingBloomFilter
+b_filter <span style="color:#f92672">=</span> CountingBloomFilter(<span style="color:#ae81ff">10000</span>) <span style="color:#75715e">#specify the capacity of a counting bloom filter</span>
+
+b_filter<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in b_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> b_filter))
+<span style="color:#75715e"># James in b_filter == True</span>
+
+b_filter<span style="color:#f92672">.</span>remove(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in b_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> b_filter))
+<span style="color:#75715e"># James in b_filter == False</span>
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#example function to demonstrate how to insert into a cuckoo filter.</span>
+
+<span style="color:#f92672">import</span> mmh3
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">obtain_indices_from_item</span>(item_to_insert, fingerprint_size, capacity):
+
+    <span style="color:#75715e">#hash the string item</span>
+    hash_value <span style="color:#f92672">=</span> mmh3<span style="color:#f92672">.</span>hash_bytes(item_to_insert)
+
+    <span style="color:#75715e">#subset the hash to a fingerprint size</span>
+    fingerprint <span style="color:#f92672">=</span> hash_value[:fingerprint_size]
+
+    <span style="color:#75715e">#derive the index</span>
+    index_1 <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(hash_value, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;big&#34;</span>)
+    index_1 <span style="color:#f92672">=</span> index_1 <span style="color:#f92672">%</span> capacity
+
+    <span style="color:#75715e">#derive the index from the fingerprint</span>
+    hashed_fingerprint <span style="color:#f92672">=</span> mmh3<span style="color:#f92672">.</span>hash_bytes(fingerprint)
+    finger_print_index <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(hashed_fingerprint, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;big&#34;</span>)
+    finger_print_index <span style="color:#f92672">=</span> finger_print_index <span style="color:#f92672">%</span> capacity
+
+    <span style="color:#75715e">#second index -&amp;gt; first_index xor index derived from hash(fingerprint)</span>
+    index_2 <span style="color:#f92672">=</span> index_1 <span style="color:#f92672">^</span> finger_print_index
+    index_2 <span style="color:#f92672">=</span> index_2 <span style="color:#f92672">%</span> capacity
+
+    <span style="color:#66d9ef">return</span> index_1, index_2, fingerprint
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">insert_into_table</span>(table, index_1, index_2, bucket_capacity):
+    <span style="color:#75715e">#now insert item into the table</span>
+    <span style="color:#66d9ef">if</span> len(table[index_1]) <span style="color:#75715e">#let&#39;s create a crude cuckoo hashtable</span>
+        capacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e">#capacity of our cuckoo hashtable</span>
+        bucket_capacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+        table <span style="color:#f92672">=</span> [[] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(capacity)]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#obtain possibe indices</span>
+index_1, index_2, fp <span style="color:#f92672">=</span> obtain_indices_from_item(<span style="color:#e6db74">&#34;James&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>)
+
+<span style="color:#75715e">#now let&#39;s insert &#34;James into the table&#34;</span>
+table, _ <span style="color:#f92672">=</span> insert_into_table(table, index_1, index_2, bucket_capacity)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Table after James is inserted.&#34;</span>)
+<span style="color:#75715e">#check to see that &#34;james&#34; has been inserted</span>
+<span style="color:#66d9ef">print</span>(table)
+<span style="color:#75715e"># Table after James is inserted.</span>
+<span style="color:#75715e"># [[], [], [], [], [], [], [], [], [], [b&#39;\xc0\n&#39;]]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#let&#39;s insert &#34;james&#34; again.</span>
+index_1, index_2, fp <span style="color:#f92672">=</span> obtain_indices_from_item(<span style="color:#e6db74">&#34;James&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>)
+
+<span style="color:#75715e">#now let&#39;s insert &#34;James into the table&#34;</span>
+table, _ <span style="color:#f92672">=</span> insert_into_table(table, index_1, index_2, bucket_capacity)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Table after James is inserted a second time.&#34;</span>)
+<span style="color:#75715e">#now let&#39;s check to see that &#34;James&#34; has been inserted again</span>
+<span style="color:#66d9ef">print</span>(table)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#75715e"># Table after James is inserted a second time.</span>
+<span style="color:#75715e"># [[], [], [], [], [], [], [], [], [], [b&#39;\xc0\n&#39;, b&#39;\xc0\n&#39;]]</span>
+
+<span style="color:#75715e">#let&#39;s insert a different item now</span>
+index_1, index_2, fp <span style="color:#f92672">=</span> obtain_indices_from_item(<span style="color:#e6db74">&#34;Henry&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>)
+
+table, _ <span style="color:#f92672">=</span> insert_into_table(table, index_1, index_2, bucket_capacity)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Table after Henry is inserted.&#34;</span>)
+<span style="color:#75715e">#now let&#39;s check to see that &#34;Henry&#34; has been inserted into the table.</span>
+<span style="color:#66d9ef">print</span>(table)
+<span style="color:#75715e"># Table after Henry is inserted.</span>
+<span style="color:#75715e"># [[], [], [b&#39;\x1c\xb2&#39;], [], [], [], [], [], [], [b&#39;\xc0\n&#39;, b&#39;\xc0\n&#39;]]</span>
+</code></pre></div><!-- raw HTML omitted -->
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

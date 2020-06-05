@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Realistic Video Generation</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 28, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Realistic Video Generation</h1>
+  <p><a href="https://arxiv.org/abs/1406.2661">Generative Adversarial Networks</a> (GANs) wowed the world in 2014 with their
+ability to generate what we considered to be <a href="https://arxiv.org/abs/1701.07875">realistic images</a>. While these
+images were quite low resolution, researchers kept working on how to perfect
+these methods in order to increase the quality of the images and even to apply
+the algorithm on other types of data like text and sound.</p>
+<p><img src="/images/2018/09/gan-1536758013486.png" alt=""></p>
+<p>However, until recently there has been little success in making realistic
+videos. The main problem with making videos is temporal consistency: while
+people can be forgiving in one frame and find some interpretation for
+unrealistic regions, we are adept at seeing inconsistencies with how videos
+progress.</p>
+<p><img src="/images/2018/09/pix2pixhd-1536757958811.gif" alt=""></p>
+<p>For example, we can accept some strange looking texture in the background of an
+image as simply some strange looking background. However, if that background is
+randomly changing from frame to frame in a video, we immediately discount the
+video. It is exactly this temporal consistency which has plagued researchers
+trying to apply GANs to videos &ndash; while each frame seemed realistic taken on
+its own, when assembled into a video, there were considerable inconsistencies
+which ruined any illusion of realism. This restricted the ability to reuse
+models that showed success at generating individual images, and forced
+researchers to come up with new methods to deal with the temporal nature of
+videos.</p>
+<p><img src="/images/2018/09/maxresdefault-1536763922861.jpg" alt=""></p>
+<p>Recently, researchers at NVIDIA and MIT have come up with a new type of
+GAN, <a href="https://tcwang0509.github.io/vid2vid/">vid2vid</a>, which primarily addresses this problem by explicitly
+incorporating how things seem to be moving within the video, in order to continue
+this motion in future frames. (In addition, they follow previous work, which uses
+a multi-resolution approach for generating high resolution images). This is done
+by calculating the <a href="https://en.wikipedia.org/wiki/Optical_flow">optical flow</a> of the image, which is a classic computer
+vision method that simply has not been incorporated into such a model until now.</p>
+<p><img src="/images/2018/09/citysmall-1536759505454.gif" alt=""></p>
+<p>The results are quite staggering (we highly recommend watching their <a href="https://www.youtube.com/watch?v=GrP_aOSXt5U&amp;feature=youtu.be">release
+video</a>). With the model you can create dashboard camera footage from the initial
+segmentation frame (allowing you to change the type and shape of objects in the
+frame by simply drawing in the corresponding color); it&rsquo;s even possible to create realistic looking
+dance videos from pose information. It&rsquo;s interesting to see this new method as
+<a href="https://www.youtube.com/watch?v=A7g4mLD1E1E">compared with previous methods</a>, to really get a sense of how important this
+additional temporal information is for making realistic results.</p>
+<p><img src="/images/2018/09/pose_to_body_vid2vi2-1536757918891.gif" alt=""></p>
+<p>These high quality results are quite exciting and are groundbreaking work in
+the field of video generation. From applications in generating synthetic
+training data to use in creative projects, the vid2vid model itself is instantly
+applicable.</p>
+<p>Even more interesting is how the field as a whole will learn from this
+research and start finding ways to incorporate other classic algorithms into
+neural networks. Just as conv-nets explicitly encoded the two dimensional
+understanding we have for images into models so that they can more quickly and
+accurately learn how to work with that data, this method explicitly encodes our
+understanding of how frames of a video flow from one to another (albeit this was
+much trickier to do than the conv-net example!). We&rsquo;re interested in seeing what
+other algorithms will be incorporated into neural networks like this and what
+capabilities these models will have.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

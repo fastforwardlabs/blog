@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Encartopedia</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 8, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>Encartopedia</h1>
+  <p><img src="/images/2017/08/enc-tabula.jpg" alt="Tabula Rogeriana"></p>
+<h5 id="the-tabula-rogerianahttpsenwikipediaorgwikitabula_rogeriana-a-world-map-created-by-muhammad-al-idrisi-through-traveler-interviews-in-1154">The <a href="https://en.wikipedia.org/wiki/Tabula_Rogeriana">Tabula Rogeriana</a>, a world map created by Muhammad al-Idrisi through traveler interviews in 1154.</h5>
+<p>The Wikipedia corpus is one of the favorite datasets of the machine learning community. It is often used for experimenting, benchmarking and providing how-to examples. These experiments are generally presented separate from the Wikipedia user interface, however, which has remained true to the early hypertext vision of the web. For this experiment, <a href="http://encartopedia.fastforwardlabs.com"><em>Encartopedia</em></a>, I used machine learning techniques and visualization to explore new navigation possibilities for Wikipedia while preserving its hypertextual feel. With Encartopedia, you can map the path of any <a href="https://xkcd.com/214/">journey</a> through Wikipedia, or use the visualization to jump to articles near and far.</p>
+<p><img src="/images/2017/08/enc-ui.png" alt="Encartopedia"></p>
+<h5 id="encartopediahttpencartopediafastforwardlabscom-features-the-conventional-wikipedia-interface-in-the-left-panel-and-a-mapping-of-articles-based-on-similarity-on-the-right"><a href="http://encartopedia.fastforwardlabs.com">Encartopedia</a> features the conventional Wikipedia interface in the left panel, and a mapping of articles based on similarity on the right.</h5>
+<h2 id="mapping-articles">Mapping articles</h2>
+<p>The starting point for the research was <a href="http://seealso.hatnote.com/">hatnote.com</a> which has a glossary of Wikipedia visualizations and alternative user interfaces. Among those examples <a href="http://wiki.polyfra.me/">Wikigalaxy</a> by <a href="http://byowen.com/">Owen Cornec</a> was the most inspiring for its attempt to map the semantic space of Wikipedia into a navigable space. From Wikigalaxy I borrowed the coordinates of their dimensionality reduction algorithm, mapping the articles to 2D coordinates for the 100,000 top Wikipedia articles.</p>
+<p>The mapping of the top 100,000 articles makes up the base visualization in the right-hand panel of Encartopedia. The mapping is not only limited to those 100,000 articles, however. Any article you navigate to in Wikipedia can be located on the navigation map. To make this possible I used a method similar to this <a href="https://rare-technologies.com/performance-shootout-of-nearest-neighbours-contestants/">benchmark</a> to create a fast index of 500 dimensional LSA vectors for all five million articles. I used <a href="https://github.com/spotify/annoy">Annoy</a> to query the nearest neighbors of the chosen article and used triangulation to then place the article on the map. The nearest neighbors are also displayed above the Wikipedia article in the &ldquo;Semantic Neighbors&rdquo; section.</p>
+<h2 id="categorizing-clusters">Categorizing clusters</h2>
+<p>In order to color code and categorize the topic clusters in the article map, I applied the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html">DBSCAN</a> clustering algorithm over the result of article coordinates. Unlike many other clustering algorithms DBSCAN doesn&rsquo;t create evenly sized clusters, making it a good fit for the map clusters (after some parameter tuning). DBSCAN doesn&rsquo;t assign categories to all the points but it is easy to assign those points to a cluster in the second pass using <a href="http://scikit-learn.org/stable/modules/neighbors.html">Nearest Neighbors</a>. To name the clusters I scraped the Wikipedia categories assigned to those articles and found the top category shared between them.</p>
+<p><img src="/images/2017/08/enc-color.png" alt="Coloring the map"></p>
+<h5 id="color-coding-points-by-clustering-using-dbscan">Color coding points by clustering using DBSCAN</h5>
+<p><img src="/images/2017/08/enc-voro.png" alt="Voronoi overlay of the map"></p>
+<h5 id="overlaying-the-clusters-with-a-voronoi-diagram-for-mouseover-interactions">Overlaying the clusters with a voronoi diagram for mouseover interactions.</h5>
+<h2 id="making-it-interactive">Making it interactive</h2>
+<p>The UI is build using <a href="https://facebook.github.io/react/">React</a> and <a href="http://redux.js.org/">Redux</a>. The map is mostly in <a href="https://threejs.org/">three.js</a> and rendered on a canvas except for the annotations which are SVG. Using <a href="https://d3js.org/">D3.js</a> is almost inevitable in any data-driven UI, especially with the modular design of version 4, however the DOM manipulation is done only with React.</p>
+<h2 id="the-possibilities-of-encyclopedia-cartography">The possibilities of encyclopedia cartography</h2>
+<p>My interest in Wikipedia is not just because I spend too much time reading random articles, but also because I am fascinated by the idea of the ultimate encyclopedia containing the totality of human knowledge. Once such an encyclopedia was an idealistic dream that was mostly <a href="https://www.pastemagazine.com/blogs/lists/2014/03/10-of-the-weirdest-mostly-fictional-encyclopedias.html">fantasized about in literature</a>, but now its accessibility has  trivialized it to the point it no longer has its past allure. So maybe being able to map and log the navigation within this meta-space brings back a little bit of the old fantasy.</p>
+<p>On the other hand hyperlinks are no longer the unique source of signifying the relation between two nodes on the web. <a href="https://medium.com/matter/the-web-we-have-to-save-2eb1fe15a426">The hypertext web is declining</a> where social media indexes play a more important role in determining how much media objects on the web are valuable and related. Wikipedia is unique for remaining purely hypertextual. Encartopedia is also a celebration of the good old hypertextual web.</p>
+<h5 id="in-the-end-i-wanted-to-mention-how-grateful-i-am-for-fast-forward-labs-especially-granthttpstwittercomgrantcuster-and-hilaryhttpstwittercomhmason-for-giving-me-the-opportunity-to-work-on-this-project-which-i-have-been-fascinated-with-for-a-long-time-i-would-also-like-to-thank-michahttpsgithubcommynameisfiber-for-help-with-figuring-out-ml-challenges-and-raschinhttpstwittercompurplebulldozer-for-help-with-ui-hatnotehttpstwittercomhatnotable-and-owen-cornechttpstwittercomowencornec-for-inspiration-and-all-the-creators-and-contributors-to-the-open-source-projects-i-have-used">In the end I wanted to mention how grateful I am for Fast Forward Labs, especially <a href="https://twitter.com/GrantCuster">Grant</a> and <a href="https://twitter.com/hmason">Hilary</a> for giving me the opportunity to work on this project which I have been fascinated with for a long time. I would also like to thank <a href="https://github.com/mynameisfiber">Micha</a> for help with figuring out ML challenges and <a href="https://twitter.com/purplebulldozer">Raschin</a> for help with UI, <a href="https://twitter.com/hatnotable">hatnote</a> and <a href="https://twitter.com/owencornec">Owen Cornec</a> for inspiration and all the creators and contributors to the open-source projects I have used.</h5>
+<p>– <a href="https://sepans.com/sp">Sepand</a></p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

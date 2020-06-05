@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>art on Blog</title>
+    <link>https://fastforwardlabs.github.io/hugo_blog/tags/art.html</link>
+    <description>Recent content in art on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Feb 2016 15:09:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/art/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>NeuralTalk with Kyle McDonald</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/02/neuraltalk-with-kyle-mcdonald.html</link>
+      <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/02/neuraltalk-with-kyle-mcdonald.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;h5 id=&#34;image-from-a-hrefhttpsvimeocom90547410social-soula-an-immersive-experience-of-being-inside-a-social-media-stream-by-a-hrefhttplauren-mccarthycomlauren-mccarthya-and-kyle-mcdonald&#34;&gt;Image from &lt;!-- raw HTML omitted --&gt;Social Soul&lt;!-- raw HTML omitted --&gt;, an immersive experience of being inside a social media stream, by &lt;!-- raw HTML omitted --&gt;Lauren McCarthy&lt;!-- raw HTML omitted --&gt; and Kyle McDonald&lt;/h5&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+    <item>
+      <title>Machines and Metaphors</title>
+      <link>https://fastforwardlabs.github.io/hugo_blog/2016/02/machines-and-metaphors.html</link>
+      <pubDate>Tue, 16 Feb 2016 16:35:11 +0000</pubDate>
+      
+      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/02/machines-and-metaphors.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;
+&lt;h5 id=&#34;this-is-a-guest-post-by-a-hrefhttpwwwgenekogancomgene-kogana-an-artist-and-programmer-who-applies-emerging-technology-into-artistic-and-expressive-contexts-and-teaches-courses-and-workshops-on-topics-related-to-code-and-art&#34;&gt;This is a guest post by &lt;!-- raw HTML omitted --&gt;Gene Kogan&lt;!-- raw HTML omitted --&gt;, an artist and programmer who applies emerging technology into artistic and expressive contexts, and teaches courses and workshops on topics related to code and art.&lt;/h5&gt;
+&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

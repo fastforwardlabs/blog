@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Introducing Variational Autoencoders (in Prose and Code)</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 12, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      whitepaper
+      
+    </span>
+  </h5>
+  <h1>Introducing Variational Autoencoders (in Prose and Code)</h1>
+  <!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+<span style="color:#f92672">from</span> tensorflow.examples.tutorials.mnist <span style="color:#f92672">import</span> input_data
+
+<span style="color:#f92672">import</span> vae <span style="color:#75715e"># this is our model - to be explored in the next post</span>
+
+
+IMG_DIM <span style="color:#f92672">=</span> <span style="color:#ae81ff">28</span>
+ARCHITECTURE <span style="color:#f92672">=</span> [IMG_DIM<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>, <span style="color:#75715e"># 784 pixels</span>
+                <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>, <span style="color:#75715e"># intermediate encoding</span>
+                <span style="color:#ae81ff">50</span>] <span style="color:#75715e"># latent space dims</span>
+<span style="color:#75715e"># (and symmetrically back out again)</span>
+HYPERPARAMS <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;batch_size&#34;</span>: <span style="color:#ae81ff">128</span>,
+    <span style="color:#e6db74">&#34;learning_rate&#34;</span>: <span style="color:#ae81ff">1E-3</span>,
+    <span style="color:#e6db74">&#34;dropout&#34;</span>: <span style="color:#ae81ff">0.9</span>,
+    <span style="color:#e6db74">&#34;lambda_l2_reg&#34;</span>: <span style="color:#ae81ff">1E-5</span>,
+    <span style="color:#e6db74">&#34;nonlinearity&#34;</span>: tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>elu,
+    <span style="color:#e6db74">&#34;squashing&#34;</span>: tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>sigmoid
+}
+
+mnist <span style="color:#f92672">=</span> input_data<span style="color:#f92672">.</span>read_data_sets(<span style="color:#e6db74">&#34;mnist_data&#34;</span>)
+v <span style="color:#f92672">=</span> vae<span style="color:#f92672">.</span>VAE(ARCHITECTURE, HYPERPARAMS)
+v<span style="color:#f92672">.</span>train(mnist, max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">20000</span>)
+</code></pre></div><!-- raw HTML omitted -->
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

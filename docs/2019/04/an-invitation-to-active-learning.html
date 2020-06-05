@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>An Invitation to Active Learning</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 3, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      post
+      
+    </span>
+  </h5>
+  <h1>An Invitation to Active Learning</h1>
+  <p>Many interesting learning problems exist in places where labeled data is limited.
+As such, much thought has been spent on how best to learn from limited labeled data.
+One obvious answer is simply to collect more data.
+That is valid, but for some applications, data is difficult or expensive to collect.
+If we will collect more data, we ought at least be smart about the data we collect.
+This motivates <em>active learning</em>, which provides strategies for learning in this scenario.</p>
+<p>The ideal setting for active learning is that in which we have a small amount of labeled data with which to build a model and access to a large pool of unlabeled data.
+We must also have the means to label some of that data, but it&rsquo;s OK for the labeling process to be costly (for instance, a human hand-labeling an image).
+The active learning process forms a loop:</p>
+<ol>
+<li>build a model based on the labeled data available</li>
+<li>use the model to predict labels for the unlabeled points</li>
+<li>use an active learning <em>strategy</em> to decide which point to label next</li>
+<li>label that point</li>
+<li>GOTO 1.</li>
+</ol>
+<p><img src="/images/editor_uploads/2019-04-04-171937-uncertainty_sampling_observable_fast.gif" alt="The active learning loop in action">
+<em>The active learning loop in action - try out the <a href="https://observablehq.com/@cjwallace/an-invitation-to-active-learning">demo</a>!</em></p>
+<p>The essence of active learning is in the <em>strategy</em> we choose in the loop above.
+Three broad families of strategy are:</p>
+<ul>
+<li>
+<p><em>Random sampling</em>. In the default case, we sample unlabeled data from the pool randomly. This is a passive approach where we don&rsquo;t use the output of the current model to inform the next data point to be labeled. As such, it isn&rsquo;t really active learning.</p>
+</li>
+<li>
+<p><em>Uncertainty sampling</em>. In uncertainty sampling, we choose the data point about which the algorithm is least certain to label next. This could be the point closest to the decision boundary (the least confident prediction), or it could be the point with highest entropy, or other measure of uncertainty. Choosing points as such helps our learning algorithm refine the decision boundary.</p>
+</li>
+<li>
+<p><em>Density sampling</em>. Uncertainty sampling works much better than random sampling, but by definition it causes the data points we choose to label to cluster around the decision boundary. This data may be very informative, but not necessarily representative. In density sampling, we try to sample from regions where there are many data points. The trade off between informativeness and representativeness is fundamental to active learning, and there are many approaches that address it.</p>
+</li>
+</ul>
+<p>To illustrate the difference between passive and active learning, we created an Observable notebook with a toy problem, which you can explore <a href="https://observablehq.com/@cjwallace/an-invitation-to-active-learning">here</a>.
+In the notebook, the goal is to find a good separation of red and blue points on a two dimensional chart, and we train a logistic regression model live in the browser to do so.
+One can see how the decision boundary separating the points evolves as more data is labeled with a random sampling strategy, and also with an uncertainty sampling strategy.
+In the case of two classes with a linear decision boundary, all the uncertainty sampling strategies (least confidence and highest entropy) give the same result.
+This is an extremely simplified example, but we think it shows some of the intuition behind active learning.</p>
+<p>We explore active learning in much more detail in our report Learning with Limited Labeled Data, and you can get a high level overview in our <a href="https://blog.fastforwardlabs.com/2019/04/02/a-guide-to-learning-with-limited-labeled-data.html">previous post</a>.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

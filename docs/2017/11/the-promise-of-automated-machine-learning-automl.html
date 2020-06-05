@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>The promise of Automated Machine Learning (AutoML)</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Nov 30, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>The promise of Automated Machine Learning (AutoML)</h1>
+  <p>Earlier this month The New York Times published an article on <a href="https://www.nytimes.com/2017/11/05/technology/machine-learning-artificial-intelligence-ai.html">Building A.I. That Can Build A.I.</a>. There is a lot of excitement about AutoML due to the scarcity of machine learning (ML) talent:</p>
+<blockquote>
+<p><em>By some estimates, only 10,000 people worldwide have the education, experience and talent needed to build the complex and sometimes mysterious mathematical algorithms that will drive this new breed of artificial intelligence.</em></p>
+</blockquote>
+<p>Furthermore, ML/AI experts are expensive: <a href="https://www.nytimes.com/2017/10/22/technology/artificial-intelligence-experts-salaries.html?_r=0">Tech Giants Are Paying Huge Salaries for Scarce A.I. Talent</a>. AutoML promises <em>more ML at lower cost</em>; it is an enticing offering.</p>
+<h3 id="the-multiple-meanings-of-automl">The multiple meanings of AutoML</h3>
+<p>That said, the realistic promise of new capabilities is hard to grasp. There are at least three different notions of AutoML:</p>
+<ul>
+<li><strong>Citizen Data Science / ML</strong>: AutoML will allow everyone to do data science and ML. It requires no special training or skills.</li>
+<li><strong>Efficient Data Science / ML</strong>: AutoML will supercharge your data scientists and ML engineers by making them more efficient.</li>
+<li><strong>Learning to Learn</strong>: AutoML will automate architecture and optimization algorithm design (much like neural networks automated feature engineering).</li>
+</ul>
+<p>We could add a fourth:</p>
+<ul>
+<li><strong>Transfer Learning</strong>: AutoML will allow algorithms to learn new tasks faster by utilizing what they have learned from mastering other tasks in the past.</li>
+</ul>
+<p>Google Brain&rsquo;s AutoML project is about <a href="https://research.googleblog.com/2017/05/using-machine-learning-to-explore.html">Learning to Learn</a>:</p>
+<blockquote>
+<p><em>Typically, our machine learning models are painstakingly designed by a team of engineers and scientists. This process of manually designing machine learning models is difficult because the search space of all possible models can be combinatorially large — a typical 10-layer network can have ~1010 candidate networks! For this reason, the process of designing networks often takes a significant amount of time and experimentation by those with significant machine learning expertise.</em></p>
+</blockquote>
+<p>Learning to learn is very exciting! But it requires extensive computational resources for model training, the kind Google has access to, but not many others. By providing access to (cloud) compute power, of course, AutoML as <em>Learning to Learn</em> is an excellent strategy to monetize Google&rsquo;s cloud compute offering; Google has an excellent <em>business case</em> for investing time and resources into the AutoML project (of course).  But experts suugest it will take a while before the promise of AutoML as <em>Learning to Learn</em> will materialize:</p>
+<blockquote>
+<p><em>Renato Negrinho, a researcher at Carnegie Mellon University who is exploring technology similar to AutoML, said this was not a reality today but should be in the years to come. “It is just a matter of when,” he said.</em></p>
+</blockquote>
+<p>We agree. So how about the promise of the other notions of AutoML?</p>
+<p>There are data science and ML platform vendors that promise to automate data science and ML to the extent that <em>Citizen Data Science / ML</em> may soon became real (e..g, <a href="https://www.datarobot.com/">DataRobot</a>). Data science and ML practitioners, however, are skeptical about the promise of Citizen Data Science (and, frankly, worried about some of its outputs and consequences).</p>
+<p>We believe AutoML as <em>Efficient Data Science / ML</em> shows real promise for the largest number of companies within the near to midterm future. There is ample opportunity to improve the data science and ML work flow, and to automate parts of it, to make your data professionals more effective.</p>
+<h3 id="the-promise-of-automl-as-efficient-data-science">The promise of AutoML as Efficient Data Science</h3>
+<p>The typical ML system can be broken down into a number of different components, or modules, each with a different aim and focus.</p>
+<p><img src="/images/2017/11/Screen_Shot_2017_11_07_at_10_07_43_AM-1510067292745.png" alt=""></p>
+<h5 id="the-different-components-of-ml-systems-only-a-small-fraction-of-real-world-ml-systems-are-composed-of-the-ml-code-to-put-ml-to-work-requires-complex-surrounding-infrastructure-taken-from-the-paper-hidden-technical-debt-in-machine-learning-systemshttpspapersnipsccpaper5656-hidden-technical-debt-in-machine-learning-systemspdf">The different components of ML systems. Only a small fraction of real-world ML systems are composed of the ML code. To put ML to work requires complex surrounding infrastructure (taken from the paper <a href="https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems.pdf"><em>Hidden Technical Debt in Machine Learning Systems</em></a>).</h5>
+<p>ML code, while important, is only a small fraction of the code base authored by data teams (and their colleagues) to put algorithms to work. And, even the best, highest accuracy models are useful only in production. In production, they need monitoring, and (eventually) retraining. Building and maintaining these often fragile ML pipelines is expensive, both in time and effort. In the process, teams often build up <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43146.pdf">significant technical debt</a>.</p>
+<p><a href="https://eng.uber.com/michelangelo/">Uber</a> and <a href="http://www.kdd.org/kdd2017/papers/view/tfx-a-tensorflow-based-production-scale-machine-learning-platform">Google</a> recently published papers describing their ML platforms. Their platforms inform us about the challenges they faced putting ML to work.</p>
+<p>Google&rsquo;s platform is built with an emphasis on systems capable of detecting failure and bugs so they do not propagate into the production environment. Uber&rsquo;s emphasis is on making good use for institutional knowledge. Uber&rsquo;s platform features a feature store, where Uber&rsquo;s data scientists store and share (engineered) features (and, presumably, trained models) alongside the appropriate meta-data to help with discoverability (preparing the ground for <em>Transfer Learning</em>). Both provide a framework for reliably producing and deploying machine learning models at scale and promise AutoML as <em>Efficient Data Science / ML</em> (and, eventually, <em>Transfer Learning</em>).</p>
+<p>At Cloudera (please excuse the plug), the <a href="https://www.cloudera.com/products/data-science-and-engineering/data-science-workbench.html">Cloudera Data Science Workbench</a> provides a solution available to all, not just Google&rsquo;s or Uber&rsquo;s data scientists.</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>

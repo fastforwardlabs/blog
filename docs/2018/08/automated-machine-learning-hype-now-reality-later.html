@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Automated Machine Learning: Hype now, reality later?</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main id="main">
+        
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 29, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+      newsletter
+      
+    </span>
+  </h5>
+  <h1>Automated Machine Learning: Hype now, reality later?</h1>
+  <p><a href="https://blog.fastforwardlabs.com/newsletters/2017-11-08-client.html">Previously in our newsletter</a>, we had framed automated machine learning around four notions:</p>
+<ul>
+<li>Citizen Data Science / ML: Automated machine learning will allow everyone to do data science and ML. It requires no special training or skills.</li>
+<li>Efficient Data Science / ML: Automated machine learning will supercharge your data scientists and ML engineers by making them more efficient.</li>
+<li>Learning to Learn: Automated machine learning will automate architecture and optimization algorithm design(architecture search).</li>
+<li>Transfer Learning: Automated machine learning will allow algorithms to learn new tasks faster by utilizing what they learned from mastering other tasks in the past.</li>
+</ul>
+<p>Since then, the term <em>automated machine learning</em> has been strongly linked to Google&rsquo;s definition of <strong>AutoML as a way for neural nets to design neural nets</strong>, or - expressed technically - as a way to perform neural architecture search. Google&rsquo;s messaging asserts that AutoML will <a href="https://blog.google/technology/ai/making-ai-work-for-everyone/">make AI work for everyone</a>.  <a href="https://cloud.google.com/automl/">Google Cloud&rsquo;s AutoML</a> beta products now allow one to custom vision, language and translation models with minimum machine learning skills. The product page states that under the hood, this capability is powered by Google&rsquo;s AutoML and transfer learning. But, <a href="http://www.fast.ai/2018/07/23/auto-ml-3/">as pointed out by fast.ai</a>, transfer learning and neural architecture search are two opposite approaches. Transfer learning assumes that neural net architectures generalize to similar problems (for example, features like corners and lines show up in many different images); neural architecture search assumes that each dataset needs a unique and specialized architecture. In transfer learning, you start with a trained model with an existing architecture and further tune the weights with your data; neural architecture search requires training multiple new architectures along with new weights. In practice, one does not need to use both techniques (yet?)! Transfer learning is currently the predominant approach since neural architecture search is <strong>currently</strong> computationally expensive. We very much agree with <a href="http://www.fast.ai/2018/07/23/auto-ml-3/">fast.ai&rsquo;s assessment</a> that not everyone needs to perform neural architecture search, and the ability to perform such a search does not replace machine learning expertise. In fact, blindly using computation power to search for the best architecture seems to lead us further into the abyss of un-interpretable models.</p>
+<p>On the flip side, if we go back in time to the pre-GPU era, one could argue that we are at the same place with neural architecture search as we were back then with deep learning. Sprinkle in the notion of <a href="https://medium.com/@karpathy/software-2-0-a64152b37c35">Software 2.0</a>, and suddenly the idea of everyone designing neural nets for their particular needs looks like a reasonable trajectory!</p>
+
+  <div class="spacer"></div>
+  <hr />
+</div>
+
+      </main>
+      <div style="padding-bottom: 1rem">
+        <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
+        <p style="margin-bottom: 0px;">
+          Cloudera Fast Forward is an applied machine learning research group.
+        </p>
+        <a
+          href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+          >Cloudera</a
+        >&nbsp;
+        <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
+        <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+        <p></p>
+      </div>
+    </div>
+  </body>
+</html>
