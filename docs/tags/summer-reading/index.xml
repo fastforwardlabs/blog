@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>summer reading on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/summer-reading.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/summer-reading.html</link>
     <description>Recent content in summer reading on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 27 Jul 2016 16:45:52 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/summer-reading/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/summer-reading/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Late Summer Reading List</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/07/late-summer-reading-list.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/07/late-summer-reading-list.html</link>
       <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/07/late-summer-reading-list.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/07/late-summer-reading-list.html</guid>
       <description></description>
     </item>
     

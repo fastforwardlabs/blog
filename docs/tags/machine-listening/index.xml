@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>machine listening on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/machine-listening.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/machine-listening.html</link>
     <description>Recent content in machine listening on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 10 Jun 2016 14:23:11 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/machine-listening/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/machine-listening/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Machine Listening: Interview with Juan Pablo Bello</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/06/machine-listening-interview-with-juan-pablo-bello.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/06/machine-listening-interview-with-juan-pablo-bello.html</link>
       <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/06/machine-listening-interview-with-juan-pablo-bello.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/06/machine-listening-interview-with-juan-pablo-bello.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components&#34;&gt;A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>

@@ -1,4 +1,4 @@
-baseURL = "https://fastforwardlabs.github.io/hugo_blog/"
+baseURL = "http://test-blog.fastforwardlabs.com"
 languageCode = "en-us"
 title = "Blog"
 Paginate = 12

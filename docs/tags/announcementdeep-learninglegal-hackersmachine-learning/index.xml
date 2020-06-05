@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>announcement,deep learning,legal hackers,machine learning on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/announcementdeep-learninglegal-hackersmachine-learning.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/announcementdeep-learninglegal-hackersmachine-learning.html</link>
     <description>Recent content in announcement,deep learning,legal hackers,machine learning on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 11 Jul 2016 12:46:23 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/announcementdeep-learninglegal-hackersmachine-learning/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/announcementdeep-learninglegal-hackersmachine-learning/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Two Talks in NYC this Saturday</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/07/two-talks-in-nyc-this-saturday.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/07/two-talks-in-nyc-this-saturday.html</link>
       <pubDate>Mon, 11 Jul 2016 12:46:23 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/07/two-talks-in-nyc-this-saturday.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/07/two-talks-in-nyc-this-saturday.html</guid>
       <description>PyGotham | July 16 | 2:15 pm Mike Williams on Text Summarization Legal Hackers International Summit | July 16 | 1:10 pm Kathryn Hume on the Ethics of Applying Machine Learning in Law </description>
     </item>
     

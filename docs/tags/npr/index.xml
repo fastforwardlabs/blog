@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>npr on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/npr.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/npr.html</link>
     <description>Recent content in npr on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 16 Jun 2015 14:40:47 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/npr/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/npr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hilary on Science Friday</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2015/06/hilary-on-science-friday.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/06/hilary-on-science-friday.html</link>
       <pubDate>Tue, 16 Jun 2015 14:40:47 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/06/hilary-on-science-friday.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/06/hilary-on-science-friday.html</guid>
       <description>Last Friday, Hilary joined Ira Flatow on Science Friday in the studio to discuss the question:Will Our Smartphones Know Us Better Than Ourselves?We love imagining what our future may look like with the technology we are building.</description>
     </item>
     

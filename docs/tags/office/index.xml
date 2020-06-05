@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>office on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/office.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/office.html</link>
     <description>Recent content in office on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Jun 2016 13:53:20 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/office/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/office/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome, Friederike!</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/06/welcome-friederike.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/06/welcome-friederike.html</link>
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/06/welcome-friederike.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/06/welcome-friederike.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Coffee Thermoregulation</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2015/06/coffee-thermoregulation.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/06/coffee-thermoregulation.html</link>
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/06/coffee-thermoregulation.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/06/coffee-thermoregulation.html</guid>
       <description>We take coffee pretty seriously here at Fast Forward Labs. In addition to our machine learning research, we have also explored both hot and cold coffee brewing technologies.
 Research reveals that no one wants to drink a mug of hot brew once it settles to room temperature. As a slow sipper, I end up pouring out most of the coffee in my mug because it cools off too quickly. I set up this solution in a few minutes this afternoon using an off-the-shelf immersion heater and a microcontroller temperature regulator.</description>
     </item>
     
     <item>
       <title>We Built a Table</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2014/08/we-built-a-table.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2014/08/we-built-a-table.html</link>
       <pubDate>Thu, 21 Aug 2014 19:28:14 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2014/08/we-built-a-table.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2014/08/we-built-a-table.html</guid>
       <description>At Fast Forward Labs we’re thoughtful about the kind of work space we want to spend our time in. We decided that we preferred a shared large table instead of individual desks, to make it easier to collaborate and offer the flexibility to spread out when necessary, and to allow space for other people to drop in and work with us.
 We also love to build things, and find an hour of working with our hands to be a welcome respite from hours of math, programming, reading, and writing, so we decided to build it ourselves!</description>
     </item>

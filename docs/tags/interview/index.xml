@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>interview on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/interview.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/interview.html</link>
     <description>Recent content in interview on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Aug 2016 16:18:12 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Next Economics: Interview with Jimi Crawford</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/08/next-economics-interview-with-jimi-crawford.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/08/next-economics-interview-with-jimi-crawford.html</link>
       <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/08/next-economics-interview-with-jimi-crawford.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/08/next-economics-interview-with-jimi-crawford.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;building-shadows-as-proxies-for-construction-rates-in-shanghai-photos-courtesy-of-orbital-insightdigital-globe&#34;&gt;Building shadows as proxies for construction rates in Shanghai. Photos courtesy of Orbital Insight/Digital Globe.&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
@@ -24,10 +24,10 @@
     
     <item>
       <title>Machine Listening: Interview with Juan Pablo Bello</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/06/machine-listening-interview-with-juan-pablo-bello.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/06/machine-listening-interview-with-juan-pablo-bello.html</link>
       <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/06/machine-listening-interview-with-juan-pablo-bello.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/06/machine-listening-interview-with-juan-pablo-bello.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components&#34;&gt;A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
@@ -35,19 +35,19 @@
     
     <item>
       <title>Welcome, Friederike!</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/06/welcome-friederike.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/06/welcome-friederike.html</link>
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/06/welcome-friederike.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/06/welcome-friederike.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Human-Machine Algorithms: Interview with Eric Colson</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/05/human-machine-algorithms-interview-with-eric-colson.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/05/human-machine-algorithms-interview-with-eric-colson.html</link>
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/05/human-machine-algorithms-interview-with-eric-colson.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/05/human-machine-algorithms-interview-with-eric-colson.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;ndash-matthew-2221&#34;&gt;– Matthew, 22:21&lt;/h5&gt;
@@ -56,10 +56,10 @@
     
     <item>
       <title>Active Learning in the Law</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/04/active-learning-in-the-law.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/04/active-learning-in-the-law.html</link>
       <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/04/active-learning-in-the-law.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/04/active-learning-in-the-law.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;the-nist-text-retrieval-conference-trec-logo&#34;&gt;The NIST Text Retrieval Conference (TREC) Logo&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
@@ -67,19 +67,19 @@
     
     <item>
       <title>Shivon Zilis on the Machine Intelligence Landscape</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/03/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/03/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
       <pubDate>Wed, 30 Mar 2016 15:00:03 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/03/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/03/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>NeuralTalk with Kyle McDonald</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/02/neuraltalk-with-kyle-mcdonald.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/02/neuraltalk-with-kyle-mcdonald.html</link>
       <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/02/neuraltalk-with-kyle-mcdonald.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/02/neuraltalk-with-kyle-mcdonald.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;image-from-a-hrefhttpsvimeocom90547410social-soula-an-immersive-experience-of-being-inside-a-social-media-stream-by-a-hrefhttplauren-mccarthycomlauren-mccarthya-and-kyle-mcdonald&#34;&gt;Image from &lt;!-- raw HTML omitted --&gt;Social Soul&lt;!-- raw HTML omitted --&gt;, an immersive experience of being inside a social media stream, by &lt;!-- raw HTML omitted --&gt;Lauren McCarthy&lt;!-- raw HTML omitted --&gt; and Kyle McDonald&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
@@ -87,20 +87,20 @@
     
     <item>
       <title>What History Teaches Us About Data Science</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/02/what-history-teaches-us-about-data-science.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/02/what-history-teaches-us-about-data-science.html</link>
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/02/what-history-teaches-us-about-data-science.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/02/what-history-teaches-us-about-data-science.html</guid>
       <description>The FFL team at the New York Historical Society&amp;rsquo;s Silicon City exhibit  Study the past if you would define the future. — Confucius
  1. Claude Shannon, the father of UX design? 2. Products (and models) have their moment of maturity, but we must be wary of trends 3. Statistics, computer science, and data science 4. IBM had really cool marketing in the 1930s-1950s </description>
     </item>
     
     <item>
       <title>Eli Pariser on the Ethics of Algorithmic Filtering</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2016/01/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/01/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</link>
       <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2016/01/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/01/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Chiefly his reflection, of which the portrait / Is the reflection, of which the portrait / Is the reflection once removed. / The glass chose to reflect only what he saw / Which was enough for his purpose: his image / Glazed, embalmed, projected at a 180-degree angle.&lt;/p&gt;
@@ -111,19 +111,19 @@
     
     <item>
       <title>Fashion Goes Deep: Data Science at Lyst</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2015/12/fashion-goes-deep-data-science-at-lyst.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/12/fashion-goes-deep-data-science-at-lyst.html</link>
       <pubDate>Wed, 09 Dec 2015 17:44:00 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/12/fashion-goes-deep-data-science-at-lyst.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/12/fashion-goes-deep-data-science-at-lyst.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>Interview with Pedro Domingos</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2015/10/interview-with-pedro-domingos.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/10/interview-with-pedro-domingos.html</link>
       <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/10/interview-with-pedro-domingos.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/10/interview-with-pedro-domingos.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     

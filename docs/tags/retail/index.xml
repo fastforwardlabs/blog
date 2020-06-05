@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>retail on Blog</title>
-    <link>https://fastforwardlabs.github.io/hugo_blog/tags/retail.html</link>
+    <link>http://test-blog.fastforwardlabs.com/tags/retail.html</link>
     <description>Recent content in retail on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 29 Sep 2015 18:13:00 +0000</lastBuildDate>
     
-	<atom:link href="https://fastforwardlabs.github.io/hugo_blog/tags/retail/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/retail/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Machine Learning in Retail: Consumer Privacy Implications</title>
-      <link>https://fastforwardlabs.github.io/hugo_blog/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</link>
       <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
       
-      <guid>https://fastforwardlabs.github.io/hugo_blog/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
