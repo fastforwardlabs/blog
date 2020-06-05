@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="spacer"></div>
+<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+</a>
+<div class="spacer"></div>
+<div>
+  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+</div>
+<div class="post">
+  <div class="spacer"></div>
+  <h5 style="margin-bottom: 4px;">
+    <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
+    <span style="text-transform: capitalize;">
+      <!-- split -->
+      {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
+      <!-- split -->
+    </span>
+  </h5>
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <div class="spacer"></div>
+  <hr />
+</div>
+{{ end }}

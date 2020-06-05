@@ -1,0 +1,7 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Blog"
+Paginate = 12
+uglyurls = true
+[permalinks]
+  "/" = "/:year/:month/:title/"

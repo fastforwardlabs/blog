@@ -1,0 +1,202 @@
+@font-face {
+  font-family: 'Plex Mono';
+  src: url('fonts/IBMPlexMono-Regular.woff2') format('woff2'),
+    url('fonts/IBMPlexMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Plex Mono';
+  src: url('fonts/IBMPlexMono-Italic.woff2') format('woff2'),
+    url('fonts/IBMPlexMono-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Plex Sans';
+  src: url('fonts/IBMPlexSans-Regular.woff2') format('woff2'),
+    url('fonts/IBMPlexSans-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Plex Sans';
+  src: url('fonts/IBMPlexSans-Italic.woff2') format('woff2'),
+    url('fonts/IBMPlexSans-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Plex Sans';
+  src: url('fonts/IBMPlexSans-Bold.woff2') format('woff2'),
+    url('fonts/IBMPlexSans-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Plex Sans';
+  src: url('fonts/IBMPlexSans-BoldItalic.woff2') format('woff2'),
+    url('fonts/IBMPlexSans-BoldItalic.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Plex Sans', sans-serif;
+  font-size: 17.5px;
+  line-height: 28px;
+}
+a {
+  color: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+.post img {
+  padding-top: 0.5rem;
+}
+.post h1 + img {
+  padding-top: 0;
+}
+.post h2 + img {
+  padding-top: 0;
+}
+.post h3 + img {
+  padding-top: 0;
+}
+h1 {
+  font-size: 2em;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+}
+h2 {
+  padding-top: 1rem;
+  font-size: 1.5em;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+h3 {
+  padding-top: 0.5rem;
+  font-size: 1.25em;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+h3 {
+  padding-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+h5 {
+  font-family: 'Plex Mono';
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 1rem;
+  color: #222;
+}
+p {
+  margin-bottom: 1rem;
+}
+
+.small {
+  font-size: 16px;
+  line-height: 24px;
+}
+.container {
+  margin: 0 auto;
+  max-width: 64ch;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+code {
+  font-family: 'Plex Mono';
+  font-size: 14px;
+}
+pre {
+  margin-bottom: 1rem;
+  overflow: auto;
+  line-height: 18px;
+  padding: 0.5rem 0.75rem;
+}
+
+.spacer {
+  width: 100%;
+  height: 1rem;
+}
+.hspacer {
+  width: 100%;
+  height: 0.5rem;
+}
+
+.post-link {
+  padding-left: 9rem;
+}
+.post-link h2 {
+  padding: 0;
+  margin: 0;
+}
+.preview-image-holder {
+  position: absolute;
+  left: 0;
+  width: 8rem;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.preview-image {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.pagination-holder {
+  font-family: 'Plex Mono';
+  font-size: 15px;
+  line-height: 28px;
+  margin-bottom: 1rem;
+  display: flex;
+}
+ul.pagination {
+  list-style-type: none;
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+ul.pagination li a {
+  display: block;
+  width: 28px;
+  /* border: solid 1px black; */
+  text-align: center;
+}
+
+ul.pagination li.page-item:first-child,
+ul.pagination li.page-item:last-child {
+  display: none;
+}
+ul.pagination li.page-item.disabled {
+  color: #666;
+}
+ul.pagination li.page-item.active {
+  background: #eee;
+}
+ul.pagination li.page-item.active a {
+  text-decoration: none;
+}
