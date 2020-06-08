@@ -146,7 +146,7 @@ pre {
 }
 
 .post-link {
-  padding-left: 9rem;
+  padding-right: 9rem;
 }
 .post-link h2 {
   padding: 0;
@@ -154,7 +154,7 @@ pre {
 }
 .preview-image-holder {
   position: absolute;
-  left: 0;
+  right: 0;
   width: 8rem;
   height: 6rem;
   display: flex;
