@@ -4,6 +4,7 @@ author_link: https://twitter.com/GrantCuster
 date: "2017-10-04T00:00:00Z"
 preview_image: http://blog.fastforwardlabs.com/images/2017/10/tsne-final.png
 title: 'First Look: Using Three.js for 2D Data Visualization'
+popular: true
 ---
 
 ##### Update: I have a new post on [Using three.js for 2D data visualization](https://beta.observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization). It contains all the stuff I learned while working on the project and is the place you should look for updated code. This post may still be interesting if you want to see my thoughts when I first started on the project.

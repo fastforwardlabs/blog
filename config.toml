@@ -1,7 +1,7 @@
 baseURL = "http://test-blog.fastforwardlabs.com"
 languageCode = "en-us"
 title = "Blog"
-Paginate = 12
+Paginate = 6
 uglyurls = true
 publishDir = "docs"
 [permalinks]

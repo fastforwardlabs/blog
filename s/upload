@@ -1,0 +1,22 @@
+#!/bin/bash
+
+filename=$(basename -- "$1" | sed -e 's/[^A-Za-z0-9._-]/_/g')
+extension="${filename##*.}"
+filename="${filename%.*}"
+timestamp="$(date +%s)"
+newname="$filename-$timestamp.$extension"
+syntax="![](/images/hugo/$newname)"
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]
+then
+  echo -n "$syntax" | xclip -sel clip
+elif [[ "$OSTYPE" == "darwin"* ]]
+then
+  echo -n "$syntax" | pbcopy
+fi
+
+cp $1 ../static/images/hugo/
+
+echo "Markdown image syntax:
+$syntax
+Copied to your clipboard"

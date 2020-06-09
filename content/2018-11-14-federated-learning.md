@@ -6,6 +6,7 @@ feature: true
 preview_image: /images/editor_uploads/2018-11-14-214557-ff09_07.png
 published: true
 title: 'Federated learning: distributed machine learning with data locality and privacy'
+popular: true
 ---
 
 We’re excited to release *Federated Learning*, the latest report and prototype from Cloudera Fast Forward Labs.

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Hi, "$USER". This script will help you create a new post."
+
+echo -n "Enter your name and press [ENTER]: "
+read name
+
+echo "what up, $name"

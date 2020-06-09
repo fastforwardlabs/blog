@@ -1,72 +1,161 @@
 {{ define "main" }} {{ $pages := .Paginate .Site.RegularPages.ByDate.Reverse }}
 <!-- split -->
 {{ $paginator := .Paginate $pages }}
+<div  class="container">
 <div class="spacer"></div>
 <a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
   <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
 </a>
 <div class="spacer"></div>
-<div class="front">
-  <h1>{{ .Title }}</h1>
-  {{ if (ne ($paginator.PageNumber) 1) }}
-  <div class="pagination-holder">
-    Page: {{ template "_internal/pagination.html" . }}
-  </div>
-  {{ end }} {{ range $paginator.Pages }}
-  <div class="post-link" style="position: relative">
-    <h5 style="margin-bottom: 4px;">
-      <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
-      <span style="text-transform: capitalize;">
-        <!-- split -->
-        {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
-        <!-- split -->
-      </span>
-    </h5>
-    {{ if (isset .Params "preview_image") }}
-    <div class="preview-image-holder">
-      <img class="preview-image" src="{{ .Params.preview_image }}" />
-    </div>
-    {{ end }}
-    <div>
-      {{ if (isset .Params "external_url") }}
-      <a href="{{ .Params.external_url }}">
-        <h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
-      >
-      {{ else }}
-      <a href="{{ .RelPermalink }}"
-        ><h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
-      >
-      {{ end }}
-    </div>
-    <div class="small" style="height: 4.5em; overflow: hidden;">
-      {{ if (isset .Params "author") }}
-      <span style="font-style: italic;">
-        by {{ if (isset .Params "author_link") }}
-        <span
-          ><a href="{{ .Params.author_link }}">{{ .Params.author }}</a>
-          &middot; </span
-        >{{ else }} {{ .Params.author }} &middot; {{ end }}
-      </span>
-      {{ end }}{{ .Summary }}
-    </div>
-    <div
-      style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-      {{ if (isset .Params "external_url") }}
-      <a href="{{ .Params.external_url }}">
-        <!-- split -->
-        {{ replace (replace .Params.external_url "https://" "") "http://" ""}}
-      </a>
-      {{ else }}
-      <a href="{{ .RelPermalink }}">...read more</a>
-      {{ end }}
-    </div>
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
+<h1>{{ .Title }}</h1>
+<h3>Latest posts</h3>
+{{ if (ne ($paginator.PageNumber) 1) }}
+<div class="pagination-holder">
+  Page: {{ template "_internal/pagination.html" . }}
+</div>
+{{ end }}
+<div id="posts-holder" data-page="{{ $paginator.PageNumber }}"> 
+{{ range $paginator.Pages }}
+<div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
+    <span style="text-transform: capitalize;">
+      <!-- split -->
+      {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
+      <!-- split -->
+    </span>
+  </h5>
+  {{ if (isset .Params "preview_image") }}
+  <a href="{{ .RelPermalink }}" class="preview-image-holder">
+    <img class="preview-image" src="{{ .Params.preview_image }}" />
+  </a>
   {{ end }}
-  <div class="pagination-holder">
-    Page: {{ template "_internal/pagination.html" . }}
+  <div>
+    {{ if (isset .Params "external_url") }}
+    <a href="{{ .Params.external_url }}">
+      <h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
+    >
+    {{ else }}
+    <a href="{{ .RelPermalink }}"
+      ><h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
+    >
+    {{ end }}
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    {{ if (isset .Params "author") }}
+    <span>
+      by {{ if (isset .Params "author_link") }}
+      <span
+        ><a href="{{ .Params.author_link }}">{{ .Params.author }}</a>
+        &middot; </span
+      >{{ else }} {{ .Params.author }} &middot; {{ end }}
+    </span>
+    {{ end }}{{ .Summary }}
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+  >
+    {{ if (isset .Params "external_url") }}
+    <a href="{{ .Params.external_url }}">
+      <!-- split -->
+      {{ replace (replace .Params.external_url "https://" "") "http://" ""}}
+    </a>
+    {{ else }}
+    <a href="{{ .RelPermalink }}">...read more</a>
+    {{ end }}
   </div>
 </div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+{{ end }}
+</div>
+<div ><button id="load_more" style="width: 100%;">load more</button></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+<div class="container">
+<h3>Popular posts</h3>
+<div>
+{{ range where .Site.RegularPages ".Params.popular" true }}
+<div>
+  <h5 style="margin-bottom: 0px;">
+    <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
+    <span style="text-transform: capitalize;">
+      <!-- split -->
+      {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
+      <!-- split -->
+    </span>
+  </h5>
+  <div><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong></a></div>
+  <div class="spacer"></div>
+</div>
+{{ end }}
+</div>
+</div>
+<div class="spacer"></div>
+<div style="background: #efefef;">
+<div class="container" >
+  <div class="spacer"></div>
+  <h1 >Reports</h1>
+  <div>
+  {{ range .Site.Data.reports.entries }}
+  <div style="position: relative;">
+    <h5 style="margin-bottom: 0">{{ .number }}</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="{{ .link }}">{{ .name }}</a></h2>
+    <a href="{{ .link }}" style="display: block:">
+      <img style="max-width: 620px; display: block; margin: 0 auto;" src="images/reports/{{ .img }}" />
+    </a>
+    <div>{{ .blurb }}</div>
+    <div><a href="{{ .link }}">Read the report&nbsp; →</a></div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+  </div>
+  {{ end }}
+  </div>
+</div>
+</div>
+<div class="spacer"></div>
+<div class="container">
+  <h1>Prototypes</h1>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, 32ch); grid-auto-rows: 360px; padding-left: 12px; padding-right: 12px; justify-content: center;">
+  {{ $dataJ := getJSON "https://experiments.fastforwardlabs.com/experiments.json" }}
+  {{ range $dataJ.experiments }}
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 16px; padding-right: 16px;">
+    <div>
+      <h5 style="margin-bottom: 0">{{ .head }}</h5>
+      <h2 style="padding-top: 0; margin-bottom: 0;"><a href="{{ .url }}">{{ .name }}</a></h2>
+    </div>
+    <div style="flex: 1 1 auto; position: relative;">
+      <div style="position: absolute; top: 0.25rem; width: 100%; height: calc(100% - 0.75rem); background-image: url('https://experiments.fastforwardlabs.com{{ .image }}'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></div>
+    </div>
+    <div>
+      <div class="small">{{ .description }}</div>
+      <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="{{ .url }}">{{ .url }}</a></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+  </div>
+  {{ end }}
+</div>
+  <script>
+    window.addEventListener('load', () => {
+      let $posts_holder = document.getElementById('posts-holder')
+      let $load_more = document.getElementById('load_more')
+      let next_page = 2
+      $load_more.addEventListener('click', () => {
+        fetch(`/page/${next_page}.html`).then(r =>r.text()).then(r => {
+          let el = document.createElement('html')
+          el.innerHTML = r
+          next_page += 1
+          console.log(next_page)
+          let $posts = el.querySelector('#posts-holder').children
+          for (let i=0; i< $posts.length; i++) {
+            let $post = $posts[i]
+            $posts_holder.appendChild($post)
+          }
+        })
+      })
+    })
+  </script>
 {{ end }}

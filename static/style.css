@@ -125,6 +125,12 @@ p {
   padding-left: 12px;
   padding-right: 12px;
 }
+.double-container {
+  margin: 0 auto;
+  max-width: 96ch;
+  padding-left: 12px;
+  padding-right: 12px;
+}
 code {
   font-family: 'Plex Mono';
   font-size: 14px;
@@ -223,4 +229,17 @@ blockquote {
 }
 ul {
   padding-left: 2ch;
+}
+button {
+  border: none;
+  background: #efefef;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: 2.5rem;
+  color: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+button:hover {
+  background: #ddd;
 }

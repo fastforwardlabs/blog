@@ -11,6 +11,7 @@ tags:
 - deep learning
 - code
 title: '"Hello world" in Keras (or, Scikit-learn versus Keras)'
+popular: true
 ---
 
 <h5>This article is <a
