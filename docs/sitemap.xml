@@ -8,7 +8,17 @@
   </url>
   
   <url>
+    <loc>http://test-blog.fastforwardlabs.com/</loc>
+    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://test-blog.fastforwardlabs.com/2020/04/enterprise-grade-ml.html</loc>
+    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://test-blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2020-04-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -599,11 +609,6 @@
   
   <url>
     <loc>http://test-blog.fastforwardlabs.com/tags/aidata-sciencedata-driveninnovation.html</loc>
-    <lastmod>2016-12-13T13:02:12+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://test-blog.fastforwardlabs.com/</loc>
     <lastmod>2016-12-13T13:02:12+00:00</lastmod>
   </url>
   
@@ -1544,6 +1549,14 @@
   
   <url>
     <loc>http://test-blog.fastforwardlabs.com/categories.html</loc>
+  </url>
+  
+  <url>
+    <loc>http://test-blog.fastforwardlabs.com/prototypes.html</loc>
+  </url>
+  
+  <url>
+    <loc>http://test-blog.fastforwardlabs.com/reports.html</loc>
   </url>
   
 </urlset>

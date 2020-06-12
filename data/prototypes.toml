@@ -1,0 +1,139 @@
+[[experiments]]
+name = "NLP for Question Answering"
+head = "Notebooks"
+description = "Ongoing posts and code documenting the process of building a question answering model."
+url = "https://qa.fastforwardlabs.com"
+image = "/images/uploads/qa.png"
+
+[[experiments]]
+name = "Interpretability Revisited: SHAP and LIME"
+head = "Notebook"
+description = "Explore how to use LIME and SHAP for interpretability."
+url = "https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N"
+image = "/images/uploads/shap-and-lime.png"
+
+[[experiments]]
+name = "Refractor"
+head = "Prototype"
+description = "Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions."
+url = "https://refractor.fastforwardlabs.com"
+image = "/images/uploads/refractor.gif"
+
+[[experiments]]
+name = "Anomagram"
+head = "Prototype"
+description = "An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection."
+url = "https://anomagram.fastforwardlabs.com"
+image = "/images/uploads/anomagram.gif"
+
+[[experiments]]
+name = "Blip"
+head = "Prototype"
+description = "Blip visualizes how four different anomaly detection algorithms perform at detecting network attacks."
+url = "https://blip.fastforwardlabs.com"
+image = "/images/uploads/blip.gif"
+
+[[experiments]]
+name = "S-quote"
+head = "Demo"
+description = "A semantic search engine that takes some input text and returns relevant famous quotes."
+url = "https://github.com/cjwallace/squote"
+image = "/images/uploads/squote.gif"
+
+[[experiments]]
+name = "Textflix"
+head = "Prototype"
+description = "Textflix uses movie reviews to show how machine learning can unlock the data embedded in large amounts of unstructured text."
+url = "https://textflix.fastforwardlabs.com"
+image = "/images/uploads/textflix-s.gif"
+
+[[experiments]]
+name = "ConvNet Playground"
+head = "Prototype"
+description = "With ConvNet Playground you can explore how a convolutional neural network does semantic image search."
+url = "https://convnetplayground.fastforwardlabs.com"
+image = "/images/uploads/convnet-s.gif"
+
+[[experiments]]
+name = "Weak supervision with Snorkel"
+head = "Notebook"
+description = "A notebook showing how to train a complaint classifier with Snorkel. Using data from the Consumer Financial Protection Bureau."
+url = "https://github.com/fastforwardlabs/snorkel-demo-colab/blob/master/snorkel_demo.ipynb"
+image = "/images/uploads/snorkel.png"
+
+[[experiments]]
+name = "Active Learner"
+head = "Prototype"
+description = "An interactive visualization of active learning data labeling strategies for supervised machine learning."
+url = "https://activelearner.fastforwardlabs.com"
+image = "/images/uploads/active-learner-short.gif"
+
+[[experiments]]
+name = "Handtrack.js"
+head = "Library"
+description = "Handtrack.js is a library for prototyping realtime hand detection (bounding box), directly in the browser."
+url = "https://victordibia.github.io/handtrack.js"
+image = "/images/uploads/bossflip.gif"
+
+[[experiments]]
+name = "UMAP Explorer"
+head = "Prototype"
+description = "An interactive UMAP visualization of the MNIST data set."
+url = "https://grantcuster.github.io/umap-explorer"
+image = "/images/uploads/umap_zoom-1547839236.gif"
+
+[[experiments]]
+name = "Active Learning with Logistic Regression"
+head = "Notebook"
+description = "A toy example about logistic regression and different active learning strategies."
+url = "https://observablehq.com/@cjwallace/an-invitation-to-active-learning"
+image = "/images/uploads/2019-04-04-171937-uncertainty_sampling_observable_fast.gif"
+
+[[experiments]]
+name = "Turbofan Tycoon"
+head = "Prototype"
+description = "See if you have what it takes to make it as a turbofan factory owner in our federated learning prototype."
+url = "https://turbofan.fastforwardlabs.com"
+image = "/images/uploads/2018-12-07-163940-turbofan_even_shorter.gif"
+
+[[experiments]]
+name = "Probabilistic Real Estate"
+head = "Prototype"
+description = "A probabilistic programming prototype that predicts future real estate prices across New York City boroughs and neighborhoods."
+url = "http://fastforwardlabs.github.io/pre"
+image = "/images/uploads/pre.gif"
+
+[[experiments]]
+name = "Brief Preview"
+head = "Prototype"
+description = "Brief uses neural networks to score and highlight the most interesting sentences within any article."
+url = "http://fastforwardlabs.github.io/brief/"
+image = "/images/uploads/brief.png"
+
+[[experiments]]
+name = "Using three.js for 2D Data Visualization"
+head = "Notebook"
+description = "An interactive notebook about using three.js to render tens of thousands of points."
+url = "https://observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization"
+image = "/images/uploads/3d-viz.png"
+
+[[experiments]]
+name = "Encartopedia"
+head = "Prototype"
+description = "Encartopedia visualizes Wikipedia topic clusters and plots your journey through them."
+url = "http://encartopedia.fastforwardlabs.com"
+image = "/images/uploads/encartopedia.png"
+
+[[experiments]]
+name = "Visualizing the Taste of a Community of Cinephiles"
+head = "Prototype"
+description = "An interactive visualization that uses T-SNE to cluster movies together based on user ratings."
+url = "http://fastforwardlabs.github.io/cinephile_tsne/"
+image = "/images/uploads/cinephiles.png"
+
+[[experiments]]
+name = "Luhn Method Demo"
+head = "Prototype"
+description = "Luhn's method, from 1958, provides a foundation for understanding modern auto-summarization techniques."
+url = "http://fastforwardlabs.github.io/luhn/"
+image = "/images/uploads/luhn.png"

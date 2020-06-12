@@ -1,0 +1,11 @@
+<div>
+  <h5 style="margin-bottom: 0px;">
+    <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
+    <span style="text-transform: capitalize;">
+      {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
+    </span>
+  </h5>
+  <div><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong></a></div>
+  <div class="spacer"></div>
+</div>
+

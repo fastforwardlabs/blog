@@ -1,0 +1,7 @@
+<h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  {{ range where .Site.RegularPages ".Params.popular" true }}
+    {{ partial "post_simple_link.html" . }}
+  {{ end }}
+</div>

@@ -1,0 +1,49 @@
+<div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
+    <span style="text-transform: capitalize;">
+      {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
+    </span>
+  </h5>
+  {{ if (isset .Params "preview_image") }}
+  <a href="{{ .RelPermalink }}" class="preview-image-holder">
+    <img class="preview-image" src="{{ .Params.preview_image }}" />
+  </a>
+  {{ end }}
+  <div>
+    {{ if (isset .Params "external_url") }}
+    <a href="{{ .Params.external_url }}">
+      <h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
+    >
+    {{ else }}
+    <a href="{{ .RelPermalink }}"
+       ><h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
+     >
+     {{ end }}
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    {{ if (isset .Params "author") }}
+    <span>
+      by {{ if (isset .Params "author_link") }}
+      <span
+        ><a href="{{ .Params.author_link }}">{{ .Params.author }}</a>
+        &middot; </span
+      >{{ else }} {{ .Params.author }} &middot; {{ end }}
+    </span>
+    {{ end }}{{ .Summary }}
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    {{ if (isset .Params "external_url") }}
+    <a href="{{ .Params.external_url }}">
+    {{ replace (replace .Params.external_url "https://" "") "http://" ""}}
+    </a>
+    {{ else }}
+    <a href="{{ .RelPermalink }}">...read more</a>
+    {{ end }}
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+

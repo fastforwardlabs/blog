@@ -5,4 +5,4 @@ Paginate = 6
 uglyurls = true
 publishDir = "docs"
 [permalinks]
-  "/" = "/:year/:month/:title/"
+  "posts" = "/:year/:month/:title/"

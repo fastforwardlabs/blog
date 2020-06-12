@@ -111,6 +111,12 @@ h5 {
   margin-bottom: 1rem;
   color: #222;
 }
+
+.clear {
+  margin: 0;
+  padding: 0;
+}
+
 p {
   margin-bottom: 1rem;
 }
@@ -122,8 +128,8 @@ p {
 .container {
   margin: 0 auto;
   max-width: 64ch;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 1ch;
+  padding-right: 1ch;
 }
 .double-container {
   margin: 0 auto;
@@ -152,7 +158,7 @@ pre {
 }
 
 .post-link {
-  padding-right: 9rem;
+  padding-right: 17ch;
 }
 .post-link h2 {
   padding: 0;
@@ -162,7 +168,7 @@ pre {
   position: absolute;
   right: 0;
   top: 2rem;
-  width: 8rem;
+  width: 14ch;
   height: 6rem;
   display: flex;
   justify-content: center;
@@ -204,7 +210,8 @@ ul.pagination {
 }
 ul.pagination li a {
   display: block;
-  width: 28px;
+  padding-left: 0.75ch;
+  padding-right: 0.75ch;
   /* border: solid 1px black; */
   text-align: center;
 }

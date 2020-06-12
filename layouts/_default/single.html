@@ -1,27 +1,74 @@
 {{ define "main" }}
 <div class="container">
-<div class="spacer"></div>
-<a href="https://www.cloudera.com/products/fast-forward-labs-research.html">
-  <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
-</a>
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
+      <span style="text-transform: capitalize;">
+        {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
+      </span>
+    </h5>
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+{{ $pages := .Site.RegularPages.ByDate.Reverse }}
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      {{with $pages.Next .}}
+      <div class="small">Newer</div>
+      {{ partial "post_simple_link.html" . }}
+      {{end}}
+    </div>
+    <div>
+      {{with $pages.Prev .}}
+      <div class="small">Older</div>
+      {{ partial "post_simple_link.html" . }}
+      {{end}}
+    </div>
+  </div>
+</div>
+
+<div class="container">
 <div class="spacer"></div>
 <div>
-  <h3 style="margin: 0"><a href="/">Blog</a></h3>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
 </div>
-<div class="post">
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  {{ partial "latest_posts.html" . }}
+  {{ partial "popular_posts.html" . }}
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
   <div class="spacer"></div>
-  <h5 style="margin-bottom: 4px;">
-    <span>{{ .Date.Format "Jan 2, 2006" }}</span> &middot;
-    <span style="text-transform: capitalize;">
-      <!-- split -->
-      {{ lower (cond (isset .Params "post_type") .Params.post_type "Post") }}
-      <!-- split -->
-    </span>
-  </h5>
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
   <div class="spacer"></div>
-  <hr />
+  {{ partial "reports.html" . }}
 </div>
-</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+{{ partial "prototypes.html" . }}
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
 {{ end }}

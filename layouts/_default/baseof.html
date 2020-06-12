@@ -8,25 +8,38 @@
     />
     <title>{{ .Title }}</title>
     <link rel="stylesheet" type="text/css" href="/style.css" />
-  </head>
   <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
       <main id="main">
         {{ block "main" . }}{{ end }}
       </main>
       <div class="container">
-        <div style="padding-bottom: 1rem">
-          <h2 style="margin-top: 0; margin-bottom: 0px;">About</h2>
-          <p style="margin-bottom: 0px;">
-            Cloudera Fast Forward is an applied machine learning research group.
-          </p>
-          <a
-            href="https://www.cloudera.com/products/fast-forward-labs-research.html"
-            >Cloudera</a
-          >&nbsp;
-          <a href="http://experiments.fastforwardlabs.com">Experiments</a>&nbsp;
-          <a href="https://twitter.com/fastforwardlabs">Twitter</a>
-          <p></p>
+        <div>
+          <h1 class="clear">About</h1>
+          <div>
+              Cloudera Fast Forward is an applied machine learning reseach group.<br />
+            <a
+              href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+              >Cloudera</a
+            >&nbsp;&nbsp;
+            <a
+              href="https://blog.fastforwardlabs.com"
+              >Blog</a
+            >&nbsp;&nbsp;
+            <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+          </div>
         </div>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
       </div>
   </body>
 </html>
