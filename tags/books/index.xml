@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>books on Blog</title>
+    <link>http://test-blog.fastforwardlabs.com/tags/books.html</link>
+    <description>Recent content in books on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 Jul 2016 16:45:52 +0000</lastBuildDate>
+    
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/books/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Late Summer Reading List</title>
+      <link>http://test-blog.fastforwardlabs.com/2016/07/late-summer-reading-list.html</link>
+      <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2016/07/late-summer-reading-list.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Five Good Books* of 2015</title>
+      <link>http://test-blog.fastforwardlabs.com/2015/12/five-good-books-of-2015.html</link>
+      <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2015/12/five-good-books-of-2015.html</guid>
+      <description>* Plus a few papers, videos, and other fun things. </description>
+    </item>
+    
+  </channel>
+</rss>

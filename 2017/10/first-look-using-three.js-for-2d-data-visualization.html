@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>First Look: Using Three.js for 2D Data Visualization</title>
+<meta property="og:title" content="First Look: Using Three.js for 2D Data Visualization">
+<meta property="description" content="Update: I have a new post on Using three.js for 2D data visualization. It contains all the stuff I learned while working on the project and is the place you should look for updated code. This post may still be interesting if you want to see my thoughts when I first started on the project. We&rsquo;ve started work on our next prototype. While the design is still evolving, we&rsquo;re pretty sure one element of it will be a visualization of tens of thousands of data points, clustered through a dimensional reduction algorithm (most likely using T-SNE).">
+<meta property="og:description" content="Update: I have a new post on Using three.js for 2D data visualization. It contains all the stuff I learned while working on the project and is the place you should look for updated code. This post may still be interesting if you want to see my thoughts when I first started on the project. We&rsquo;ve started work on our next prototype. While the design is still evolving, we&rsquo;re pretty sure one element of it will be a visualization of tens of thousands of data points, clustered through a dimensional reduction algorithm (most likely using T-SNE).">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.comhttp://blog.fastforwardlabs.com/images/2017/10/tsne-final.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2017/10/first-look-using-three.js-for-2d-data-visualization.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Oct 4, 2017</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>First Look: Using Three.js for 2D Data Visualization</h1>
+    <h5 id="update-i-have-a-new-post-on-using-threejs-for-2d-data-visualizationhttpsbetaobservablehqcomgrantcusterusing-three-js-for-2d-data-visualization-it-contains-all-the-stuff-i-learned-while-working-on-the-project-and-is-the-place-you-should-look-for-updated-code-this-post-may-still-be-interesting-if-you-want-to-see-my-thoughts-when-i-first-started-on-the-project">Update: I have a new post on <a href="https://beta.observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization">Using three.js for 2D data visualization</a>. It contains all the stuff I learned while working on the project and is the place you should look for updated code. This post may still be interesting if you want to see my thoughts when I first started on the project.</h5>
+<p>We&rsquo;ve started work on our next prototype. While the design is still
+evolving, we&rsquo;re pretty sure one element of it will be a visualization of tens of
+thousands of data points, clustered through a dimensional reduction algorithm
+(most likely using
+<a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">T-SNE</a>).
+For the past week I&rsquo;ve been exploring how to render that many points in the
+browser and I
+wanted to document some early lessons in this post, specifically about using the
+<a href="https://threejs.org/">three.js</a> library.</p>
+<p>I&rsquo;m new to three.js so this isn&rsquo;t a best practices post. Hopefully this provides a
+starting point for people interested in doing similar data visualization work.
+If you have ideas on how to do this stuff better, I&rsquo;d love to hear them via
+Twitter (<a href="//www.twitter.com/GrantCuster">@grantcuster</a>).</p>
+<h2 id="what-im-after">What I&rsquo;m after</h2>
+<p><img src="//blog.fastforwardlabs.com/images/2017/10/tsne-final.png" alt="A screenshot of the final working demo: a plotted t-sne with working pan and zoom."></p>
+<h5 id="the-final-result-a-t-sne-rendered-in-threejs-with-a-map-style-pan-and-zoomhttpscodepeniograntcusterpenrggrrp">The final result: <a href="https://codepen.io/GrantCuster/pen/rGGRRp">a T-SNE rendered in three.js with a map style pan and zoom</a>.</h5>
+<p>I want to render a visualization with tens of thousands of points. I want to be
+able to zoom into that visualization by scrolling and pan by clicking and
+dragging (think <a href="//maps.google.com">Google Maps</a>). I want the zoom to follow the
+position of the mouse and I want that zoom to feel smooth and responsive. I also want the browser to
+not crash when I do those things.</p>
+<h2 id="challenges">Challenges</h2>
+<p>The main challenge has been getting a good zoom feel. For me, zoom feels bad
+when:</p>
+<ol>
+<li>The framerate drops because the browser can&rsquo;t handle rendering that many points.</li>
+<li>The zoom behavior is too fast, or jerky.</li>
+</ol>
+<p>The solution to #1 is to use three.js. The solution to #2 (so far) is to use
+<a href="https://github.com/d3/d3-zoom">D3.js&rsquo;s zoom behavior</a> combined with three.js.
+More detail on both below.</p>
+<h2 id="rendering-strategies">Rendering strategies</h2>
+<p>There are three strategies I considered for visualizing a bunch of
+points on the web:</p>
+<ol>
+<li><a href="https://bl.ocks.org/mbostock/4e3925cdc804db257a86fdef3a032a45">D3.js rendering to SVG</a></li>
+<li><a href="https://bl.ocks.org/mbostock/b418a040bb28295e4a78581fe8e269d1">D3.js rendering to canvas (better performance)</a></li>
+<li><a href="https://codepen.io/GrantCuster/pen/QqvXwd">Three.js rendering to canvas with webGL (best performance when rendering lots of points)</a></li>
+</ol>
+<p>Most D3 examples use SVG, but there are canvas examples for when you are
+animating lots of points and need the boosted performance. I didn&rsquo;t find any
+three.js-specific examples so I made my own. I&rsquo;d love to see an
+exhaustive investigation and benchmark for the performance of each (and
+alternative methods!), but I&rsquo;m not going to do that here.</p>
+<h2 id="prior-art-and-past-experience">Prior art and past experience</h2>
+<p>I&rsquo;d had my own experience with the limits of SVG rendering for lots of points.
+I&rsquo;d also seen a bit of what WebGL could do while working on our <a href="http://fastforwardlabs.github.io/pre">Probabilistic Real
+Estate prototype</a>, which uses <a href="https://www.mapbox.com/mapbox-gl-js/api/">Mapbox&rsquo;s
+WebGL library</a>. For knowledge of
+canvas and three.js strategies, I was lucky to have the examples of two great
+past projects from FFL interns.</p>
+<ul>
+<li><a href="//www.twitter.com/whaleandpetnuia">Aditya</a> used D3 rendered to canvas in his
+<a href="http://fastforwardlabs.github.io/cinephile_tsne/">visualization of a community&rsquo;s taste in
+movies</a>. I watched him push
+canvas rendering to its limits, rendering around 20,000 points.</li>
+<li><a href="//sepans.com/">Sepand</a> used three.js to render his <a href="//www.fastforwardlabs.com/encartopedia">visualization
+of Wikipedia articles</a>. He was able to
+render 100,000 points without framerate issues. Coming (like me) from D3
+experience, he had to invest considerable dev time in understanding
+three.js&rsquo;s camera system.</li>
+</ul>
+<p>Based on those experiences, I went into this project thinking I&rsquo;d use three.js. It also just
+seemed like fun. Three.js comes more out of the game dev world
+than the web app one I&rsquo;m used to. A lot of recent web app
+innovation has come from adopting techniques from the video game world, so I was
+excited about the opportunity to further explore that path.</p>
+<h2 id="getting-started-in-threejs">Getting started in three.js</h2>
+<p>I looked through the three.js <a href="https://threejs.org/docs/index.html#manual/introduction/Creating-a-scene">documentation</a> and <a href="https://threejs.org/examples/">examples</a>. Then I started looking
+for examples of 2D visualizations that were similar to what I wanted to create. There are
+not many. I did find this <a href="https://stackoverflow.com/questions/21786184/setting-up-a-2d-view-in-three-js">Stack Overflow post about setting up a 2D
+view</a>,
+which had some helpful points for getting started and an encouraging tone (I
+love that by the third update they&rsquo;re reading <a href="https://www.amazon.com/dp/0321399528/">Computer Graphics and Principles</a>).</p>
+<h3 id="setting-the-scene">Setting the scene</h3>
+<p>I started with the basic scene set-up from the three.js
+tutorial, and worked on replacing the spinning cube with a wall of points. I put
+some work into trying to understand the <a href="https://threejs.org/docs/#api/cameras/PerspectiveCamera">PerspectiveCamera</a>, but in terms of getting
+things to render at the size I was after I mainly used trial and error of
+plugging in different parameters. One of the downsides of rendering to a canvas
+(rather than HTML or SVG) is that you don&rsquo;t have a DOM to inspect for debugging.
+Often I&rsquo;d find myself  with a blank canvas and I&rsquo;d have to retrace my steps to a
+point where things were working. I made frequent reference to <a href="https://github.com/sepans/wikiviz">Sepand&rsquo;s
+code</a>.</p>
+<h3 id="the-animation-loop">The animation loop</h3>
+<p>One of the video game techniques you use in three.js is the animation loop:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// Three.js render loop
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">animate</span>() {
+  <span style="color:#a6e22e">requestAnimationFrame</span>(<span style="color:#a6e22e">animate</span>);
+  <span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">render</span>(<span style="color:#a6e22e">scene</span>, <span style="color:#a6e22e">camera</span>);
+}
+<span style="color:#a6e22e">animate</span>();
+</code></pre></div><p>Rather than having logic set up to only re-draw when things change, the animation
+loop is always re-drawing. Because of this, you don&rsquo;t have to worry about render
+logic as you update objects (like the camera) in a three.js scene. You just
+update them. This resonates with the philosophy of newer javascript frameworks like
+<a href="https://reactjs.org/">React</a>. I don&rsquo;t know the exact paths of influence there (I would be interested to
+read them!) but it&rsquo;s fun for me to discover connections as I go.</p>
+<h3 id="z-fighting">Z-Fighting</h3>
+<p><img src="//blog.fastforwardlabs.com/images/2017/10/z-fighting.png" alt="A screenshot of the flickering points debug demo."></p>
+<h5 id="an-early-challenge-flickering-caused-by-z-fightinghttpscodepeniograntcusterpengmmpxx">An early challenge: <a href="https://codepen.io/GrantCuster/pen/GMmPxx">flickering caused by z-fighting</a></h5>
+<p>After I got a lot of points to render at the size I wanted, I found that some of the
+points would flicker. I eventually learned this flickering was caused by
+<a href="https://en.wikipedia.org/wiki/Z-fighting">z-fighting</a>, where, because they were
+all on the same z-level, different points were &lsquo;winning&rsquo; each time the scene was
+drawn. It sounds like there is some combination of camera properties that could
+solve the issue, but I was unable to find the right combo. As pointed out in the
+<a href="https://stackoverflow.com/questions/21786184/setting-up-a-2d-view-in-three-js">above-mentioned Stack Overflow
+post</a>,
+you may also be able to fix it by slightly varying the z-value of each point. If
+it came to it I would do that, but it didn&rsquo;t feel right.</p>
+<p>I ended up solving the problem by setting <code>sizeAttenuation: false</code> on the
+<a href="https://threejs.org/docs/#api/materials/PointsMaterial">PointsMaterial</a>. In its default state of <code>true</code>, <code>sizeAttenuation</code> scales the
+points so they appear larger as you get closer and smaller as you move the camera
+farther away. Attenuation makes sense as a simulation of real objects, but
+for a visualization, setting it to <code>false</code>, which means the points stay the same
+size regardless of zoom level, is often more desirable. Unattenuated means that as you zoom in, the negative space between points
+expands. For dense visualizations, this lets you see local structure better as
+you zoom in. I&rsquo;m not sure why turning off <code>sizeAttenuation</code> fixed the z-fighting issue, but since I wanted it off anyway, I closed
+the case.</p>
+<h2 id="zoom-and-pan">Zoom and pan</h2>
+<p>Getting the points on the screen went fairly smoothly. Dialing in a zoom and pan
+set-up that I&rsquo;m happy with was more of a process. Targeted
+zoom requires an understanding of the camera and perspective that I&rsquo;m still
+developing.</p>
+<h3 id="handling-mouse-events">Handling mouse events</h3>
+<p>First I needed to translate mouse events into zoom and pan actions. I started by
+trying to plug in <a href="https://github.com/d3/d3-zoom">D3&rsquo;s zoom behavior</a>, since I was most familiar with it, and I
+didn&rsquo;t want to do the low-level event work of calculating how far a user
+scrolled. The zoom behavior gets you a scale level, and an <code>x</code> and <code>y</code> value.
+Combined in a transform, they get you the sort of directed zoom I was after. But I ended up
+using only the scale level from it because I could not figure out how to translate
+the <code>x</code> and <code>y</code> coordinates into the correct three.js camera
+position. I&rsquo;m 90% sure it&rsquo;s doable, but I didn&rsquo;t figure it out this round.</p>
+<h3 id="directed-zoom">Directed zoom</h3>
+<p>I had a hard time finding an example of the zoom behavior I wanted implemented
+in three.js. Even Google&rsquo;s impressive <a href="http://projector.tensorflow.org/">Embedding
+Projector</a> zooms to the center of the screen
+rather than following the mouse position. I thought that if I could figure out
+how to translate the mouse position on screen along different z-values,
+I could figure something out myself. That question turns out to be a
+relatively well-explored one because people often need it to calculate hover
+interactions with objects.</p>
+<p>This <a href="https://stackoverflow.com/questions/13055214/mouse-canvas-x-y-to-three-js-world-x-y-z/13091694#13091694">code snippet from
+WestLangley</a> turned out to be the key for getting
+directed zoom working:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vector</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">Vector3</span>();
+
+<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">set</span>(
+    ( <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">clientX</span> <span style="color:#f92672">/</span> window.<span style="color:#a6e22e">innerWidth</span> ) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+    <span style="color:#f92672">-</span> ( <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">clientY</span> <span style="color:#f92672">/</span> window.<span style="color:#a6e22e">innerHeight</span> ) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>,
+    <span style="color:#ae81ff">0.5</span> );
+
+<span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">unproject</span>( <span style="color:#a6e22e">camera</span> );
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">dir</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">vector</span>.<span style="color:#a6e22e">sub</span>( <span style="color:#a6e22e">camera</span>.<span style="color:#a6e22e">position</span> ).<span style="color:#a6e22e">normalize</span>();
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">distance</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">camera</span>.<span style="color:#a6e22e">position</span>.<span style="color:#a6e22e">z</span> <span style="color:#f92672">/</span> <span style="color:#a6e22e">dir</span>.<span style="color:#a6e22e">z</span>;
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pos</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">camera</span>.<span style="color:#a6e22e">position</span>.<span style="color:#a6e22e">clone</span>().<span style="color:#a6e22e">add</span>( <span style="color:#a6e22e">dir</span>.<span style="color:#a6e22e">multiplyScalar</span>( <span style="color:#a6e22e">distance</span> ) );
+</code></pre></div><p>It projects a ray from the camera through the mouse position. You can then
+move along that ray on the z-axis, using the <code>z</code> value to get back new <code>x</code> and
+<code>y</code> coordinates. In <a href="https://codepen.io/GrantCuster/pen/rGGRRp">my code</a>, I&rsquo;m taking the scale from D3&rsquo;s zoom behavior and
+plugging it in as the new <code>z</code> value. I can then use the <code>x</code> and <code>y</code> values to set the
+new camera position and get the directed zoom effect I was after. My
+understanding of <em>exactly</em> what&rsquo;s happening here is still fuzzy, I tried
+dissecting it a bit and hope to do more in the future. For now, though, it
+works.</p>
+<h3 id="crashing">Crashing</h3>
+<p>I crashed my browser a lot during the zoom experiments, and sometimes even crashed my
+computer especially when I started trying to <code>console.log</code> to debug on zoom
+events. I don&rsquo;t have any real insight into what was causing the crash. I tried
+some developer tools profiling, but I wasn&rsquo;t really sure what to look for. Compared
+to an error message, a crash is a real bummer to recover from, and it&rsquo;s a big
+reason I didn&rsquo;t dissect the zoom code further. The cost of a mistake was too
+high. This was compounded because I don&rsquo;t really have a sense yet of what is
+expensive for three.js/3D in general and what is not. I kept stumbling into
+crashes while changing something I thought was innocuous. The whole experience made me less
+likely to experiment with changing things that were working, which is a big part
+of how I learn how things work. I don&rsquo;t know if there&rsquo;s anything to be done at a
+library or browser level that would result in more error messages and fewer
+crashes, but it would be a big help for getting started.</p>
+<h3 id="panning">Panning</h3>
+<p>While looking for a panning solution, I found <a href="https://github.com/anvaka/three.map.control">Andrei Kashcha&rsquo;s
+three.map.control</a>,
+which conceptually had the things I was after for both directed zoom and
+panning. I did not like the zoom feel, however. In my opinion it moves
+too fast and the thresholding makes it jerky. The momentum setting on the
+panning is also not what I was after.</p>
+<p>I checked out the code, and found the <code>getCurrentScale</code>
+function which calculates the current scale based on the camera settings and <code>z</code>
+value. Using this along with the <code>movementX</code> and <code>movementY</code> events from D3&rsquo;s
+zoom behavior (how
+far you&rsquo;d dragged) yielded the pan behavior I was after.</p>
+<p>I experimented with using <code>getCurrentScale</code> to replace the ray function I was using for zoom.
+It seemed cleaner to have the directed zoom and panning operating off the same
+logic. After a fair amount of experimenting I got values fairly close to the ray
+method – but not close enough. It felt like I was zooming on ice.  I&rsquo;m
+still 90% sure can be done, but after crashing the browser a bunch
+of times trying to figure it out, I decided to stick with the current working
+configuration.</p>
+<h2 id="a-practical-success">A practical success</h2>
+<p>So, after lots of experimentation, crashes, and help from other people&rsquo;s code,
+I made it to <a href="https://codepen.io/GrantCuster/pen/rGGRRp">a working example with tens of thousands of
+points, and the zoom and panning behavior I was
+after</a>. I&rsquo;d like to tighten up the
+code for that behavior as well as my understanding of it, but that&rsquo;s
+always the case. I&rsquo;ve had my first tangle with a lot of the concepts and edges
+of three.js, and I expect I&rsquo;ll have lots of opportunities to revisit them. I look
+forward to learning how to do all of this stuff better in the future.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>In the current demo the zoom direction is inverted because I&rsquo;m plugging D3&rsquo;s
+scale directly into the camera&rsquo;s z-value. D3 evidently has some easing as you
+zoom in close, where it slows down the rate of zoom change. That means I can&rsquo;t
+just simply invert the scale. I&rsquo;ll figure out something to fix this in the
+future.</li>
+<li>In the demo, I scale the point size up a bit when you&rsquo;re really close. This is
+what feels best to me &ndash; points stay the same size most of the way in, but at
+the end they get a bit bigger. Right now it&rsquo;s all an experiment in what feels right.</li>
+<li>Why exactly is three.js fast? This is something I&rsquo;d love to learn more about.
+My operating understanding is that WebGL uses the GPU, which is good at doing
+these kinds of calculations, and three.js is also very smart about only drawing
+what you can currently see (known as culling). I don&rsquo;t know how this all plays
+out though. Is it fast mostly because of the GPU use or mostly because of the
+culling?</li>
+<li>The camera uses a field of view setting which is not at all intuitive to me, but if you
+have friends or coworkers who are into actual physical cameras they&rsquo;ll have a
+bunch of experience with it. You can ask them about it and they&rsquo;ll probably draw
+diagrams.</li>
+<li>Why am I using a 3D library for a 2D visualization? Because it&rsquo;s fast. I did
+look at the 2D WebGL renderer <a href="http://www.pixijs.com/">PixiJS</a> but found mostly
+game related examples. I could also try using the WebGL library directly. I&rsquo;d
+love to read about either of those approaches. But given my time limit three.js
+seemed the right level at which to dive in.</li>
+<li>Why are the points squares? It is apparently more taxing to draw circles.
+Sepand did it, and I plan to eventually (with sprites) once I understand the
+ins-and-outs a little more.</li>
+</ul>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 26, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2017/10/alphago-zeros-win-what-it-means.html"><strong>AlphaGo Zero&#39;s win, what it means</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 2, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2017/10/probabilistic-programming-an-annotated-bibliography.html"><strong>Probabilistic programming: an annotated bibliography</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <div>
+    
+    <a href="/newsletters/2020-06.html"
+       ><h2 style="margin-bottom: 4px;"></h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    Hello, and welcome to the June edition of Cloudera Fast Forward&rsquo;s monthly newsletter.
+ New research: NLP for Question Answering Here in the Fast Forward lab, we&rsquo;re always asking ourselves a lot of questions. Now we&rsquo;re asking BERT a lot of questions too! Our current research focus is question answering systems. In place of a report with all our learnings at the end of our research, we&rsquo;re inviting you to follow along as we explore building a question answering system using modern neural architectures.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/newsletters/2020-06.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  <div><a href="/2019/10/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2018/11/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2018/04/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2017/10/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  <div><a href="/2016/08/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2016/02/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

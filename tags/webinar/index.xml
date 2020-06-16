@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>webinar on Blog</title>
+    <link>http://test-blog.fastforwardlabs.com/tags/webinar.html</link>
+    <description>Recent content in webinar on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 May 2016 17:16:23 +0000</lastBuildDate>
+    
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/webinar/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Online Talk: Summarization Algorithms</title>
+      <link>http://test-blog.fastforwardlabs.com/2016/05/online-talk-summarization-algorithms.html</link>
+      <pubDate>Fri, 27 May 2016 17:16:23 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2016/05/online-talk-summarization-algorithms.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Evaluating Summarization Systems</title>
+      <link>http://test-blog.fastforwardlabs.com/2016/05/evaluating-summarization-systems.html</link>
+      <pubDate>Mon, 23 May 2016 17:09:13 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2016/05/evaluating-summarization-systems.html</guid>
+      <description>We’re excited for tomorrow’s online discussion about automatic text summarization! You can register here. During the event, Mohamed AlTantawy, CTO of Agolo, will explain the tech behind their summarization tool. In this blog post, he describes how his team evaluates the quality of summaries produced by their system. Join us tomorrow to learn more and ask questions about the approach! Rouge Readability  “The market is maturing,” and opening retail stores in India helps “form the building blocks” for the firm in the country, he said.</description>
+    </item>
+    
+    <item>
+      <title>Fast Forward Labs Interviews Clarifai about Deep Learning</title>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/fast-forward-labs-interviews-clarifai-about-deep-learning.html</link>
+      <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

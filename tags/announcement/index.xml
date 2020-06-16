@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>announcement on Blog</title>
+    <link>http://test-blog.fastforwardlabs.com/tags/announcement.html</link>
+    <description>Recent content in announcement on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Jun 2016 13:53:20 +0000</lastBuildDate>
+    
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/announcement/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Welcome, Friederike!</title>
+      <link>http://test-blog.fastforwardlabs.com/2016/06/welcome-friederike.html</link>
+      <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2016/06/welcome-friederike.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FFL in the Bay Area, Chicago, and DC</title>
+      <link>http://test-blog.fastforwardlabs.com/2015/11/ffl-in-the-bay-area-chicago-and-dc.html</link>
+      <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2015/11/ffl-in-the-bay-area-chicago-and-dc.html</guid>
+      <description>Wednesday, November 11 | Mountain View, CA Tuesday, November 17 | Washington, DC Wednesday, November 18 | Chicago, IL </description>
+    </item>
+    
+    <item>
+      <title>Fast Forward Labs Interviews Clarifai about Deep Learning</title>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/fast-forward-labs-interviews-clarifai-about-deep-learning.html</link>
+      <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pictograph: Unlock Your Images</title>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/pictograph-unlock-your-images.html</link>
+      <pubDate>Tue, 15 Sep 2015 19:16:19 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/pictograph-unlock-your-images.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Our Next Topic: Realtime Stream Analysis</title>
+      <link>http://test-blog.fastforwardlabs.com/2014/12/our-next-topic-realtime-stream-analysis.html</link>
+      <pubDate>Fri, 19 Dec 2014 21:17:09 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2014/12/our-next-topic-realtime-stream-analysis.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hello, Fast Forward Labs!</title>
+      <link>http://test-blog.fastforwardlabs.com/2014/07/hello-fast-forward-labs.html</link>
+      <pubDate>Mon, 21 Jul 2014 12:01:01 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2014/07/hello-fast-forward-labs.html</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>announcement,language processing,press,product on Blog</title>
+    <link>http://test-blog.fastforwardlabs.com/tags/announcementlanguage-processingpressproduct.html</link>
+    <description>Recent content in announcement,language processing,press,product on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 Apr 2016 11:25:26 +0000</lastBuildDate>
+    
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/announcementlanguage-processingpressproduct/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>New Tools to Summarize Text</title>
+      <link>http://test-blog.fastforwardlabs.com/2016/04/new-tools-to-summarize-text.html</link>
+      <pubDate>Mon, 11 Apr 2016 11:25:26 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2016/04/new-tools-to-summarize-text.html</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

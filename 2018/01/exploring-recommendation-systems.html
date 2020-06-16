@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Exploring Recommendation Systems</title>
+<meta property="og:title" content="Exploring Recommendation Systems">
+<meta property="description" content="While we commonly associate recommendation systems with e-commerce, their application extends to any decision-making problem which requires pairing two types of things together. To understand why recommenders don&rsquo;t always work as well as we&rsquo;d like them to, we set out to build some basic recommendation systems using publicly available data.
+Data The first ingredient for building a recommendation system is user interaction data. We experimented with two different datasets, one from Flickr and one from Amazon.">
+<meta property="og:description" content="While we commonly associate recommendation systems with e-commerce, their application extends to any decision-making problem which requires pairing two types of things together. To understand why recommenders don&rsquo;t always work as well as we&rsquo;d like them to, we set out to build some basic recommendation systems using publicly available data.
+Data The first ingredient for building a recommendation system is user interaction data. We experimented with two different datasets, one from Flickr and one from Amazon.">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.com/images/2018/01/ROC_NMF_tag_loop_1115_nodot.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2018/01/exploring-recommendation-systems.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Jan 22, 2018</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Exploring Recommendation Systems</h1>
+    <p>While we commonly associate recommendation systems with e-commerce, their
+application extends to any decision-making problem which requires pairing two
+types of things together. To understand why recommenders don&rsquo;t always work as
+well as we&rsquo;d like them to, we set out to build some basic recommendation systems
+using publicly available data.</p>
+<h2 id="data">Data</h2>
+<p>The first ingredient for building a recommendation system is user interaction
+data. We experimented with two different datasets, one from Flickr and one from
+Amazon. The Flickr dataset contains interactions between users and photos that
+they liked; the Amazon dataset contains user ratings on books. Both datasets are
+time-stamped. The Flickr dataset has positive class data only (i.e. liked
+photos), while the Amazon dataset has granular ratings data ranging from 1 to 5.</p>
+<p>In general, user interaction data is <em>sparse,</em> since a single user would only
+have interacted with a small subset of items (think about how many movies you
+have rated on Netflix). In addition, users tend to rate good items only, leading
+to class imbalance. For datasets with granular ratings data, not only is it hard
+for a user to differentiate 2 from 3, a 3 could also mean different things to
+different users.</p>
+<p>In recommendation systems, it is important to remove both users who have
+interacted with many items and items that have many ratings. Intuitively, users
+who like many items do not add any useful information to our system, as they are
+not selective enough. Similarly, items that many users like will tend to be
+overly recommended. To clean our dataset, we filtered out these cases. We then
+split the dataset into two (training and testing), using a cutoff timestamp.</p>
+<h2 id="building-the-recommender">Building the Recommender</h2>
+<p>The goal of a recommendation system is to use historical interaction data to
+recommend a new pairing (user and item) for the future. There are two
+approaches. The first approach predicts an actual rating for a user-item pair
+and recommends the highest rated item for that user. The second approach
+predicts a ranking of items and recommends the highest ranked item for a
+user. Our experiment focuses on the first approach. The recommenders are
+evaluated using standard metrics such as area under curve (AUC) and root mean
+squared error (RMSE).</p>
+<p>AUC computes the area under the ROC curve for classification problems, and a
+larger number is better. The
+<a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">ROC</a> curve
+plots the true positive rate against the false positive rate. We want a
+classifier that correctly identifies as many positive instances as are available, with
+a very low percentage of negative instances incorrectly classified as
+positive. As a result, the ROC curve of a perfect classifier will go straight up
+the y axis (true positive rate) and then along the x axis (false positive
+rate). A classifier with no power will sit on the x=y diagonal. RMSE computes
+how far the predicted value is from the actual value.</p>
+<h3 id="basic-photo-recommendation-system">Basic photo recommendation system</h3>
+<p>To quickly get a recommender up and running, we used a Python scikit called
+<a href="https://github.com/NicolasHug/Surprise">SURPRISE</a>. The package has various
+built-in recommendation algorithms including ones based on neighborhood approach
+and matrix factorization. Neighborhood approach finds a group of users who are
+similar to you and assumes that you share the same item preferences. The
+algorithm then recommends to you items that these users have liked. Matrix
+factorization represents users and items using a set of factors and predicts
+user preference for items using a linear combination of these factors. Because a
+recommender needs to know both what a user liked and disliked, we used
+heuristics to infer negative ratings for the Flickr dataset. (An example
+heuristic is to assume that <em>x</em> number of photos before the <em>liked</em> photo are
+disliked.)</p>
+<p>With both positive and negative ratings, we were ready to plug our data into
+SURPRISE. To do so, we transformed it into a text file that provides four pieces
+of information {userid, photoid, rating, timestamp}, where a rating is either a 1
+or 5.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>The following code snippet shows how custom datasets can be defined and used in
+SURPRISE.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> surprise <span style="color:#f92672">import</span> Dataset
+<span style="color:#f92672">from</span> surprise <span style="color:#f92672">import</span> Reader
+
+train_file <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>expanduser(data_path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;train.data&#39;</span>)
+test_file <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>expanduser(data_path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;test.data&#39;</span>)
+reader <span style="color:#f92672">=</span> Reader(line_format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;user item rating timestamp&#39;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;;&#39;</span>)
+data <span style="color:#f92672">=</span> Dataset<span style="color:#f92672">.</span>load_from_folds([(train_file, test_file)], reader<span style="color:#f92672">=</span>reader)
+</code></pre></div><p>Training a model and getting a prediction is straightforward.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> surprise <span style="color:#f92672">import</span> dump
+<span style="color:#f92672">from</span> surprise <span style="color:#f92672">import</span> KNNBasic
+<span style="color:#f92672">from</span> surprise.accuracy <span style="color:#f92672">import</span> rmse
+
+algo <span style="color:#f92672">=</span> KNNBasic(sim_options<span style="color:#f92672">=</span>sim_options, min_k<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+<span style="color:#66d9ef">for</span> trainset, testset <span style="color:#f92672">in</span> data<span style="color:#f92672">.</span>folds():
+    algo<span style="color:#f92672">.</span>train(trainset)
+    predictions <span style="color:#f92672">=</span> algo<span style="color:#f92672">.</span>test(testset)
+    rmse(predictions)
+    dump(<span style="color:#e6db74">&#39;./dump_KNN&#39;</span>, predictions, trainset, algo)
+</code></pre></div><p>The ROC curve for our system was underwhelming - it is very close to the diagonal
+line because there is not enough information in the interaction matrix.</p>
+<p><img src="/images/2018/01/ROC_NMF_nodot_1115.png" alt=""></p>
+<h3 id="photo-recommender-with-tags">Photo recommender with Tags</h3>
+<p>Could we build a better recommendation system if we made use of the tag
+information that comes for free with the Flickr dataset? Instead of describing a
+photo using its id (a series of numbers), we used tags like <em>sunset, bridge,
+Brooklyn</em>. Why? First, by doing so, we hoped to add more information to the
+interaction matrix. Second, our basic photo recommender was unable to recommend
+a new photo because it did not have any historical interaction
+information. Since it did not know who had interacted with this photo and what
+the outcome of the interaction was, it did not know how to recommend this new
+item. (This is known as the <em>cold start</em> problem.) By adding tags, we built
+a system that understands the content of what it is recommending. With this
+understanding comes the ability to recommend items that it has never seen
+before. A new photo is no longer new to the system; it can be represented by a
+set of tags that the system has seen before.</p>
+<p>When we describe a photo with a set of tags, each column of the input matrix is
+now a tag (vs a photo id). As such, the size of the input matrix becomes much
+larger. For each user, the recommender returns a set of tags and their
+corresponding scores. To get back a photo recommendation, these tag scores need
+to be converted to photo scores. For each photo, we compute its score by i)
+comparing the recommended tags to the set of tags representing the photo, ii)
+finding the common tags between them, iii) adding up the scores for the common
+tags and iv) normalizing by the number of common tags. All photos are ranked
+using this score and the top one is recommended. Once tag information is
+incorporated, our ROC curve looked much better!</p>
+<p><img src="/images/2018/01/ROC_NMF_tag_loop_1115_nodot.png" alt=""></p>
+<h3 id="basic-book-recommendation-system">Basic book recommendation system</h3>
+<p>Our recommender based on Flickr&rsquo;s dataset required inferred negative
+ratings. Amazon&rsquo;s user rating dataset, on the other hand, provides rating
+information ranging from 1 to 5. We tested two recommenders on this dataset: the
+first was a recommender we built using Python&rsquo;s scikit-learn package; the second
+was a recommender put together using
+<a href="https://github.com/maciejkula/spotlight">Spotlight</a>, a PyTorch based
+recommendation package. In our scikit-learn implementation we incorporated both
+matrix factorization and neighborhood-based algorithms. In the Spotlight
+recommender, we built an engine using matrix factorization since Spotlight does
+not support neighborhood based-approaches. All recommenders are evaluated using
+RMSE.</p>
+<p>We cleaned and separated the Amazon dataset into training and testing sets using the same
+approach as we did with the Flickr dataset. From here, we transformed the input data into an
+interaction matrix for our sklearn-based recommender. Each row in the
+interaction matrix represents a user and each column represents a book. For
+Spotlight, this interaction matrix is converted into a custom <em>interactions</em>
+object. This object takes in three arrays: user ID, book ID, and ratings
+information. The user ID is the row index for our interaction matrix, the book
+ID is the column index, and the rating information is the value of the
+interaction matrix. Here is the code snippet.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> spotlight.interactions <span style="color:#f92672">import</span> Interactions
+interactions <span style="color:#f92672">=</span> Interactions(np<span style="color:#f92672">.</span>asarray(userid, dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>int32),
+	       		    np<span style="color:#f92672">.</span>asarray(bookid, dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>int32),
+                            np<span style="color:#f92672">.</span>asarray(ratings_all, dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>float32))
+</code></pre></div><p>Training and scoring the model is a two liner.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> spotlight.factorization.explicit <span style="color:#f92672">import</span> ExplicitFactorizationModel
+<span style="color:#f92672">from</span> spotlight.evaluation <span style="color:#f92672">import</span> rmse_score
+
+model <span style="color:#f92672">=</span> ExplicitFactorizationModel(n_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+model<span style="color:#f92672">.</span>fit(sp_train[<span style="color:#ae81ff">0</span>])
+rmse <span style="color:#f92672">=</span> rmse_score(model, sp_test[<span style="color:#ae81ff">0</span>])  <span style="color:#75715e"># 0.62</span>
+</code></pre></div><p>Similar to our results with the Flickr dataset, the initial results were underwhelming, but expected for a
+system built using only user and book ratings information.</p>
+<h3 id="book-recommender-with-subject">Book Recommender with Subject</h3>
+<p>What if we added some content information to the books? In the Flickr dataset,
+each photo already has a set of tags associated with it; content information is
+free! For the Amazon dataset, we obtained subject information using the open
+library API. This allowed us to identify a book using its subject. Each column in
+our interaction matrix is now a subject rather than a book ID. Since multiple
+books can be mapped to the same subject, our input matrix is smaller and
+denser. (This is in contrast to the Flickr dataset, where adding content
+information expanded the input matrix.) Ratings that a user assigned for books
+with the same subject are aggregated into a single rating for that particular
+subject. To obtain a recommended rating on a book, we mapped the book to its
+subject and read off that recommendation. With subject information, the RMSE
+improved by approximately 2-fold across the board! Unfortunately, we also saw
+that most of the algorithms do not work since they perform worse than a random
+recommender when we use RMSE as a metric.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Algorithm</th>
+<th align="center">RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">NMF (ID)</td>
+<td align="center">0.84</td>
+</tr>
+<tr>
+<td align="center">NMF (Subject)</td>
+<td align="center">0.46</td>
+</tr>
+<tr>
+<td align="center">Neighborhood (ID)</td>
+<td align="center">0.84</td>
+</tr>
+<tr>
+<td align="center">Neighborhood (Subject)</td>
+<td align="center">0.44</td>
+</tr>
+<tr>
+<td align="center">Spotlight MF (ID)</td>
+<td align="center">0.62</td>
+</tr>
+<tr>
+<td align="center">Spotlight MF (Subject)</td>
+<td align="center">0.27</td>
+</tr>
+<tr>
+<td align="center">Random</td>
+<td align="center">0.38</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-we-learned">What we learned</h2>
+<h3 id="raw-material">Raw material</h3>
+<p>Data makes all the difference. Traditional recommendation systems do not work
+well because of the sparsity problem. Each user only rates a small percentage of
+items in the universe, but recommendation systems rely on this weak signal to
+make decisions.</p>
+<p>To make a better system we need a denser matrix in order to extract a stronger
+signal. In our example we used content information: tags for the Flickr dataset
+and subjects for the Amazon dataset. Both cases saw dramatic
+improvements.</p>
+<p>Time-stamp information is also helpful because it makes the
+problem amenable to some deep learning techniques. As an example, the prototype we built to
+accompany our new Semantic Recommendations report uses deep features as a way of
+extending the factorization models.</p>
+<h3 id="does-a-basic-recommendation-system-work">Does a basic recommendation system work?</h3>
+<p>A recommendation system built using matrix factorization or neighborhood
+approaches trained on simple user-item interaction data is unlikely to give
+great recommendations. In our experiment with the Amazon dataset, these
+recommendation systems underperform a random system! Moreover, these systems
+suffer from the cold start problem - they rely on historical interaction data
+and cannot make recommendations on new items.</p>
+<p>For more on recommendation systems, please see our new report! The Semantic
+Recommendations report explores the current state of recommendation systems,
+with a focus on how machines can better understand content. Armed with this
+newfound understanding, we look at how systems can bypass the cold start problem
+and expand their utility well beyond traditional e-commerce use cases.</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jan 26, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  <div><a href="/2018/01/google-maps-competitive-moat-why-better-data-matters.html"><strong>Google Maps&#39; Competitive Moat - Why Better Data Matters</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Dec 20, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2017/12/highlights-of-2017.html"><strong>Highlights of 2017</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <div>
+    
+    <a href="/newsletters/2020-06.html"
+       ><h2 style="margin-bottom: 4px;"></h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    Hello, and welcome to the June edition of Cloudera Fast Forward&rsquo;s monthly newsletter.
+ New research: NLP for Question Answering Here in the Fast Forward lab, we&rsquo;re always asking ourselves a lot of questions. Now we&rsquo;re asking BERT a lot of questions too! Our current research focus is question answering systems. In place of a report with all our learnings at the end of our research, we&rsquo;re inviting you to follow along as we explore building a question answering system using modern neural architectures.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/newsletters/2020-06.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  <div><a href="/2019/10/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2018/11/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2018/04/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2017/10/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  <div><a href="/2016/08/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  <div><a href="/2016/02/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

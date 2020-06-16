@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fashion on Blog</title>
+    <link>http://test-blog.fastforwardlabs.com/tags/fashion.html</link>
+    <description>Recent content in fashion on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 29 Sep 2015 18:13:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://test-blog.fastforwardlabs.com/tags/fashion/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Machine Learning in Retail: Consumer Privacy Implications</title>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</link>
+      <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
+      
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/machine-learning-in-retail-consumer-privacy-implications.html</guid>
+      <description>&lt;!-- raw HTML omitted --&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
