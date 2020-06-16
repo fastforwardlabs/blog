@@ -7,7 +7,7 @@
   </h5>
   {{ if (isset .Params "external_url") }}
   <div><a href="{{ .Params.external_url }}" target="_blank">
-      <strong>{{.Title}} 🡕</strong></a></div>
+      <strong>{{.Title}} →</strong></a></div>
   {{ else }}
     <div><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong></a></div>
   {{ end }}
