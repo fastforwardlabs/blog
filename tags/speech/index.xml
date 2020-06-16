@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>speech on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/tags/speech.html</link>
+    <link>http://blog.fastforwardlabs.com/tags/speech.html</link>
     <description>Recent content in speech on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 Jun 2015 19:42:33 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/tags/speech/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/tags/speech/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>MongoDB World Keynote</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/06/19/mongodb-world-keynote.html</link>
+      <link>http://blog.fastforwardlabs.com/2015/06/19/mongodb-world-keynote.html</link>
       <pubDate>Fri, 19 Jun 2015 19:42:33 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/06/19/mongodb-world-keynote.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2015/06/19/mongodb-world-keynote.html</guid>
       <description>Fast Forward Labs’ founder and CEO gave a keynote speech at MongoDB World in New York earlier this month. Check out the video here.</description>
     </item>
     

@@ -2,67 +2,67 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>design on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/tags/design.html</link>
+    <link>http://blog.fastforwardlabs.com/tags/design.html</link>
     <description>Recent content in design on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 25 Mar 2016 16:25:43 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>H.P. Luhn and the Heuristic Value of Simplicity</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>Designing the Tech Graph</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</link>
+      <link>http://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</link>
       <pubDate>Tue, 19 May 2015 16:25:01 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</guid>
       <description>Dramatizing Information Work Visualizing Thinking with the Tech Graph The graph has a pretty bare-bones feature set at the moment, topics and links can be created and deleted and that’s about about it. My goal is to keep adding and improving to the point where it becomes a useful brainstorming tool for us. I’m looking forward to exploring what kinds of features can aid our thinking process.A Starting Point </description>
     </item>
     
     <item>
       <title>Blog Design Refresh</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/04/06/blog-design-refresh.html</link>
+      <link>http://blog.fastforwardlabs.com/2015/04/06/blog-design-refresh.html</link>
       <pubDate>Mon, 06 Apr 2015 20:12:24 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/04/06/blog-design-refresh.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2015/04/06/blog-design-refresh.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Probabilistic Methods for Realtime Streams</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</link>
+      <link>http://blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</link>
       <pubDate>Wed, 01 Apr 2015 20:24:20 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</guid>
       <description>Our second R&amp;amp;D Report, Probabilistic Methods for Realtime Streams, has gone out! In this report, we explored probabilistic algorithms for machine learning on potentially large realtime streams of data with efficient CPU and memory usage.
 Our prototype demonstrated these algorithms running on large amounts of social conversation data. More on that soon.</description>
     </item>
     
     <item>
       <title>The Natural Language Generation Report is Out</title>
-      <link>http://test-blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</link>
+      <link>http://blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</link>
       <pubDate>Fri, 17 Oct 2014 20:49:48 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</guid>
       <description>The Fast Forward Labs report on Natural Language Generation will be arriving soon to a bookshelf near you!</description>
     </item>
     
     <item>
       <title>We Built a Table</title>
-      <link>http://test-blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</link>
+      <link>http://blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</link>
       <pubDate>Thu, 21 Aug 2014 19:28:14 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</guid>
       <description>At Fast Forward Labs we’re thoughtful about the kind of work space we want to spend our time in. We decided that we preferred a shared large table instead of individual desks, to make it easier to collaborate and offer the flexibility to spread out when necessary, and to allow space for other people to drop in and work with us.
 We also love to build things, and find an hour of working with our hands to be a welcome respite from hours of math, programming, reading, and writing, so we decided to build it ourselves!</description>
     </item>

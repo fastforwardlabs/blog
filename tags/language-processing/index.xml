@@ -2,57 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>language processing on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/tags/language-processing.html</link>
+    <link>http://blog.fastforwardlabs.com/tags/language-processing.html</link>
     <description>Recent content in language processing on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 27 May 2016 17:16:23 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/tags/language-processing/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/tags/language-processing/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Online Talk: Summarization Algorithms</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</link>
       <pubDate>Fri, 27 May 2016 17:16:23 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Evaluating Summarization Systems</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</link>
       <pubDate>Mon, 23 May 2016 17:09:13 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</guid>
       <description>We’re excited for tomorrow’s online discussion about automatic text summarization! You can register here. During the event, Mohamed AlTantawy, CTO of Agolo, will explain the tech behind their summarization tool. In this blog post, he describes how his team evaluates the quality of summaries produced by their system. Join us tomorrow to learn more and ask questions about the approach! Rouge Readability  “The market is maturing,” and opening retail stores in India helps “form the building blocks” for the firm in the country, he said.</description>
     </item>
     
     <item>
       <title>Making a Case for Machine Learning to Legal Departments</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</link>
       <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</guid>
       <description>Since we released our text summarization resources, the legal technology community has shown interestin leveraging summarization technology to support litigation document review, deposition digests, and contract analysis. Data scientist interest to use machine learning to mine legal document corpuses and support legal strategy was also one factor motivating our summarization research. The time is therefore ripe for data scientists to apply new text analytics capabilities for legal use cases. But to be effective, data scientists must first understand how lawyers think: what problems they’re trying to solve, how their processes are structured, and, perhaps most importantly, what fears may hinder the adoption of new technologies.</description>
     </item>
     
     <item>
       <title>Summarization as a Gateway to Computable Language</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</link>
       <pubDate>Thu, 21 Apr 2016 19:38:37 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</guid>
       <description>Summaries make documents more manageable The technologies we use to summarize documents have many other potential uses </description>
     </item>
     
     <item>
       <title>H.P. Luhn and the Heuristic Value of Simplicity</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     

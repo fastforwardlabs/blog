@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>fashiontech on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/tags/fashiontech.html</link>
+    <link>http://blog.fastforwardlabs.com/tags/fashiontech.html</link>
     <description>Recent content in fashiontech on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 19 Aug 2015 18:08:14 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/tags/fashiontech/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/tags/fashiontech/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Machine Learning Applications in Fashion Retail</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</link>
+      <link>http://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</link>
       <pubDate>Wed, 19 Aug 2015 18:08:14 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;this-is-the-first-of-two-articles-about-recent-developments-in-fashion-technology-part-two-will-focus-on-implications-for-consumer-privacy&#34;&gt;This is the first of two articles about recent developments in fashion technology. Part two will focus on implications for consumer privacy.&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>

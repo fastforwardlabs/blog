@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Newsletters on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/newsletters.html</link>
+    <link>http://blog.fastforwardlabs.com/newsletters.html</link>
     <description>Recent content in Newsletters on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 16 Jun 2020 17:57:24 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/newsletters/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/newsletters/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title></title>
-      <link>http://test-blog.fastforwardlabs.com/newsletters/2020-06.html</link>
+      <link>http://blog.fastforwardlabs.com/newsletters/2020-06.html</link>
       <pubDate>Tue, 16 Jun 2020 17:57:24 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/newsletters/2020-06.html</guid>
+      <guid>http://blog.fastforwardlabs.com/newsletters/2020-06.html</guid>
       <description>Hello, and welcome to the June edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter.
  New research: NLP for Question Answering Here in the Fast Forward lab, we&amp;rsquo;re always asking ourselves a lot of questions. Now we&amp;rsquo;re asking BERT a lot of questions too! Our current research focus is question answering systems. In place of a report with all our learnings at the end of our research, we&amp;rsquo;re inviting you to follow along as we explore building a question answering system using modern neural architectures.</description>
     </item>

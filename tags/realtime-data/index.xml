@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>realtime data on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/tags/realtime-data.html</link>
+    <link>http://blog.fastforwardlabs.com/tags/realtime-data.html</link>
     <description>Recent content in realtime data on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 23 Nov 2016 18:36:58 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/tags/realtime-data/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/tags/realtime-data/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</link>
       <pubDate>Wed, 23 Nov 2016 18:36:58 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>
       <description>Traditional Bloom filters do not support deletions because hashing is lossy and irreversible. That means, deletions require the entire filter to be rebuilt. But what if we want to delete items seen in the past, like certain tweets in the Twitter example above? The counting Bloom filter was introduced to solve this problem. To support deletions, counting Bloom filters extend buckets in traditional Bloom filters from single bit values to n-bit counters.</description>
     </item>
     

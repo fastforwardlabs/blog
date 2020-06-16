@@ -2,58 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>product on Blog</title>
-    <link>http://test-blog.fastforwardlabs.com/tags/product.html</link>
+    <link>http://blog.fastforwardlabs.com/tags/product.html</link>
     <description>Recent content in product on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 21 Apr 2016 19:38:37 +0000</lastBuildDate>
     
-	<atom:link href="http://test-blog.fastforwardlabs.com/tags/product/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.fastforwardlabs.com/tags/product/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Summarization as a Gateway to Computable Language</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</link>
       <pubDate>Thu, 21 Apr 2016 19:38:37 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</guid>
       <description>Summaries make documents more manageable The technologies we use to summarize documents have many other potential uses </description>
     </item>
     
     <item>
       <title>H.P. Luhn and the Heuristic Value of Simplicity</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
+      <link>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>Probabilistic Methods for Realtime Streams</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</link>
+      <link>http://blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</link>
       <pubDate>Wed, 01 Apr 2015 20:24:20 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</guid>
       <description>Our second R&amp;amp;D Report, Probabilistic Methods for Realtime Streams, has gone out! In this report, we explored probabilistic algorithms for machine learning on potentially large realtime streams of data with efficient CPU and memory usage.
 Our prototype demonstrated these algorithms running on large amounts of social conversation data. More on that soon.</description>
     </item>
     
     <item>
       <title>Our Next Topic: Realtime Stream Analysis</title>
-      <link>http://test-blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</link>
+      <link>http://blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</link>
       <pubDate>Fri, 19 Dec 2014 21:17:09 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>The Natural Language Generation Report is Out</title>
-      <link>http://test-blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</link>
+      <link>http://blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</link>
       <pubDate>Fri, 17 Oct 2014 20:49:48 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</guid>
+      <guid>http://blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</guid>
       <description>The Fast Forward Labs report on Natural Language Generation will be arriving soon to a bookshelf near you!</description>
     </item>
     
