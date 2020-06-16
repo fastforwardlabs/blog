@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Trees, Layers, and Speed: Talking Optimization with Patrick Hayes</title>
+<meta property="og:title" content="Trees, Layers, and Speed: Talking Optimization with Patrick Hayes">
+<meta property="description" content="In a modern twist on Claude Shannon&rsquo;s Theseus, SigOpt explains optimization by teaching a mouse to solve a randomly generated maze The learning of machine learning refers to the process of updating and tuning the parameters of a model. For example, if we take the function f(x) = ax^2 &#43; bx &#43; c, learning would mean to change the values of a, b, and c so that our function does a better job describing our data.">
+<meta property="og:description" content="In a modern twist on Claude Shannon&rsquo;s Theseus, SigOpt explains optimization by teaching a mouse to solve a randomly generated maze The learning of machine learning refers to the process of updating and tuning the parameters of a model. For example, if we take the function f(x) = ax^2 &#43; bx &#43; c, learning would mean to change the values of a, b, and c so that our function does a better job describing our data.">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.com/images/2017/04/maze%20image.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2017/03/10/trees-layers-and-speed-talking-optimization-with-patrick-hayes.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Mar 10, 2017</span> &middot;
+      <span style="text-transform: capitalize;">
+        interview
+      </span>
+    </h5>
+    <h1>Trees, Layers, and Speed: Talking Optimization with Patrick Hayes</h1>
+    <p><img src="/images/2017/04/maze%20image.png" alt=""></p>
+<h5 id="in-a-modern-twist-on-claude-shannons-theseushttpswwwyoutubecomwatchvvpkkxibqxga-sigopt-explains-optimization-by-teaching-a-mousehttpblogsigoptcompost151388283013sigopt-in-depth-building-a-better-mousetrap-via-to-solve-a-randomly-generated-maze">In a modern twist on <a href="https://www.youtube.com/watch?v=vPKkXibQXGA">Claude Shannon&rsquo;s Theseus</a>, SigOpt explains optimization by <a href="http://blog.sigopt.com/post/151388283013/sigopt-in-depth-building-a-better-mousetrap-via">teaching a mouse</a> to solve a randomly generated maze</h5>
+<p>The learning of machine learning refers to the process of updating and tuning the parameters of a model. For example, if we take the function f(x) = ax^2 + bx + c, learning would mean to change the values of a, b, and c so that our function does a better job describing our data.</p>
+<p>But what if we zoom out and focus on higher level model properties? Instead of learning coefficients for a function to best fit our data, is it possible to learn how many layers to put in a neural network or how many trees to put in a random forest model?</p>
+<p>The machine learning community calls this <a href="https://www.quora.com/What-are-hyperparameters-in-machine-learning">hyperparameter optimization</a>. There are a few competing optimization approaches available today, and <a href="https://sigopt.com/">SigOpt</a>, a San Francisco startup, is the first company we know of that offers a platform to automate optimization work for just about any machine learning project and pipeline.</p>
+<p>SigOpt has an <a href="http://blog.sigopt.com/">excellent technical blog</a> on this topic if you&rsquo;d like to dig in further. To start you off, we recently interviewed SigOpt Co-founder and VP of Engineering <a href="https://twitter.com/pfjhayes">Patrick Hayes</a>. Keep reading for highlights!</p>
+<p><strong>You studied math and computer science at the University of Waterloo, which has a unique <a href="https://uwaterloo.ca/software-engineering/future-undergraduate-students/co-op-and-careers">Co-op Program</a> where students alternate between four-month study terms at university and four-month work terms in business, industry, or government. How did this experience shape your interests?</strong></p>
+<p>I did six internships during my undergraduate degree, at companies like Blackberry, Sybase, Facebook, and Bloomberg, so left school with a good level of practical experience under my belt While many of these companies were large, I had some experience working on a small team at Wish, a mobile commerce company, where even as a junior engineer I was able to work on topic analysis using a Naive Bayes bag-of-words model. While many data scientists come from statistics or physics backgrounds, I studied pure math, which sculpted the way I approach problems. That said, it’s my training in computer science, not math, that has really impacted my practical day-to-day work. I think people from different intellectual backgrounds can succeed in data science. At SigOpt, we combine expertise in applied math, full stack engineering, and machine learning, and love having such diversity to attack problems from different directions.</p>
+<p><strong>Did you prefer working in a big or small company?</strong></p>
+<p>The different environments develop a different set of skills. I liked working at a smaller company like Wish because it gave me the opportunity to work on bigger projects. I had more ownership over my work and was able to wear different hats. I liked having a wide array of experiences early in my career to learn what I like to do, as well as what I don’t like to do, building skills to make big impact later in my career. That said, big companies offer some nice benefits, like having more support structures and processes and the ability and time to do a deep dive into a given project.</p>
+<p><strong>Why did you found SigOpt and what’s it been like working with your investors?</strong></p>
+<p>My co-founder, <a href="https://www.linkedin.com/in/sc932/">Scott Clark</a>, researched hyperparameter optimization in his PhD work at Cornell. <a href="https://www.quora.com/What-are-hyperparameters-in-machine-learning">Hyperparameters</a> are the higher-level properties of a model such as its complexity (e.g., number of layers in a neural network or trees in a random forest) or learning rate, and are usually fixed before model training begins rather than tweaked over time to improve performance. I had a lot of respect for Scott, having worked with him in the past, and felt turning this research into a product could make differences across many industries and problem sets. We started in Y Combinator at the beginning of 2015, and later received investment from Andreessen Horowitz. Y Combinator helped us stay focused in the early days. As Scott and I are both technical founders, they helped us learn how to run a business: our ability pitch to investors or sell to customers was like night and day after a few months! The Y Combinator network, including fellow cohort founders and alumni, was also critical to our early success. Andreessen Horowitz took us to the next step by introducing us to prospects, helping us hire new talent, and helping us grow into executives. I’ve personally learned a lot in these experiences. I came in as an engineer and was in my comfort zone writing code and solving problems. But to build a business, I had to spend 14 hours a day doing stuff I used to be bad at, like sales, marketing, hiring, and managing! It’s great to watch our team progressing on these activities.</p>
+<p><strong>How does the product work?</strong></p>
+<p>SigOpt is an optimization platform for any machine learning pipeline: our API includes various optimization technologies for hyperparameters, feature selection, machine learning model selection, or even algorithmic trading strategies.The goal is to enable our users to have the best version of their model as possible. We recently published a <a href="https://arxiv.org/abs/1603.09441">paper demonstrating</a> that our methods outperform other common approaches to this problem, like <a href="https://www.quora.com/What-is-the-difference-between-random-search-and-grid-search-for-hyperparameter-optimization">random search and grid search</a>.</p>
+<p><img src="/images/2017/04/optimization%20feedback%20loop.png" alt=""></p>
+<p><strong>SigOpt focuses on Bayesian optimization ensembles. What does that mean and how do Bayesian techniques support parameter optimization?</strong></p>
+<p>There’s a <a href="https://dash.harvard.edu/bitstream/handle/1/27769882/BayesOptLoop.pdf?sequence=1">solid 2015 paper</a> that gives an introduction to Bayesian optimization. Mathematically, optimization solves the problem of finding a global maximum (or minimum) for some function f. Global is important here because we don’t get stuck where things may look good locally: we only need to observe the function f through unbiased point-wise observations. What makes the techniques Bayesian is that we start with a prior belief over possible responses of the objective functions we’re optimizing for, and sequentially refine this model as data are observed, i.e., we update our posterior. We can then leverage the uncertainty baked into our Bayesian posterior to guide further exploration and exploitation to optimize the function: exploration is learning more about areas where we have greater uncertainty, and exploitation is going deeper in areas where we are confident the model performs well.</p>
+<p>The term ensemble refers to the fact that there are a variety of ways to do black-box optimization. As with all applied AI, it’s a balance between different factors: some techniques are accurate but slow, others are less accurate but fast; some perform better on functions with many parameters and others on functions with fewer parameters. Our product does the work of selecting which strategy will perform best for the problem at hand so our customers don’t have to select which optimizer to use.</p>
+<p><strong>What are some interesting use cases?</strong></p>
+<p>We’ve seen pretty strong adoption in <a href="https://sigopt.com/industries/algorithmic-trading">algorithmic trading</a> to help quants tune their models faster when they discover a new feature or as the data changes. There have also been a few interesting physical use cases, like optimizing the chemical composition in shaving cream or the process parameters for making beer. It can be expensive for companies to make something new that might fail, so they really need to get the best version as soon as possible. These experiments are often solved by trial and error, but optimization software helps make domain experts more efficient.</p>
+<p><strong>Can SigOpt help organizations with long-term operation and maintenance of models? A common challenge companies face is that the models their data scientists build are only relevant at one point in time. Do you have tips for productionalization of models in your experience as an engineer?</strong></p>
+<p>It’s true that models are built and optimized for a given setting, and as your data changes or you add more features, they quickly become outdated. SigOpt can help upkeep model performance even in the face of a changing landscape or ongoing product development. We want to encourage people to treat optimization as a first-class citizen in their machine learning and AI pipeline. Our algorithmic trading customers do this well, as they need an automated process to get their model ready to perform and only have 16 hours between trading hours to do this. Necessity, as they say, is the mother of invention.</p>
+<p><strong>How will tools like SigOpt change the work and skill set of data scientists over the next few years? Will it be possible to automate feature engineering, for example?</strong></p>
+<p>I don’t think feature engineering will be automated any time in the near future. Hyperparameter optimization is another example of <a href="http://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric.html">letting machines do what machines do best</a>, and enabling humans to focus on more creative and critical thinking activities. Our brains aren’t made to optimize 20-dimensional functions in our head, but they are made to explore aspects of a data set to frame a problem worth solving. I’d advise aspiring data scientists to make sure they understand the full machine learning pipeline, from collection and processing, through model building, through engineering and shipping the model. You can’t be satisfied with just part of the process. Production machine learning requires a different skill set than theoretical data science. There’s certain ways of thinking and behaving you can only learn by doing, by getting your hands dirty on the job, by working with real, messy data and making a model scale on real infrastructure.</p>
+<p><img src="/images/2017/04/tunable%20parameters%20deep%20learning.png" alt=""></p>
+<h5 id="optimization-can-be-a-powerful-tool-for-complex-neural-network-architecture">Optimization can be a powerful tool for complex neural network architecture</h5>
+<p><strong>What book or article has had the greatest influence on you recently?</strong></p>
+<p><a href="https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber">Susan Fowler’s article</a> about her experience at Uber. It’s important we continue to support diversity in the tech industry, to make sure everyone in the field feels comfortable and supported  in their work environment. We think a lot about culture at SigOpt, and all work to cultivate an environment of respect that can support a diverse team.</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Mar 13, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      talk slides
+    </span>
+  </h5>
+  
+    <div><a href="/2017/03/13/practical-deep-learning.html"><strong>Practical Deep Learning</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Mar 9, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2017/03/09/fairml-auditing-black-box-predictive-models.html"><strong>FairML: Auditing Black-Box Predictive Models</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 27, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-02-28-180128-markus_spiske_FXFz_sW0uwo_unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html"
+       ><h2 style="margin-bottom: 4px;">Privacy, data governance, and machine learning: the regulatory perspective</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/varun-bhatnagar-74303437/">Varun</a>
+        &middot; </span
+      >
+    </span>
+    Why do privacy and governance matter? Data privacy has been a common conversation topic among the general public since the Cambridge Analytica scandal in 2018. The data &ldquo;breach,&rdquo; in which user information was hoovered up through a Facebook quiz and subsequently misrepresented as being used for academic purposes, resulted in over $5 billion in fines for Facebook. However, Facebook&rsquo;s infringements were, in fact, relatively narrow in scope (though nonetheless egregious) compared to the growing remit of privacy law.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

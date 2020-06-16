@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Transfer Learning - from the ground up</title>
+<meta property="og:title" content="Transfer Learning - from the ground up">
+<meta property="description" content="Machine learning enables us to build systems that can predict the world around us: like what movies we’d like to watch, how much traffic we’ll experience on our morning commute, or what words we’ll type next in our emails.
+There are many types of models and tasks. Face detection models transform raw image pixels into high level signals (like the presence and position of eyes, noses, and ears) and then use those signals to locate all faces in an image.">
+<meta property="og:description" content="Machine learning enables us to build systems that can predict the world around us: like what movies we’d like to watch, how much traffic we’ll experience on our morning commute, or what words we’ll type next in our emails.
+There are many types of models and tasks. Face detection models transform raw image pixels into high level signals (like the presence and position of eyes, noses, and ears) and then use those signals to locate all faces in an image.">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.com/images/editor_uploads/2019-09-06-213558-fig_10.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2019/09/05/transfer-learning-from-the-ground-up.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Sep 5, 2019</span> &middot;
+      <span style="text-transform: capitalize;">
+        featured post
+      </span>
+    </h5>
+    <h1>Transfer Learning - from the ground up</h1>
+    <p>Machine learning enables us to build systems that can predict the world around us: like what movies we’d like to watch, how much traffic we’ll experience on our morning commute, or what words we’ll type next in our emails.</p>
+<p>There are many types of models and tasks. Face detection models transform raw image pixels into high level signals (like the presence and position of eyes, noses, and ears) and then use those signals to locate all faces in an image. Time series models can use sensor measurements to extract long-term trends and seasonal patterns in order to predict future observations. Text prediction models extract information about the meaning of past sentences, grammaticality, and emotions in the text in order to predict the next word or phrase that you’ll type.</p>
+<p>To do this, we use algorithms to train a model to accomplish a task. At the beginning, the model knows nothing, then we show it examples of training data for that task. As the model sees more and more examples it learns the basic concepts, then finer details, of how to carry out the task. Importantly, models are never explicitly told what types of information to extract; they learn to extract whatever types of information are useful to solving a specific task. Once trained, the model can transform raw data (text, images, gps coordinates, etc.) into useful signals that can then be used to make predictions.</p>
+<h3 id="transfer-learning">Transfer Learning</h3>
+<p>Traditionally, a model is trained from scratch, and on only one training dataset, for one specific task. This process is naive and brittle, and it requires lots of data. Transfer learning provides a smarter alternative.</p>
+<p>Consider two image classification tasks: in one case a model should learn to distinguish between pictures of cats and dogs, and in a second case a model should learn to distinguish between pictures of cats and bears. Without transfer learning, we would train two totally separate models, each learning the concept of cats and dogs or cats and bears from scratch. But it seems obvious that the type of information that would be useful in distinguishing between cats and dogs (identifying different types of ears, eyes, fur, or common surrounding scenery) would also be helpful in distinguishing cats from bears. With transfer learning, we can use models that already know how to extract useful information because they have learned from other, related tasks.</p>
+<p><img src="/images/editor_uploads/2019-09-06-213347-fig_29.png" alt=""></p>
+<p>Imagine that a customer service manager would like to build an automated system to answer simple questions from customers so the customers don’t need to be forwarded to human representatives. Current machine learning technology is sufficiently advanced to build such a system, but would require tens of thousands of question/answer examples, a fleet of expensive processors called GPUs, and an expert practitioner in both deep learning and natural language processing. Not knowing about transfer learning, the manager decides these resources are just too difficult to come by, so the project never gets off the ground.</p>
+<p>Now imagine that the manager does know about transfer learning. With transfer learning, the data requirement may be reduced to a few hundred examples, a single GPU will suffice, and a non-expert data scientist can build the system. Transfer learning enables the data scientist to reuse a model that is already trained to extract information from text. This pre-trained model has been trained using easily available, generic, self-labeling data to learn the basics of language. This general understanding of language helps the model with the specific task of question answering. The data scientist can download this model freely from the internet, and then train it on a small amount of data so that it can specialize on the type of data the company has. With transfer learning, the project becomes tenable and a minimum viable product is deployed in a matter of weeks.</p>
+<p>Let’s explore how natural language processing models work.</p>
+<h3 id="modern-nlp-systems">Modern NLP Systems</h3>
+<p>One extremely common input to machine learning systems is natural (human) language, often in the form of text. Machine learning systems can do numerous tasks by processing natural language, including: next-word prediction, identifying sentiment or emotion, extracting topics, or answering questions. Even though these tasks have very different outputs, they all involve extracting similar types of information from text input. In fact, we can break down most any modern NLP system into the following components:</p>
+<p><img src="/images/editor_uploads/2019-09-06-213418-fig_02.png" alt=""></p>
+<p><strong>Tokenizer.</strong> The tokenizer is a fixed component (no machine learning) that breaks up a piece of text into a sequence of symbols, known as tokens. These tokens might be individual words or letters depending on the type of tokenization used.</p>
+<p><strong>Token Embedder.</strong> The token embedder turns the individual tokens into numerical form. There are various ways to do this, but most commonly a token embedder learns individual vector representations for each different token. These vector representations are often called word embeddings.</p>
+<p><strong>Contextual Token Embedder.</strong> The contextual token embedder is responsible for extracting information by analyzing all tokens in tandem. It may learn how tokens interact (e.g., how past adjectives modify a noun), it may take token order into account, and it may build hierarchical features of language. In deep NLP systems, the model is often a type of recurrent neural network. Its output is essentially contextualized token embeddings - continuous representations of tokens that take past or future context into account.</p>
+<p><strong>Predictor.</strong> The predictor is responsible for taking the contextualized token embeddings and turning them into a prediction of the correct type. When predicting ratings from restaurant reviews, that would be a numerical star rating. For a machine translation system, that would be a string of text in another language.</p>
+<p>This common structure for NLP systems is something we can take advantage of. Regardless of the end goal, each system needs a token embedder and a contextual token embedder to efficiently extract useful information from text. In short, a token embedder or contextual token embedder that was trained on one task (prediction) is probably usable and useful in a separate task. Only the prediction component is particularly specific to the prediction task. This means that we don’t need to train these complex components (the token embedder and contextual token embedder) from scratch every time - they can be reused. This helps circumvent challenges relating to lack of data.</p>
+<p>One common example of this is the transfer of token embeddings through algorithms like Word2Vec. Word2Vec uses abundant, publicly available data (like Wikipedia) to learn continuous embeddings for words. The output of Word2Vec is a set of word vectors that preserve some of the meaning of words.</p>
+<p><img src="/images/editor_uploads/2019-09-06-213531-fig_01.png" alt=""></p>
+<p>For example, synonyms like “dwelling,” “house,” and “home” may be clustered together. Even analogies like “Paris is to France as Berlin is to Germany” may be preserved. It is clear that token embeddings store some information about the meaning of words that is useful. The meanings of these tokens are the same for most datasets; “dwelling,” “house,” and “home” are synonyms (or at least very closely related) regardless of the dataset. Therefore, it is wasteful to re-learn these embeddings for every new task. With small datasets, it may be impossible to learn them anyway. Instead, we can learn them once from a large, generic dataset, and then reuse them for any model that requires token embeddings.</p>
+<p>Transferring the token embedder provides better token embeddings, but the impact is somewhat limited. The contextual token embedder has a far more difficult task - while the token embedder learns the meaning of words, the contextual token embedder learns the meaning of language. Recent breakthroughs in academic research have shown that it is not only possible but extremely advantageous to transfer the contextual token embedder.</p>
+<h3 id="transferring-the-contextual-token-embedder">Transferring the Contextual Token Embedder</h3>
+<p>The contextual token embedder is the workhorse of modern NLP systems. It is usually a sophisticated deep learning model (like an RNN or a Transformer) that can do powerful things given enough data. However, in many valuable business applications there simply isn’t enough data to train these models. The consequence is that simpler models must be used instead, which can yield low-performance.</p>
+<p>With recent breakthroughs, we can train the contextual token embedder using a related task called language modeling and transfer the “knowledge” of that training to another task. Consider a case where we want to train a model that can extract the sentiment of restaurant reviews. The classic approach would be to hand label a selection of reviews as positive or negative, and then train a model to learn from these examples. But we may not have or be able to get enough data to train a powerful model from scratch. Instead, we can use the task of language modeling which doesn’t require any labels. Language modeling is the task of predicting missing words in a sequence of text.</p>
+<p><img src="/images/editor_uploads/2019-09-06-213558-fig_10.png" alt=""></p>
+<p>The key is that language models must learn to extract pieces of information that are relevant to other tasks as well. In this example, a language model needs to understand how negation in the first sentence impacts the missing word - that it is probably positive since “isn’t bad” is similar to ”good.” Similarly, negation is a very important concept in sentiment analysis. So, in the process of training a good language model, we end up training a contextual token embedder that could be useful in sentiment analysis. Crucially, we have far more data points for a language model because it doesn’t require hand-labeling; that is, the labels come from the text itself. The label is simply the next word in the text.</p>
+<p>This is one example of a very general strategy for training models: train a language model using an extremely large corpus of text, and then transfer the contextual token embedder from that model to do a related task that is valuable to your business.</p>
+<p>There are a number of pretrained models available for download. Google has released a powerful model called BERT, Fast.ai has made ULMFiT available as a part of its libraries, OpenAI has released GPT-2, And AllenNLP has released ELMo. Each of these models has been extensively trained and made available at no cost for use in your applications.</p>
+<h3 id="our-prototype-textflix">Our Prototype: Textflix</h3>
+<p>To test and demonstrate this training strategy, we built Textflix, a prototype of a social network for movie watchers. Texflix incorporates automatic sentiment analysis to help users understand which movies are popular and why.</p>
+<p><img src="/images/editor_uploads/2019-09-06-215600-textflix_sample.png" alt=""></p>
+<p>While the dataset we used to build the model behind Textflix had up to 50,000 labeled training examples available, we tested the system with varying-sized subsamples of the dataset down to as few as ten examples. We did this because we wanted to understand how different models, including transfer learning models, would perform with limited data. After all, in real-world problems there is often little or no labeled data available.</p>
+<p>To explore how dataset size affects performance, we tested models fine tuned with subsamples of the examples in the dataset to get performance curves for a variety of models.</p>
+<p><img src="/images/editor_uploads/2019-09-06-213658-figure_graph_3.png" alt=""></p>
+<p>We compared state-of-the-art models BERT and ULMFiT with baseline models based on naive Bayes support vector machine (NB-SVM) and simple word vector summation. When trained on plenty of data (i.e., 10,000 examples) the transfer learning models greatly outperform the baseline models, reducing the error rate by a factor of 3 (from 15% to 5%). This is due to the fact that the transfer learning models have significantly higher capacity - they are large deep learning models. Because they were pretrained on massive datasets, they do not overfit the relatively small amount of data here; these models were already skilled language processors to begin with. We expect them to outperform the baseline models.</p>
+<p>But the more exciting part of the chart is what happens around 100 samples. At 100 examples the baseline models are useless - hardly better than random guessing. The transfer learning models, however, still provide about 88% accuracy which is better than the baseline models can do even at 10,000 samples.</p>
+<p>This isn’t just a better model, it’s a new capability: a human can generate enough samples in a short time to get reasonable performance in an NLP system. 100 data samples is manageable for a human to label in a single workday (albeit a tedious one). This lifts the constraint of having labeled data; if no labels are available, simply have a human spend a day generating labels and use transfer learning for the rest.</p>
+<p>We built our prototype Textflix using a BERT model trained on just 500 labeled examples. This more closely mimics real-world scenarios where data is extremely limited. The model behind Textflix still provides near state-of-the-art performance despite this constraint.</p>
+<h3 id="transfer-learning-in-nlp-is-advancing-quickly">Transfer Learning in NLP Is Advancing Quickly</h3>
+<p>Transfer learning in natural language processing is one of the hottest topics in research today, and we’re still exploring its limits. New, more powerful models trained on ever-larger datasets are published frequently, and the state-of-the-art is being pushed higher each time. The improvements to models by simply training them on more and more data is expected to reach a ceiling at some point, but it’s not clear yet where that ceiling is. While this research is technically interesting, end users need not get bogged down by the details. Because these models all obey the common abstractions discussed above, you can benefit by simply downloading the latest models and plugging them in to existing systems today.</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Sep 27, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/09/27/automating-weak-supervision.html"><strong>Automating Weak Supervision</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 28, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/08/28/two-approaches-for-data-validation-in-ml-production.html"><strong>Two approaches for data validation in ML production</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 27, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-02-28-180128-markus_spiske_FXFz_sW0uwo_unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html"
+       ><h2 style="margin-bottom: 4px;">Privacy, data governance, and machine learning: the regulatory perspective</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/varun-bhatnagar-74303437/">Varun</a>
+        &middot; </span
+      >
+    </span>
+    Why do privacy and governance matter? Data privacy has been a common conversation topic among the general public since the Cambridge Analytica scandal in 2018. The data &ldquo;breach,&rdquo; in which user information was hoovered up through a Facebook quiz and subsequently misrepresented as being used for academic purposes, resulted in over $5 billion in fines for Facebook. However, Facebook&rsquo;s infringements were, in fact, relatively narrow in scope (though nonetheless egregious) compared to the growing remit of privacy law.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

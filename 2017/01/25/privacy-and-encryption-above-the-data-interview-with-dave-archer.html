@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Privacy and Encryption Above the Data: Interview with Dave Archer</title>
+<meta property="og:title" content="Privacy and Encryption Above the Data: Interview with Dave Archer">
+<meta property="description" content="Our mission at Fast Forward Labs is to commercialize artificial intelligence research, to clearly explain how new technologies work and help enterprises apply them in practical products. As our business model is rare, we&rsquo;re always keen to connect with and learn from organizations that straddle this same line between research and application. That&rsquo;s why we&rsquo;re delighted to feature Galois, a Portland, Oregon-based R&amp;D firm that specializes in security and trustworthiness, in this blog post.">
+<meta property="og:description" content="Our mission at Fast Forward Labs is to commercialize artificial intelligence research, to clearly explain how new technologies work and help enterprises apply them in practical products. As our business model is rare, we&rsquo;re always keen to connect with and learn from organizations that straddle this same line between research and application. That&rsquo;s why we&rsquo;re delighted to feature Galois, a Portland, Oregon-based R&amp;D firm that specializes in security and trustworthiness, in this blog post.">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.com/images/2017/01/chart.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2017/01/25/privacy-and-encryption-above-the-data-interview-with-dave-archer.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Jan 25, 2017</span> &middot;
+      <span style="text-transform: capitalize;">
+        interview
+      </span>
+    </h5>
+    <h1>Privacy and Encryption Above the Data: Interview with Dave Archer</h1>
+    <p>Our mission at Fast Forward Labs is to commercialize artificial intelligence research, to clearly explain how new technologies work and help enterprises apply them in practical products. As our business model is rare, we&rsquo;re always keen to connect with and learn from organizations that straddle this same line between research and application. That&rsquo;s why we&rsquo;re delighted to feature <a href="https://galois.com/">Galois</a>, a Portland, Oregon-based R&amp;D firm that specializes in security and trustworthiness, in this blog post.</p>
+<p>Machine learning is changing security and trustworthiness in a few ways. First, companies like <a href="https://www.cylance.com/">Cylance</a> are applying deep learning to detect malware before it infects a system, which was a key limitation of former signature-based tools. Next, the appetite to use machine learning to build data products is forcing a paradigm shift in privacy and encryption: former concepts of anonymization and use limitation don&rsquo;t suffice in the data-driven world, inspiring research into techniques that permit analysis while hiding the individual data that informs insights. Finally, the black box nature of many machine learning algorithms is forcing researchers to revisit definitions of trust, especially as <a href="https://arxiv.org/abs/1606.08813">regulators require</a> that automated decisions impacting consumers be transparent and explainable.</p>
+<p>We interviewed <a href="https://galois.com/team/david-archer/">Dave Archer</a>, a member of Galois&rsquo; research team, to learn more about what&rsquo;s new in cryptography and trustworthiness. Keep reading for highlights!</p>
+<p><strong>You research cryptography and secure <a href="https://en.wikipedia.org/wiki/Secure_multi-party_computation">multi-party computation</a>, but always say that Galois&rsquo; core mission is to ensure trustworthiness in critical systems. What does that mean?</strong></p>
+<p>Cryptography systems are tools people use to protect their data, and much of our research at Galois focuses on formally verifying that crypto tools are trustworthy: that they are correct and do exactly what they claim to do. For crypto, that means looking at crypto algorithms and mathematically proving key properties that ensure the security of those algorithms. It also means looking at crypto implementations and mathematically proving their &ldquo;correctness&rdquo; &ndash; their equivalence to the algorithms they implement. This is a growing issue because people increasingly design and implement their own crypto, and even a tiny error can destroy the security they&rsquo;re looking for. In practice, we formally verify crypto tools in two ways. First we use <a href="http://www.cs.miami.edu/~tptp/OverviewOfATP.html">automatic theorem proving</a> to model crypto algorithms such as ciphers (encryption-decryption algorithms) and then formally prove their properties, or prove that an implementation matches an algorithm, as shown below. If proofs fail, the prover system provides a counter-example that a user can use to understand why.</p>
+<p><img src="/images/2017/01/chart.png" alt=""></p>
+<p>For example, one property we commonly prove is that a decryption algorithm in a cipher is the inverse of the encryption algorithm. Automatic theorem proving is an exciting area of deep learning research these days, with <a href="https://research.google.com/pubs/pub45402.html">work featured at NIPS</a>.  Second, we formally verify crypto protocols, focusing for example on assurance that private data is transferred correctly between participants while preventing adversaries from learning those secrets or impersonating participants.</p>
+<p><strong>What&rsquo;s one of the hardest challenges you face in your research?</strong></p>
+<p>Proving cryptographic properties, as well as proving equivalence between algorithms and implementations, rapidly gets more difficult as the complexity and size of code to be analyzed grows. For example, secure multi-party computation (MPC) code - code that allows computation while data remains encrypted - is complex, so proving equivalence between the MPC implementation of a cipher and the algorithm it implements is an extremely hard problem at the moment.</p>
+<p><strong>Trustworthiness, here, relates to ensuring the security tools you create will perform as expected. Does that definition also hold for artificial intelligence (AI) systems?</strong></p>
+<p>Yes. When we say a system is trustworthy, we mean that it will do exactly what we expect of it and nothing else. In the cryptography examples above, we talked mostly about proving the &ldquo;exactly what we expect&rdquo; part. With AI, a key part is &ldquo;and nothing else.&rdquo; If we delegate certain decisions to AI systems, we need to trust that they&rsquo;ll make those decisions correctly, but we also need to trust that they don&rsquo;t act in other ways we don&rsquo;t intend. With simple machine learning techniques like linear regression, we can backtrack to understand what input feature leads to a given output. But this explanatory process is harder to tackle with more complex algorithms like those used in deep learning or AI, which is driving the exciting advancements today in computer vision and autonomous systems like self-driving cars. This is a big obstacle for wide AI adoption, so much so that DARPA has created an <a href="http://www.darpa.mil/program/explainable-artificial-intelligence">explainable AI program</a>. The trust questions here are how we articulate what we want from our AI systems, and explain the reasoning behind answers in a way humans can understand. It&rsquo;s a big deal, as the causal, short horizon logic and narratives humans use often differ from the long-term statistics and probability underlying machine learning tools.</p>
+<p><strong>What are the key opportunities to use machine learning in security?</strong></p>
+<p>One key area is to detect adversaries. Stealthy adversaries are very hard to detect: they try not to leave traces in simple patterns humans can comprehend, but yet they still leave traces. Machine learning such as statistical anomaly detection may well detect something like a slow <a href="https://www.symantec.com/theme.jsp?themeid=apt-infographic-1">advanced persistent threat</a> in progress in a system, if detectors are trained on the right features. Traditional intrusion detectors miss those signs, and human network defenders are often so overwhelmed by the number of possible attack points that adversaries find it easy to hide. The role machine learning plays in this example is to amplify human attention by drawing attention to things that look different than the rest, enabling human decisions on defense, rather than aiming to replace security analysts outright. Another key area for ML in security is in detecting malicious software before it is activated. Modern malware is slippery: you&rsquo;ll hear terms like polymorphism used to describe malware that evolves at each infection so it doesn&rsquo;t conform to traditional signature detection. Machine learning techniques can detect patterns deeper than simple signatures to identify modern malware before it acts.</p>
+<p><strong>What about opportunities for industrial control systems rather than IT networks?</strong></p>
+<p>One example of security threats in industrial control systems is in US power grids. Recent events in Ukraine point out how real this issue is. However, I believe there are ways to detect such threats. For example, there are several thousand points across the grid, called Phasor Measurement Units,  that monitor power. When something goes wrong, it&rsquo;s critical to decide immediately if the anomaly is the beginning of a cyber attack or just a lightning storm. Machine learning across PMU measurements should be able to make those decisions and alert human operators. In 2015, <a href="http://www.darpa.mil/news-events/2015-12-14">DARPA started a research program</a> to look at this kind of rapid detection and classification of power grid anomalies. This is a big deal, as we don&rsquo;t historically have any visibility into the industrial control units that run the grid.</p>
+<p><strong>One area we&rsquo;re excited about at Fast Forward Labs is <a href="http://www.win-vector.com/blog/2015/10/a-simpler-explanation-of-differential-privacy/">differential privacy</a>, which Cynthia Dwork <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">has championed</a> for some time (including at a <a href="https://www.ias.edu/events/differential-privacy">recent symposium</a> at Princeton). Has Galois looked into this?</strong></p>
+<p>Yes, we think of differential privacy as a key part of privacy-preserving computation. One interesting thing about differential privacy is that although its application seems straightforward, the math gets interesting when you apply the techniques to multiple queries over time, especially when the queried data changes significantly. The community has figured out the math to provide a basic privacy guarantee, where noise can disguise the existence of a single new record added to a data set. A more difficult question is how to manage a privacy budget, for example, how many queries the differential privacy algorithms can tolerate before an adversary could identify that single record. We don&rsquo;t yet have practical tools to assign and manage a privacy budget, especially if the data keeps changing. So there are practical questions to resolve, like how often we have to recompute privacy budgets to know how much noise to add, and how these procedures will impact users.</p>
+<p><strong>What research are you most excited about?</strong></p>
+<p>Privacy of data at rest, in transit, and during computation is a huge issue, both for corporations and individuals.</p>
+<p><img src="/images/2017/01/triangle.png" alt=""></p>
+<p>I&rsquo;d claim that we largely understand how to secure data at rest and in transit (though we still need to do it, and prove it&rsquo;s done correctly), but the last mile - securing data during computation - needs work. I&rsquo;m really excited about the promise of <a href="https://eprint.iacr.org/2010/543.pdf">functional encryption</a>, an encryption technique where a key holder can learn only a specific function of encrypted data, but learn nothing else about the data. This is a hard problem: the research shows it&rsquo;s theoretically possible, but I&rsquo;d like to explore making it more practical than we&rsquo;ve managed to date. Imagine if we could distribute keys that only allow users to ask the questions they care about. Then instead of users coming to the data with arbitration at some central policy enforcement point, (encrypted) data can be sent to users, with the certainty that all they can learn is a specific kind of result. This is a conceptual complement to differential privacy: functional encryption controls what can be learned, and differential privacy controls with how much precision it can be learned. I&rsquo;m also excited about other ways of computing on encrypted data. There are some tools out there, but they tend to only be practical on small data or simple computations. However, progress is being made. Imagine a future where a business could apply for a loan without revealing its financial situation to the bank, yet the bank can still have assurance that the loan is a good investment. Or, imagine a future where a patient can find out whether they&rsquo;re a good candidate for an advanced therapy without revealing their medical history or genome to the company offering the therapy, or to the insurance company paying for it - while still satisfying the need for those companies to know that the patient is a good candidate. It&rsquo;s incredibly powerful to be able to have the results we want without being able to see the underlying data that informs those results.</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jan 30, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/01/30/the-algorithms-behind-probabilistic-programming.html"><strong>The Algorithms Behind Probabilistic Programming</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jan 18, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/01/18/new-research-on-probabilistic-programming.html"><strong>New Research on Probabilistic Programming</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 27, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-02-28-180128-markus_spiske_FXFz_sW0uwo_unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html"
+       ><h2 style="margin-bottom: 4px;">Privacy, data governance, and machine learning: the regulatory perspective</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/varun-bhatnagar-74303437/">Varun</a>
+        &middot; </span
+      >
+    </span>
+    Why do privacy and governance matter? Data privacy has been a common conversation topic among the general public since the Cambridge Analytica scandal in 2018. The data &ldquo;breach,&rdquo; in which user information was hoovered up through a Facebook quiz and subsequently misrepresented as being used for academic purposes, resulted in over $5 billion in fines for Facebook. However, Facebook&rsquo;s infringements were, in fact, relatively narrow in scope (though nonetheless egregious) compared to the growing remit of privacy law.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

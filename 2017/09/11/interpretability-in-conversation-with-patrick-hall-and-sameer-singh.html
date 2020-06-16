@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Interpretability in conversation with Patrick Hall and Sameer Singh</title>
+<meta property="og:title" content="Interpretability in conversation with Patrick Hall and Sameer Singh">
+<meta property="description" content="We&rsquo;re pleased to share the recording of our recent webinar on machine learning interpretability and accompanying resources.
+We were joined by guests Patrick Hall (Senior Director for Data Science Products at H2o.ai, co-author of Ideas on Interpreting Machine Learning) and Sameer Singh (Assistant Professor of Computer Science at UC Irvine, co-creator of LIME).
+We spoke for an hour and got lots of fantastic questions during that time. We didn&rsquo;t have time to answer them all, so Patrick and Sameer have been kind enough to answer many of them below.">
+<meta property="og:description" content="We&rsquo;re pleased to share the recording of our recent webinar on machine learning interpretability and accompanying resources.
+We were joined by guests Patrick Hall (Senior Director for Data Science Products at H2o.ai, co-author of Ideas on Interpreting Machine Learning) and Sameer Singh (Assistant Professor of Computer Science at UC Irvine, co-creator of LIME).
+We spoke for an hour and got lots of fantastic questions during that time. We didn&rsquo;t have time to answer them all, so Patrick and Sameer have been kind enough to answer many of them below.">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.com/images/2017/08/ff06-logo.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2017/09/11/interpretability-in-conversation-with-patrick-hall-and-sameer-singh.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Sep 11, 2017</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Interpretability in conversation with Patrick Hall and Sameer Singh</h1>
+    <!-- raw HTML omitted -->
+<p>We&rsquo;re pleased to share the recording of our recent webinar on machine learning
+interpretability and accompanying resources.</p>
+<p>We were joined by guests Patrick Hall (Senior Director for Data Science
+Products at H2o.ai, co-author of <a href="https://www.oreilly.com/ideas/ideas-on-interpreting-machine-learning">Ideas on Interpreting Machine
+Learning</a>)
+and Sameer Singh (Assistant Professor of Computer Science at UC Irvine,
+co-creator of <a href="https://github.com/marcotcr/lime">LIME</a>).</p>
+<p>We spoke for an hour and got lots of fantastic questions during that time. We
+didn&rsquo;t have time to answer them all, so Patrick and Sameer have been kind
+enough to <a href="#questions">answer many of them below</a>.</p>
+<p>We&rsquo;re also glad to share contact information for all the participants and links
+to code and further reading. Please get in touch with any of us if you&rsquo;re
+interested in working together.</p>
+<h3 id="contact">Contact</h3>
+<ul>
+<li>Fast Forward Labs, <a href="mailto:cffl@cloudera.com">cffl@cloudera.com</a>,
+<a href="https://twitter.com/FastForwardLabs">@fastforwardlabs</a></li>
+<li>Mike Lee Williams, <a href="https://twitter.com/mikepqr">@mikepqr</a></li>
+<li>Patrick Hall, <a href="https://twitter.com/jpatrickhall">@jpatrickhall</a>,
+<a href="mailto:phall@h2o.ai">phall@h2o.ai</a></li>
+<li>Sameer Singh, <a href="http://sameersingh.org/">sameersingh.org</a> or
+<a href="https://twitter.com/sameer_">@sameer_</a>, <a href="mailto:sameer@uci.edu">sameer@uci.edu</a></li>
+</ul>
+<h3 id="code-demos-and-applications">Code, demos and applications</h3>
+<ul>
+<li><a href="https://github.com/marcotcr/lime">Open source LIME implementation</a></li>
+<li><a href="https://youtu.be/3_gm00kBwEw">Machine Learning Interpretability with H2O.ai’s Driverless
+AI</a></li>
+<li><a href="https://github.com/jphall663/GWU_data_mining/blob/master/10_model_interpretability/10_model_interpretability.md">Practical Model
+Interpretability</a>
+(Patrick’s teaching resources)</li>
+<li><a href="http://blog.fastforwardlabs.com/2017/09/01/LIME-for-couples.html">Why your relationship is likely to last (or not): using
+LIME</a> by
+Fast Forward Labs</li>
+</ul>
+<h3 id="reading">Reading</h3>
+<ul>
+<li><a href="https://www.oreilly.com/ideas/ideas-on-interpreting-machine-learning">Ideas on Machine
+Learning</a>
+by Patrick Hall</li>
+<li><a href="https://arxiv.org/abs/1602.04938">&ldquo;Why Should I Trust You?&quot;: Explaining the Predictions of Any
+Classifier</a> (or <a href="https://www.oreilly.com/learning/introduction-to-local-interpretable-model-agnostic-explanations-lime">O’Reilly version of
+paper</a>)
+by Marco Tulio Ribero, Sameer Singh and Carlos Guestrin</li>
+<li><a href="http://people.dbmi.columbia.edu/noemie/papers/15kdd.pdf">Intelligible Models for HealthCare: Predicting Pneumonia Risk and Hospital
+30-day Readmission</a>
+by Rich Caruana et al. (the source for the pneumonia/asthma story Mike told)</li>
+<li><a href="http://blog.fastforwardlabs.com/2017/08/02/business-interpretability.html">The business case for
+interpretability</a>
+by Fast Forward Labs</li>
+<li><a href="https://arxiv.org/abs/1606.05386">A Case for Model-Agnostic
+Interpretability</a> by Marco Tulio Ribero,
+Sameer Singh and Carlos Guestrin</li>
+<li><a href="http://www.fatml.org/">Fairness, Accountability and Transparency in Machine
+Learning</a> and <a href="https://fatconference.org/">FAT
+conference</a> (NYC, February 2018)</li>
+<li><a href="https://logicmag.io/01-intelligence/">Logic Magazine Issue 1</a>, which
+features the interview with an anonymous data scientist</li>
+</ul>
+<h3 id="talks">Talks</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=LAm4QmVaf0E">Explaining Black-box Machine Learning
+Predictions</a>, talk by Sameer on
+LIME and related ideas at the Orange County ACM chapter.</li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny/public/schedule/detail/59747">Interpretable AI: not just for
+regulators</a>
+a forthcoming talk by SriSatish Ambati and Patrick Hall at Strata NYC, Sep
+27 2017</li>
+</ul>
+<h2 id="audience-questions-we-didnt-address-during-the-webinar">Audience questions we didn&rsquo;t address during the webinar</h2>
+<p><strong>Is there a standard way to measure model complexity?</strong></p>
+<p>Patrick: Not that I am aware of, but we use and have <a href="https://www.oreilly.com/ideas/ideas-on-interpreting-machine-learning">put forward this simple
+heuristic</a>:</p>
+<ul>
+<li>Linear, monotonic models - easily interpretable</li>
+<li>Nonlinear, monotonic models - interpretable</li>
+<li>Nonlinear, non-monotonic models - difficult to interpret</li>
+</ul>
+<p>Mike: one option, when comparing like with like, is simply the number of
+parameters. This is a common metric in the deep learning community. It glosses
+over some of what we really mean when we say &ldquo;complex&rdquo;, but it gets at
+something.</p>
+<p>Sameer: Complexity is very subjective, and in different contexts, different
+definitions are useful. I also agree that number of parameters are often quite
+a useful proxy to complexity. One other metric I like is running time or energy
+consumed for each prediction. Of course, there is some theoretical work on this
+as well, such as <a href="https://en.wikipedia.org/wiki/VC_dimension">VC
+dimensionality</a> or even <a href="https://en.wikipedia.org/wiki/Kolmogorov_complexity">Kolmogorov
+complexity</a>. The open
+question is which of these measures of complexity correlates with a user’s
+capacity to interpret it.</p>
+<p><strong>Is there really a trade-off in call cases between interpretability and accuracy? There are certainly cases where there isn&rsquo;t, e.g Rich Caruana&rsquo;s pneumonia model. Can you characterize where this trade-off exists and doesn&rsquo;t?</strong></p>
+<p>Patrick: I think we are making an assumption that greater accuracy requires
+greater complexity &ndash; which it often does for predictive modeling. So, maybe
+it’s more accurate to say there is a trade-off between interpretability and
+complexity. Humans cannot, in general, understand models with thousands, let
+alone millions, of rules or parameters &ndash; this level of complexity is common in
+machine learning &ndash; and this level of complexity is often required to model
+real-life, nonlinear phenomena. For a linear model, I probably agree with the
+questioner that the trade-off may not be as impactful, as long as the number of
+parameters in the linear model is relatively small.</p>
+<p>Mike: This may be stating the obvious, but I’d also add that, in situations
+where you can get high enough accuracy for your use case with a model so simple
+it’s interpretable by inspection (which does happen!), there is of course no
+trade-off. You can have it all!</p>
+<p><strong>Is the black box aspect of machine learning programming only an early AI development issue? Will it eventually be possible to program in &ldquo;check points&rdquo; where programmed models will reveal key points or factors that appear within levels of neural network calculations?</strong></p>
+<p>Patrick: I don’t think this is an early AI issue. In my opinion, it’s about the
+fundamental complexity of the generated models. Again, the sheer volume of
+information is not interpretable to humans &ndash; not even touching on more subtle
+complications. I don’t mean big data either &ndash; even though that often doesn’t
+help make things any clearer &ndash; I mean that I don’t think anyone can understand
+a mathematical formula that requires 500 MB just to store it’s rules and
+parameters. (Which is not uncommon in practice.) I do like the idea of training
+checkpoints, but what if at the checkpoint, the model says: &ldquo;these are the
+10,000 most important extracted features which represent 100+ degree
+combinations of the original model inputs&rdquo;? So perhaps the combination of
+training checkpoints plus constraints on complexity could be very useful.</p>
+<p><strong>Conversations in data science center around the latest/greatest models, not interpretability. Do you have any recommendations for building a company culture that values interpretability.</strong></p>
+<p>Mike: send your colleagues our blog post <a href="http://blog.fastforwardlabs.com/2017/08/02/business-interpretability.html">The Business Case for Machine
+Learning
+Interpretability</a>!
+Interpretability models are profitable, safer and more intellectually
+rewarding. Hopefully every one of your colleagues is interested in at least one
+of those things.</p>
+<p>Patrick: In my opinion, I’d also say this is part of customer-focus in an
+analytics tool provider’s culture. It’s usually us data-nerds who want to use
+our new toys. I almost never hear a customer say, &ldquo;give me a model using the
+latest and greatest algorithm, oh, and it’s fine if it’s super complex and not
+interpretable.&rdquo;</p>
+<p>Sameer: Partly, it comes from the fact that accuracy provides a single number,
+which appeals to the human strive for competition and for sports, and for
+engineering things that beat other things. Interpretability is, almost by
+definition, much more fuzzier to define and evaluate, making us a little
+nervous as empiricists, I think.</p>
+<p><strong>How does interpretability varies across industry, e.g. aviation v media v financial services?</strong></p>
+<p>Patrick: I can only say that the regulations for predictive models are probably
+most mature in credit lending <em>in the U.S.</em>, and that I see machine learning
+being used more prominently in verticals outside credit lending, i.e.
+e-commerce, marketing, anti-fraud, anti-money-laundering.</p>
+<p>Mike: I’d say that, of the particular three mentioned, the need for
+interpretability is most acute in aviation. In fact, it goes beyond
+interpretability into <a href="http://composition.al/blog/2017/05/30/proving-that-safety-critical-neural-networks-do-what-theyre-supposed-to-where-we-are-where-were-going-part-1-of-2/">formal verifiability of the properties of an
+algorithm</a>,
+which is a whole different ball of wax. The acknowledged need is least in
+media, because there’s relatively little regulation. Which is not to say it
+wouldn’t be profitable to apply these techniques in this or any other industry
+where it’s important to understand your customers. Financial services is
+interesting. The need for interpretability is well-understood (and hopefully
+well-enforced) there. There’s no question, however, that more accurate models
+would make more money. People are <a href="https://insight.equifax.com/approve-business-customers/">starting to build neural network-based
+trading and lending
+models</a> that satisfy
+applicable regulations, e.g. <a href="https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm">SR
+11-7</a>, and
+the <a href="https://en.wikipedia.org/wiki/Fair_Credit_Reporting_Act">Fair Credit Reporting
+Act</a>. There&rsquo;s a huge
+first-to-market advantage in deploying these more accurate models.</p>
+<p><strong>Model governance and model reviews are standard for financial models as are stress tests. Do you see something similar in the future of industry ML models?</strong></p>
+<p>Patrick: I don’t know why so few machine learning practitioners stress-test
+their models. It’s easy to do with simple sensitivity analysis, and the
+financial risks of out-of-range predictions on new data are staggering! I do
+also hope that machine learning models that make serious impacts on people’s
+lives will be better regulated in the future, and the EU is taking steps toward
+this with the GDPR. In the meantime, you can keep up with research in this area
+at <a href="http://www.fatml.org/">FATML</a>.</p>
+<p>Mike: I also recommend <a href="https://research.google.com/pubs/pub45742.html">What’s your ML test score? A rubric for ML production
+systems</a>, which mentions a
+bunch of really basic stuff that far too few of us do.</p>
+<p><strong>What effect will interpretability have on feature selection?</strong></p>
+<p>Mike: Anecdotally, we spotted a bunch of problems with our model of customer
+churn using LIME. In particular, as non-experts in the domain, we’d left in
+features that were leaking the target variable. These lit up like Christmas
+trees in our web interface thanks to LIME.</p>
+<p>Patrick: I think it will prevent people from using overly-complicated,
+difficult to explain features in their models as well. It’s no good to say
+<code>CV_SVD23_Cluster99_INCOME_RANGE</code> is the most important variable in the
+prediction if you can’t also say directly what that variable is exactly and how
+it was derived.</p>
+<p><strong>I&rsquo;m a graduate DS student who just sent some ML research to a group of people in industry who I thought would be interested. In response I got the question &ldquo;will your research replace my job&rdquo;. What are some ways to overcome the fear of ML and convince people that AI won&rsquo;t replace the creativity in decision making of humans.</strong></p>
+<p>Patrick: Well it might one day &ndash; and we all need to be realistic about that.
+But for today, and likely for many years, most of us can rest easy. Today,
+machine learning is only good at specific tasks: tasks where there is a large
+amount of labeled, easy-to-use &ldquo;clean&rdquo; data that has also been labeled.</p>
+<p>Sameer: For now, you can use the explanations almost as a way to show that
+machine learning is not a magical black-box. Without an explanation, a natural
+reaction is to say &ldquo;how could it predict this? It must be super-intelligent!&quot;,
+but with an explanation and demystifies this, even if it is doing the right
+thing for right reasons, the perception of machine learning will not be of an
+adversary.</p>
+<p><strong>Why is it that some models are seen as interpretable and others aren&rsquo;t? There are large tomes on the theory of linear models, yet they&rsquo;re seen as interpretable. Could part of this be due to how long they&rsquo;ve been taught?</strong></p>
+<p>Mike: this is a great point. I don’t think it’s simply due to our relative
+familiarity with linear models. It’s that a trained linear model really is
+simple to describe (and interpret). Trained neural networks are, in a relative
+sense, not even simple to describe. The big linear modeling textbooks are about the long textbooks&rsquo; deep domain-specific implications, difficulties like
+causality, and the <a href="https://arxiv.org/abs/1008.4686">real numerical/engineering
+subtleties</a>.</p>
+<p>Patrick: I 100% agree with the questioner&rsquo;s sentiment. Essentially linear model
+interpretations are exact and stable, which is great, <em>but</em> the models are
+approximate. Machine learning explanations take a different mindset: machine
+learning explanations are less stable and exact, but the model itself is
+usually much less approximate. So, do you prefer an exact explanation for an
+approximate model? Or an approximate explanation for an exact model? In my
+opinion, both are useful.</p>
+<p>Sameer: Interpretability is relative. I don’t think we should hold linear
+models as the ideal in interpretability, because it is not, especially with
+large number of variables. One of the known problems with linear models is
+correlated features, i.e. the importance of a feature can get distributed to
+correlated features, making features that are less important, but uncorrelated,
+have a higher weight. We tried to get around this somewhat in LIME by
+restricting the number of features chosen as an explanation (L1 regularization
+or Lasso), and normalizing the regression variables over our samples (to reduce
+the effect of the bias).</p>
+<p><strong>Once we identify biases, how do we address them?</strong></p>
+<p>Patrick: Problematic features &ndash; such as those correlated to race, gender,
+marital status, disability status, etc. &ndash; can be removed from the input data
+and the model can be retrained. Or features can be intentionally corrupted to
+remove problematic information with techniques like differential privacy during
+model training. Another method I’m personally interested is determining the
+local contribution of problematic features using something like LOCO or LIME
+and subtracting out the different contributions of problematic features
+row-by-row when predictions are made.</p>
+<p><strong>Aren&rsquo;t we reducing interpretability to visual analytics of sensitivity?</strong></p>
+<p>Patrick: In some cases yes, but I would argue this is a good thing. In my
+opinion, explanations themselves have to be simple. However, I’m more
+interested in fostering the understanding of someone who was just denied parole
+or a credit card (both of which are happening today) based on the decision of a
+predictive model. For the mass-consumer audience, it’s not an effective
+strategy to provide explanations that are just as mathematically complex as the
+original model.</p>
+<p><strong>How is LIME different than variable importance, which we get from different algorithms (e.g. RFs?)</strong></p>
+<p>Patrick: The key is locality. LIME essentially provides local variable
+importance, meaning that you often get a different variable importance value
+for each input variable for each row of the data set. This opens up the
+possibility of describing why a machine learning model made the prediction it
+made for each customer, patient, transaction, etc. in the data set.</p>
+<p>Sameer: To add to that, I would say the difference between global and local
+dependence can sometimes be quite important. Aggregations used to compute
+global dependence, like variable importance, can sometimes drown signals. For
+example, if race is being used to make a decision for a really small number of
+individuals, it might not show up in the global aggregations. Similarly, local
+explanations are also useful in showing the sign of the dependence in context,
+i.e. age might be important overall, but for some individuals age might act as
+a negative factor, and for a positive, and global explanations will not be able
+to capture that. That said, it’s much easier to look at only the big picture,
+instead of many small pictures.</p>
+<p><strong>Which bootstrapping algorithm is used by LIME generate the perturbed samples</strong></p>
+<p>Sameer: This is often domain dependent, and you can plug in your own. We tried
+to stick with pretty simple techniques for each domain, such as removing tokens
+in text, patches in images, etc. More details are in the paper/code.</p>
+<p><strong>In the case of adversarial attacks, can LIME detect what causes the deviation from correct detection.</strong></p>
+<p>Sameer: (excerpt from an email thread with Adam) This is quite an interesting
+idea, but unfortunately, I believe LIME will get quite stumped in this case,
+especially for images, either proposing the whole image as the explanation
+(assuming the adversarial noise is spread out, as it often is), or find a &ldquo;low
+confidence&rdquo; explanation, i.e. it&rsquo;ll find the subset of the image that is most
+adversarial, but with sufficient uncertainty to say &ldquo;don&rsquo;t take this
+explanation too seriously&rdquo;.</p>
+<p><strong>Can you explain the significance of the clusters in the H2O interpretability interface?</strong></p>
+<p>Patrick: We chose to use clusters in the training data, instead of bootstrapped
+or simulated samples around a row of data, to construct local regions on which
+to build explanatory linear models. This has two primary advantages:</p>
+<ul>
+<li>We don’t need a new/different sample for every point we want to explain</li>
+<li>It allows us to present the (hopefully helpful) diagnostic plot of the
+training data, complex model, and explanatory model that you saw in the
+webinar.</li>
+</ul>
+<p>The main drawback is that sometimes clusters are large and the fit of the
+explanatory model can degrade in this case. If you’re curious,  we choose the
+number clusters by maximizing the R-squared between all the linear model
+predictions and the complex model’s predictions.</p>
+<p><strong>LIME makes accurate models more interpretable. Also mentioned was the related idea of making interpretable models more accurate. Which is more promising?</strong></p>
+<p>Patrick: Most research I see is towards making accurate models more
+interpretable. One nice practical approach for going the other direction &ndash;
+making interpretable models more accurate &ndash; are the monotonicity constraints
+in XGBoost.</p>
+<p>Sameer: Personally, I like the former, since I do believe an inaccurate model
+is not a useful model. I also don’t want to restrict the architecture or the
+algorithms that people want to use, nor do I want to constrain them to certain
+types of interpretations that an interpretable model provides.</p>
+<h3 id="mailing-list">Mailing list</h3>
+<p>Our public mailing list is a great way of getting a taste of what Fast Forward
+Labs is interested in and working on right now. <a href="https://www.cloudera.com/products/fast-forward-labs-research/fast-forward-lab-research-newsletter-sign-up.html">We hope you&rsquo;ll sign up</a>!</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Sep 26, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/09/26/the-product-possibilities-of-interpretability.html"><strong>The Product Possibilities of Interpretability</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Sep 7, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/09/07/to-the-future....html"><strong>To the Future...</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 27, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-02-28-180128-markus_spiske_FXFz_sW0uwo_unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html"
+       ><h2 style="margin-bottom: 4px;">Privacy, data governance, and machine learning: the regulatory perspective</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/varun-bhatnagar-74303437/">Varun</a>
+        &middot; </span
+      >
+    </span>
+    Why do privacy and governance matter? Data privacy has been a common conversation topic among the general public since the Cambridge Analytica scandal in 2018. The data &ldquo;breach,&rdquo; in which user information was hoovered up through a Facebook quiz and subsequently misrepresented as being used for academic purposes, resulted in over $5 billion in fines for Facebook. However, Facebook&rsquo;s infringements were, in fact, relatively narrow in scope (though nonetheless egregious) compared to the growing remit of privacy law.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

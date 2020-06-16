@@ -13,10 +13,10 @@
     
     <item>
       <title>Dimensionality Reduction and Intuition</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/12/dimensionality-reduction-and-intuition.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/12/08/dimensionality-reduction-and-intuition.html</link>
       <pubDate>Thu, 08 Dec 2016 17:22:58 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/12/dimensionality-reduction-and-intuition.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/12/08/dimensionality-reduction-and-intuition.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“I call our world Flatland, not because we call it so, but to make its nature clearer to you, my happy readers, who are privileged to live in Space.&amp;rdquo;&lt;/p&gt;
@@ -27,19 +27,19 @@
     
     <item>
       <title>Late Summer Reading List</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/07/late-summer-reading-list.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</link>
       <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/07/late-summer-reading-list.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Machine Listening: Interview with Juan Pablo Bello</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/06/machine-listening-interview-with-juan-pablo-bello.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</link>
       <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/06/machine-listening-interview-with-juan-pablo-bello.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components&#34;&gt;A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
@@ -47,19 +47,19 @@
     
     <item>
       <title>Online Talk: Summarization Algorithms</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/05/online-talk-summarization-algorithms.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</link>
       <pubDate>Fri, 27 May 2016 17:16:23 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/05/online-talk-summarization-algorithms.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Human-Machine Algorithms: Interview with Eric Colson</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/05/human-machine-algorithms-interview-with-eric-colson.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</link>
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/05/human-machine-algorithms-interview-with-eric-colson.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;ndash-matthew-2221&#34;&gt;– Matthew, 22:21&lt;/h5&gt;
@@ -68,19 +68,19 @@
     
     <item>
       <title>Making a Case for Machine Learning to Legal Departments</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/making-a-case-for-machine-learning-to-legal-departments.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</link>
       <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/making-a-case-for-machine-learning-to-legal-departments.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</guid>
       <description>Since we released our text summarization resources, the legal technology community has shown interestin leveraging summarization technology to support litigation document review, deposition digests, and contract analysis. Data scientist interest to use machine learning to mine legal document corpuses and support legal strategy was also one factor motivating our summarization research. The time is therefore ripe for data scientists to apply new text analytics capabilities for legal use cases. But to be effective, data scientists must first understand how lawyers think: what problems they’re trying to solve, how their processes are structured, and, perhaps most importantly, what fears may hinder the adoption of new technologies.</description>
     </item>
     
     <item>
       <title>Active Learning in the Law</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/active-learning-in-the-law.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</link>
       <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/active-learning-in-the-law.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;h5 id=&#34;the-nist-text-retrieval-conference-trec-logo&#34;&gt;The NIST Text Retrieval Conference (TREC) Logo&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
@@ -88,47 +88,47 @@
     
     <item>
       <title>Assessing Data Science Maturity</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/assessing-data-science-maturity.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/04/15/assessing-data-science-maturity.html</link>
       <pubDate>Fri, 15 Apr 2016 18:07:33 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/assessing-data-science-maturity.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/04/15/assessing-data-science-maturity.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Where Do You Put Your Data Scientists?</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/04/where-do-you-put-your-data-scientists.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/04/06/where-do-you-put-your-data-scientists.html</link>
       <pubDate>Wed, 06 Apr 2016 15:41:33 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/04/where-do-you-put-your-data-scientists.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/04/06/where-do-you-put-your-data-scientists.html</guid>
       <description>This is a guest post by Daniel Tunkelang, a data scientist and engineering executive, to preview the keynote he’ll deliver at our April 28 Data Leadership Conferencein New York City! The Rapid Rise of Data Science Building The Data Scientist Pipeline Where Do You Put Your Data Scientists? Looking Forward to Fast Forward! </description>
     </item>
     
     <item>
       <title>Shivon Zilis on the Machine Intelligence Landscape</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/03/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
       <pubDate>Wed, 30 Mar 2016 15:00:03 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/03/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>What History Teaches Us About Data Science</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/02/what-history-teaches-us-about-data-science.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/02/what-history-teaches-us-about-data-science.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>
       <description>The FFL team at the New York Historical Society&amp;rsquo;s Silicon City exhibit  Study the past if you would define the future. — Confucius
  1. Claude Shannon, the father of UX design? 2. Products (and models) have their moment of maturity, but we must be wary of trends 3. Statistics, computer science, and data science 4. IBM had really cool marketing in the 1930s-1950s </description>
     </item>
     
     <item>
       <title>Eli Pariser on the Ethics of Algorithmic Filtering</title>
-      <link>http://test-blog.fastforwardlabs.com/2016/01/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</link>
       <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2016/01/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Chiefly his reflection, of which the portrait / Is the reflection, of which the portrait / Is the reflection once removed. / The glass chose to reflect only what he saw / Which was enough for his purpose: his image / Glazed, embalmed, projected at a 180-degree angle.&lt;/p&gt;
@@ -139,55 +139,55 @@
     
     <item>
       <title>Fashion Goes Deep: Data Science at Lyst</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/12/fashion-goes-deep-data-science-at-lyst.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/12/09/fashion-goes-deep-data-science-at-lyst.html</link>
       <pubDate>Wed, 09 Dec 2015 17:44:00 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/12/fashion-goes-deep-data-science-at-lyst.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/12/09/fashion-goes-deep-data-science-at-lyst.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>FFL in the Bay Area, Chicago, and DC</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/11/ffl-in-the-bay-area-chicago-and-dc.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</link>
       <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/11/ffl-in-the-bay-area-chicago-and-dc.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</guid>
       <description>Wednesday, November 11 | Mountain View, CA Tuesday, November 17 | Washington, DC Wednesday, November 18 | Chicago, IL </description>
     </item>
     
     <item>
       <title>Interview with Pedro Domingos</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/10/interview-with-pedro-domingos.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</link>
       <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/10/interview-with-pedro-domingos.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</guid>
       <description>&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     
     <item>
       <title>Flip the Paradigm</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/10/flip-the-paradigm.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</link>
       <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/10/flip-the-paradigm.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>How do neural networks learn?</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/09/how-do-neural-networks-learn.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</link>
       <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/09/how-do-neural-networks-learn.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Fast Forward Labs Interviews Clarifai about Deep Learning</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/09/fast-forward-labs-interviews-clarifai-about-deep-learning.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</link>
       <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/09/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
       <description></description>
     </item>
     

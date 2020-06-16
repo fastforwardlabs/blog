@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Slack Maestro: Helping Users Stay on Topic</title>
+<meta property="og:title" content="Slack Maestro: Helping Users Stay on Topic">
+<meta property="description" content="This is a guest post featuring a project by Andrej Ficnar (now a data scientist at Schireson Associates), which he completed as a fellow in the Insight Data Science program. We are partnered with Insight and occasionally advise fellows on month-long projects from idea to implementation. Slack is a popular messaging app that brings communication together in one place. It provides the abilities for messaging, archiving, and searching for teams, while organizing conversations into channels.">
+<meta property="og:description" content="This is a guest post featuring a project by Andrej Ficnar (now a data scientist at Schireson Associates), which he completed as a fellow in the Insight Data Science program. We are partnered with Insight and occasionally advise fellows on month-long projects from idea to implementation. Slack is a popular messaging app that brings communication together in one place. It provides the abilities for messaging, archiving, and searching for teams, while organizing conversations into channels.">
+<meta property="og:image" content="http://test-blog.fastforwardlabs.com/images/2017/05/threshold.png">
+<meta property="og:url" content="http://test-blog.fastforwardlabs.com/2017/05/30/slack-maestro-helping-users-stay-on-topic.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <body>
+  </head>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>May 30, 2017</span> &middot;
+      <span style="text-transform: capitalize;">
+        guest post
+      </span>
+    </h5>
+    <h1>Slack Maestro: Helping Users Stay on Topic</h1>
+    <h5 id="this-is-a-guest-post-featuring-a-project-by-andrej-ficnar-now-a-data-scientist-at-schireson-associateshttpwwwschiresoncom-which-he-completed-as-a-fellow-in-the-insight-data-science-programhttpinsightdatasciencecom-we-are-partnered-with-insight-and-occasionally-advise-fellows-on-month-long-projects-from-idea-to-implementation">This is a guest post featuring a project by Andrej Ficnar (now a data scientist at <a href="http://www.schireson.com/">Schireson Associates</a>), which he completed as a fellow in the <a href="http://insightdatascience.com/">Insight Data Science program</a>. We are partnered with Insight and occasionally advise fellows on month-long projects from idea to implementation.</h5>
+<p><a href="https://slack.com/">Slack</a> is a popular messaging app that brings communication together in one place. It provides the abilities for messaging, archiving, and searching for teams, while organizing conversations into channels. The names of channels are often not sufficiently informative to understand which topics are relevant to a given channel. Veterans just <em>know</em>; newbies struggle. This blog post introduces Slack Maestro, a bot that learns the topics of different channels, monitors conversations, and warns users when they go off topic. The bot relies on an implementation of <a href="http://proceedings.mlr.press/v37/kusnerb15.pdf">Word Mover&rsquo;s Distance</a>, introduced at the leading machine learning conference <a href="https://nips.cc/">NIPS</a> in 2015, and <a href="https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf">word embeddings</a>. Give it a <a href="https://slack-police.slack.com">try</a>!</p>
+<!-- raw HTML omitted -->
+<h2 id="bot-brains-word-movers-distance-with-a-twist">Bot Brains: Word Mover&rsquo;s Distance With a Twist</h2>
+<p>At its heart, the bot needs to be able to compare two messages (documents): the user&rsquo;s input and messages already present in a channel. A standard way to compare two documents is to use <a href="https://en.wikipedia.org/wiki/Bag-of-words_model">bag-of-words</a> (BoW), which includes approaches such as <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">tf-idf</a> and cosine similarity. However, BoW does not capture semantic properties of words, and problems arise when documents share related but not identical words (e.g. &ldquo;press&rdquo; and &ldquo;media&rdquo;).</p>
+<p>To address this, I used <a href="http://jmlr.org/proceedings/papers/v37/kusnerb15.pdf">Word Mover&rsquo;s Distance</a>, a novel-ish similarity metric built on top of (and leveraging) <a href="https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf">word embeddings</a>. At a high level, word embeddings are high dimensional representations of words that capture their semantic properties (i.e. distributional semantics). Words of similar meaning &ldquo;live&rdquo; close to one another in this high dimensional space. I used pre-trained word embeddings from <a href="https://spacy.io/">Spacy</a> trained on the Common Crawl corpus.</p>
+<p>With word embeddings, a natural way to estimate how dissimilar (or <em>distant</em>) two documents are is to look at the distance between the corresponding word vectors and, roughly speaking, add up those distances. That is the main idea behind the Word Mover&rsquo;s Distance approach, and neatly, it is an instance of the well-known <a href="https://en.wikipedia.org/wiki/Earth_mover's_distance">Earth Mover&rsquo;s Distance</a> (EMD) optimization problem, only formulated in the word embedding space.</p>
+<h3 id="wmd--earth-movers-distance-for-document-similarity">WMD = Earth Mover&rsquo;s Distance for Document Similarity</h3>
+<p>The EMD assumes that one has two vectors - let&rsquo;s call them <em>senders</em> and the <em>receivers</em> - and a matrix of their pair-wise distances. Additionally, each of the vectors has a weight, a real number smaller than 1, that indicates how many &ldquo;goods&rdquo; each of the sender vectors has to send and how much of the goods each of the receiver vectors needs to receive. Given this formulation, the EMD can be posed as a transportation problem: given the distances (costs) between the sender-receiver pairs, determine the most efficient way to <em>move</em> the goods from the senders to the receivers, allowing for partial sending and receiving (so that a sender can send a portion of its goods to one receiver and another portion to another receiver). This problem is a non-trivial constrained optimization problem. Luckily, it has a known solution, which can be easily implemented in Python with the <a href="https://pypi.python.org/pypi/pyemd"><code>pyemd</code></a> package.</p>
+<p>WMD is the application of the EMD problem in the context of word embeddings where the senders and receivers are word embeddings of words from the first and second documents being compared, respectively. The weights of the vectors are chosen to be proportional to the number of times the corresponding word appears in the document, and the distances between the vectors are calculated using standard Euclidean distances in the word embedding space. In this way, the WMD distance between two documents can be easily calculated using the <code>pyemd</code> package.</p>
+<h3 id="op3-logp-terrible-time-complexity">O(p^3 log(p)), Terrible Time Complexity</h3>
+<p>A practical obstacle in applying this method is the fact that the EMD algorithm has a terrible time complexity: <em>O(p^3 log(p))</em>, where <em>p</em> is the number of unique words in the two documents. One would need to compare the user&rsquo;s input to all of the previous messages in all the channels, then calculate the average distance for each of the channels, and identify the one with the smallest average distance - resulting in a prediction for the channel to which the user&rsquo;s message should belong. If the user posts the message in the predicted channel, the bot doesn&rsquo;t do anything; if not, the bot will advise the user to consider posting it to the predicted (i.e., correct) channel. For Slack teams that contain a lot of messages spread out over many channels, this approach will not be feasible.</p>
+<p>Surely there are messages that are more &ldquo;representative&rdquo; of the channel than others. Comparing the input message to <em>all</em> the messages in a given channel seems excessive. It&rsquo;s likely sufficient to compare the user input to those representative messages only. However, this approach would require expensive preprocessing, in which we essentially have to sort the channel messages using WMD as a key. Is it possible to construct a single message representative of an entire channel?</p>
+<h3 id="slack-channel-fingerprints">Slack Channel &ldquo;Fingerprints&rdquo;</h3>
+<p>Intuitively, we could achieve this representation by looking at the word distributions in a given channel. To a human, looking at the first 10 or so of the most frequently occurring words in a channel would give a sense of what that channel is about. A single message representative of that channel should therefore contain only those 10 (or so) words! This is where word embeddings are crucial: even if the user&rsquo;s input belongs to a channel but does not contain any of the words from its representative message <em>exactly</em>, WMD distance will still be rather short, due to the semantic similarity between the user&rsquo;s word vectors and the word vectors in the representative message.</p>
+<p>To use the representative message in EMD / WMD, I needed to choose the weights of the vectors representing the words in it. Since the weights in a standard WMD are directly proportional to how many times a given word appears in a message, the weights in my representative message can be proportional to the number of times a given word appears in the entire channel (and then normalized). Once I constructed representative messages for each of the channels, all I needed to do was calculate the WMD distances between the user&rsquo;s input message and each of the representative messages, find the shortest one, and predict the corresponding channel as the one to which the input message was supposed to go. But are the top 10 words enough to form a representative message? How about 30? I found the optimal number of top words by treating it as a hyperparameter and tuning it on a validation set. Turns out it was 180 (see below).</p>
+<h2 id="implementing-the-bot">Implementing the Bot</h2>
+<p>Now that I had the bot&rsquo;s brains all figured out, in order to actually build and train the bot, I needed some data.</p>
+<h3 id="data-reddit-in-place-of-slack">Data: Reddit in Place of Slack</h3>
+<p>Slack data is hard to come by because it&rsquo;s private. The next best thing is <a href="https://www.reddit.com/">Reddit</a> given that its data is easily available and has a similar structure to Slack, where instead of channels, different topics are grouped into subreddits. To build the bot prototype, I chose the following five topics (subreddits): <em>Diving</em>, <em>Handball</em>, <em>Corgi</em>, <em>Data Science</em>, and <em>Machine Learning</em>. These were chosen intentionally so that some of the topics are more similar to each other and others are less so (plus, they also tell you something about the things I like!). The relevant data (submissions and comments) was downloaded using Reddit&rsquo;s excellent API through an easy-to-use <a href="https://praw.readthedocs.io/en/latest/#"><code>PRAW</code></a> package for Python, and stored in a SQL database.</p>
+<p>To showcase the bot&rsquo;s abilities, I made a <a href="https://slack-police.slack.com">demo Slack team</a> where I created 5 channels, corresponding to the 5 subreddits above, and populated those channels with the comments obtained from the corresponding subreddits. For simplicity, I focused only on comments rather than the submissions since they tend to be shorter, perhaps more faithfully mimicking the form of Slack messages. To upload the Reddit data to my Slack team, I registered 4 <a href="https://api.slack.com/bot-users">bot users</a> on Slack (posing as famous characters on Seinfeld!), and used the excellent package <a href="https://github.com/slackapi/python-slackclient"><code>slackclient</code></a> that allows one to communicate with Slack&rsquo;s API from Python. For more details on how to build simple bots in Python, check out my code on Github and/or have a look at a great tutorial from the <a href="https://www.fullstackpython.com/blog/build-first-slack-bot-python.html">Full Stack Python</a> blog. The bot itself is hosted on <a href="https://aws.amazon.com/">AWS</a>, constantly monitoring the discussions in the demo Slack team.</p>
+<h3 id="initial-model-performance">Initial Model Performance</h3>
+<p>Then I applied the bot&rsquo;s brains to this Reddit data. First, I tuned the optimal number of <em>top words</em> in the channels&rsquo; representative messages, which turns out to be 180 (take a look at the confusion matrix). The accuracy of this model is about 74%, which is pretty good and a noticeable improvement from 68% that one gets from the tf-idf approach and using the cosine similarity as the metric.</p>
+<p><!-- raw HTML omitted --></p>
+<h3 id="turns-out-thank-yous-can-be-annoying">Turns Out &ldquo;Thank You&rsquo;s&rdquo; Can Be Annoying</h3>
+<p>In the confusion matrix, we see some expected confusion with the closely related topics: for example, 24% of messages from the machine learning channel got misclasified as data science. If we look under the hood, we can see that a lot of these messages are in fact pretty generic (e.g. &ldquo;thank you&rdquo;) and could belong to any channel. In fact, our model picked up on the fact that the distances to all the channels for these messages are pretty similar, and it just happens that the distance to the data science channel was the shortest one.</p>
+<p>To eliminate some of these &ldquo;generic&rdquo; messages, I introduced a threshold: when the distance between the channel in which the message was posted and the channel to which the message was classified was smaller than some value <em>epsilon</em>, the prediction of the model is ignored and the bot won&rsquo;t alert the user. To keep things simple I used a fixed, relative threshold for the entire corpus, treated it as a hyperparameter, and tuned it on the validation set.</p>
+<p>However, as the messages are not labeled as generic or non-generic, I couldn&rsquo;t code up some automatic verification process to tells me how accurate the model is performing in flagging messages as generic (for a given value of the threshold). I would need an actual human being to look at the example the model flagged as generic and decide if it is indeed generic. That seems cumbersome! Is there a more practical approach?</p>
+<h3 id="maximizing-the-high-accuracy-likelihood">Maximizing the High Accuracy Likelihood</h3>
+<p>In order not to decrease the accuracy of the model too much, I wanted to minimize the number of correctly classified messages that were flagged as generic. Because flagging a message as generic introduces a possibility that I mis-flagged it, this would decrease the accuracy of the model. On the other hand, in order to try to increase the accuracy of the model, I needed to maximize the number of incorrectly classified messages flagged as generic. Given that flagging a message as generic introduces a possibility that I correctly flagged it, this would increase the accuracy of the model. As I increased the threshold, the amount of correctly classified messages predicted to be generic increased, while the amount of the incorrectly classified messages predicted to be non-generic decreased, as shown in the plot below.</p>
+<p><!-- raw HTML omitted --></p>
+<p>A natural choice for the optimal relative threshold is the place where the two curves intersect, which is about 0.05 in this case. Now that I&rsquo;d chosen an optimal threshold, I applied my model to the test set, manually checked how many of the messages the model flagged as generic were indeed generic, and used that to update the effective accuracy of the model. <strong>This resulted in a final accuracy of about 84%</strong>, a substantial improvement from the initial 74%.</p>
+<h2 id="final-words">Final Words</h2>
+<p>This bot prototype is pretty versatile: it can be applied to platforms other than Slack (such as Reddit and Stack Overflow), and it can be also potentially developed into more advanced applications, including automatic email classification and maybe even filtering out hate speech on Twitter. Curious? Check out this more detailed <a href="https://aficnar.github.io/slackpolice/">blog post</a> and take a look at the <a href="https://github.com/aficnar/slack_police">bot&rsquo;s code</a>.</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jun 6, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      fiction
+    </span>
+  </h5>
+  
+    <div><a href="/2017/06/06/probabilistic-programmming-sci-fi-bayeshead-5000.html"><strong>Probabilistic Programmming Sci-Fi: BayesHead 5000</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>May 26, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/05/26/learning-from-real-world-models-the-mississippi-basin-model-and-machine-learning.html"><strong>Learning from Real-World Models: The Mississippi Basin Model and Machine Learning</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Feb 27, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-02-28-180128-markus_spiske_FXFz_sW0uwo_unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html"
+       ><h2 style="margin-bottom: 4px;">Privacy, data governance, and machine learning: the regulatory perspective</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/varun-bhatnagar-74303437/">Varun</a>
+        &middot; </span
+      >
+    </span>
+    Why do privacy and governance matter? Data privacy has been a common conversation topic among the general public since the Cambridge Analytica scandal in 2018. The data &ldquo;breach,&rdquo; in which user information was hoovered up through a Facebook quiz and subsequently misrepresented as being used for academic purposes, resulted in over $5 billion in fines for Facebook. However, Facebook&rsquo;s infringements were, in fact, relatively narrow in scope (though nonetheless egregious) compared to the growing remit of privacy law.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/02/27/privacy-data-governance-and-machine-learning-the-regulatory-perspective.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://refractor.fastforwardlabs.com" target="_blank">Refractor</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://refractor.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/refractor.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Prototype</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

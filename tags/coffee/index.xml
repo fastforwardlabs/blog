@@ -13,10 +13,10 @@
     
     <item>
       <title>Coffee Thermoregulation</title>
-      <link>http://test-blog.fastforwardlabs.com/2015/06/coffee-thermoregulation.html</link>
+      <link>http://test-blog.fastforwardlabs.com/2015/06/04/coffee-thermoregulation.html</link>
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
-      <guid>http://test-blog.fastforwardlabs.com/2015/06/coffee-thermoregulation.html</guid>
+      <guid>http://test-blog.fastforwardlabs.com/2015/06/04/coffee-thermoregulation.html</guid>
       <description>We take coffee pretty seriously here at Fast Forward Labs. In addition to our machine learning research, we have also explored both hot and cold coffee brewing technologies.
 Research reveals that no one wants to drink a mug of hot brew once it settles to room temperature. As a slow sipper, I end up pouring out most of the coffee in my mug because it cools off too quickly. I set up this solution in a few minutes this afternoon using an off-the-shelf immersion heater and a microcontroller temperature regulator.</description>
     </item>
