@@ -12,7 +12,7 @@
   {{ end }}
   <div>
     {{ if (isset .Params "external_url") }}
-    <a href="{{ .Params.external_url }}">
+    <a href="{{ .Params.external_url }}" target="_blank">
       <h2 style="margin-bottom: 4px;">{{.Title}}</h2></a
     >
     {{ else }}
@@ -36,11 +36,12 @@
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
     >
     {{ if (isset .Params "external_url") }}
-    <a href="{{ .Params.external_url }}">
-    {{ replace (replace .Params.external_url "https://" "") "http://" ""}}
-    </a>
+      <a href="{{ .Params.external_url }}" target="_blank">
+        {{ $url := urls.Parse .Params.external_url }}	
+        {{ $url.Host  }}
+      </a>
     {{ else }}
-    <a href="{{ .RelPermalink }}">...read more</a>
+      <a href="{{ .RelPermalink }}">...read more</a>
     {{ end }}
   </div>
   <div class="spacer"></div>

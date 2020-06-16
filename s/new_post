@@ -1,8 +1,46 @@
 #!/bin/bash
 
-echo "Hi, "$USER". This script will help you create a new post."
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+base=`echo $DIR | sed 's|\(.*\)/.*|\1|'`
+relpath="$base/content/posts/"
+date=`date '+%FT%T'`
 
-echo -n "Enter your name and press [ENTER]: "
+echo "Enter the title for your post (you can always change it before you publish):"
 read name
 
-echo "what up, $name"
+slug=`echo "$name" | iconv -t ascii//TRANSLIT | sed -E 's/[~\^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+\|-+$//g' | sed -E 's/^-+//g' | sed -E 's/-+$//g' | tr A-Z a-z`
+timestamp=`date '+%Y-%m-%d'`
+filename="$timestamp-$slug.md"
+place="$relpath$filename"
+
+echo "creating file $place"
+
+echo "---
+title: \"$name\"
+date: $date" > "$place"
+
+echo "Enter the author (blank for none):"
+read author
+echo "author: $author" >> "$place"
+
+echo "Enter the author link (blank for none):"
+read author
+echo "author_link: $author" >> "$place"
+
+echo "Enter the preview image path (should be relative) (blank for none):"
+read image_path
+echo "preview_image: $image_path" >> "$place"
+
+echo "Enter the post type (this is just the label that appears above the headline) (blank defaults to Post):"
+read post_type
+echo "post_type: $post_type" >> "$place"
+
+echo "If this is a post hosted elsewhere, enter a link to the post:"
+read external_url
+echo "external_url: $external_url" >> "$place"
+
+echo "---
+" >> "$place"
+
+echo "$place"
+

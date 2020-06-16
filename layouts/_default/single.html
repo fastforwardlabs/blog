@@ -1,3 +1,13 @@
+{{ define "head" }}
+<title>{{ .Title }}</title>
+<meta property="og:title" content="{{ .Title }}">
+<meta property="description" content="{{ .Summary }}">
+<meta property="og:description" content="{{ .Summary }}">
+<meta property="og:image" content="{{ .Site.BaseURL }}{{ .Params.preview_image }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="twitter:card" content="summary_large_image">
+{{ end }}
+
 {{ define "main" }}
 <div class="container">
   <div>
@@ -67,6 +77,11 @@
 <div class="spacer"></div>
  
 {{ partial "prototypes.html" . }}
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+{{ partial "about.html" . }}
 
 <div class="spacer"></div>
 <div class="spacer"></div>

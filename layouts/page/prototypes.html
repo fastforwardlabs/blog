@@ -8,7 +8,7 @@
   <div class="spacer"></div>
 </div>
 
-<div id="prototypes-holder" style="display: grid; grid-template-columns: repeat(auto-fit, 32ch); grid-auto-rows: 360px; justify-content: center; max-width: 128ch; margin: 0 auto;">
+<div id="prototypes-holder" style="">
   {{ range .Site.Data.prototypes.experiments }}
   {{ partial "prototype_link.html" . }}
   {{ end }}

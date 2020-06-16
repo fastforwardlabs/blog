@@ -3,6 +3,6 @@ languageCode = "en-us"
 title = "Blog"
 Paginate = 6
 uglyurls = true
-publishDir = "docs"
+googleAnalytics = "UA-53030428-5"
 [permalinks]
   "posts" = "/:year/:month/:title/"

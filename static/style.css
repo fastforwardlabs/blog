@@ -250,3 +250,34 @@ button {
 button:hover {
   background: #ddd;
 }
+.report-link {
+  padding-left: 33ch;
+}
+.report-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+@media only screen and (max-width: 74ch) {
+  .report-link {
+    max-width: 62ch;
+    margin: 0 auto;
+    padding-left: 0;
+  }
+  .report-image {
+    position: relative;
+  }
+}
+#prototypes-holder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 32ch);
+  grid-auto-rows: 360px;
+  justify-content: center;
+  max-width: 128ch;
+  margin: 0 auto;
+}
+@media only screen and (max-width: 66ch) {
+  #prototypes-holder {
+    display: block;
+  }
+}
