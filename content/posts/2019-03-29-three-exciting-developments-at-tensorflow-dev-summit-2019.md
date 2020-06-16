@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: '![](/images/editor_uploads/2019-05-09-205154-tensorflow.png)'
 published: true
 title: Three exciting developments at TensorFlow Dev Summit 2019
+aliases:
+  - /2019/03/29/three-exciting-developments-at-tensorflow-dev-summit-2019.html
 ---
 
 The third annual TensorFlow Dev Summit was held. The entire first day of talks was live-streamed, and videos are available on the [TensorFlow YouTube channel](https://www.youtube.com/channel/UC0rqucBdTuFTjJiefW5t-IQ). I stayed up late (from the UK) watching a few of the talks, and here’s an entirely idiosyncratic description of three things I find exciting. A broader [recap](https://medium.com/tensorflow/recap-of-the-2019-tensorflow-dev-summit-1b5ede42da8d) is provided by the TensorFlow team themselves.

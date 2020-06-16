@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/03/param_importance-1522251173209.png
 published: true
 title: Simple Architectures Outperform Complex Ones in Language Modeling
+aliases:
+  - /2018/04/25/simple-architectures-outperform-complex-ones-in-language-modeling.html
 ---
 
 Are novel, complex, and specialized neural network architectures always better for language modeling? [Recent papers](https://arxiv.org/abs/1708.02182) have shown otherwise. Language models are used to predict the next token given the preceeding tokens. Most operate at word-level or character-level. Word-level models have large vocabulary sizes (how many words are there in the English language?) compared to character-level models (there are 26 letters in the English language). This means that character-level models require less memory. On the other hand, when processing a sentence, character-level models see a large number of tokens (each character is a token) compared to word-level models. A large number of tokens (long sequence) is harder for neural networks because of the vanishing gradients problem.                                                                      

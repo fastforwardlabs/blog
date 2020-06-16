@@ -7,6 +7,8 @@ post_type: NEWSLETTER
 preview_image: /images/editor_uploads/2019-10-18-162954-bridge_fuzzy.png
 published: true
 title: Fuzzy People
+aliases:
+  - /2019/10/30/fuzzy-people.html
 ---
 
 While preparing for a recent edition of the Federated Learning talk I often give at conferences, I encountered [this tweet](https://twitter.com/EliotAndres/status/1175101115966398464), which includes a demonstration of real-time multi-person segmentation on a smartphone.

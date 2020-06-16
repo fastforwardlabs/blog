@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2018/09/gan-1536758013486.png
 published: true
 title: Realistic Video Generation
+aliases:
+  - /2018/09/28/realistic-video-generation.html
 ---
 
 [Generative Adversarial Networks][6] (GANs) wowed the world in 2014 with their

@@ -6,6 +6,8 @@ feature: true
 post_type: Guest Post
 preview_image: /images/2017/05/threshold.png
 title: 'Slack Maestro: Helping Users Stay on Topic'
+aliases:
+  - /2017/05/30/Slack-Maestro-Helping-Users-Stay-on-Topic.html
 ---
 
 ##### This is a guest post featuring a project by Andrej Ficnar (now a data scientist at [Schireson Associates](http://www.schireson.com/)), which he completed as a fellow in the [Insight Data Science program](http://insightdatascience.com/). We are partnered with Insight and occasionally advise fellows on month-long projects from idea to implementation.

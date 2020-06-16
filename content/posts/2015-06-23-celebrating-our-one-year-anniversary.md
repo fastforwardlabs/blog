@@ -8,6 +8,8 @@ tags:
 - fastforwardlabs
 - burgers
 title: Celebrating Our One Year Anniversary
+aliases:
+  - /2015/06/23/celebrating-our-one-year-anniversary.html
 ---
 
 <img src="/tumblr_files/tumblr_nqewle0krb1teyfqto1_1280.jpg"/>

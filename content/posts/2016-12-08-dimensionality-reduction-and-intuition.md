@@ -11,6 +11,8 @@ tags:
 - data visualization
 - t-sne
 title: Dimensionality Reduction and Intuition
+aliases:
+  - /2016/12/08/dimensionality-reduction-and-intuition.html
 ---
 
 <figure data-orig-width="651" data-orig-height="513" class="tmblr-full"><img src="http://68.media.tumblr.com/a97d30b7577d5fb32955853cb2ec7b17/tumblr_inline_ohvie7chq81ta78fg_540.png" alt="image" data-orig-width="651" data-orig-height="513"/></figure>

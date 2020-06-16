@@ -5,6 +5,8 @@ preview_image: https://68.media.tumblr.com/cbe0007d3ac0cdaaf70d6c4d25978e83/tumb
 published: true
 redirect_from: /post/156046009163/new-research-on-probabilistic-programming
 title: New Research on Probabilistic Programming
+aliases:
+  - /2017/01/18/new-research-on-probabilistic-programming.html
 ---
 
 ![image](https://68.media.tumblr.com/cbe0007d3ac0cdaaf70d6c4d25978e83/tumblr_inline_ojzf3jTBUF1ta78fg_540.png)

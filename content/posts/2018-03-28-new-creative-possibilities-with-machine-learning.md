@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2018-03-09-211736-Screen_Shot_2018_03_08_at_3_52_58_PM.png
 published: true
 title: New creative possibilities with machine learning
+aliases:
+  - /2018/03/28/new-creative-possibilities-with-machine-learning.html
 ---
 
 Machine learning techniques are able to organize large amounts of unstructured data. Combined with dimensionality reduction techniques like t-SNE, this capability opens up new ways for us to interact with creative material including sounds, words, and ideas. In this section we highlight three of our favorite recent experiments.

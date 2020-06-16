@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2018-03-31-210319-hicat2.gif
 published: true
 title: 'JavaScript eats the world: deep learning and notebooks edition'
+aliases:
+  - /2018/04/25/javascript-eats-the-world-deep-learning-and-notebooks-edition.html
 ---
 
 Google recently announced [TensorFlow.js](https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db), an open-source library for running machine learning in the browser, and a successor to the deeplearn.js library. While the majority of machine learning work is unlikely to shift to JavaScript anytime soon, the examples included on the [TensorFlow.js site](https://js.tensorflow.org/) do a good job of showing the promise of machine learning models that run in the browser. 

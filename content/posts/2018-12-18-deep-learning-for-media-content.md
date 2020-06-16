@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-01-05-191614-Merlin_Flow.png
 published: true
 title: Deep Learning for Media Content
+aliases:
+  - /2018/12/18/deep-learning-for-media-content.html
 ---
 
 Machine learning continues to make its way into the arts, most recently in film and TV.

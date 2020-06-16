@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/02/PsychLabs_DeepMind_figure-1517949199677.png
 published: true
 title: 'Comparing human and agent performance: DeepMind releases PsychLab'
+aliases:
+  - /2018/02/28/comparing-human-and-agent-performance-deepmind-releases-psychlab.html
 ---
 
 Google’s DeepMind released [PsychLab](https://deepmind.com/blog/open-sourcing-psychlab/) this week, which has been developed internally and released to the public as part of [DeepMind’s efforts](http://www.cell.com/neuron/abstract/S0896-6273(17)30509-3) to apply decades of research in cognitive science/neuroscience to advance the state of the art in machine learning and artificial intelligence. Many modern machine learning models have taken inspiration from principles derived from decades of research in cognitive science/neuroscience. This announcement, along with the accompanying [paper](https://arxiv.org/abs/1801.08116), provide an open-source playground for testing how agents (built using LSTM deep learning alrogirthms) perform when compared to humans on a slew of cognitive tasks that are fairly well-understood and widely used to study human perception.   

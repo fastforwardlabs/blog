@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/2018/07/task_dict_v-1532535013679.jpg
 published: true
 title: Breakthroughs in transfer learning for natural language processing
+aliases:
+  - /2018/08/29/breakthroughs-in-transfer-learning-for-nlp.html
 ---
 
 One of the most exciting parts of our jobs at Cloudera Fast Forward Labs is [our work](https://www.cloudera.com/products/fast-forward-labs-research/fast-forward-labs-research-reports.html) on applied machine learning research. Through this research we see and work with some of the most exciting developments in machine learning, deep learning, and AI, but - as with any field that has been overhyped - we sift through a lot of noise. By noise, we generally mean research that is too immature to be of practical use, or research that follows one or more of the [troubling trends in machine learning](https://arxiv.org/pdf/1807.03341.pdf). 

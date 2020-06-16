@@ -8,6 +8,8 @@ preview_image: /images/2018/10/mike_petrucci_607505_unsplash-1539792581534.jpg
 published: true
 title: 'The quest continues: a look at a new initiative to explore human and machine
   intelligence'
+aliases:
+  - /2018/10/29/the-quest-continues-a-look-at-a-new-initiative-to-explore-human-and-machine-intelligence.html
 ---
 
 The resurrection of neural networks as a technique has helped propel the field of machine learning to the forefront of commercial applications. Today’s most popular applications focus on finding patterns in data and exploiting those patterns for very narrow tasks. But what if we want more from machine learning? Instead of trying to contort the methods we have today to achieve marginal gains in generalizability, what if we took another angle altogether?

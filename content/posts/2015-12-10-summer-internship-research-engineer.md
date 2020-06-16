@@ -6,6 +6,8 @@ published: false
 redirect_from: /post/134926967273/summer-internship-research-engineer
 tags: announcement,internship
 title: 'Summer Internship: Research Engineer'
+aliases:
+  - /2015/12/10/summer-internship-research-engineer.html
 ---
 
 <p>We’re excited to announce a summer internship opportunity, which is open to current undergraduate and graduate students. To apply, send your resume and cover letter to jobs@fastforwardlabs.com. </p><p>Keep reading for details on responsibilities, qualifications, and perks. </p>

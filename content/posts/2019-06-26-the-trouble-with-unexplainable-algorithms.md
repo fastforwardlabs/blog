@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-06-07-135738-helloquence_51716_unsplash.jpg
 published: true
 title: The trouble with unexplainable algorithms
+aliases:
+  - /2019/06/26/the-trouble-with-unexplainable-algorithms.html
 ---
 
 Thanks to a mix of technology-driven disruption and savvy competitors, the business environment is an increasingly challenging one. Staying competitive requires a better understanding of customers’ behaviour and preferences. It also requires the ability to optimise internal processes to more efficiently support both these things. This is a big reason that so many organisations are investing in machine learning.

@@ -9,6 +9,8 @@ post_type: Demo
 preview_image: /images/2017/05/tweetratio.png
 published: true
 title: A Quick Look at the Reply-to-Retweet Ratio
+aliases:
+  - /2017/05/15/reply-retweet-ratio.html
 ---
 
 Twitter users can retweet, like or reply to a tweet. If a tweet from a

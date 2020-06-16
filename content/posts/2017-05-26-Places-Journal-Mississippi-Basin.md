@@ -6,6 +6,8 @@ feature: false
 preview_image: /images/2017/05/dykema-basin-model-1_525.jpg
 published: true
 title: 'Learning from Real-World Models: The Mississippi Basin Model and Machine Learning'
+aliases:
+  - /2017/05/26/Places-Journal-Mississippi-Basin.html
 ---
 
 Model-building has a venerable history that long predates parallel processing, python, and perceptrons. Physical, scale models and maps have helped humans think through complex processes and ambitious endeavors, from the rigging of a pharoah's [pleasure yacht](http://www.touregypt.net/images/touregypt/boat.jpg) to the [Battle of Britain](https://upload.wikimedia.org/wikipedia/commons/b/bf/Plotting_Table.jpg) by reducing the complexity of the real world to the most important, salient features that affect a problem, and by bringing disconnected, distant phenomena into view from a single perspective. And yet, with the release of packages and platforms that make it ever easier to build, train, and deploy models, it is easy to lose track of what goes into a successful model, what the relationship is between model and #reality, and how the models we build and use every day are the inheritors of a storied tradition that offers plenty of lessons from the past for present.

@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2019/09/Screen_Shot_2019_09_13_at_10_36_26_AM-1568385551725.png
 published: true
 title: Automating Weak Supervision
+aliases:
+  - /2019/09/27/automating-weak-supervision.html
 ---
 
 ### What is weak supervision?

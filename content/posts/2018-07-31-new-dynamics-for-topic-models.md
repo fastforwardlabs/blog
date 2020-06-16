@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/07/f5-1531838383022.jpg
 published: true
 title: New Dynamics for Topic Models
+aliases:
+  - /2018/07/31/new-dynamics-for-topic-models.html
 ---
 
 Topic models can extract key themes from large collections of documents in an unsupervised manner, which makes them one of the most powerful tools in organizing, searching, and understanding the vast troves of text data produced by humanity. Their power derives, in part, from their in-built assumptions about the nature of text; specifically, to identify topics, the model has to give the notion of a topic a mathematical structure that echoes its significance to a human reader. In their recent paper, [*Scalable Generalized Dynamic Topic Models*](https://arxiv.org/abs/1803.07868), Patrick Jähnichen, Florian Wenzel, Marius Kloft, and Stephan Mandt show scalable models that allow topics to change over time in a way that is more general than it was previously, extracting new forms of patterns from large-scale datasets. 

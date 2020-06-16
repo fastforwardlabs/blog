@@ -8,6 +8,8 @@ preview_image: https://68.media.tumblr.com/3eefb9d8c2e3d798ca6dcead23017de9/tumb
 redirect_from:
 - /post/155350468038/learning-to-use-react
 title: Learning to Use React
+aliases:
+  - /2017/01/03/learning-to-use-react.html
 ---
 
 ![](https://68.media.tumblr.com/3eefb9d8c2e3d798ca6dcead23017de9/tumblr_inline_oj7sj2BjWG1ta78fg_540.png)

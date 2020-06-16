@@ -6,6 +6,8 @@ published: true
 redirect_from: /post/135272766678/nextview-ventures-podcast
 tags: interview,podcast,data science
 title: NextView Ventures Podcast
+aliases:
+  - /2015/12/15/nextview-ventures-podcast.html
 ---
 
 <figure class="tmblr-full" data-orig-height="324" data-orig-width="333"><img src="http://68.media.tumblr.com/2a7557828a723a63971bd2f90412bbf0/tumblr_inline_nzf49uMo1i1ta78fg_540.png" data-orig-height="324" data-orig-width="333"/></figure>

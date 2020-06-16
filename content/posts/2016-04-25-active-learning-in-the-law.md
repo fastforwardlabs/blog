@@ -11,6 +11,8 @@ tags:
 - data science
 - legal tech
 title: Active Learning in the Law
+aliases:
+  - /2016/04/25/active-learning-in-the-law.html
 ---
 
 <figure data-orig-width="782" data-orig-height="438" class="tmblr-full"><img src="http://68.media.tumblr.com/5419ce3290efb6634bdefc85748cbe2e/tumblr_inline_o67a1hhHOk1ta78fg_540.gif" alt="image" data-orig-width="782" data-orig-height="438"/></figure>

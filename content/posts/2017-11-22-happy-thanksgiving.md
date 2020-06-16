@@ -5,6 +5,8 @@ date: "2017-11-22T00:00:00Z"
 preview_image: /images/2017/11/cute_bot-1511369925891.jpg
 published: true
 title: Algorithmic Cookery & Happy Thanksgiving
+aliases:
+  - /2017/11/22/happy-thanksgiving.html
 ---
 
 As you are preparing for your Thanksgiving meal, just *know* that a robotic arm is holding the spoon at the Institute for Culinary Education (ICE); progress is relentless. *"The Chef Watson cookbook is a revolutionary display of the creative collaboration of man and machine."* [Cognitive Cooking with Chef Watson](https://www.ice.edu/about-us/brand-at-ice/ibm-cognitive-cooking-with-chef-watson-partnership), culinary and *cognitive* creativity [at your fingertips](https://www.ibmchefwatson.com/community). Perhaps you should try the Acorn Squash Meat Roast ... with English Breakfast Tea.

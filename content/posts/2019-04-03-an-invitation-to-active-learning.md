@@ -6,6 +6,8 @@ feature: false
 preview_image: /images/editor_uploads/2019-04-04-171937-uncertainty_sampling_observable_fast.gif
 published: true
 title: An Invitation to Active Learning
+aliases:
+  - /2019/04/03/an-invitation-to-active-learning.html
 ---
 
 Many interesting learning problems exist in places where labeled data is limited.

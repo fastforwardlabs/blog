@@ -11,6 +11,8 @@ tags:
 - ai
 - announcement
 title: FFL in the Bay Area, Chicago, and DC
+aliases:
+  - /2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html
 ---
 
 <p>We’ve got three events on the horizon. Join us, or contact us with questions if you’d like to learn more but are unable to attend!</p>

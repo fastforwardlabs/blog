@@ -6,6 +6,8 @@ post_type: Featured Post
 preview_image: /images/2019/05/fig1-1558038180094.png
 published: true
 title: Meta-Learners - learning how to learn
+aliases:
+  - /2019/05/22/metalearners-learning-how-to-learn.html
 ---
 
 [Active learning](https://blog.fastforwardlabs.com/2019/04/02/a-guide-to-learning-with-limited-labeled-data.html)

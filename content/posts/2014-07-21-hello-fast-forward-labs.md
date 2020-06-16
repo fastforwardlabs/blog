@@ -9,6 +9,8 @@ published: true
 redirect_from: /post/92438955263/hello-fast-forward-labs
 tags: announcement
 title: Hello, Fast Forward Labs!
+aliases:
+  - /2014/07/21/hello-fast-forward-labs.html
 ---
 
 <p>I’m very pleased to introduce <a href="http://www.fastforwardlabs.com/" title="Fast Forward Labs" target="_blank">Fast Forward Labs</a>.</p>

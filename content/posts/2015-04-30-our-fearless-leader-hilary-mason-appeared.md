@@ -10,6 +10,8 @@ tags:
 - twitter
 - bloombergtv
 title: Hilary on Bloomberg TV
+aliases:
+  - /2015/04/30/our-fearless-leader-hilary-mason-appeared.html
 ---
 
 <img src="/tumblr_files/tumblr_nnn20a7yAI1teyfqto1_r1_1280.png"/>

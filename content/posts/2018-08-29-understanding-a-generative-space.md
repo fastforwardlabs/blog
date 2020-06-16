@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/2018/08/compton_generator-1533226496607.jpg
 published: true
 title: Understanding a generative space
+aliases:
+  - /2018/08/29/understanding-a-generative-space.html
 ---
 
 [Kate Compton](http://www.galaxykate.com/), maker of many interesting things, recently tweeted a diagram from her work-in-progress dissertation zine. The illustration breaks down how we interact with a procedural generator, which can be anything from a photo filter to a character creation tool.

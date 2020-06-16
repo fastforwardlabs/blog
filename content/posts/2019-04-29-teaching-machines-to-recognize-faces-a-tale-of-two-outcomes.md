@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2019/04/Affectiva_Face_Image-1555448954465.jpg
 published: true
 title: 'Teaching machines to recognize faces: a tale of two outcomes'
+aliases:
+  - /2019/04/29/teaching-machines-to-recognize-faces-a-tale-of-two-outcomes.html
 ---
 
 Machine learning used for facial recognition can have both potentially life-saving and privacy-killing consequences. The rise of cheap sensors, more robust data storage, and advances in machine learning have propelled many industries forward - for instance, many sensors used in the automative industry have focused on detecting vehicle malfunctions, maintenance needs, and even the early components of self-driving cars.   

@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: http://feed.grantcuster.com/static/images/feed/umap_zoom-1547839236092.gif
 published: true
 title: Making an interactive UMAP visualization of the MNIST data set
+aliases:
+  - /2019/01/29/making-an-interactive-umap-visualization-of-the-mnist-data-set.html
 ---
 
 ![A GIF of zooming into the MNIST visualization](http://feed.grantcuster.com/static/images/feed/umap_zoom-1547839236092.gif)

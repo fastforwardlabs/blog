@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2017/09/Screen_Shot_2017_09_13_at_9-1505322932035.59
 published: true
 title: The Danger and Promise of Adversarial Samples
+aliases:
+  - /2017/09/29/the-danger-and-promise-of-adversarial-samples.html
 ---
 
 Adversarial samples are inputs designed to fool a model: they are inputs created by applying perturbations to example inputs in the dataset such that the perturbed inputs result in the model outputting an *incorrect* answer with *high* confidence. Often, perturbations are so small that they are imperceptible to the human eye — they are inconspicuous.

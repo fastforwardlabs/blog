@@ -4,6 +4,8 @@ author_link: https://twitter.com/shioulin_sam
 date: "2018-01-22T00:00:00Z"
 preview_image: /images/2018/01/ROC_NMF_tag_loop_1115_nodot.png
 title: Exploring Recommendation Systems
+aliases:
+  - /2018/01/22/exploring-recommendation-systems.html
 ---
  
 

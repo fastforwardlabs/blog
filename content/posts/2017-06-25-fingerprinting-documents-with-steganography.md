@@ -8,6 +8,8 @@ interview_with_link: http://github.com/mynameisfiber/
 preview_image: /images/2017/06/confusables.png
 published: true
 title: F⁠ingerprinting documents​ with steganography​
+aliases:
+  - /2017/06/25/fingerprinting-documents-with-steganography.html
 ---
 
 Steganography is the​ practice​ of​ hiding messages​ anywhere​ they’re​ not expected‏‎.

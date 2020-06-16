@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/06/Screen_Shot_2018_06_14_at_4_27_13_PM-1529008110241.png
 published: true
 title: Sequence labeling with semi-supervised multi-task learning
+aliases:
+  - /2018/06/29/sequence-labeling-with-semisupervised-multitask-learning.html
 ---
 
 Sequence labeling tasks attempt to assign a categorical label to each member in

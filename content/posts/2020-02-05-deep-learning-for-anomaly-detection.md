@@ -7,6 +7,8 @@ post_type: Featured Post
 preview_image: /images/2020/02/ill-13.png
 published: true
 title: Deep Learning for Anomaly Detection
+aliases:
+  - /2020/02/05/deep-learning-for-anomaly-detection.html
 ---
 
 *The full **Deep Learning for Anomaly Detection** report [is now available](https://ff12.fastforwardlabs.com).* 

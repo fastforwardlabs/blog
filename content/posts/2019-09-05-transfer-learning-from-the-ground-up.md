@@ -6,6 +6,8 @@ post_type: Featured Post
 preview_image: /images/editor_uploads/2019-09-06-213558-fig_10.png
 published: true
 title: Transfer Learning - from the ground up
+aliases:
+  - /2019/09/05/transfer-learning-from-the-ground-up.html
 ---
 
 Machine learning enables us to build systems that can predict the world around us: like what movies we’d like to watch, how much traffic we’ll experience on our morning commute, or what words we’ll type next in our emails. 

@@ -5,6 +5,8 @@ interview_with_link: https://galois.com/team/david-archer/
 post_type: Interview
 preview_image: /images/2017/01/chart.png
 title: 'Privacy and Encryption Above the Data: Interview with Dave Archer'
+aliases:
+  - /2017/01/25/privacy-and-encryption-above-the-data-interview-with-dave-archer.html
 ---
 
 Our mission at Fast Forward Labs is to commercialize artificial intelligence research, to clearly explain how new technologies work and help enterprises apply them in practical products. As our business model is rare, we're always keen to connect with and learn from organizations that straddle this same line between research and application. That's why we're delighted to feature [Galois](https://galois.com/), a Portland, Oregon-based R&D firm that specializes in security and trustworthiness, in this blog post.

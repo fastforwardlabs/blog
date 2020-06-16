@@ -6,6 +6,8 @@ feature: true
 preview_image: /images/editor_uploads/2018-12-07-163940-turbofan_even_shorter.gif
 published: true
 title: Designing Turbofan Tycoon
+aliases:
+  - /2018/12/06/designing-turbofan-tycoon.html
 ---
 
 ![A GIF of Turbofan Tycoon in action.](/images/editor_uploads/2018-12-07-163940-turbofan_even_shorter.gif)

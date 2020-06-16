@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2019-06-12-143410-BigGANs.png
 published: true
 title: Seeing is not necessarily believing
+aliases:
+  - /2019/06/26/seeing-is-not-necessarily-believing.html
 ---
 
 Advancements in machine learning have evolved to such an extent that machines can not only understand the input data but have also learned to create it. Generative models are one of the most promising approaches towards this goal. To train such a model we first collect a large amount of data (be it images, text, etc.) and then train a model to generate data like it.

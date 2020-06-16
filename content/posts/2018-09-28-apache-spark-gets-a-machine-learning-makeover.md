@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2018-09-19-194511-XOnSpark.png
 published: true
 title: Apache Spark gets a machine learning makeover
+aliases:
+  - /2018/09/28/apache-spark-gets-a-machine-learning-makeover.html
 ---
 
 ### Machine learning on Spark: an abridged history

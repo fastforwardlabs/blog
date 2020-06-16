@@ -5,6 +5,8 @@ preview_image: https://68.media.tumblr.com/14005dd5347c443d8716cd09c855a599/tumb
 redirect_from:
 - /post/155677733503/five-2016-trends-we-expect-to-come-to-fruition-in
 title: Five 2016 Trends We Expect to Come to Fruition in 2017
+aliases:
+  - /2017/01/10/five-trends-we-expect-to-come-to-fruition-in-2017.html
 ---
 
 The start of a new year is an excellent occasion for audacious extrapolation. Based on 2016  developments, what do we expect for 2017?

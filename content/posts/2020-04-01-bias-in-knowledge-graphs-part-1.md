@@ -7,6 +7,8 @@ post_type: POST
 preview_image: /images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg
 published: true
 title: Bias in Knowledge Graphs - Part 1
+aliases:
+  - /2020/04/01/bias-in-knowledge-graphs-part-1.html
 ---
 
 ### Introduction

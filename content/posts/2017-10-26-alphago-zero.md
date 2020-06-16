@@ -5,6 +5,8 @@ date: "2017-10-26T00:00:00Z"
 preview_image: /images/2017/10/220px_Go_board_part-1508964914733.jpg
 published: true
 title: AlphaGo Zero's win, what it means
+aliases:
+  - /2017/10/26/alphago-zero.html
 ---
 
 In an almost Freudian twist, a play on [*Vatermord*](http://www.gutenberg.org/files/41214/41214-h/41214-h.htm) by an artificial intelligence, [AlphaGo Zero](https://deepmind.com/blog/alphago-zero-learning-scratch/) has dethroned its "parent," AlphaGo. 

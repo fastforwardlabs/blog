@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-08-08-164145-NLP_Comparison.png
 published: true
 title: NLP and Transfer Learning
+aliases:
+  - /2019/08/28/nlp-and-transfer-learning.html
 ---
 
 ## NLP and Transfer Learning

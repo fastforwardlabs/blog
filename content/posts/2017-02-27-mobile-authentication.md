@@ -5,6 +5,8 @@ date: "2017-02-27T00:00:00Z"
 feature: false
 preview_image: /images/2017/02/mobileauth.png
 title: Mobile Behavioural Authentication
+aliases:
+  - /2017/02/27/mobile-authentication.html
 ---
 
 As mobile devices become central to our personal and professional lives, their

@@ -6,6 +6,8 @@ feature: false
 preview_image: /images/editor_uploads/2019-07-18-191823-fig_Artboard_1_copy_64@4x.png
 published: true
 title: 'New research: transfer learning for natural language processing'
+aliases:
+  - /2019/07/17/new-research-transfer-learning-for-natural-language-processing.html
 ---
 
 ##### We discussed this research as part of our virtual event on Wednesday, July 24th; you can watch the replay [here](https://www.cloudera.com/content/dam/www/marketing/resources/webinars/advancing-ml-with-deep-learning-and-transfer-learning.landing.html?utm_source=blog&utm_medium=organic&utm_term=ml&utm_campaign=FFL_Showcase_Recording_AMER_Webinar_2019&cid=7012H000001l3cz)!

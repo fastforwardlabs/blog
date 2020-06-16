@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png
 published: true
 title: Enterprise Grade ML
+aliases:
+  - /2020/04/01/enterprise-grade-ml.html
 ---
 
 At Cloudera Fast Forward, one of the mechanisms we use to tightly couple

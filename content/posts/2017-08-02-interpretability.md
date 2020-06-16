@@ -8,6 +8,8 @@ interview_with_link: http://github.com/mynameisfiber/
 preview_image: /images/2017/08/ff06-animation.gif
 published: true
 title: New Research on Interpretability
+aliases:
+  - /2017/08/02/interpretability.html
 ---
 
 We're excited to release the latest prototype and report from our machine

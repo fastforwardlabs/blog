@@ -4,6 +4,8 @@ author_link: https://twitter.com/GrantCuster
 date: "2017-11-02T00:00:00Z"
 preview_image: /images/2017/09/5-07.png
 title: 'Interpretability Sci-Fi: The Definition of Success'
+aliases:
+  - /2017/11/02/interpretability-scifi-the-definition-of-success.html
 ---
 
 ##### We believe in fiction as an important tool for imagining future relationships to technology. In our reports on new technologies we feature short science fiction stories that imagine the possible implications. The following story, influenced by a [certain classic Sci-Fi film](https://en.wikipedia.org/wiki/Alien_(film)), appeared in our [Interpretability report](/2017/08/02/interpretability.html). For more on interpretability read a [video conversation on interpretability](http://blog.fastforwardlabs.com/2017/09/11/interpretability-webinar.html), [a guide to using the LIME technique to predict whether couples will stay together](http://blog.fastforwardlabs.com/2017/09/01/LIME-for-couples.html), and a look at the [business rationale](http://blog.fastforwardlabs.com/2017/08/02/business-interpretability.html). In [our post on FairML](http://blog.fastforwardlabs.com/2017/03/09/fairml-auditing-black-box-predictive-models.html), we used interpretability techniques to identify discriminatory bias in algorithms. For more sci-fi, check out [BayesHead 5000](http://blog.fastforwardlabs.com/2017/06/06/probabilistic-programming-sci-fi-bayeshead-5000.html).

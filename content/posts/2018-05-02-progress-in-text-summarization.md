@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2018-10-19-160814-pointer_gen.png
 published: "true"
 title: Progress in text summarization
+aliases:
+  - /2018/05/02/progress-in-text-summarization.html
 ---
 
 We published our report on text summarization in 2016. Since then, we've

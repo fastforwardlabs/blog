@@ -5,6 +5,8 @@ interview_with_link: https://twitter.com/astrobiased
 post_type: Interview
 preview_image: /images/2017/04/b1509_w11.jpg
 title: Eli Bressert on Data-Driven Processes at Netflix
+aliases:
+  - /2017/04/28/eli-bressert-on-data-driven-processes-at-netflix.html
 ---
 
 ##### Despite their best intentions, companies often struggle to develop processes that provide data-driven decisions through partnership across the business. Netflix stands out as a company that excels at deeply integrating its data science teams into all aspects of the company. We spoke with [Eli Bressert](https://twitter.com/astrobiased), Manager, Data Engineering and Analytics at Netflix, to learn more about how they create the culture and processes to support and sustain that integration.

@@ -4,6 +4,8 @@ feature: true
 preview_image: /images/editor_uploads/2018-09-18-170232-robot_share_1.png
 published: true
 title: Deep learning made easier with transfer learning
+aliases:
+  - /2018/09/17/deep-learning-is-easy-an-introduction-to-transfer-learning.html
 ---
 
 <style type="text/css">.post img { max-width: 460px }</style>

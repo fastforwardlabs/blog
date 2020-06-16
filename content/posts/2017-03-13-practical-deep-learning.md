@@ -8,6 +8,8 @@ preview_image: /images/2017/03/doc-full-screen.jpg
 published: true
 redirect_from: /post/156046009163/new-research-on-probabilistic-programming
 title: Practical Deep Learning
+aliases:
+  - /2017/03/13/practical-deep-learning.html
 ---
 
 ![](/images/2017/03/micha-talk-doc.jpg)

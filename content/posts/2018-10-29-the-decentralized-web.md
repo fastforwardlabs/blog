@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2018-10-02-191324-Screen_Shot_2018_10_01_at_3_04_36_PM.png
 published: true
 title: The Decentralized Web
+aliases:
+  - /2018/10/29/the-decentralized-web.html
 ---
 
 Last week, Sir Tim Berners-Lee [announced Solid](https://medium.com/@timberners_lee/one-small-step-for-the-web-87f92217d085), a project designed to give users more control over their data. Solid is one of a number of recent attempts to rethink how the web works. As part of an effort to get my head around the goals of these different approaches and, more concretely, what they actually do, I made some notes on what I see as the most interesting approaches.

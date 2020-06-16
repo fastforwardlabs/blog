@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2019/07/goog_system-1562965719123.png
 published: true
 title: Two approaches for data validation in ML production
+aliases:
+  - /2019/08/28/two-approaches-for-data-validation-in-ml-production.html
 ---
 
 Machine learning models start to deteriorate once we deploy them. This is partly

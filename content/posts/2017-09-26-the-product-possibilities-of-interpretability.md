@@ -6,6 +6,8 @@ feature: true
 preview_image: /images/2017/09/refractor-local.gif
 published: true
 title: The Product Possibilities of Interpretability
+aliases:
+  - /2017/09/26/the-product-possibilities-of-interpretability.html
 ---
 
 ##### This post is part of a series highlighting the importance of interpretability. Previous posts include a [video conversation on interpretability](http://blog.fastforwardlabs.com/2017/09/11/interpretability-webinar.html), [a guide to using the LIME technique to predict whether couples will stay together](http://blog.fastforwardlabs.com/2017/09/01/LIME-for-couples.html), and a look at the [business rationale](http://blog.fastforwardlabs.com/2017/08/02/business-interpretability.html). In [our post on FairML](http://blog.fastforwardlabs.com/2017/03/09/fairml-auditing-black-box-predictive-models.html), we used interpretability techniques to identify discriminatory bias in algorithms.

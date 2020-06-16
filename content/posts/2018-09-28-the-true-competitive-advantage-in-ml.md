@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2018-10-30-212122-rawpixel_1072884_unsplash.jpg
 published: true
 title: The True Competitive Advantage in ML
+aliases:
+  - /2018/09/28/the-true-competitive-advantage-in-ml.html
 ---
 
 Data science, machine learning (ML), and AI are no longer just cute buzzwords.  Nearly all organizations, companies and governments now recognize the immense potential of AI-enabled products and services, and many of them have already made the very real investment of hiring employees with skills in these emerging fields.  

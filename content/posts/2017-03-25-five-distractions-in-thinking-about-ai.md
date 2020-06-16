@@ -8,6 +8,8 @@ preview_image: https://quamproxime.files.wordpress.com/2017/03/screen-shot-2017-
 published: true
 redirect_from: /post/156046009163/new-research-on-probabilistic-programming
 title: Five Distractions in Thinking about AI
+aliases:
+  - /2017/03/25/five-distractions-in-thinking-about-ai.html
 ---
 
 ![An image of a clock drawn in a cappuccino melting over the side of the cup, reminiscent of a Salvador Dali painting.](https://quamproxime.files.wordpress.com/2017/03/screen-shot-2017-03-25-at-1-28-55-pm.png)

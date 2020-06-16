@@ -9,6 +9,8 @@ tags:
 - fastforwardlabs
 - papers
 title: Five Good Books* of 2015
+aliases:
+  - /2015/12/21/five-good-books-of-2015.html
 ---
 
 ##### * Plus a few papers, videos, and other fun things.

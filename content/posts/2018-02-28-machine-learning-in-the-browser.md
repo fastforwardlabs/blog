@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-02-21-221448-tfjs.jpg
 published: true
 title: Machine Learning In The Browser
+aliases:
+  - /2018/02/28/machine-learning-in-the-browser.html
 ---
 
 The promise of Machine Learning (ML) on edge devices holds potential to enable new capabilities while reaping the benefits associated with on-device computation. As an environment that is frequently the source of data (user interactions, sensors such as cameras, acelerometers, etc.), the browser within PCs, mobile  and IoT devices represents an important edge “platform.” Deploying models in such environments can improve latency for interactive applications, reduce model distribution costs, and enable privacy as data is no longer sent to remote servers for analysis. 

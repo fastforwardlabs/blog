@@ -5,6 +5,8 @@ date: "2017-09-01T00:00:00Z"
 feature: true
 preview_image: /images/2017/09/the_turk.jpg
 title: 'Crowdwork for Machine Learning: An Autoethnography'
+aliases:
+  - /2017/09/01/crowdwork-for-ml.html
 ---
 
 Amazon’s [Mechanical Turk](https://www.wired.com/2002/03/turk/) is a platform for soliciting work on online tasks that has been used by market researchers, translators, and data scientists to complete surveys, perform work that cannot be easily automated, and create human-labeled data for supervised learning systems. Its namesake, the original Mechanical Turk, was an 18th-century chess-playing automaton gifted to the Austrian Empress Maria Theresa. An elaborate hoax, it concealed a human player amidst the clockwork machinery that appeared to direct each move on the board. Amazon's Mechanical Turk (mTurk), which they call "artificial artificial intelligence," isn't all that different. From the outside, mTurk appears to perform tasks automatically that only humans can, like identifying objects in photographs, discerning the sentiment towards a brand in a tweet, or generating natural language in response to a prompt. Behind the scenes, however, there are actual human beings - crowdworkers - logging in and performing each of these "human intelligence tasks" (HITs), usually for a few pennies per task. 

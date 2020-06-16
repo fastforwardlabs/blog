@@ -14,6 +14,8 @@ tags:
 - deep learning
 - music technology
 title: 'Machine Listening: Interview with Juan Pablo Bello'
+aliases:
+  - /2016/06/10/machine-listening-interview-with-juan-pablo-bello.html
 ---
 
 <figure data-orig-width="360" data-orig-height="270" class="tmblr-full"><img src="http://68.media.tumblr.com/5cfcc6b830aa09f63bf9e9b2333524a1/tumblr_inline_o8k7rqJDmA1ta78fg_540.png" alt="image" data-orig-width="360" data-orig-height="270"/></figure>

@@ -7,6 +7,8 @@ preview_image: /images/2017/09/henry_viii-1504299070584.jpg
 published: true
 title: 'Why your relationship is likely to last (or not): using Local Interpretable
   Model-Agnostic Explanations (LIME)'
+aliases:
+  - /2017/09/01/LIME-for-couples.html
 ---
 
 ![](/images/2017/09/henry_viii-1504299070584.jpg)

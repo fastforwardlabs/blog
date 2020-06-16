@@ -5,6 +5,8 @@ date: "2017-01-30T00:00:00Z"
 feature: false
 preview_image: http://fastforwardlabs.github.io/report_images/ff05/3-08.png
 title: The Algorithms Behind Probabilistic Programming
+aliases:
+  - /2017/01/30/the-algorithms-behind-probabilistic-programming.html
 ---
 
 We recently [introduced our report on probabilistic

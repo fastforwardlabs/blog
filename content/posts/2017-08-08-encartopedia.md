@@ -8,6 +8,8 @@ interview_with_link: http://github.com/mynameisfiber/
 preview_image: /images/2017/08/enc-tabula.jpg
 published: true
 title: Encartopedia
+aliases:
+  - /2017/08/08/encartopedia.html
 ---
 
 ![Tabula Rogeriana](/images/2017/08/enc-tabula.jpg)

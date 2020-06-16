@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/01/Smith_Court_Area_of_Interest-1516748269178.JPG
 published: true
 title: Google Maps' Competitive Moat - Why Better Data Matters
+aliases:
+  - /2018/01/26/google-mapss-competitive-moat-why-better-data-matters.html
 ---
 
 Justin O'Beirne recently wrote a [blog post](https://www.justinobeirne.com/google-maps-moat/) surveying the landscape of mapping apps and sites (with particular focus on Google Maps and Apple Maps). This is one of a [series of pieces](https://www.justinobeirne.com/cartography-comparison) O'Beirne has written [comparing Google and Apple Maps](https://www.justinobeirne.com/a-year-of-google-maps-and-apple-maps). In short, O'Beirne concludes that Google has a substantial competitive advantage in mapping that boils down to having better data.

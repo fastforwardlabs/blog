@@ -8,6 +8,8 @@ tags:
 - announcement
 - product
 title: 'Our Next Topic: Realtime Stream Analysis'
+aliases:
+  - /2014/12/19/announcing-our-next-topic-realtime-stream.html
 ---
 
 <p>We&rsquo;re very pleased to announce our second research report topic will be realtime stream analysis, with a focus on probabilistic data structures. </p>

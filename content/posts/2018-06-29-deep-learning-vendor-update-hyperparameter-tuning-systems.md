@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2018-06-19-231235-Compressorhead___Fingers_on_Gibson_Flying_V_Bones_on_Fender_Precision_Bass___Musikmesse_Frankfurt_2013.jpg
 published: true
 title: 'Deep Learning Vendor Update: Hyperparameter Tuning Systems'
+aliases:
+  - /2018/06/29/deep-learning-vendor-update-hyperparameter-tuning-systems.html
 ---
 
 In our [research reports](https://www.cloudera.com/products/fast-forward-labs-research/fast-forward-labs-research-reports.html), we cover "the recently possible," and what makes "the recently possible" possible. In addition to a detailed how-to guide of new machine learning capabilities, each of our reports contains a section on open source projects, commercial offerings, and vendors that help implement this new machine learning capability to realize the opportunities opened up by technological innovation. We like to keep an eye on the the technologies we research, of course. Our report on deep learning (for image classification) was published a few years ago, and we have seen noteworthy new developments.

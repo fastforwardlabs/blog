@@ -8,6 +8,8 @@ tags:
 - product
 - design
 title: The Natural Language Generation Report is Out
+aliases:
+  - /2014/10/17/the-fast-forward-labs-report-on-natural-language.html
 ---
 
 <img src="/tumblr_files/tumblr_ndlwj0JNFG1teyfqto1_1280.jpg"/>

@@ -8,6 +8,8 @@ redirect_from:
 tags:
 - design
 title: Blog Design Refresh
+aliases:
+  - /2015/04/06/its-restyled-blog-day-here-at-fast-forward-labs.html
 ---
 
 <img src="/tumblr_files/tumblr_nmeisoQ5mn1teyfqto1_1280.png"/>

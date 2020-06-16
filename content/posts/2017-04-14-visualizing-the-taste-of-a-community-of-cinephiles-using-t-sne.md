@@ -7,6 +7,8 @@ feature: true
 post_type: Demo
 preview_image: http://fastforwardlabs.github.io/cinephile_tsne/images/Cover.png
 title: Visualizing the Taste of a Community of Cinephiles Using t-SNE
+aliases:
+  - /2017/04/14/visualizing-the-taste-of-a-community-of-cinephiles-using-t-sne.html
 ---
 
 In this post we are going to look at an interactive visualization that clusters movies together based on their ratings by a set of users. This visualization will give us a glimpse into the aesthetic tastes of a community of cinephiles.

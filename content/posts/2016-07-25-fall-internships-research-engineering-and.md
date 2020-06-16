@@ -8,6 +8,8 @@ redirect_from: /post/147953672348/fall-internships-research-engineering-and
 tags: announcement,internship
 title: 'Fall Internships: Research Engineering and Prototype + Data Visualization
   [Filled]'
+aliases:
+  - /2016/07/25/fall-internships-research-engineering-and.html
 ---
 
 **These positions have been filled.** We are not accepting further applications. For announcements of future opportunities, please <a href="http://www.fastforwardlabs.com/#contact">subscribe to our mailing list</a>.

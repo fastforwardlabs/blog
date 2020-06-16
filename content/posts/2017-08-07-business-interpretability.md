@@ -8,6 +8,8 @@ interview_with_link: http://github.com/mynameisfiber/
 preview_image: /images/2017/08/actions.png
 published: true
 title: The Business Case for Machine Learning Interpretability
+aliases:
+  - /2017/08/07/business-interpretability.html
 ---
 
 Last week we launched the latest prototype and report from our machine

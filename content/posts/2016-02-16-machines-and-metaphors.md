@@ -12,6 +12,8 @@ tags:
 - art
 - deep learning
 title: Machines and Metaphors
+aliases:
+  - /2016/02/16/machines-and-metaphors.html
 ---
 
 <figure data-orig-width="703" data-orig-height="376" class="tmblr-full"><img src="http://68.media.tumblr.com/2cf1b0924a1bfc66737d96f4797ef6f7/tumblr_inline_o2neravFOu1ta78fg_540.png" alt="image" data-orig-width="703" data-orig-height="376"/></figure>

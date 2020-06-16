@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2019-10-31-191907-squote_better.gif
 published: true
 title: Squote - semantic quote search
+aliases:
+  - /2019/12/24/squote-semantic-quote-search.html
 ---
 
 Here in the (virtual) Fast Forward lab, we’re currently deep in the topic selection process for FF13. While one or two of our research engineers take the lead for each report, we work through several rounds of discussion and debate about the merits and demerits of topics on our collective radar as a team. Part of that process is dreaming up potential prototype applications.

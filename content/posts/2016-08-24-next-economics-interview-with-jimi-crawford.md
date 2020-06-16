@@ -13,6 +13,8 @@ tags:
 - machine learning
 - hedge funds
 title: 'Next Economics: Interview with Jimi Crawford'
+aliases:
+  - /2016/08/24/next-economics-interview-with-jimi-crawford.html
 ---
 
 <figure class="tmblr-full" data-orig-height="656" data-orig-width="1629"><img src="http://68.media.tumblr.com/de9fc93bc4bda585c1bb51a785fc7801/tumblr_inline_ocf6npUoHK1ta78fg_540.png" data-orig-height="656" data-orig-width="1629"/></figure><figure class="tmblr-full" data-orig-height="923" data-orig-width="2291"><img src="http://68.media.tumblr.com/e65b096c51449dd8ad7ef4b2f0e4ad10/tumblr_inline_ocf6k5SHv61ta78fg_540.png" data-orig-height="923" data-orig-width="2291"/></figure>

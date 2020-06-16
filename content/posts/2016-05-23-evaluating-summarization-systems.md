@@ -12,6 +12,8 @@ tags:
 - summarization
 - webinar
 title: Evaluating Summarization Systems
+aliases:
+  - /2016/05/23/evaluating-summarization-systems.html
 ---
 
 <figure data-orig-width="1300" data-orig-height="863" class="tmblr-full"><img src="http://68.media.tumblr.com/d879f22c1b7be3467b606c8aa8f7cfb6/tumblr_inline_o7n3a6bf5R1ta78fg_540.jpg" alt="image" data-orig-width="1300" data-orig-height="863"/></figure>

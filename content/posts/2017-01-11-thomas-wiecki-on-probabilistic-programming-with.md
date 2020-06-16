@@ -8,6 +8,8 @@ preview_image: https://68.media.tumblr.com/b1cc21602fec1b350032b5b79db93552/tumb
 redirect_from:
 - /post/155718521293/thomas-wiecki-on-probabilistic-programming-with
 title: Thomas Wiecki on Probabilistic Programming with PyMC3
+aliases:
+  - /2017/01/11/thomas-wiecki-on-probabilistic-programming-with.html
 ---
 
 ![](https://68.media.tumblr.com/b1cc21602fec1b350032b5b79db93552/tumblr_inline_ojmc1prF0t1ta78fg_540.png)

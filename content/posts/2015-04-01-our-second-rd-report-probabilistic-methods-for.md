@@ -8,6 +8,8 @@ tags:
 - product
 - design
 title: Probabilistic Methods for Realtime Streams
+aliases:
+  - /2015/04/01/our-second-rd-report-probabilistic-methods-for.html
 ---
 
 <img src="/tumblr_files/tumblr_nm5a0kCyu11teyfqto1_1280.jpg"/>

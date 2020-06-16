@@ -12,6 +12,8 @@ tags:
 - code
 title: '"Hello world" in Keras (or, Scikit-learn versus Keras)'
 popular: true
+aliases:
+  - /2016/02/24/hello-world-in-keras-or-scikit-learn-versus.html
 ---
 
 <h5>This article is <a

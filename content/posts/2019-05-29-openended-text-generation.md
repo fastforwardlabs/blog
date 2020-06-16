@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2019/05/Screen_Shot_2019_05_08_at_3_06_36_PM-1557342561886.png
 published: true
 title: Open-ended Text Generation
+aliases:
+  - /2019/05/29/openended-text-generation.html
 ---
 
 The goal in open-ended text generation is to create a coherent portion of text that is

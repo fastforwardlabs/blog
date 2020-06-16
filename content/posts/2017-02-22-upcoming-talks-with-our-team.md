@@ -6,6 +6,8 @@ preview_image: https://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_630,w
 published: false
 redirect_from: /post/156046009163/new-research-on-probabilistic-programming
 title: Upcoming Talks with our Team
+aliases:
+  - /2017/02/22/upcoming-talks-with-our-team.html
 ---
 
 The Fast Forward Labs team will be traveling the world to give talks in March and April! Please join us and let us know if you'd like to meet one-on-one to discuss all things data science and machine learning at these events. You can reach us at contact@fastforwardlabs.com to schedule a meeting. 

@@ -7,6 +7,8 @@ post_type: Featured Post
 preview_image: /images/2019/07/Screen_Shot_2019_07_30_at_11_48_40_AM-1564575247422.png
 published: true
 title: 'New research: Deep Learning for Image Analysis'
+aliases:
+  - /2019/07/22/new-research-deep-learning-for-image-analysis.html
 ---
 
 *We discussed this research as part of our virtual event on Wednesday, July 24th; you can watch the replay [here](https://www.cloudera.com/content/dam/www/marketing/resources/webinars/advancing-ml-with-deep-learning-and-transfer-learning.landing.html?utm_source=blog&utm_medium=organic&utm_term=ml&utm_campaign=FFL_Showcase_Recording_AMER_Webinar_2019&cid=7012H000001l3cz)!*

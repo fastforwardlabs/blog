@@ -6,6 +6,8 @@ feature: true
 preview_image: /images/2017/08/ff06-logo.png
 published: true
 title: Interpretability in conversation with Patrick Hall and Sameer Singh
+aliases:
+  - /2017/09/11/interpretability-webinar.html
 ---
 
 <div class="video-holder">

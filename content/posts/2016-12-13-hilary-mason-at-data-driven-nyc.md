@@ -9,6 +9,8 @@ published: true
 redirect_from: /post/154428106298/hilary-mason-at-data-driven-nyc
 tags: ai,data science,data driven,innovation
 title: Hilary Mason at Data Driven NYC
+aliases:
+  - /2016/12/13/hilary-mason-at-data-driven-nyc.html
 ---
 
 <figure data-orig-width="1046" data-orig-height="478" class="tmblr-full"><img src="http://68.media.tumblr.com/706a85da781f730b2aa59f0dc0e965c4/tumblr_inline_oi4x9i4yhD1ta78fg_540.png" alt="image" data-orig-width="1046" data-orig-height="478"/></figure><p>Hilary Mason, Fast Forward Labs Founder &amp; CEO, gave <a href="http://firstmarkcap.com/insights/a-process-for-discovery/">a talk</a> at November’s <a href="http://www.meetup.com/DataDrivenNYC/">Data Driven NYC</a> Meetup. <a href="http://firstmarkcap.com/insights/a-process-for-discovery/">Check it out</a> to hear our thoughts on:</p>

@@ -6,6 +6,8 @@ feature: false
 preview_image: /images/2018/06/02_03-1530032857031.png
 published: true
 title: Supercharging Classification - The Value of Multi-task Learning
+aliases:
+  - /2018/06/26/supercharging-classification-the-value-of-multitask-learning.html
 ---
 
 Today's machines can identify objects in photographs, predict loan repayments or

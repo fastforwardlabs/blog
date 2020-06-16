@@ -15,6 +15,8 @@ tags:
 - ethics
 - filter bubble
 title: Eli Pariser on the Ethics of Algorithmic Filtering
+aliases:
+  - /2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html
 ---
 
 <figure data-orig-width="1442" data-orig-height="1440" class="tmblr-full"><img src="http://68.media.tumblr.com/3172e6d87c1d99d12058845989f9041f/tumblr_inline_o1bgwg1jOS1ta78fg_540.jpg" alt="image" data-orig-width="1442" data-orig-height="1440"/></figure>

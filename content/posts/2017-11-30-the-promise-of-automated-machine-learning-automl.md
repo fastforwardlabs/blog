@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2017/11/Screen_Shot_2017_11_07_at_10_07_43_AM-1510067292745.png
 published: true
 title: The promise of Automated Machine Learning (AutoML)
+aliases:
+  - /2017/11/30/the-promise-of-automated-machine-learning-automl.html
 ---
 
 Earlier this month The New York Times published an article on [Building A.I. That Can Build A.I.](https://www.nytimes.com/2017/11/05/technology/machine-learning-artificial-intelligence-ai.html). There is a lot of excitement about AutoML due to the scarcity of machine learning (ML) talent:

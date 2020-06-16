@@ -7,6 +7,8 @@ published: true
 redirect_from: /post/147243583878/two-talks-in-nyc-this-saturday
 tags: announcement,deep learning,legal hackers,machine learning
 title: Two Talks in NYC this Saturday
+aliases:
+  - /2016/07/11/two-talks-in-nyc-this-saturday.html
 ---
 
 <figure data-orig-width="689" data-orig-height="287" class="tmblr-full"><img src="http://68.media.tumblr.com/6d185b6ef69e9fa29f78e724fdf7415e/tumblr_inline_oa5seyqhEJ1ta78fg_540.png" alt="image" data-orig-width="689" data-orig-height="287"/></figure><p>If you’re a New Yorker looking for something interesting to do Saturday afternoon, Fast Forward Labs will be speaking at two events. </p>

@@ -7,6 +7,8 @@ post_type: Post
 preview_image: /images/editor_uploads/2020-02-28-180128-markus_spiske_FXFz_sW0uwo_unsplash.jpg
 published: true
 title: 'Privacy, data governance, and machine learning: the regulatory perspective'
+aliases:
+  - /2020/02/27/privacy,-data-governance,-and-machine-learning-the-regulatory-perspective.html
 ---
 
 ### Why do privacy and governance matter?

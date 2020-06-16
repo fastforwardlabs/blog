@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2018/12/Screen_Shot_2018_12_07_at_12_03_44_PM-1544202300577.png
 published: true
 title: Fine-tuning for Natural Language Processing
+aliases:
+  - /2018/12/18/finetuning-for-natural-language-processing.html
 ---
 
 2018 was a fun and exciting year for natural language processing. A series of papers put forth powerful new ideas that improve the way machines understand and work with language. They challenge the [standard way of using pretrained word embeddings like word2vec](http://ruder.io/nlp-imagenet/) to initialize the first layer of a neural net, while the rest is trained on data of a particular task. Instead, these papers propose better embeddings (feature-based approach) and pre-trained models that can be fine-tuned for a supervised downstream task (fine-tuning approach).

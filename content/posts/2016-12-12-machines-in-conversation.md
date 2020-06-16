@@ -7,6 +7,8 @@ preview_image: http://68.media.tumblr.com/692d44e33b12223b1e7fb77bb122ec99/tumbl
 redirect_from:
 - /post/154383131913/machines-in-conversation
 title: Machines in Conversation
+aliases:
+  - /2016/12/12/machines-in-conversation.html
 ---
 
 ![](http://68.media.tumblr.com/692d44e33b12223b1e7fb77bb122ec99/tumblr_inline_oi327sddi71ta78fg_540.png)

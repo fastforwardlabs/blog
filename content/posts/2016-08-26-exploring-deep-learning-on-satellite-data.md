@@ -9,6 +9,8 @@ tags:
 - deep learning
 - code
 title: Exploring Deep Learning on Satellite Data
+aliases:
+  - /2016/08/26/exploring-deep-learning-on-satellite-data.html
 ---
 
 ##### This is a guest post featuring a project Patrick Doupe, now a Senior Data Analyst at Icahn School of Medicine at Mount Sinai, completed as a fellow in the <a href="http://insightdatascience.com">Insight Data Science program</a>. In our partnership with Insight, we occassionally advise fellows on month-long projects and how to build a career in data science.

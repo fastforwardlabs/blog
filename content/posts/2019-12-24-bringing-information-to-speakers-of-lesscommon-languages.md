@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2019-11-05-200808-WikipediaLanguages.png
 published: false
 title: Bringing Information to Speakers of Less-common Languages
+aliases:
+  - /2019/12/24/bringing-information-to-speakers-of-lesscommon-languages.html
 ---
 
 NLP has made major strides forward in the last year or two, and still has a lot of momentum. Now we're starting to see this research applied to universal translation that can reach broad audiences, including speakers of less-common languages.

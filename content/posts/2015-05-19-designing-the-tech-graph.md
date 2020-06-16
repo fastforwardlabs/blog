@@ -9,6 +9,8 @@ tags:
 - design
 - code
 title: Designing the Tech Graph
+aliases:
+  - /2015/05/19/designing-the-tech-graph.html
 ---
 
 <p>We launched a redesign of the <a href="http://i.imgur.com/p7kidae.png" target="_blank">Fast Forward Labs website</a> today. There are lots of parts of the design I’d like to write someday about but for this post I want to focus on the thinking behind the “Tech Graph” force-directed graph display in the Intro section.</p>

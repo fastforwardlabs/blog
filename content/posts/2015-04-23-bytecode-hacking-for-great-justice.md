@@ -12,6 +12,8 @@ tags:
 - bytecode
 - optimization
 title: Bytecode Hacking for Great Justice
+aliases:
+  - /2015/04/23/bytecode-hacking-for-great-justice.html
 ---
 
 <p><em>DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!</em></p>

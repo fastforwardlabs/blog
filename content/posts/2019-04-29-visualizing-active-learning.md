@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-04-10-191420-active_learner_gif_small.gif
 published: true
 title: Visualizing Active Learning
+aliases:
+  - /2019/04/29/visualizing-active-learning.html
 ---
 
 ![A GIF of the Active Learner prototype](/images/editor_uploads/2019-04-10-191420-active_learner_gif_small.gif)

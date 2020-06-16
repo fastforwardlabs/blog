@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/02/MTLNet-1517931635465.png
 published: true
 title: Multi-Task Learning
+aliases:
+  - /2018/02/28/multitask-learning.html
 ---
 
 The common approach in machine learning is to train and optimize one task at a time. In contrast, multitask learning (MTL) trains related tasks in parallel, using a shared representation. One advantage of MTL is improved generalization - using information regarding related tasks prevents a model from being overly focused on a single task, while it is also learning to produce better results.

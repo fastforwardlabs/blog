@@ -8,6 +8,8 @@ preview_image: /images/editor_uploads/2019-10-25-173715-graph_basics.png
 published: true
 title: Exciting Applications of Graph Neural Networks
 popular: true
+aliases:
+  - /2019/10/30/exciting-applications-of-graph-neural-networks.html
 ---
 
 Graph Neural Networks (GNNs) are neural networks that take graphs as inputs. These models operate on the relational information in data to produce insights not possible in other neural network architectures and algorithms.

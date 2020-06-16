@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/01/serverless_pywren-1515449109658.png
 published: true
 title: Serverless data science
+aliases:
+  - /2018/01/26/serverless-data-science.html
 ---
 
 Cloud computing has transformed enterprise IT. It makes it possible to rapidly

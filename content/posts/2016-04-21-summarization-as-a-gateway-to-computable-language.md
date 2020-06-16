@@ -9,6 +9,8 @@ tags:
 - product
 - language processing
 title: Summarization as a Gateway to Computable Language
+aliases:
+  - /2016/04/21/summarization-as-a-gateway-to-computable-language.html
 ---
 
 <p>Analyzing unstructured text data such as news, emails, chats, narrative prose, legal documents, or transcribed speech is an extremely tough problem. Thanks to massive leaps in data engineering, we can just about store and retrieve this torrent of information. But we can&rsquo;t yet conduct the kind of rich and fast analyses that we take for granted with structured, quantitative data.</p>

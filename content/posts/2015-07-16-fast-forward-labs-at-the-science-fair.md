@@ -6,6 +6,8 @@ redirect_from:
 tags:
 - TimesOpen
 title: Fast Forward Labs at the Science Fair
+aliases:
+  - /2015/07/16/fast-forward-labs-at-the-science-fair.html
 ---
 
 <p>Last night was the New York Times&rsquo; Open Source Science Fair. It kicked off with a keynote speech by our own Hilary Mason.</p><figure data-orig-width="1024" data-orig-height="768" class="tmblr-full"><img src="http://68.media.tumblr.com/e66d787dfddf623b21818a329481f84e/tumblr_inline_nrlf88nLI11ts2crc_540.jpg" alt="image" data-orig-width="1024" data-orig-height="768"/></figure>

@@ -6,6 +6,8 @@ feature: true
 preview_image: /images/2017/09/ff05.gif
 published: true
 title: 'Probabilistic programming: an annotated bibliography'
+aliases:
+  - /2017/10/02/pp-bibliography.html
 ---
 
 Earlier this year we launched a research report on [probabilistic

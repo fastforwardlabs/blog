@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2017/09/star_trek_chess-1505156456055.jpg
 published: true
 title: Futurism and Artificial Intelligence
+aliases:
+  - /2017/09/29/futurism-and-artificial-intelligence.html
 ---
 
 For some, [Mayweather-McGregor](http://www.espn.com/boxing/story/_/id/20607363/floyd-mayweather-conor-mcgregor-live-gate-generates-554-million) was the prizefight of the summer. For others, it has been Musk-Zuckerberg going toe-to-toe over the risks posed by AI, with Musk voicing his [reservations](https://www.vanityfair.com/news/2017/03/elon-musk-billion-dollar-crusade-to-stop-ai-space-x) about artificial intelligence while Zuck remains more [sanguine](https://www.cnbc.com/2017/07/24/mark-zuckerberg-elon-musks-doomsday-ai-predictions-are-irresponsible.html). Musk has called AI possibly the "biggest threat" to humanity and gone so far as to suggest the decidedly un-Catholic opinion that Silicon Valley should be welcoming regulatory oversight of AI in this one exceptional instance. Some have responded to Musk's statements by accusing him of having watched Terminator a few times too many while others have taken his statements as license to trumpet their own dire warnings about the threat of AI or [report](http://www.information-age.com/demand-new-legislaai-experts-warning-123468393/) gleefully over the blow-by-blow. 

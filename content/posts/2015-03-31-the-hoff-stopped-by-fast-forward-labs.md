@@ -8,6 +8,8 @@ tags:
 - press
 - hasslehoff
 title: The Hoff
+aliases:
+  - /2015/03/31/the-hoff-stopped-by-fast-forward-labs.html
 ---
 
 <img src="/tumblr_files/tumblr_nm3aqjqnEp1teyfqto1_1280.jpg"/>

@@ -12,6 +12,8 @@ tags:
 - deep learning
 - probabilistic programming
 title: Introducing Variational Autoencoders (in Prose and Code)
+aliases:
+  - /2016/08/12/introducing-variational-autoencoders-in-prose-and.html
 ---
 
 <p>Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.</p>

@@ -6,6 +6,8 @@ feature: false
 post_type: Newsletter
 published: true
 title: 'Automated Machine Learning: Hype now, reality later?'
+aliases:
+  - /2018/08/29/automated-machine-learning-hype-now-reality-later.html
 ---
 
 [Previously in our newsletter](https://blog.fastforwardlabs.com/newsletters/2017-11-08-client.html), we had framed automated machine learning around four notions:

@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2018-09-05-182818-snorkel_workflow.png
 published: true
 title: 'Snorkel: Rapid Training Data Creation with Weak Supervision'
+aliases:
+  - /2018/09/28/snorkel-rapid-training-data-creation-with-weak-supervision.html
 ---
 
 Machine learning (and more specifically, deep learning) techniques are recognized for their ability to obtain high accuracy for 

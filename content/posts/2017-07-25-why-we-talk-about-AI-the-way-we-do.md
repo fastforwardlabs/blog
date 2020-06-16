@@ -6,6 +6,8 @@ feature: true
 preview_image: TBA
 published: false
 title: Why we talk about AI the way we do, and why we have to change it.
+aliases:
+  - /2017/07/25/why-we-talk-about-AI-the-way-we-do.html
 ---
 
 The public conversation about machine learning and AI happens at the extremes. AI is either awesome or scary. It writes [movie scripts](https://arstechnica.com/the-multiverse/2016/06/an-ai-wrote-this-movie-and-its-strangely-moving/), wins at [poker](http://www.sciencemag.org/news/2017/03/artificial-intelligence-goes-deep-beat-humans-poker) and [Go](https://techcrunch.com/2017/05/24/alphago-beats-planets-best-human-go-player-ke-jie/), and helps [Google cool its data centers](https://deepmind.com/blog/deepmind-ai-reduces-google-data-centre-cooling-bill-40/). Awesome! It will take our [jobs](http://www.eng.ox.ac.uk/about/news/new-study-shows-nearly-half-of-us-jobs-at-risk-of-computerisation) and robot investors will incite [wars for profits](http://fortune.com/2016/08/17/elon-musk-ai-fear-werner-herzog/). Scary!

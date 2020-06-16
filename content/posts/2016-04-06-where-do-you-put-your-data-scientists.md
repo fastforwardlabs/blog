@@ -12,6 +12,8 @@ tags:
 - data science
 - leadership
 title: Where Do You Put Your Data Scientists?
+aliases:
+  - /2016/04/06/where-do-you-put-your-data-scientists.html
 ---
 
 <figure data-orig-width="728" data-orig-height="315" class="tmblr-full"><img src="http://68.media.tumblr.com/84ee6a02c04f8869d9b14bc31170c5d8/tumblr_inline_o57xvwb9QO1ta78fg_540.png" alt="image" data-orig-width="728" data-orig-height="315"/></figure>

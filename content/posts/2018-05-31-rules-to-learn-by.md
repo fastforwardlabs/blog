@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2018-05-09-164638-55f9d8d8bd86ef1d008bac98_750_577.png
 published: true
 title: Rules to Learn By
+aliases:
+  - /2018/05/31/rules-to-learn-by.html
 ---
 
 Longtime readers of this newsletter know that we follow the Fairness, Accountability, and Transparency in Machine Learning conversation closely (see [here](https://fatconference.org/2018/index.html) and [here](https://www.fatml.org/)). These conversations address and attempt to mitigate the potential for technical systems to produce unfairness. Much of this unfairness arises from how algorithmic systems might perpetuate historical inequalities or otherwise produce discriminatory effects. This conversation is broader than could be encapsulated in any newsletter, but we want to point to some recommendations that have come out of this conversation to demonstrate how we think through the challenges of building models that don't learn or perpetuate bias. We embrace these challenges not just because of an overriding ethical commitment to build safely, but also because addressing these challenges helps us build things that work better than they otherwise might. 

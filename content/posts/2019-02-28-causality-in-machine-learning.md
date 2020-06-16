@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-03-12-191909-correlation.png
 published: true
 title: Causality in machine learning
+aliases:
+  - /2019/02/28/causality-in-machine-learning.html
 ---
 
 [Judea Pearl](https://en.wikipedia.org/wiki/Judea_Pearl), the inventor of [Bayesian networks](https://en.wikipedia.org/wiki/Bayesian_network), recently published a book called _[The Book of Why: The New Science of Cause and Effect](https://www.amazon.com/dp/B075CR9QBJ/)_. The book covers a great many things, including a detailed history of how the fields of causality and statistics have long been at odds, Pearl's own [_do-calculus_](https://www.inference.vc/untitled/) framework for teasing causal inferences from observational data, and why (in Pearl's view) the future of AI depends on causality. 

@@ -9,6 +9,8 @@ published: true
 redirect_from: /post/149140805148/giving-speech-a-voice-in-the-home
 tags: smart home,deep learning,connected home,data science,whitepaper
 title: Giving Speech a Voice in the Home
+aliases:
+  - /2016/08/18/giving-speech-a-voice-in-the-home.html
 ---
 
 <figure data-orig-width="701" data-orig-height="483" class="tmblr-full"><img src="http://68.media.tumblr.com/24baab55961a73824bb7c218d3fb3d52/tumblr_inline_oc4fofyCUx1ta78fg_540.png" alt="image" data-orig-width="701" data-orig-height="483"/></figure>

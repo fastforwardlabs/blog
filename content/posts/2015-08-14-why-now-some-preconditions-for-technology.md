@@ -10,6 +10,8 @@ tags:
 - gpu
 - whitepaper
 title: Why Now? Some Preconditions for Technology Innovations
+aliases:
+  - /2015/08/14/why-now-some-preconditions-for-technology.html
 ---
 
 <p>We like to hold fast to the myth of the individual creative genius as the source of the world’s most impactful scientific revolutions or disruptive innovations. But it’s consoling to recall how Isaac Newton consoled his rival Robert Hooke: “If I’ve seen further than others, it was by standing on the shoulders of giants.”</p><figure data-orig-width="583" data-orig-height="420" class="tmblr-full"><img src="http://68.media.tumblr.com/aedff218136a4dbddc112c09618503ae/tumblr_inline_nt365m6VoK1ta78fg_540.jpg" alt="image" data-orig-width="583" data-orig-height="420"/></figure>

@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-01-05-191115-FF09_Overview.png
 published: true
 title: The business case for federated learning
+aliases:
+  - /2018/12/28/the-business-case-for-federated-learning.html
 ---
 
 Last month, we released Federated Learning, the latest report and prototype from

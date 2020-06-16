@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2018-06-26-144942-Screen_Shot_2018_06_25_at_10_46_42_AM.png
 published: true
 title: Neural reinterpretations of movie trailers
+aliases:
+  - /2018/07/31/neural-reinterpretations-of-movie-trailers.html
 ---
 
 In his latest project, artist and coder Mario Klingemann uses a neural network to match archival movie footage with the content of recent movie trailers. He regularly posts the resulting “neural reinterpretations” on [his Twitter](https://twitter.com/quasimondo). The results are technically impressive. They’re also a fascinating view into how to explore the creative possibilities of a machine learning technique.

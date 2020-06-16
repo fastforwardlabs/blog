@@ -11,6 +11,8 @@ tags:
 - code
 - realtime data
 title: 'Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters'
+aliases:
+  - /2016/11/23/probabilistic-data-structure-showdown-cuckoo.html
 ---
 
 <p><figure data-orig-width="600" data-orig-height="241" class="tmblr-full"><img src="http://68.media.tumblr.com/02f8acc9218bd0faa09ab3c373629884/tumblr_inline_oh29g1UjZy1qcg73w_540.png" data-orig-width="600" data-orig-height="241"/></figure></p>

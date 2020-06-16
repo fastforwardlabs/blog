@@ -8,6 +8,8 @@ preview_image: /images/editor_uploads/2020-03-24-015853-Screen_Shot_2020_03_20_a
 published: false
 title: 4 Ways Machine Learning is Bringing the Fight to COVID-19 - and What You Can
   Do To Help
+aliases:
+  - /2020/03/23/4-ways-machine-learning-is-bringing-the-fight-to-covid19-and-what-you-can-do-to-help.html
 ---
 
 As the COVID-19 crisis continues to unfold, we're all watching the news with anxiety, uncertainty, and maybe even a little bit of dread. Instead of dwelling on the fearful, I want to focus on what's hopeful. In this article, I'll touch on how machine learning and data science are rising to the challenge. While it would be unrealistic to say that AI will save us from this crisis, it would be equally misguided to think that these techniques can't help at all. There are four big areas where machine learning can make a difference: prediction, diagnostics, cures, and knowledge extraction. Let's briefly examine each area, and then I'll tell you about a few ways that you can get involved, whether or not you have any machine learning experience! 

@@ -6,6 +6,8 @@ feature: true
 post_type: Whitepaper
 preview_image: /images/2017/03/fairness_and_justice_symbol.png
 title: 'FairML: Auditing Black-Box Predictive Models'
+aliases:
+  - /2017/03/09/fairml-auditing-black-box-predictive-models.html
 ---
 
 ![Fairness in ML](/images/2017/03/fairness_and_justice_symbol.png)

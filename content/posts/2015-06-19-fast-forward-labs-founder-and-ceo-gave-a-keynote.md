@@ -8,6 +8,8 @@ tags:
 - speech
 - mongodb
 title: MongoDB World Keynote
+aliases:
+  - /2015/06/19/fast-forward-labs-founder-and-ceo-gave-a-keynote.html
 ---
 
 <img src="/tumblr_files/tumblr_nq7ihwHn5R1teyfqto1_1280.png"/>

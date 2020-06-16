@@ -13,6 +13,8 @@ tags:
 - probabilistic programming
 title: Under the Hood of the Variational Autoencoder (in Prose and Code)
 popular: true
+aliases:
+  - /2016/08/22/under-the-hood-of-the-variational-autoencoder-in.html
 ---
 
 ##### The <a href="https://arxiv.org/abs/1312.6114">Variational</a> <a href="https://arxiv.org/abs/1401.4082">Autoencoder</a> (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In <a href="http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a> of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—<a href="http://shakirm.com/slides/DLSummerSchool_Aug2016_compress.pdf">“machines that imagine and reason.”</a>

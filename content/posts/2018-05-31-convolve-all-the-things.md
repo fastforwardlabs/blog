@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/04/CausalConv-1524689210501.jpg
 published: true
 title: Convolve all the things
+aliases:
+  - /2018/05/31/convolve-all-the-things.html
 ---
 
 While deep learning can be applied generally, much of the excitement around it has stemmed from significant breakthroughs in two main areas: computer vision and natural language processing. Practitioners have typically applied convolutional neural networks (CNNs) to spatial data (e.g. images) and recurrent neural networks (RNNs) to sequence data (e.g. text). However, a [recent research paper](https://arxiv.org/pdf/1803.01271.pdf) has shown that convolutional neural networks are not only capable of performing well on sequential data tasks, but they have inherent advantages over recurrent networks and may be a better default starting point.

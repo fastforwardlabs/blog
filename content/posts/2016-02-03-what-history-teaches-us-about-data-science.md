@@ -12,6 +12,8 @@ tags:
 - new york
 - history
 title: What History Teaches Us About Data Science
+aliases:
+  - /2016/02/03/what-history-teaches-us-about-data-science.html
 ---
 
 <figure data-orig-width="2966" data-orig-height="1979" class="tmblr-full"><img src="http://68.media.tumblr.com/98f5a3cef5a6fa19d9adebc7e2476ded/tumblr_inline_o1znwlckGY1ta78fg_540.jpg" alt="image" data-orig-width="2966" data-orig-height="1979"/></figure>

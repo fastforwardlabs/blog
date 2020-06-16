@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2017/10/Screen_Shot_2017_10_10_at_10-1507644713217.11
 published: true
 title: Bias Mitigation Using the Copyright Doctrine of Fair Use
+aliases:
+  - /2017/10/26/bias-mitigation-using-the-copyright-doctrine-of-fair-use.html
 ---
 
 Pirating a copyrighted song, video, or e-book to listen to the song, watch the movie, or read the book is an infringement of copyright (which can be severely fined). So how about pirating a song, video, or e-book to *train* machine learning models?

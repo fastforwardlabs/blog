@@ -6,6 +6,8 @@ author: Melanie
 author_link: https://www.linkedin.com/in/melanierbeck
 post_type: Notebook
 preview_image: /images/hugo/qa-workflow.png
+aliases:
+  - /2020/04/28/intro-to-automated-question-answering.html
 ---
 
 Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:

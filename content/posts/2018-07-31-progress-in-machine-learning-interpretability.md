@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/07/lime-1530894622923.png
 published: true
 title: Progress in machine learning interpretability
+aliases:
+  - /2018/07/31/progress-in-machine-learning-interpretability.html
 ---
 
 Our goal when we do research is to address capabilities and technologies that

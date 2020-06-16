@@ -7,6 +7,8 @@ post_type: Newsletter
 preview_image: /images/editor_uploads/2019-08-21-204110-robots_question.jpg
 published: true
 title: ' Is machine learning research moving in the right direction'
+aliases:
+  - /2019/08/28/is-machine-learning-research-moving-in-the-right-direction.html
 ---
 
 Research in machine learning has seen some of the biggest and brightest minds of our time -  and copious amounts of funding - funneled into the pursuit of better, safer, and more generalizable algorithms. As the field grows, there is vigorous debate around the direction that growth should take (for a less biased take, see [here](https://www.technologyreview.com/s/612768/we-analyzed-16625-papers-to-figure-out-where-ai-is-headed-next/)). This week, I give some background on the major algorithm types being researched, help frame aspects of the ongoing debate, and ultimately conclude that there is no single direction to build toward - but that through collaboration, we’ll see advances on all fronts. 

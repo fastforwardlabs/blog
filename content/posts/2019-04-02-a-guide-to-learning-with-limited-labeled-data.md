@@ -6,6 +6,8 @@ post_type: Featured post
 preview_image: /images/2019/03/fig_15-1553784931001.png
 published: true
 title: A Guide to Learning with Limited Labeled Data
+aliases:
+  - /2019/04/02/a-guide-to-learning-with-limited-labeled-data.html
 ---
 
 We are excited to release _Learning with Limited Labeled Data_, the latest report and prototype from Cloudera Fast Forward Labs.

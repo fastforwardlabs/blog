@@ -9,6 +9,8 @@ tags:
 - image recognition
 - whitepaper
 title: 'On Stirling Engines and Orchids: A Prelude to Deep Learning'
+aliases:
+  - /2015/08/07/on-stirling-engines-and-orchids-a-prelude-to-deep.html
 ---
 
 <p>Today’s post is inspired by a slow-motion recording we captured of a Stirling engine that Ryan, Fast Forward’s General Counsel, just so happened to have lying around our New York City offices. For the non-mechanics among us, a <a href="https://en.wikipedia.org/wiki/Stirling_engine">Stirling engine</a> is a heat engine that operates by cyclic compression and expansion of air and other gas at different temperatures; the temperature differential translates heat into mechanical work. The slowmo in the video renders a hypnotic locomotive sound that differs greatly from the mechanic buzz of realtime.</p>

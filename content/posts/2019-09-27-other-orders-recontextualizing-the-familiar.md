@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-09-18-153746-Screen_Shot_2019_09_16_at_2_13_44_PM.png
 published: true
 title: 'Other Orders: Re-contextualizing the Familiar'
+aliases:
+  - /2019/09/27/other-orders-recontextualizing-the-familiar.html
 ---
 
 ![](/images/editor_uploads/2019-09-18-153437-Screen_Shot_2019_09_06_at_3_12_08_PM.png)

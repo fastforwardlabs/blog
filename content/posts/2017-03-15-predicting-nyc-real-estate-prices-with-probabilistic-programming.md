@@ -5,6 +5,8 @@ date: "2017-03-15T00:00:00Z"
 feature: false
 preview_image: /images/2017/05/price_mode.gif
 title: Predicting NYC Real Estate Prices with Probabilistic Programming
+aliases:
+  - /2017/03/15/predicting-nyc-real-estate-prices-with-probabilistic-programming.html
 ---
 
 [Probabilistic Real Estate](http://fastforwardlabs.github.io/pre) is a prototype we built to explore the New York City real estate market. As explained in a [previous post](http://blog.fastforwardlabs.com/2017/01/18/new-research-on-probabilistic-programming.html), we used probabilistic programming's ability to incorporate hierarchical models to make predictions across neighborhoods with sparse amounts of pricing data. In this post, we'll focus on how we designed the prototype to capitalize on another strength of probabilistic programming: the ability to generate probability distributions.

@@ -6,6 +6,8 @@ feature: true
 preview_image: /images/2017/09/gradient-1504809772766.jpg
 published: true
 title: To the Future...
+aliases:
+  - /2017/09/07/to-the-future.html
 ---
 
 I started Fast Forward Labs more than three years ago with the vision of creating a new mechanism for applied research, helping businesses large and small understand how recently possible machine learning and applied artificial intelligence technologies could be useful for solving real business problems.

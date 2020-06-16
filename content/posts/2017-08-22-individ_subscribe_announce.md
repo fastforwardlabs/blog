@@ -4,6 +4,8 @@ feature: false
 preview_image: /images/editor_uploads/2018-02-08-170315-ff_logo_white_bg.png
 published: false
 title: Individual User Subscriptions
+aliases:
+  - /2017/08/22/individ_subscribe_announce.html
 ---
 
 ****Announcing Individual User Subscriptions****

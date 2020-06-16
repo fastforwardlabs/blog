@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2019/05/markus_spiske_109588_unsplash-1556815976857.jpg
 published: true
 title: Rise of the Low-Code ML toolboxes
+aliases:
+  - /2019/05/29/rise-of-the-lowcode-ml-toolboxes.html
 ---
 
 We've written previously about the rapid growth and adoption of ML tools in the [AutoML](https://blog.fastforwardlabs.com/2017/11/30/the-promise-of-automated-machine-learning-automl.html) family.  Specifically, we broke down AutoML into 4 categories:

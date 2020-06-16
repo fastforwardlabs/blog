@@ -8,6 +8,8 @@ interview_with_link: http://github.com/mynameisfiber/
 preview_image: /images/2017/07/output_30_0.png
 published: true
 title: Probabilistic programming from scratch
+aliases:
+  - /2017/07/05/probabilistic-programming-from-scratch.html
 ---
 
 ##### This article contains highlights from a series of [three interactive video tutorials](https://www.safaribooksonline.com/search/?query=%22Probabilistic%20Programming%20from%20Scratch%22&extended_publisher_data=true&highlight=true&is_academic_institution_account=false&source=user&include_assessments=false&include_courses=true&include_orioles=true&include_playlists=true&publishers=O%27Reilly%20Media%2C%20Inc.&field=title&sort=relevance&utm_source=oreilly&utm_medium=newsite&utm_campaign=probabilistic-programming-from-scratch-top-cta-orioles-link) on probabilistic programming from scratch published on O'Reilly Safari (login required).

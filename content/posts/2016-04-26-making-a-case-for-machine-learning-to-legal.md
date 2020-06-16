@@ -12,6 +12,8 @@ tags:
 - whitepaper
 - language processing
 title: Making a Case for Machine Learning to Legal Departments
+aliases:
+  - /2016/04/26/making-a-case-for-machine-learning-to-legal.html
 ---
 
 <figure data-orig-width="550" data-orig-height="394" class="tmblr-full"><img src="http://68.media.tumblr.com/ebfd0ddb6284c50fde7a72b87f40462d/tumblr_inline_o69786Qw561ta78fg_540.jpg" alt="image" data-orig-width="550" data-orig-height="394"/></figure>

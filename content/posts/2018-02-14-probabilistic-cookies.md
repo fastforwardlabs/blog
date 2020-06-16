@@ -7,6 +7,8 @@ post_type: Fast Forward Food Labs
 preview_image: /images/editor_uploads/2018-02-15-204722-IMG_20180208_091928_1200.jpg
 published: true
 title: Probabilistic Cookies!
+aliases:
+  - /2018/02/14/probabilistic-cookies.html
 ---
 
 In the spirit of Valentine's Day, we at Fast Forward Labs thought it would be fun to bake cookies for our sweethearts. Being DIY nerds, we thought we'd math it up a bit.

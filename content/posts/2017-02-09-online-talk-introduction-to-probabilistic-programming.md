@@ -6,6 +6,8 @@ preview_image: http://fastforwardlabs.github.io/report_images/ff05/2-08.png
 published: true
 redirect_from: /post/156046009163/new-research-on-probabilistic-programming
 title: 'Online Talk: Introduction to Probabilistic Programming'
+aliases:
+  - /2017/02/09/online-talk-introduction-to-probabilistic-programming.html
 ---
 
 On Tuesday, we hosted an online talk with the [Stan Group](http://stan.fit/) discussing why probabilistic programming is generating so much excitement in the fields of machine learning and statistics. In essence, probabilistic programming is a powerful tool to help organizations make rational decisions under uncertainty.

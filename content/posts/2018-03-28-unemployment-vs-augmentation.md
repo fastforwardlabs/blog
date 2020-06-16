@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2018/02/1_ruUDqwD4sGZOhIkeK2zUYQ-1519759204276.png
 published: true
 title: Unemployment vs. Augmentation
+aliases:
+  - /2018/03/28/unemployment-vs-augmentation.html
 ---
 
 In the ongoing debates around whether or not robots are going to take our jobs, listening to those who have a real stake in the technology is critical, and often offers important insights for how we build new technologies, as well as how we talk about what we build. Take, for example, this [blog post](https://becominghuman.ai/radiologists-as-knowledge-experts-in-a-world-of-artificial-intelligence-summary-of-radiology-ec63a7002329) by Judy Gichoya about the Radiology Society of North America's annual meeting last December, which provides a useful window into the concerns radiologists have about the ways automation will affect their profession, and how those concerns could be taken into account when building capabilities that impact their domain of expertise. Radiologists are justified in seeing their jobs as directly within the sights of automation, even if the tech is not there yet. (Kaggle's [Data Science Bowl 2017](https://www.kaggle.com/c/data-science-bowl-2017) offered a $1 million prize for submissions that could best detect lung cancer from CT scans, a problem that is squarely within the existing job function of radiologists around the world.)  But although the risk is real, the idea that any algorithm will replace all radiologists overnight can be easily dismissed. There is more to radiology than just reading film, questions of liability and responsibility are far from being solved, and image classification tools are not nearly accurate or generalizable enough yet for wide scale deployment.

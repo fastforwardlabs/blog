@@ -5,6 +5,8 @@ post_type: Newsletter
 preview_image: /images/2017/10/Screen_Shot_2017_10_09_at_9-1507556105313.33
 published: true
 title: Neuroscience-inspired AI
+aliases:
+  - /2017/10/26/neuroscienceinspired-ai.html
 ---
 
 Pioneers in artificial intelligence (AI) have worked across multiple related fields, including computer science, AI, neuroscience, and psychology - but as each of these areas of research have grown in complexity and disciplinary boundaries have solidified, collaboration has become less commonplace. In [*Neuroscience-Inspired Artificial Intelligence*](https://www.ncbi.nlm.nih.gov/pubmed/28728020), the co-founder of Google DeepMind [Demis Hassabis](https://en.wikipedia.org/wiki/Demis_Hassabis), alongside other renowned neuroscientists, argues to revive collaborative efforts.

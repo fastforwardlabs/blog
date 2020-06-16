@@ -8,6 +8,8 @@ preview_image: /images/2017/03/development-workflows-1.jpg
 published: true
 redirect_from: /post/156046009163/new-research-on-probabilistic-programming
 title: 'Free eBook: Development Workflows for Data Scientists'
+aliases:
+  - /2017/03/31/free-ebook-development-workflows-for-data-scientists.html
 ---
 
 ![Cover image from Development Workflows for Data Scientists eBook](/images/2017/03/development-workflows-1.jpg)

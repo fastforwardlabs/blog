@@ -7,6 +7,8 @@ published: false
 redirect_from: /post/137351428898/demystifying-machine-intelligence
 tags: interview,artificial intelligence,data science,language generation
 title: Demystifying Machine Intelligence
+aliases:
+  - /2016/01/15/demystifying-machine-intelligence.html
 ---
 
 <p>We recently co-hosted an event at <a href="http://www.1871.com">1871 </a>in Chicago with Kris Hammond, Chief Scientist at Narrative Science. Called “Technology Explained,” the event helped attendees understand why machine intelligence is succeeding today and how businesses can leverage new technologies to make better decisions and optimize efficiency. Some highlights: </p>

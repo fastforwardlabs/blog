@@ -6,6 +6,8 @@ post_type: Featured post
 preview_image: /images/editor_uploads/2019-03-21-201701-AL_loop.png
 published: true
 title: Learning with Limited Labeled Data
+aliases:
+  - /2019/03/20/learning-with-limited-labeled-data.html
 ---
 
 In recent years, machine learning technologies - especially deep learning - have made breakthroughs which have turned science fiction into reality. Autonomous cars are almost possible, and machines can comprehend language. These technical advances are unprecedented, but they hinge on the availability of vast amounts of data. 

@@ -12,6 +12,8 @@ tags:
 - overkill
 - office
 title: Coffee Thermoregulation
+aliases:
+  - /2015/06/04/coffee-thermoregulation.html
 ---
 
 We take coffee pretty seriously here at Fast Forward Labs.  In addition to our machine learning research, we have also explored both hot and cold coffee brewing technologies.

@@ -5,6 +5,8 @@ feature: false
 preview_image: /images/2019/07/snorkel_overview-1562618731259.png
 published: true
 title: Taking Snorkel for a spin
+aliases:
+  - /2019/07/08/snorkel_final.html
 ---
 
 Active learning, which we explored in our [report on _Learning with Limited

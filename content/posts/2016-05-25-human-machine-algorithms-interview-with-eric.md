@@ -14,6 +14,8 @@ tags:
 - fashion technology
 - recommendation system
 title: 'Human-Machine Algorithms: Interview with Eric Colson'
+aliases:
+  - /2016/05/25/human-machine-algorithms-interview-with-eric.html
 ---
 
 <figure data-orig-width="780" data-orig-height="396" class="tmblr-full"><img src="http://68.media.tumblr.com/dd7cacb29c66b0d8ac385f37fde89d2d/tumblr_inline_o7qmpkkMD11qcg73w_540.png" alt="image" data-orig-width="780" data-orig-height="396"/></figure>

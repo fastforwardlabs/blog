@@ -7,6 +7,8 @@ post_type: post
 preview_image: /images/2020/01/manual_graph-1579272546736.png
 published: true
 title: 'A Symbiotic Relationship: Knowledge Graphs & Machine Learning'
+aliases:
+  - /2020/01/29/a-symbiotic-relationship-knowledge-graphs-and-machine-learning.html
 ---
 
 For the past decade, humans have unknowingly come to depend on Knowledge Graphs on a daily basis. From personalized shopping recommendations to intelligent assistants and user-friendly search results, many of these accepted (and expected) features have come to fruition through the exploitation of knowledge graphs. Despite their longstanding conceptual and practical existence, knowledge graphs were just added to the *Gartner Hype Cycle for Emerging Technologies* in 2018 and have continued to garner attention as an area of active research and development for their distinct ability to represent real-world relationships.

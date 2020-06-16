@@ -9,6 +9,8 @@ tags:
 - scifri
 - sciencefriday
 title: Hilary on Science Friday
+aliases:
+  - /2015/06/16/last-friday-hilary-joined-ira-flatow-on-science.html
 ---
 
 <img src="/tumblr_files/tumblr_nq1krz1wI61teyfqto1_1280.jpg"/>

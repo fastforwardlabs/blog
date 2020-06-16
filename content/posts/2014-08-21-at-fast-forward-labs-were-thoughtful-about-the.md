@@ -7,6 +7,8 @@ tags:
 - office
 - design
 title: We Built a Table
+aliases:
+  - /2014/08/21/at-fast-forward-labs-were-thoughtful-about-the.html
 ---
 
 <img src="/tumblr_files/tumblr_nao8r2wCGP1teyfqto5_1280.jpg"/>

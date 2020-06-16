@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2018/10/meta_learning-1538505489954.png
 published: true
 title: Learning to learn in a model-agnostic way
+aliases:
+  - /2018/10/29/learning-to-learn-in-a-modelagnostic-way.html
 ---
 
 As humans, we can quickly adapt our actions in new situations, be it recognizing objects from a few examples, or learning new skills and

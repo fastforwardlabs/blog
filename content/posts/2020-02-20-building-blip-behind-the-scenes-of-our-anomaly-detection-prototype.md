@@ -7,6 +7,8 @@ post_type: post
 preview_image: /images/editor_uploads/2020-02-20-210814-blip_three_sections.png
 published: true
 title: 'Building Blip: behind the scenes of our anomaly detection prototype'
+aliases:
+  - /2020/02/20/building-blip-behind-the-scenes-of-our-anomaly-detection-prototype.html
 ---
 
 ![A screenshot of the Blip prototype.](/images/editor_uploads/2020-02-20-210127-blip.gif)

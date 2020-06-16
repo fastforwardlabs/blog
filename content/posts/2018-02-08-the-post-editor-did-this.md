@@ -4,6 +4,8 @@ feature: false
 preview_image: /images/editor_uploads/2018-02-08-170315-ff_logo_white_bg.png
 published: false
 title: The post editor edited this
+aliases:
+  - /2018/02/08/the-post-editor-did-this.html
 ---
 
 Fast Forward Labs is a machine intelligence research company. Our unique applied research program helps organizations innovate with data science and machine learning.

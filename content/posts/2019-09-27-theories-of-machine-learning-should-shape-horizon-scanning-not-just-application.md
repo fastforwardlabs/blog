@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/editor_uploads/2019-10-03-190806-kristin_charleton_RvA4hzyaW7k_unsplash.jpg
 published: true
 title: Theories of (machine) learning should shape horizon scanning - not just application
+aliases:
+  - /2019/09/27/theories-of-machine-learning-should-shape-horizon-scanning-not-just-application.html
 ---
 
 ![](/images/editor_uploads/2019-10-03-190806-kristin_charleton_RvA4hzyaW7k_unsplash.jpg)

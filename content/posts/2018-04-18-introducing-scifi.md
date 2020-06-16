@@ -5,6 +5,8 @@ date: "2018-04-18T00:00:00Z"
 feature: false
 preview_image: /images/editor_uploads/2018-04-19-185324-scifi_crop.png
 title: Introducing SciFi
+aliases:
+  - /2018/04/18/introducing-scifi.html
 ---
 
 Today we are launching a [mini-site featuring our collection of short stories inspired by new developments in machine learning](https://scifi.fastforwardlabs.com/).   Beginning with our fourth report, we started including a science-fiction story along with the technical and strategic overviews that are the bulk of each report. Using these stories, we can look at the technologies we profile from a different angle and explore their cultural implications.

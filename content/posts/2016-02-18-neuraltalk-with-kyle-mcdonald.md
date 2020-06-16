@@ -14,6 +14,8 @@ tags:
 - deep learning
 - art
 title: NeuralTalk with Kyle McDonald
+aliases:
+  - /2016/02/18/neuraltalk-with-kyle-mcdonald.html
 ---
 
 <figure data-orig-width="640" data-orig-height="427" class="tmblr-full"><img src="http://68.media.tumblr.com/806e99a04e9f647a198d0d887942562b/tumblr_inline_o2pgqgwhP01ta78fg_540.jpg" alt="image" data-orig-width="640" data-orig-height="427"/></figure>

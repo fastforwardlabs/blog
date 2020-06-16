@@ -7,6 +7,8 @@ preview_image: /images/editor_uploads/2018-04-11-175944-02_07.png
 published: true
 title: PyTorch for Recommenders 101
 popular: true
+aliases:
+  - /2018/04/10/pytorch-for-recommenders-101.html
 ---
 
 Recommenders, generally associated with e-commerce, sift though a huge inventory

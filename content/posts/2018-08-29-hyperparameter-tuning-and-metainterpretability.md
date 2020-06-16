@@ -7,6 +7,8 @@ post_type: newsletter
 preview_image: /images/2018/07/Screen_Shot_2018_07_31_at_11_01_41_AM-1533049344437.png
 published: true
 title: 'Hyperparameter Tuning and Meta-Interpretability: Track All Your Experiments!'
+aliases:
+  - /2018/08/29/hyperparameter-tuning-and-metainterpretability.html
 ---
 
 From random forest to neural networks, many modern machine learning algorithms involve a number of parameters that have to be fixed before training the
