@@ -1,3 +1,3 @@
 # Cloudera Fast Forware Blog
 
-Our new blog. Documentation coming.
+Our new blog. Built using Hugo. Documentation coming.
