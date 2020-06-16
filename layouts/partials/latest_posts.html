@@ -1,4 +1,4 @@
-{{ $pages := .Site.RegularPages.ByDate.Reverse }}
+{{ $pages := where .Site.RegularPages.ByDate.Reverse "Section" "posts" }}
 
 <h2 class="clear">Latest posts</h2>
 <div class="spacer"></div>
