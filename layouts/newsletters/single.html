@@ -1,25 +1,24 @@
-{{ define "main" }}
-<div class="container">
-  <div class="hspacer"></div>
-  <div>
-    <h3 class="clear"><a href="/">Blog</a></h3>
-  </div>
-  <div class="spacer"></div>
-  <h5 style="margin-bottom: 0;">
-    Newsletter
-  </h5>
-  <h1>{{ .Date.Format "January 2006" }} Newsletter</h1>
-  <div id="newsletter-content">
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, porotypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="{{.Permalink}}">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
     {{ .Content }}
   </div>
-</div>
 
-<div class="spacer"></div>
-<div class="spacer"></div>
 
-{{ partial "about.html" }}
-
-<div class="spacer"></div>
-<div class="spacer"></div>
-
-{{ end }}
