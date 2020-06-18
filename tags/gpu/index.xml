@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 14 Aug 2015 18:57:31 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/gpu/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/gpu/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Why Now? Some Preconditions for Technology Innovations</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/08/14/why-now-some-preconditions-for-technology-innovations.html</link>
+      
       <pubDate>Fri, 14 Aug 2015 18:57:31 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/08/14/why-now-some-preconditions-for-technology-innovations.html</guid>

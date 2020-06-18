@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 13 Dec 2016 13:02:12 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/aidata-sciencedata-driveninnovation/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/aidata-sciencedata-driveninnovation/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hilary Mason at Data Driven NYC</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/12/13/hilary-mason-at-data-driven-nyc.html</link>
+      
       <pubDate>Tue, 13 Dec 2016 13:02:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/12/13/hilary-mason-at-data-driven-nyc.html</guid>

@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 18 Feb 2016 15:09:51 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/art/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/art/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>NeuralTalk with Kyle McDonald</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</link>
+      
       <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</guid>
@@ -24,7 +26,9 @@
     
     <item>
       <title>Machines and Metaphors</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</link>
+      
       <pubDate>Tue, 16 Feb 2016 16:35:11 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</guid>

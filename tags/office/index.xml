@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Jun 2016 13:53:20 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/office/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/office/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome, Friederike!</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</link>
+      
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Coffee Thermoregulation</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/06/04/coffee-thermoregulation.html</link>
+      
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/06/04/coffee-thermoregulation.html</guid>
@@ -32,7 +36,9 @@ Research reveals that no one wants to drink a mug of hot brew once it settles to
     
     <item>
       <title>We Built a Table</title>
+       
       <link>http://blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</link>
+      
       <pubDate>Thu, 21 Aug 2014 19:28:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</guid>

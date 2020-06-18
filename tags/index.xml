@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 13 Dec 2016 13:02:12 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ai,data science,data driven,innovation</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/aidata-sciencedata-driveninnovation.html</link>
+      
       <pubDate>Tue, 13 Dec 2016 13:02:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/aidata-sciencedata-driveninnovation.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>data science</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/data-science.html</link>
+      
       <pubDate>Thu, 08 Dec 2016 17:22:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/data-science.html</guid>
@@ -31,7 +35,9 @@
     
     <item>
       <title>data visualization</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/data-visualization.html</link>
+      
       <pubDate>Thu, 08 Dec 2016 17:22:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/data-visualization.html</guid>
@@ -40,7 +46,9 @@
     
     <item>
       <title>dimensionality</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/dimensionality.html</link>
+      
       <pubDate>Thu, 08 Dec 2016 17:22:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/dimensionality.html</guid>
@@ -49,7 +57,9 @@
     
     <item>
       <title>t-sne</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/t-sne.html</link>
+      
       <pubDate>Thu, 08 Dec 2016 17:22:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/t-sne.html</guid>
@@ -58,7 +68,9 @@
     
     <item>
       <title>code</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/code.html</link>
+      
       <pubDate>Wed, 23 Nov 2016 18:36:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/code.html</guid>
@@ -67,7 +79,9 @@
     
     <item>
       <title>realtime data</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/realtime-data.html</link>
+      
       <pubDate>Wed, 23 Nov 2016 18:36:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/realtime-data.html</guid>
@@ -76,7 +90,9 @@
     
     <item>
       <title>deep learning</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/deep-learning.html</link>
+      
       <pubDate>Fri, 26 Aug 2016 17:43:24 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/deep-learning.html</guid>
@@ -85,7 +101,9 @@
     
     <item>
       <title>natural language processing</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/natural-language-processing.html</link>
+      
       <pubDate>Thu, 25 Aug 2016 17:24:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/natural-language-processing.html</guid>
@@ -94,7 +112,9 @@
     
     <item>
       <title>recurrent neural network</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/recurrent-neural-network.html</link>
+      
       <pubDate>Thu, 25 Aug 2016 17:24:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/recurrent-neural-network.html</guid>
@@ -103,7 +123,9 @@
     
     <item>
       <title>summarization</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/summarization.html</link>
+      
       <pubDate>Thu, 25 Aug 2016 17:24:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/summarization.html</guid>
@@ -112,7 +134,9 @@
     
     <item>
       <title>hedge funds</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/hedge-funds.html</link>
+      
       <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/hedge-funds.html</guid>
@@ -121,7 +145,9 @@
     
     <item>
       <title>interview</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/interview.html</link>
+      
       <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/interview.html</guid>
@@ -130,7 +156,9 @@
     
     <item>
       <title>machine learning</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/machine-learning.html</link>
+      
       <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/machine-learning.html</guid>
@@ -139,7 +167,9 @@
     
     <item>
       <title>satellite data</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/satellite-data.html</link>
+      
       <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/satellite-data.html</guid>
@@ -148,7 +178,9 @@
     
     <item>
       <title>probabilistic programming</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/probabilistic-programming.html</link>
+      
       <pubDate>Mon, 22 Aug 2016 18:02:08 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/probabilistic-programming.html</guid>
@@ -157,7 +189,9 @@
     
     <item>
       <title>smart home,deep learning,connected home,data science,whitepaper</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/smart-homedeep-learningconnected-homedata-sciencewhitepaper.html</link>
+      
       <pubDate>Thu, 18 Aug 2016 16:09:29 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/smart-homedeep-learningconnected-homedata-sciencewhitepaper.html</guid>
@@ -166,7 +200,9 @@
     
     <item>
       <title>books</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/books.html</link>
+      
       <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/books.html</guid>
@@ -175,7 +211,9 @@
     
     <item>
       <title>summer reading</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/summer-reading.html</link>
+      
       <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/summer-reading.html</guid>
@@ -184,7 +222,9 @@
     
     <item>
       <title>announcement,deep learning,legal hackers,machine learning</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/announcementdeep-learninglegal-hackersmachine-learning.html</link>
+      
       <pubDate>Mon, 11 Jul 2016 12:46:23 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/announcementdeep-learninglegal-hackersmachine-learning.html</guid>
@@ -193,7 +233,9 @@
     
     <item>
       <title>artificial intelligence</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/artificial-intelligence.html</link>
+      
       <pubDate>Fri, 08 Jul 2016 17:29:52 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/artificial-intelligence.html</guid>
@@ -202,7 +244,9 @@
     
     <item>
       <title>policy</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/policy.html</link>
+      
       <pubDate>Fri, 08 Jul 2016 17:29:52 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/policy.html</guid>
@@ -211,7 +255,9 @@
     
     <item>
       <title>white house</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/white-house.html</link>
+      
       <pubDate>Fri, 08 Jul 2016 17:29:52 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/white-house.html</guid>
@@ -220,7 +266,9 @@
     
     <item>
       <title>machine listening</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/machine-listening.html</link>
+      
       <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/machine-listening.html</guid>
@@ -229,7 +277,9 @@
     
     <item>
       <title>music technology</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/music-technology.html</link>
+      
       <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/music-technology.html</guid>
@@ -238,7 +288,9 @@
     
     <item>
       <title>announcement</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/announcement.html</link>
+      
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/announcement.html</guid>
@@ -247,7 +299,9 @@
     
     <item>
       <title>office</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/office.html</link>
+      
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/office.html</guid>
@@ -256,7 +310,9 @@
     
     <item>
       <title>language processing</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/language-processing.html</link>
+      
       <pubDate>Fri, 27 May 2016 17:16:23 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/language-processing.html</guid>
@@ -265,7 +321,9 @@
     
     <item>
       <title>webinar</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/webinar.html</link>
+      
       <pubDate>Fri, 27 May 2016 17:16:23 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/webinar.html</guid>
@@ -274,7 +332,9 @@
     
     <item>
       <title>fashion tech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fashion-tech.html</link>
+      
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fashion-tech.html</guid>
@@ -283,7 +343,9 @@
     
     <item>
       <title>fashion technology</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fashion-technology.html</link>
+      
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fashion-technology.html</guid>
@@ -292,7 +354,9 @@
     
     <item>
       <title>recommendation system</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/recommendation-system.html</link>
+      
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/recommendation-system.html</guid>
@@ -301,7 +365,9 @@
     
     <item>
       <title>whitepaper</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/whitepaper.html</link>
+      
       <pubDate>Mon, 23 May 2016 17:09:13 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/whitepaper.html</guid>
@@ -310,7 +376,9 @@
     
     <item>
       <title>webinar,announcement,language processing,deep learning</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/webinarannouncementlanguage-processingdeep-learning.html</link>
+      
       <pubDate>Thu, 12 May 2016 07:36:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/webinarannouncementlanguage-processingdeep-learning.html</guid>
@@ -319,7 +387,9 @@
     
     <item>
       <title>anomaly detection</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/anomaly-detection.html</link>
+      
       <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/anomaly-detection.html</guid>
@@ -328,7 +398,9 @@
     
     <item>
       <title>ediscovery</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/ediscovery.html</link>
+      
       <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/ediscovery.html</guid>
@@ -337,7 +409,9 @@
     
     <item>
       <title>active learning</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/active-learning.html</link>
+      
       <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/active-learning.html</guid>
@@ -346,7 +420,9 @@
     
     <item>
       <title>legal tech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/legal-tech.html</link>
+      
       <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/legal-tech.html</guid>
@@ -355,7 +431,9 @@
     
     <item>
       <title>product</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/product.html</link>
+      
       <pubDate>Thu, 21 Apr 2016 19:38:37 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/product.html</guid>
@@ -364,7 +442,9 @@
     
     <item>
       <title>event</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/event.html</link>
+      
       <pubDate>Fri, 15 Apr 2016 18:07:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/event.html</guid>
@@ -373,7 +453,9 @@
     
     <item>
       <title>announcement,language processing,press,product</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/announcementlanguage-processingpressproduct.html</link>
+      
       <pubDate>Mon, 11 Apr 2016 11:25:26 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/announcementlanguage-processingpressproduct.html</guid>
@@ -382,7 +464,9 @@
     
     <item>
       <title>annoucement</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/annoucement.html</link>
+      
       <pubDate>Wed, 06 Apr 2016 15:41:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/annoucement.html</guid>
@@ -391,7 +475,9 @@
     
     <item>
       <title>leadership</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/leadership.html</link>
+      
       <pubDate>Wed, 06 Apr 2016 15:41:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/leadership.html</guid>
@@ -400,7 +486,9 @@
     
     <item>
       <title>investors</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/investors.html</link>
+      
       <pubDate>Wed, 30 Mar 2016 15:00:03 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/investors.html</guid>
@@ -409,7 +497,9 @@
     
     <item>
       <title>announcement,press,data science,data culture,event</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/announcementpressdata-sciencedata-cultureevent.html</link>
+      
       <pubDate>Mon, 28 Mar 2016 16:26:11 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/announcementpressdata-sciencedata-cultureevent.html</guid>
@@ -418,7 +508,9 @@
     
     <item>
       <title>design</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/design.html</link>
+      
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/design.html</guid>
@@ -427,7 +519,9 @@
     
     <item>
       <title>history</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/history.html</link>
+      
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/history.html</guid>
@@ -436,7 +530,9 @@
     
     <item>
       <title>hello world</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/hello-world.html</link>
+      
       <pubDate>Wed, 24 Feb 2016 18:58:10 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/hello-world.html</guid>
@@ -445,7 +541,9 @@
     
     <item>
       <title>art</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/art.html</link>
+      
       <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/art.html</guid>
@@ -454,7 +552,9 @@
     
     <item>
       <title>new york</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/new-york.html</link>
+      
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/new-york.html</guid>
@@ -463,7 +563,9 @@
     
     <item>
       <title>press</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/press.html</link>
+      
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/press.html</guid>
@@ -472,7 +574,9 @@
     
     <item>
       <title>ethics</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/ethics.html</link>
+      
       <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/ethics.html</guid>
@@ -481,7 +585,9 @@
     
     <item>
       <title>filter bubble</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/filter-bubble.html</link>
+      
       <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/filter-bubble.html</guid>
@@ -490,7 +596,9 @@
     
     <item>
       <title>personalization</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/personalization.html</link>
+      
       <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/personalization.html</guid>
@@ -499,7 +607,9 @@
     
     <item>
       <title>announcement,language generation</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/announcementlanguage-generation.html</link>
+      
       <pubDate>Tue, 12 Jan 2016 13:11:44 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/announcementlanguage-generation.html</guid>
@@ -508,7 +618,9 @@
     
     <item>
       <title>fastforwardlabs</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fastforwardlabs.html</link>
+      
       <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fastforwardlabs.html</guid>
@@ -517,7 +629,9 @@
     
     <item>
       <title>holidays</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/holidays.html</link>
+      
       <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/holidays.html</guid>
@@ -526,7 +640,9 @@
     
     <item>
       <title>papers</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/papers.html</link>
+      
       <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/papers.html</guid>
@@ -535,7 +651,9 @@
     
     <item>
       <title>interview,podcast,data science</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/interviewpodcastdata-science.html</link>
+      
       <pubDate>Tue, 15 Dec 2015 16:15:34 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/interviewpodcastdata-science.html</guid>
@@ -544,7 +662,9 @@
     
     <item>
       <title>fashtech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fashtech.html</link>
+      
       <pubDate>Wed, 09 Dec 2015 17:44:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fashtech.html</guid>
@@ -553,7 +673,9 @@
     
     <item>
       <title>retailtech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/retailtech.html</link>
+      
       <pubDate>Wed, 09 Dec 2015 17:44:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/retailtech.html</guid>
@@ -562,7 +684,9 @@
     
     <item>
       <title>datascience</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/datascience.html</link>
+      
       <pubDate>Tue, 17 Nov 2015 16:35:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/datascience.html</guid>
@@ -571,7 +695,9 @@
     
     <item>
       <title>imagenet</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/imagenet.html</link>
+      
       <pubDate>Tue, 17 Nov 2015 16:35:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/imagenet.html</guid>
@@ -580,7 +706,9 @@
     
     <item>
       <title>1871chicago</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/1871chicago.html</link>
+      
       <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/1871chicago.html</guid>
@@ -589,7 +717,9 @@
     
     <item>
       <title>ai</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/ai.html</link>
+      
       <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/ai.html</guid>
@@ -598,7 +728,9 @@
     
     <item>
       <title>innovation</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/innovation.html</link>
+      
       <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/innovation.html</guid>
@@ -607,7 +739,9 @@
     
     <item>
       <title>caffe</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/caffe.html</link>
+      
       <pubDate>Mon, 26 Oct 2015 16:20:07 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/caffe.html</guid>
@@ -616,7 +750,9 @@
     
     <item>
       <title>googlenet</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/googlenet.html</link>
+      
       <pubDate>Mon, 26 Oct 2015 16:20:07 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/googlenet.html</guid>
@@ -625,7 +761,9 @@
     
     <item>
       <title>helloworld</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/helloworld.html</link>
+      
       <pubDate>Mon, 26 Oct 2015 16:20:07 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/helloworld.html</guid>
@@ -634,7 +772,9 @@
     
     <item>
       <title>neural networks</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/neural-networks.html</link>
+      
       <pubDate>Mon, 26 Oct 2015 16:20:07 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/neural-networks.html</guid>
@@ -643,7 +783,9 @@
     
     <item>
       <title>ghc15</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/ghc15.html</link>
+      
       <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/ghc15.html</guid>
@@ -652,7 +794,9 @@
     
     <item>
       <title>ghc2015</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/ghc2015.html</link>
+      
       <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/ghc2015.html</guid>
@@ -661,7 +805,9 @@
     
     <item>
       <title>paradigmshift</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/paradigmshift.html</link>
+      
       <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/paradigmshift.html</guid>
@@ -670,7 +816,9 @@
     
     <item>
       <title>diversity</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/diversity.html</link>
+      
       <pubDate>Tue, 13 Oct 2015 20:23:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/diversity.html</guid>
@@ -679,7 +827,9 @@
     
     <item>
       <title>grace hopper</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/grace-hopper.html</link>
+      
       <pubDate>Tue, 13 Oct 2015 20:23:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/grace-hopper.html</guid>
@@ -688,7 +838,9 @@
     
     <item>
       <title>keynote</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/keynote.html</link>
+      
       <pubDate>Tue, 13 Oct 2015 20:23:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/keynote.html</guid>
@@ -697,7 +849,9 @@
     
     <item>
       <title>women in tech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/women-in-tech.html</link>
+      
       <pubDate>Tue, 13 Oct 2015 20:23:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/women-in-tech.html</guid>
@@ -706,7 +860,9 @@
     
     <item>
       <title>big data</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/big-data.html</link>
+      
       <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/big-data.html</guid>
@@ -715,7 +871,9 @@
     
     <item>
       <title>disruptive innovation</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/disruptive-innovation.html</link>
+      
       <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/disruptive-innovation.html</guid>
@@ -724,7 +882,9 @@
     
     <item>
       <title>financial times</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/financial-times.html</link>
+      
       <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/financial-times.html</guid>
@@ -733,7 +893,9 @@
     
     <item>
       <title>wall street journal</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/wall-street-journal.html</link>
+      
       <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/wall-street-journal.html</guid>
@@ -742,7 +904,9 @@
     
     <item>
       <title>fashion</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fashion.html</link>
+      
       <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fashion.html</guid>
@@ -751,7 +915,9 @@
     
     <item>
       <title>machinelearning</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/machinelearning.html</link>
+      
       <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/machinelearning.html</guid>
@@ -760,7 +926,9 @@
     
     <item>
       <title>privacy</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/privacy.html</link>
+      
       <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/privacy.html</guid>
@@ -769,7 +937,9 @@
     
     <item>
       <title>retail</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/retail.html</link>
+      
       <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/retail.html</guid>
@@ -778,7 +948,9 @@
     
     <item>
       <title>complexity</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/complexity.html</link>
+      
       <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/complexity.html</guid>
@@ -787,7 +959,9 @@
     
     <item>
       <title>emergence</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/emergence.html</link>
+      
       <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/emergence.html</guid>
@@ -796,7 +970,9 @@
     
     <item>
       <title>visualization</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/visualization.html</link>
+      
       <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/visualization.html</guid>
@@ -805,7 +981,9 @@
     
     <item>
       <title>fast forward labs</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fast-forward-labs.html</link>
+      
       <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fast-forward-labs.html</guid>
@@ -814,7 +992,9 @@
     
     <item>
       <title>image processing</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/image-processing.html</link>
+      
       <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/image-processing.html</guid>
@@ -823,7 +1003,9 @@
     
     <item>
       <title>deepdream</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/deepdream.html</link>
+      
       <pubDate>Tue, 15 Sep 2015 19:16:19 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/deepdream.html</guid>
@@ -832,7 +1014,9 @@
     
     <item>
       <title>instagram</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/instagram.html</link>
+      
       <pubDate>Tue, 15 Sep 2015 19:16:19 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/instagram.html</guid>
@@ -841,7 +1025,9 @@
     
     <item>
       <title>pictogram</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/pictogram.html</link>
+      
       <pubDate>Tue, 15 Sep 2015 19:16:19 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/pictogram.html</guid>
@@ -850,7 +1036,9 @@
     
     <item>
       <title>deep dream</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/deep-dream.html</link>
+      
       <pubDate>Wed, 02 Sep 2015 14:08:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/deep-dream.html</guid>
@@ -859,7 +1047,9 @@
     
     <item>
       <title>fashiontech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/fashiontech.html</link>
+      
       <pubDate>Wed, 19 Aug 2015 18:08:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/fashiontech.html</guid>
@@ -868,7 +1058,9 @@
     
     <item>
       <title>gpu</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/gpu.html</link>
+      
       <pubDate>Fri, 14 Aug 2015 18:57:31 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/gpu.html</guid>
@@ -877,7 +1069,9 @@
     
     <item>
       <title>image recognition</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/image-recognition.html</link>
+      
       <pubDate>Fri, 07 Aug 2015 19:08:04 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/image-recognition.html</guid>
@@ -886,7 +1080,9 @@
     
     <item>
       <title>stirling engine</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/stirling-engine.html</link>
+      
       <pubDate>Fri, 07 Aug 2015 19:08:04 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/stirling-engine.html</guid>
@@ -895,7 +1091,9 @@
     
     <item>
       <title>talks,data science,innovation,press</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/talksdata-scienceinnovationpress.html</link>
+      
       <pubDate>Wed, 05 Aug 2015 16:28:34 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/talksdata-scienceinnovationpress.html</guid>
@@ -904,7 +1102,9 @@
     
     <item>
       <title>TimesOpen</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/timesopen.html</link>
+      
       <pubDate>Thu, 16 Jul 2015 19:43:26 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/timesopen.html</guid>
@@ -913,7 +1113,9 @@
     
     <item>
       <title>burgers</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/burgers.html</link>
+      
       <pubDate>Tue, 23 Jun 2015 19:24:50 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/burgers.html</guid>
@@ -922,7 +1124,9 @@
     
     <item>
       <title>ffl</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/ffl.html</link>
+      
       <pubDate>Tue, 23 Jun 2015 19:24:50 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/ffl.html</guid>
@@ -931,7 +1135,9 @@
     
     <item>
       <title>mongodb</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/mongodb.html</link>
+      
       <pubDate>Fri, 19 Jun 2015 19:42:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/mongodb.html</guid>
@@ -940,7 +1146,9 @@
     
     <item>
       <title>speech</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/speech.html</link>
+      
       <pubDate>Fri, 19 Jun 2015 19:42:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/speech.html</guid>
@@ -949,7 +1157,9 @@
     
     <item>
       <title>npr</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/npr.html</link>
+      
       <pubDate>Tue, 16 Jun 2015 14:40:47 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/npr.html</guid>
@@ -958,7 +1168,9 @@
     
     <item>
       <title>sciencefriday</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/sciencefriday.html</link>
+      
       <pubDate>Tue, 16 Jun 2015 14:40:47 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/sciencefriday.html</guid>
@@ -967,7 +1179,9 @@
     
     <item>
       <title>scifri</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/scifri.html</link>
+      
       <pubDate>Tue, 16 Jun 2015 14:40:47 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/scifri.html</guid>
@@ -976,7 +1190,9 @@
     
     <item>
       <title>coffee</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/coffee.html</link>
+      
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/coffee.html</guid>
@@ -985,7 +1201,9 @@
     
     <item>
       <title>diy</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/diy.html</link>
+      
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/diy.html</guid>
@@ -994,7 +1212,9 @@
     
     <item>
       <title>overkill</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/overkill.html</link>
+      
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/overkill.html</guid>
@@ -1003,7 +1223,9 @@
     
     <item>
       <title>projects</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/projects.html</link>
+      
       <pubDate>Thu, 04 Jun 2015 22:59:36 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/projects.html</guid>
@@ -1012,7 +1234,9 @@
     
     <item>
       <title>bloombergtv</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/bloombergtv.html</link>
+      
       <pubDate>Thu, 30 Apr 2015 21:33:25 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/bloombergtv.html</guid>
@@ -1021,7 +1245,9 @@
     
     <item>
       <title>selerity</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/selerity.html</link>
+      
       <pubDate>Thu, 30 Apr 2015 21:33:25 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/selerity.html</guid>
@@ -1030,7 +1256,9 @@
     
     <item>
       <title>twitter</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/twitter.html</link>
+      
       <pubDate>Thu, 30 Apr 2015 21:33:25 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/twitter.html</guid>
@@ -1039,7 +1267,9 @@
     
     <item>
       <title>bytecode</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/bytecode.html</link>
+      
       <pubDate>Thu, 23 Apr 2015 15:16:56 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/bytecode.html</guid>
@@ -1048,7 +1278,9 @@
     
     <item>
       <title>optimization</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/optimization.html</link>
+      
       <pubDate>Thu, 23 Apr 2015 15:16:56 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/optimization.html</guid>
@@ -1057,7 +1289,9 @@
     
     <item>
       <title>python</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/python.html</link>
+      
       <pubDate>Thu, 23 Apr 2015 15:16:56 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/python.html</guid>
@@ -1066,7 +1300,9 @@
     
     <item>
       <title>hasslehoff</title>
+       
       <link>http://blog.fastforwardlabs.com/tags/hasslehoff.html</link>
+      
       <pubDate>Tue, 31 Mar 2015 18:44:43 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/tags/hasslehoff.html</guid>

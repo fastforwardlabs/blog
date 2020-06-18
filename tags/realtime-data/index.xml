@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 23 Nov 2016 18:36:58 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/realtime-data/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/realtime-data/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</link>
+      
       <pubDate>Wed, 23 Nov 2016 18:36:58 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>

@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 25 Mar 2016 16:25:43 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/history/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/history/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>H.P. Luhn and the Heuristic Value of Simplicity</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
+      
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>What History Teaches Us About Data Science</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
+      
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>

@@ -8,18 +8,8 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 16 Jun 2020 17:57:24 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/newsletters/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/newsletters/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title></title>
-      <link>http://blog.fastforwardlabs.com/newsletters/2020-06.html</link>
-      <pubDate>Tue, 16 Jun 2020 17:57:24 +0000</pubDate>
-      
-      <guid>http://blog.fastforwardlabs.com/newsletters/2020-06.html</guid>
-      <description>Welcome to the June edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. This month, alongside our regular recommended reading, we have two exciting research announcements!
- New research: NLP for Question Answering Here in the Fast Forward lab, we&amp;rsquo;re always asking ourselves a lot of questions. Now we&amp;rsquo;re asking BERT a lot of questions too! Our current research focus is question answering systems. In place of a report with all our learnings at the end of our research, we&amp;rsquo;re inviting you to follow along as we explore building a question answering system using modern neural architectures.</description>
-    </item>
     
   </channel>
 </rss>

@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 25 Mar 2016 16:25:43 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/design/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>H.P. Luhn and the Heuristic Value of Simplicity</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</link>
+      
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Designing the Tech Graph</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</link>
+      
       <pubDate>Tue, 19 May 2015 16:25:01 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</guid>
@@ -31,7 +35,9 @@
     
     <item>
       <title>Blog Design Refresh</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/04/06/blog-design-refresh.html</link>
+      
       <pubDate>Mon, 06 Apr 2015 20:12:24 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/04/06/blog-design-refresh.html</guid>
@@ -40,7 +46,9 @@
     
     <item>
       <title>Probabilistic Methods for Realtime Streams</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</link>
+      
       <pubDate>Wed, 01 Apr 2015 20:24:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/04/01/probabilistic-methods-for-realtime-streams.html</guid>
@@ -50,7 +58,9 @@ Our prototype demonstrated these algorithms running on large amounts of social c
     
     <item>
       <title>The Natural Language Generation Report is Out</title>
+       
       <link>http://blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</link>
+      
       <pubDate>Fri, 17 Oct 2014 20:49:48 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2014/10/17/the-natural-language-generation-report-is-out.html</guid>
@@ -59,7 +69,9 @@ Our prototype demonstrated these algorithms running on large amounts of social c
     
     <item>
       <title>We Built a Table</title>
+       
       <link>http://blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</link>
+      
       <pubDate>Thu, 21 Aug 2014 19:28:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2014/08/21/we-built-a-table.html</guid>

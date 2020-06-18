@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Jun 2016 13:53:20 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/announcement/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/announcement/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome, Friederike!</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</link>
+      
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>FFL in the Bay Area, Chicago, and DC</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</link>
+      
       <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</guid>
@@ -31,7 +35,9 @@
     
     <item>
       <title>Fast Forward Labs Interviews Clarifai about Deep Learning</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</link>
+      
       <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
@@ -40,7 +46,9 @@
     
     <item>
       <title>Pictograph: Unlock Your Images</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/09/15/pictograph-unlock-your-images.html</link>
+      
       <pubDate>Tue, 15 Sep 2015 19:16:19 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/09/15/pictograph-unlock-your-images.html</guid>
@@ -49,7 +57,9 @@
     
     <item>
       <title>Our Next Topic: Realtime Stream Analysis</title>
+       
       <link>http://blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</link>
+      
       <pubDate>Fri, 19 Dec 2014 21:17:09 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</guid>
@@ -58,7 +68,9 @@
     
     <item>
       <title>Hello, Fast Forward Labs!</title>
+       
       <link>http://blog.fastforwardlabs.com/2014/07/21/hello-fast-forward-labs.html</link>
+      
       <pubDate>Mon, 21 Jul 2014 12:01:01 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2014/07/21/hello-fast-forward-labs.html</guid>

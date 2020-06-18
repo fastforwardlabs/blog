@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 22 Aug 2016 18:02:08 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/probabilistic-programming/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/probabilistic-programming/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Under the Hood of the Variational Autoencoder (in Prose and Code)</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</link>
+      
       <pubDate>Mon, 22 Aug 2016 18:02:08 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</guid>
@@ -23,7 +25,9 @@
     
     <item>
       <title>Introducing Variational Autoencoders (in Prose and Code)</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</link>
+      
       <pubDate>Fri, 12 Aug 2016 17:09:50 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</guid>
@@ -32,7 +36,9 @@
     
     <item>
       <title>Probabilistic Programming for Anomaly Detection</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</link>
+      
       <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>

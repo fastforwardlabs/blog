@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Dec 2015 17:13:49 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/fastforwardlabs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/fastforwardlabs/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Five Good Books* of 2015</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/12/21/five-good-books-of-2015.html</link>
+      
       <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/12/21/five-good-books-of-2015.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Celebrating Our One Year Anniversary</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/06/23/celebrating-our-one-year-anniversary.html</link>
+      
       <pubDate>Tue, 23 Jun 2015 19:24:50 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/06/23/celebrating-our-one-year-anniversary.html</guid>

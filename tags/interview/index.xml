@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Aug 2016 16:18:12 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Next Economics: Interview with Jimi Crawford</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/08/24/next-economics-interview-with-jimi-crawford.html</link>
+      
       <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/08/24/next-economics-interview-with-jimi-crawford.html</guid>
@@ -24,7 +26,9 @@
     
     <item>
       <title>Machine Listening: Interview with Juan Pablo Bello</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</link>
+      
       <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</guid>
@@ -35,7 +39,9 @@
     
     <item>
       <title>Welcome, Friederike!</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</link>
+      
       <pubDate>Thu, 02 Jun 2016 13:53:20 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</guid>
@@ -44,7 +50,9 @@
     
     <item>
       <title>Human-Machine Algorithms: Interview with Eric Colson</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</link>
+      
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</guid>
@@ -56,7 +64,9 @@
     
     <item>
       <title>Active Learning in the Law</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</link>
+      
       <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</guid>
@@ -67,7 +77,9 @@
     
     <item>
       <title>Shivon Zilis on the Machine Intelligence Landscape</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
+      
       <pubDate>Wed, 30 Mar 2016 15:00:03 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
@@ -76,7 +88,9 @@
     
     <item>
       <title>NeuralTalk with Kyle McDonald</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</link>
+      
       <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</guid>
@@ -87,7 +101,9 @@
     
     <item>
       <title>What History Teaches Us About Data Science</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
+      
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>
@@ -97,7 +113,9 @@
     
     <item>
       <title>Eli Pariser on the Ethics of Algorithmic Filtering</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</link>
+      
       <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</guid>
@@ -111,7 +129,9 @@
     
     <item>
       <title>Fashion Goes Deep: Data Science at Lyst</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/12/09/fashion-goes-deep-data-science-at-lyst.html</link>
+      
       <pubDate>Wed, 09 Dec 2015 17:44:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/12/09/fashion-goes-deep-data-science-at-lyst.html</guid>
@@ -120,7 +140,9 @@
     
     <item>
       <title>Interview with Pedro Domingos</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</link>
+      
       <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</guid>

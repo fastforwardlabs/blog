@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 19 Aug 2015 18:08:14 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/fashiontech/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/fashiontech/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Machine Learning Applications in Fashion Retail</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</link>
+      
       <pubDate>Wed, 19 Aug 2015 18:08:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</guid>

@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 27 Jul 2016 16:45:52 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/books/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/books/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Late Summer Reading List</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</link>
+      
       <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Five Good Books* of 2015</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/12/21/five-good-books-of-2015.html</link>
+      
       <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/12/21/five-good-books-of-2015.html</guid>

@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 26 Apr 2016 18:41:17 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/ediscovery/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/ediscovery/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Making a Case for Machine Learning to Legal Departments</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</link>
+      
       <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Active Learning in the Law</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</link>
+      
       <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</guid>

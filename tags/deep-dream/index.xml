@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 02 Sep 2015 14:08:33 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/deep-dream/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/deep-dream/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>D’Alembert’s Deep Dream: Bees and Nonlinear Transformations</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/09/02/dalemberts-deep-dream-bees-and-nonlinear-transformations.html</link>
+      
       <pubDate>Wed, 02 Sep 2015 14:08:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/09/02/dalemberts-deep-dream-bees-and-nonlinear-transformations.html</guid>

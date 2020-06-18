@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 23 May 2016 17:09:13 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/whitepaper/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/whitepaper/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Evaluating Summarization Systems</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</link>
+      
       <pubDate>Mon, 23 May 2016 17:09:13 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Probabilistic Programming for Anomaly Detection</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</link>
+      
       <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
@@ -31,7 +35,9 @@
     
     <item>
       <title>Making a Case for Machine Learning to Legal Departments</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</link>
+      
       <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</guid>
@@ -40,7 +46,9 @@
     
     <item>
       <title>Assessing Data Science Maturity</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/04/15/assessing-data-science-maturity.html</link>
+      
       <pubDate>Fri, 15 Apr 2016 18:07:33 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/04/15/assessing-data-science-maturity.html</guid>
@@ -49,7 +57,9 @@
     
     <item>
       <title>Machines and Metaphors</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</link>
+      
       <pubDate>Tue, 16 Feb 2016 16:35:11 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</guid>
@@ -60,7 +70,9 @@
     
     <item>
       <title>When Dog Is Enough: Using Hypernyms To Improve Neural Network Predictions</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/11/17/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</link>
+      
       <pubDate>Tue, 17 Nov 2015 16:35:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/11/17/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</guid>
@@ -69,7 +81,9 @@
     
     <item>
       <title>Machine Learning in Retail: Consumer Privacy Implications</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/09/29/machine-learning-in-retail-consumer-privacy-implications.html</link>
+      
       <pubDate>Tue, 29 Sep 2015 18:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/09/29/machine-learning-in-retail-consumer-privacy-implications.html</guid>
@@ -78,7 +92,9 @@
     
     <item>
       <title>Machine Learning Applications in Fashion Retail</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</link>
+      
       <pubDate>Wed, 19 Aug 2015 18:08:14 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</guid>
@@ -89,7 +105,9 @@
     
     <item>
       <title>Why Now? Some Preconditions for Technology Innovations</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/08/14/why-now-some-preconditions-for-technology-innovations.html</link>
+      
       <pubDate>Fri, 14 Aug 2015 18:57:31 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/08/14/why-now-some-preconditions-for-technology-innovations.html</guid>
@@ -98,7 +116,9 @@
     
     <item>
       <title>On Stirling Engines and Orchids: A Prelude to Deep Learning</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/08/07/on-stirling-engines-and-orchids-a-prelude-to-deep-learning.html</link>
+      
       <pubDate>Fri, 07 Aug 2015 19:08:04 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/08/07/on-stirling-engines-and-orchids-a-prelude-to-deep-learning.html</guid>

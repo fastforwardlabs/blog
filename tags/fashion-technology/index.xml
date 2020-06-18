@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 25 May 2016 12:37:15 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/fashion-technology/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/fashion-technology/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Human-Machine Algorithms: Interview with Eric Colson</title>
+       
       <link>http://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</link>
+      
       <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</guid>

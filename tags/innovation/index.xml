@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 29 Oct 2015 13:13:00 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/innovation/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/innovation/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Interview with Pedro Domingos</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</link>
+      
       <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</guid>
@@ -22,7 +24,9 @@
     
     <item>
       <title>Flip the Paradigm</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</link>
+      
       <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</guid>
@@ -31,7 +35,9 @@
     
     <item>
       <title>Why Now? Some Preconditions for Technology Innovations</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/08/14/why-now-some-preconditions-for-technology-innovations.html</link>
+      
       <pubDate>Fri, 14 Aug 2015 18:57:31 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/08/14/why-now-some-preconditions-for-technology-innovations.html</guid>

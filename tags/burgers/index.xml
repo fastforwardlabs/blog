@@ -8,12 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 23 Jun 2015 19:24:50 +0000</lastBuildDate>
     
-	<atom:link href="http://blog.fastforwardlabs.com/tags/burgers/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.fastforwardlabs.com/tags/burgers/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Celebrating Our One Year Anniversary</title>
+       
       <link>http://blog.fastforwardlabs.com/2015/06/23/celebrating-our-one-year-anniversary.html</link>
+      
       <pubDate>Tue, 23 Jun 2015 19:24:50 +0000</pubDate>
       
       <guid>http://blog.fastforwardlabs.com/2015/06/23/celebrating-our-one-year-anniversary.html</guid>
