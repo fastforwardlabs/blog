@@ -1,4 +1,4 @@
-baseURL = "http://blog.fastforwardlabs.com"
+baseURL = "https://blog.fastforwardlabs.com"
 languageCode = "en-us"
 title = "Blog"
 Paginate = 6
