@@ -8,6 +8,9 @@
 <meta property="og:image" content="{{ .Site.BaseURL }}/blog.png">
 <meta property="og:url" content="{{ .Site.BaseURL }}">
 <meta property="twitter:card" content="summary_large_image">
+{{ with .OutputFormats.Get "rss" -}}
+{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end -}}
 {{ end }}
 
 
