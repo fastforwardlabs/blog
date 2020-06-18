@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hello world on Blog</title>
-    <link>http://blog.fastforwardlabs.com/tags/hello-world.html</link>
+    <link>https://blog.fastforwardlabs.com/tags/hello-world.html</link>
     <description>Recent content in hello world on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Feb 2016 18:58:10 +0000</lastBuildDate>
     
-    <atom:link href="http://blog.fastforwardlabs.com/tags/hello-world/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.fastforwardlabs.com/tags/hello-world/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</link>
       
       <pubDate>Wed, 24 Feb 2016 18:58:10 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
       <description>&amp;gt;&amp;gt;&amp;gt; %matplotlib inline &amp;gt;&amp;gt;&amp;gt; import seaborn as sns &amp;gt;&amp;gt;&amp;gt; import numpy as np &amp;gt;&amp;gt;&amp;gt; from sklearn.cross_validation import train_test_split &amp;gt;&amp;gt;&amp;gt; from sklearn.linear_model import LogisticRegressionCV &amp;gt;&amp;gt;&amp;gt; from keras.models import Sequential &amp;gt;&amp;gt;&amp;gt; from keras.layers.core import Dense, Activation &amp;gt;&amp;gt;&amp;gt; from keras.utils import np_utils &amp;gt;&amp;gt;&amp;gt; iris = sns.load_dataset(&amp;#34;iris&amp;#34;) &amp;gt;&amp;gt;&amp;gt; iris.head() &amp;gt;&amp;gt;&amp;gt; sns.pairplot(iris, hue=&amp;#39;species&amp;#39;) &amp;gt;&amp;gt;&amp;gt; X = iris.values[:, 0:4] &amp;gt;&amp;gt;&amp;gt; y = iris.values[:, 4] &amp;gt;&amp;gt;&amp;gt; train_X, test_X, train_y, test_y = train_test_split(X, y, train_size=0.5, random_state=0) &amp;gt;&amp;gt;&amp;gt; lr = LogisticRegressionCV() &amp;gt;&amp;gt;&amp;gt; lr.</description>
     </item>
     

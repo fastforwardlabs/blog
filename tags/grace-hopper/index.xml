@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>grace hopper on Blog</title>
-    <link>http://blog.fastforwardlabs.com/tags/grace-hopper.html</link>
+    <link>https://blog.fastforwardlabs.com/tags/grace-hopper.html</link>
     <description>Recent content in grace hopper on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 13 Oct 2015 20:23:46 +0000</lastBuildDate>
     
-    <atom:link href="http://blog.fastforwardlabs.com/tags/grace-hopper/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.fastforwardlabs.com/tags/grace-hopper/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Grace Hopper Opening Keynote</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</link>
       
       <pubDate>Tue, 13 Oct 2015 20:23:46 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</guid>
       <description> “The most important thing I’ve accomplished, other than building the compiler, is training young people. They come to me, you know, and say, ‘Do you think we can do this?’ I say, “Try it.” And I back &amp;lsquo;em up. They need that. I keep track of them as they get older and I stir &amp;lsquo;em up at intervals so they don’t forget to take chances.”
  </description>
     </item>

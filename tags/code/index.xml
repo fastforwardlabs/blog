@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>code on Blog</title>
-    <link>http://blog.fastforwardlabs.com/tags/code.html</link>
+    <link>https://blog.fastforwardlabs.com/tags/code.html</link>
     <description>Recent content in code on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 23 Nov 2016 18:36:58 +0000</lastBuildDate>
     
-    <atom:link href="http://blog.fastforwardlabs.com/tags/code/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.fastforwardlabs.com/tags/code/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</link>
       
       <pubDate>Wed, 23 Nov 2016 18:36:58 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>
       <description>Traditional Bloom filters do not support deletions because hashing is lossy and irreversible. That means, deletions require the entire filter to be rebuilt. But what if we want to delete items seen in the past, like certain tweets in the Twitter example above? The counting Bloom filter was introduced to solve this problem. To support deletions, counting Bloom filters extend buckets in traditional Bloom filters from single bit values to n-bit counters.</description>
     </item>
     
     <item>
       <title>Exploring Deep Learning on Satellite Data</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/08/26/exploring-deep-learning-on-satellite-data.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/08/26/exploring-deep-learning-on-satellite-data.html</link>
       
       <pubDate>Fri, 26 Aug 2016 17:43:24 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/08/26/exploring-deep-learning-on-satellite-data.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/08/26/exploring-deep-learning-on-satellite-data.html</guid>
       <description>This is a guest post featuring a project Patrick Doupe, now a Senior Data Analyst at Icahn School of Medicine at Mount Sinai, completed as a fellow in the Insight Data Science program. In our partnership with Insight, we occassionally advise fellows on month-long projects and how to build a career in data science. </description>
     </item>
     
     <item>
       <title>Under the Hood of the Variational Autoencoder (in Prose and Code)</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</link>
       
       <pubDate>Mon, 22 Aug 2016 18:02:08 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</guid>
       <description>&lt;h5 id=&#34;the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona&#34;&gt;The &lt;!-- raw HTML omitted --&gt;Variational&lt;!-- raw HTML omitted --&gt; &lt;!-- raw HTML omitted --&gt;Autoencoder&lt;!-- raw HTML omitted --&gt; (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In &lt;!-- raw HTML omitted --&gt;Part I&lt;!-- raw HTML omitted --&gt; of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—&lt;!-- raw HTML omitted --&gt;“machines that imagine and reason.”&lt;!-- raw HTML omitted --&gt;&lt;/h5&gt;
 &lt;!-- raw HTML omitted --&gt;</description>
     </item>
@@ -48,77 +48,77 @@
     <item>
       <title>Introducing Variational Autoencoders (in Prose and Code)</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</link>
       
       <pubDate>Fri, 12 Aug 2016 17:09:50 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</guid>
       <description>import tensorflow as tf from tensorflow.examples.tutorials.mnist import input_data import vae # this is our model - to be explored in the next post IMG_DIM = 28 ARCHITECTURE = [IMG_DIM**2, # 784 pixels 500, 500, # intermediate encoding 50] # latent space dims # (and symmetrically back out again) HYPERPARAMS = { &amp;#34;batch_size&amp;#34;: 128, &amp;#34;learning_rate&amp;#34;: 1E-3, &amp;#34;dropout&amp;#34;: 0.9, &amp;#34;lambda_l2_reg&amp;#34;: 1E-5, &amp;#34;nonlinearity&amp;#34;: tf.nn.elu, &amp;#34;squashing&amp;#34;: tf.nn.sigmoid } mnist = input_data.read_data_sets(&amp;#34;mnist_data&amp;#34;) v = vae.VAE(ARCHITECTURE, HYPERPARAMS) v.</description>
     </item>
     
     <item>
       <title>Probabilistic Programming for Anomaly Detection</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</link>
       
       <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</link>
       
       <pubDate>Wed, 24 Feb 2016 18:58:10 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
       <description>&amp;gt;&amp;gt;&amp;gt; %matplotlib inline &amp;gt;&amp;gt;&amp;gt; import seaborn as sns &amp;gt;&amp;gt;&amp;gt; import numpy as np &amp;gt;&amp;gt;&amp;gt; from sklearn.cross_validation import train_test_split &amp;gt;&amp;gt;&amp;gt; from sklearn.linear_model import LogisticRegressionCV &amp;gt;&amp;gt;&amp;gt; from keras.models import Sequential &amp;gt;&amp;gt;&amp;gt; from keras.layers.core import Dense, Activation &amp;gt;&amp;gt;&amp;gt; from keras.utils import np_utils &amp;gt;&amp;gt;&amp;gt; iris = sns.load_dataset(&amp;#34;iris&amp;#34;) &amp;gt;&amp;gt;&amp;gt; iris.head() &amp;gt;&amp;gt;&amp;gt; sns.pairplot(iris, hue=&amp;#39;species&amp;#39;) &amp;gt;&amp;gt;&amp;gt; X = iris.values[:, 0:4] &amp;gt;&amp;gt;&amp;gt; y = iris.values[:, 4] &amp;gt;&amp;gt;&amp;gt; train_X, test_X, train_y, test_y = train_test_split(X, y, train_size=0.5, random_state=0) &amp;gt;&amp;gt;&amp;gt; lr = LogisticRegressionCV() &amp;gt;&amp;gt;&amp;gt; lr.</description>
     </item>
     
     <item>
       <title>Hello Deep Learning</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/10/26/hello-deep-learning.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/10/26/hello-deep-learning.html</link>
       
       <pubDate>Mon, 26 Oct 2015 16:20:07 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/10/26/hello-deep-learning.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/10/26/hello-deep-learning.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>How do neural networks learn?</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</link>
       
       <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Designing the Tech Graph</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</link>
       
       <pubDate>Tue, 19 May 2015 16:25:01 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</guid>
       <description>Dramatizing Information Work Visualizing Thinking with the Tech Graph The graph has a pretty bare-bones feature set at the moment, topics and links can be created and deleted and that’s about about it. My goal is to keep adding and improving to the point where it becomes a useful brainstorming tool for us. I’m looking forward to exploring what kinds of features can aid our thinking process.A Starting Point </description>
     </item>
     
     <item>
       <title>Bytecode Hacking for Great Justice</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html</link>
       
       <pubDate>Thu, 23 Apr 2015 15:16:56 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html</guid>
       <description>def factorial(N, result=1): if N == 1: return result return factorial(N-1, N*result) While this is not,
 def factorial(N): if N == 1: return 1 return N * factorial(N-1) def factorial(N, result=1): while True: if N == 1: return result N, result = N-1, N*result &amp;gt;&amp;gt;&amp;gt; dis.dis(factorial) # bytecode # relevant python # -----------------------------------------------------#--------------------- 2 0 LOAD_FAST 0 (N) # if N == 1: 3 LOAD_CONST 1 (1) # 6 COMPARE_OP 2 (==) # 9 POP_JUMP_IF_FALSE 16 # # 3 12 LOAD_FAST 1 (result) # return result 15 RETURN_VALUE # # 4 &amp;gt;&amp;gt; 16 LOAD_GLOBAL 0 (factorial) # return factorial(N-1, N*result) 19 LOAD_FAST 0 (N) # 22 LOAD_CONST 1 (1) # 25 BINARY_SUBTRACT # 26 LOAD_FAST 0 (N) # 29 LOAD_FAST 1 (result) # 32 BINARY_MULTIPLY # 33 CALL_FUNCTION 2 # 36 RETURN_VALUE #  2 &amp;gt;&amp;gt; 0 LOAD_FAST 0 (N) 3 LOAD_CONST 1 (1) 6 COMPARE_OP 2 (==) 9 POP_JUMP_IF_FALSE 16 3 12 LOAD_FAST 1 (result) 15 RETURN_VALUE 4 &amp;gt;&amp;gt; 16 LOAD_FAST 0 (N) 19 LOAD_CONST 1 (1) 22 BINARY_SUBTRACT 23 LOAD_FAST 0 (N) 26 LOAD_FAST 1 (result) 29 BINARY_MULTIPLY 30 STORE_FAST 1 (result) 33 STORE_FAST 0 (N) 36 JUMP_ABSOLUTE 0 </description>
     </item>

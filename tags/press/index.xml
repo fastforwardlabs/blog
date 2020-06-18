@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>press on Blog</title>
-    <link>http://blog.fastforwardlabs.com/tags/press.html</link>
+    <link>https://blog.fastforwardlabs.com/tags/press.html</link>
     <description>Recent content in press on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 03 Feb 2016 22:05:44 +0000</lastBuildDate>
     
-    <atom:link href="http://blog.fastforwardlabs.com/tags/press/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.fastforwardlabs.com/tags/press/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>What History Teaches Us About Data Science</title>
        
-      <link>http://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
+      <link>https://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
       
       <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>
       <description>The FFL team at the New York Historical Society&amp;rsquo;s Silicon City exhibit  Study the past if you would define the future. — Confucius
  1. Claude Shannon, the father of UX design? 2. Products (and models) have their moment of maturity, but we must be wary of trends 3. Statistics, computer science, and data science 4. IBM had really cool marketing in the 1930s-1950s </description>
     </item>
@@ -26,22 +26,22 @@
     <item>
       <title>Flip the Paradigm</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</link>
       
       <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Grace Hopper Opening Keynote</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</link>
       
       <pubDate>Tue, 13 Oct 2015 20:23:46 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/10/13/grace-hopper-opening-keynote.html</guid>
       <description> “The most important thing I’ve accomplished, other than building the compiler, is training young people. They come to me, you know, and say, ‘Do you think we can do this?’ I say, “Try it.” And I back &amp;lsquo;em up. They need that. I keep track of them as they get older and I stir &amp;lsquo;em up at intervals so they don’t forget to take chances.”
  </description>
     </item>
@@ -49,33 +49,33 @@
     <item>
       <title>Breaking Down Memes</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</link>
       
       <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hilary on Bloomberg TV</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/04/30/hilary-on-bloomberg-tv.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/04/30/hilary-on-bloomberg-tv.html</link>
       
       <pubDate>Thu, 30 Apr 2015 21:33:25 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/04/30/hilary-on-bloomberg-tv.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/04/30/hilary-on-bloomberg-tv.html</guid>
       <description>Our fearless leader Hilary Masonappeared yesterday on Bloomberg TV to discuss Selerity’s early acquisition of Twitter’s earnings data. The interview video is available here.</description>
     </item>
     
     <item>
       <title>The Hoff</title>
        
-      <link>http://blog.fastforwardlabs.com/2015/03/31/the-hoff.html</link>
+      <link>https://blog.fastforwardlabs.com/2015/03/31/the-hoff.html</link>
       
       <pubDate>Tue, 31 Mar 2015 18:44:43 +0000</pubDate>
       
-      <guid>http://blog.fastforwardlabs.com/2015/03/31/the-hoff.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2015/03/31/the-hoff.html</guid>
       <description>The Hoff stopped by Fast Forward Labs!</description>
     </item>
     
