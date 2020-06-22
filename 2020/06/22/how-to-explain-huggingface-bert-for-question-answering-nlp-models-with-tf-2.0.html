@@ -7,12 +7,12 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     
-<title>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</title>
-<meta property="og:title" content="&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)">
-<meta property="description" content="&gt;&gt;&gt; %matplotlib inline &gt;&gt;&gt; import seaborn as sns &gt;&gt;&gt; import numpy as np &gt;&gt;&gt; from sklearn.cross_validation import train_test_split &gt;&gt;&gt; from sklearn.linear_model import LogisticRegressionCV &gt;&gt;&gt; from keras.models import Sequential &gt;&gt;&gt; from keras.layers.core import Dense, Activation &gt;&gt;&gt; from keras.utils import np_utils &gt;&gt;&gt; iris = sns.load_dataset(&#34;iris&#34;) &gt;&gt;&gt; iris.head() &gt;&gt;&gt; sns.pairplot(iris, hue=&#39;species&#39;) &gt;&gt;&gt; X = iris.values[:, 0:4] &gt;&gt;&gt; y = iris.values[:, 4] &gt;&gt;&gt; train_X, test_X, train_y, test_y = train_test_split(X, y, train_size=0.5, random_state=0) &gt;&gt;&gt; lr = LogisticRegressionCV() &gt;&gt;&gt; lr.">
-<meta property="og:description" content="&gt;&gt;&gt; %matplotlib inline &gt;&gt;&gt; import seaborn as sns &gt;&gt;&gt; import numpy as np &gt;&gt;&gt; from sklearn.cross_validation import train_test_split &gt;&gt;&gt; from sklearn.linear_model import LogisticRegressionCV &gt;&gt;&gt; from keras.models import Sequential &gt;&gt;&gt; from keras.layers.core import Dense, Activation &gt;&gt;&gt; from keras.utils import np_utils &gt;&gt;&gt; iris = sns.load_dataset(&#34;iris&#34;) &gt;&gt;&gt; iris.head() &gt;&gt;&gt; sns.pairplot(iris, hue=&#39;species&#39;) &gt;&gt;&gt; X = iris.values[:, 0:4] &gt;&gt;&gt; y = iris.values[:, 4] &gt;&gt;&gt; train_X, test_X, train_y, test_y = train_test_split(X, y, train_size=0.5, random_state=0) &gt;&gt;&gt; lr = LogisticRegressionCV() &gt;&gt;&gt; lr.">
-<meta property="og:image" content="https://blog.fastforwardlabs.comhttp://68.media.tumblr.com/a4cf05aa664f57b54fe5021ce966f5d6/tumblr_inline_o30qnzlyxi1qcg73w_540.png">
-<meta property="og:url" content="https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html">
+<title>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</title>
+<meta property="og:title" content="How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0">
+<meta property="description" content="In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). It appears the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
+<meta property="og:description" content="In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). It appears the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/explanation-1592852095.jpg">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">
 <meta property="twitter:card" content="summary_large_image">
 
     <link rel="stylesheet" type="text/css" href="/style.css" />
@@ -48,78 +48,71 @@ if (!doNotTrack) {
   <div class="spacer"></div>
   <div class="post">
     <h5 class="clear">
-      <span>Feb 24, 2016</span> &middot;
+      <span>Jun 22, 2020</span> &middot;
       <span style="text-transform: capitalize;">
         post
       </span>
     </h5>
-    <h1>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</h1>
+    <h1>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h1>
     <!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">%</span>matplotlib inline
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> sklearn.cross_validation <span style="color:#f92672">import</span> train_test_split
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegressionCV
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.models <span style="color:#f92672">import</span> Sequential
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.layers.core <span style="color:#f92672">import</span> Dense, Activation
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.utils <span style="color:#f92672">import</span> np_utils
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> iris <span style="color:#f92672">=</span> sns<span style="color:#f92672">.</span>load_dataset(<span style="color:#e6db74">&#34;iris&#34;</span>)
-<span style="color:#f92672">&gt;&gt;&gt;</span> iris<span style="color:#f92672">.</span>head()
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> sns<span style="color:#f92672">.</span>pairplot(iris, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;species&#39;</span>)
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> X <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>values[:, <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4</span>]
-<span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>values[:, <span style="color:#ae81ff">4</span>]
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> train_X, test_X, train_y, test_y <span style="color:#f92672">=</span> train_test_split(X, y, train_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> lr <span style="color:#f92672">=</span> LogisticRegressionCV()
-<span style="color:#f92672">&gt;&gt;&gt;</span> lr<span style="color:#f92672">.</span>fit(train_X, train_y)
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> pred_y <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(test_X)
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Test fraction correct (Accuracy) = {:.2f}&#34;</span><span style="color:#f92672">.</span>format(lr<span style="color:#f92672">.</span>score(test_X, test_y)))
-<span style="color:#75715e"># Test fraction correct (Accuracy) = 0.83</span>
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">setosa
-versicolor
-setosa
-virginica
-<span style="color:#f92672">...</span>
-</code></pre></div><!-- raw HTML omitted -->
-<pre><code>setosa versicolor virginica
-     1          0         0
-     0          1         0
-     1          0         0
-     0          0         1
-</code></pre><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">one_hot_encode_object_array</span>(arr):
-    <span style="color:#e6db74">&#39;&#39;&#39;One hot encode a numpy array of objects (e.g. strings)&#39;&#39;&#39;</span>
-    uniques, ids <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(arr, return_inverse<span style="color:#f92672">=</span>True)
-    <span style="color:#66d9ef">return</span> np_utils<span style="color:#f92672">.</span>to_categorical(ids, len(uniques))
+<pre><code class="language-Given" data-lang="Given"></code></pre><p><img src="/images/hugo/explanation-1592852095.jpg" alt=""></p>
+<h5 id="in-this-sample-a-bertbase-model-gets-the-answer-correct-achaemenid-persia-it-appears-the-token-subordinate-is-impactful-in-the-selection-of-an-answer-to-the-question-macedonia-was-under-the-rule-of-which-country-this-makes-sense-good-for-bertbase">In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). It appears the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.</h5>
+<p>Recently, our team at Fast Forward Labs have been exploring state of the art models for <a href="https://qa.fastforwardlabs.com/">Question Answering</a> and have used the rather excellent HuggingFace <a href="https://github.com/huggingface/transformers/">transformers</a> library. As we applied BERT for QA models (BERTQA) to datasets outside of wikipedia (e.g legal documents), we have observed a variety of results. Naturally, one of the things we have been exploring are methods to better understand why the model provides certain responses, especially when it fails. This post focuses on the following questions:</p>
+<ul>
+<li>What are some approaches for explaining a BERT based model?</li>
+<li>Why are Gradients a good approach?</li>
+<li>How to implement Gradient explanations for BERT in Tensorflow 2.0?</li>
+<li>Some example results and visualizations!</li>
+</ul>
+<p><img src="/images/hugo/distilexplanation-1592852137.jpg" alt=""></p>
+<h5 id="in-this-sample-we-use-distilbert-for-the-same-questioncontext-pair-and-get-a-different-result-by-looking-at-the-gradients-we-see-that-while-the-model-sees-the-word-subordinate-as-impactful-it-also-sees-the-word-dominant-as-more-impactful-and-selects-an-answer-in-that-neighborhood-bad-for-distilbert">In this sample, we use distilbert for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBert..</h5>
+<p>Code used for this post (graphs above) is available in this <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing">Colab notebook</a>. Try it out!</p>
+<h2 id="how-do-we-build-an-explanation-interface-for-nlp-models-likebert">How Do We Build An Explanation Interface for NLP Models like BERT?</h2>
+<p>From the human computer interaction perspective, a primary requirement for such an interface is glanceabilty - i.e. the interface should provide an artifact  - text, number(s), or visualization that provides a complete picture of how each input contributes to the model prediction. There are several possible strategies for this. We can use model agnostic tools like ç or explore properties of the model such as self-attention weights or gradients in explaining behaviour.</p>
+<h3 id="blackbox-model-explanation-limeshap">Blackbox Model Explanation (LIME, SHAP)</h3>
+<p>Blackbox methods such as LIME and SHAP are perturbation based approaches (i.e. remove words from the input and observe its impact on results) and have a few limitations. In particular, LIME does not guarantee consistency  (LIME local models may not be faithful to the global model) and SHAP has known computation complexity issues(KernelSHAP explores multiple combinations of input where a feature is present/absent …. computing these combinations can take a while). See this <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N?usp=sharing">notebook</a> for some additional discussion on these methods. We&rsquo;ll skip this approach.</p>
+<h3 id="attention-based-explanation">Attention Based Explanation</h3>
+<p>Given that BERT is an attention based model, it is tempting to use attention weights as a way to explain its behaviour. After all, attention weights are a reflection of what inputs are important to some output task. This line of thought is not exactly bad, as attention weights have been useful in helping us understand the behaviour of sequence to sequence (seq2seq) models [5] . 
+However, BERT uses attention mechanisms differently (see this <a href="https://towardsdatascience.com/illustrated-self-attention-2d627e33b20a">relevant article</a> on self-attention mechanisms). While a traditional seq2seq model typically has a single attention mechanism [5], BERT (base) contains 12 layers, with 12 attention heads each (for a total of 144 attention mechanisms)! This immediately brings up the challenge of deciding which (combination of) mechanism(s) to use for explaining the model (see this <a href="https://towardsdatascience.com/deconstructing-bert-part-2-visualizing-the-inner-workings-of-attention-60a16d86b5c1">excellent post</a> by Jesse Vig for more info on visualizing attention heads in BERT). Furthermore, given that BERT layers are interconnected, attention is not over words but over hidden embeddings, which themselves can be mixed representations of multiple embeddings. Recent research shows that each of these attention heads focus on different patterns (e.g. heads that attend to the direct objects of verbs, determiners of nouns, objects of prepositions, and coreferent mentions [1]). Each of these different attention patterns are combined in opaque ways to enable BERTs complex language modeling capabilities. It has also been found that attention weights may be misleading as explanations in general [2] and that attention weights are not directly interpretable [3]. This is not to say attention weights are useless for debugging models .. far from it. They are valuable for scientific probing exercises that help us understand model behaviour, but perhaps not as a tool for end user interpretability.
+We will also skip this approach.</p>
+<h3 id="gradient-based-explanation">Gradient Based Explanation</h3>
+<p>It turns out that we can leverage the gradients in a trained deep neural network to efficiently infer the relationship between inputs and output. This works because, the gradient quantifies how much a change in each input dimension would change the predictions in a small neighborhood around the input. While this approach is simple, existing research suggest simple gradient explanations are stable, and faithful to the model/data generating process [4] compared to more sophisticated methods (e.g. GradCam and Integrated Gradients). Let&rsquo;s explore this approach!
+Gradients in TF 2.0 via GradientTape!
+Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api) standpoint, using GradientTape. Gradient tape allows us to record operations on a set of variables we want to perform automatic differentiation on. To explain the model&rsquo;s output on a given input we can</p>
+<ul>
+<li>(i) instantiate the GradientTape and watch our input variable</li>
+<li>(ii) compute forward pass through the model</li>
+<li>(iii) get gradients of output of interest (e.g. a specific class logits) with respect to the watched input.</li>
+<li>(iv) use the normalized gradients as explanations.</li>
+</ul>
+<script type="application/javascript" src="https://gist.github.com/victordibia/5394dcc919fc7e691c973f11703f737e.js"></script>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> train_y_ohe <span style="color:#f92672">=</span> one_hot_encode_object_array(train_y)
-<span style="color:#f92672">&gt;&gt;&gt;</span> test_y_ohe <span style="color:#f92672">=</span> one_hot_encode_object_array(test_y)
-</code></pre></div><!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> model <span style="color:#f92672">=</span> Sequential()
-<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">16</span>, input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">4</span>,)))
-<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;sigmoid&#39;</span>))
-<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">3</span>))
-<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;softmax&#39;</span>))
-<span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;categorical_crossentropy&#39;</span>, optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>)
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>fit(train_X, train_y_ohe, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> loss, accuracy <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_X, test_y_ohe, show_accuracy<span style="color:#f92672">=</span>True, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Test fraction correct (Accuracy) = {:.2f}&#34;</span><span style="color:#f92672">.</span>format(accuracy))
-
-<span style="color:#75715e"># Test fraction correct (Accuracy) = 0.99</span>
-</code></pre></div><!-- raw HTML omitted -->
+<p>The code snippet above shows how these steps can be implemented  - where model  is a Hugging Face BERT model and tokenizer is a Hugging Face tokenizer. Snippet is adapted from Andreas Madsen&rsquo;s note on explaining a BERT language model using gradients.Full sample code can be found in this <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing">Colab notebook</a>. Visuals below show results from explaining 8 random question + context snippets.</p>
+<p><img src="/images/hugo/explanationsamples-1592852171.png" alt=""></p>
+<h5 id="additional-examples-of-explanations-via-good-old-gradients">Additional examples of explanations via good old gradients!</h5>
+<p><img src="/images/hugo/answercomp-1592855082.jpg" alt=""></p>
+<h5 id="distlbert-vs-bert-base-vs-bert-large-models-for-qa-on-eight-random-questioncontext-pairsanswer-span-results-may-vary-slightly-across-each-run">DistlBERT vs BERT base vs BERT large models for QA on eight random question/context pairs. (Answer span results may vary slightly across each run)</h5>
+<ul>
+<li>DistilBERT SQUAD1 (261M): returns 5/8. 2 correct answers.</li>
+<li>DistilBERT SQUAD2 (265MB): returns 7/8 answers. 7 correct answers</li>
+<li>BERT base (433MB): returns 5/8 answers. 5 correct answers</li>
+<li>BERT large (1.34GB): returns 7/8 answers. 7 correct answers</li>
+</ul>
+<p>Explanations like the gradient method above and model output provide a few insights on BERT based QA models.</p>
+<ul>
+<li>We see that in cases where BERT does not have an answer (e.g. it outputs a CLS token only), it generally does not have high normalized gradient scores for most of the input tokens. Perhaps explanation scores can be combined with model confidence scores (start/end span softmax) to build a more complete metric for confidence in the span prediction.</li>
+<li>There are some cases where the model appears to be responsive to the right tokens but still fails to return an answer. Having a larger model (e.g bert large) helps in some cases (see output above). Bert base correctly finds answers for 5/8 questions while BERT large finds answers for 7/8 questions. There is a cost though .. bert base model size is ~540MB vs bertlarge ~1.34GB and almost 3x the run time.</li>
+<li>On the randomly selected question/context pairs above, the smaller, faster DistilBERT (squad2) surprisingly performs better than BERTbase and at par with BERTlarge. Results also demonstrate why, we all should not be using QA models trained on SQUAD1 (hint: the answer spans provided are really poor).</li>
+</ul>
+<p>In addition to these insights, explanations also enable sensemaking of model results by end users. In this case, sensemaking from the Human Computer Interaction perspective is focused on interface affordances that help the user build intuition on how, why and when these models work.</p>
+<h2 id="conclusions-whatsnext">Conclusions: Whats Next? </h2>
+<p>We have repurposed bar charts to visualize the impact of input tokens on how a BERTQA model selects answer spans. Perhaps an overlaid text approach (similar to <a href="https://github.com/AndreasMadsen/python-textualheatmap">textualheatmaps</a> by Andreas Madsen) would be better. I am working on some user interface that ties this together and will explore it in a future post. There are also a few other potential gradient based methods that can be used to yield explanations (e.g. Integrated Gradients, GradCam, SmoothGrad, see [4] for a complete list). </p>
+<h1 id="references">References</h1>
+<p>[1] Clark, Kevin, et al. &ldquo;What does bert look at? an analysis of bert&rsquo;s attention.&rdquo; arXiv preprint arXiv:1906.04341 (2019).
+[2] Jain, Sarthak, and Byron C. Wallace. &ldquo;Attention is not explanation.&rdquo; arXiv preprint arXiv:1902.10186 (2019).
+[3] Brunner, Gino, et al. &ldquo;On identifiability in transformers.&rdquo; International Conference on Learning Representations. 2019.
+[4] Adebayo, Julius, et al. &ldquo;Sanity checks for saliency maps.&rdquo; Advances in Neural Information Processing Systems. 2018.
+[5] Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. &ldquo;Neural machine translation by jointly learning to align and translate.&rdquo; arXiv preprint arXiv:1409.0473 (2014).</p>
 
     <div class="spacer"></div>
     <div>
@@ -137,35 +130,20 @@ virginica
   <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
     <div>
       
-      <div class="small">Newer</div>
-      <div>
-  <h5 style="margin-bottom: 0px;">
-    <span>Mar 25, 2016</span> &middot;
-    <span style="text-transform: capitalize;">
-      post
-    </span>
-  </h5>
-  
-    <div><a href="/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html"><strong>H.P. Luhn and the Heuristic Value of Simplicity</strong></a></div>
-  
-  <div class="spacer"></div>
-</div>
-
-
-      
     </div>
     <div>
       
       <div class="small">Older</div>
       <div>
   <h5 style="margin-bottom: 0px;">
-    <span>Feb 18, 2016</span> &middot;
+    <span>Jun 16, 2020</span> &middot;
     <span style="text-transform: capitalize;">
-      interview
+      notebook
     </span>
   </h5>
   
-    <div><a href="/2016/02/18/neuraltalk-with-kyle-mcdonald.html"><strong>NeuralTalk with Kyle McDonald</strong></a></div>
+  <div><a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <strong>Evaluating QA: Metrics, Predictions, and the Null Response →</strong></a></div>
   
   <div class="spacer"></div>
 </div>

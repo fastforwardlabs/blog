@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2020-06.html</loc>
-    <lastmod>2020-06-16T17:57:24+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2020-06-22T11:24:19+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/</loc>
+    <loc>https://blog.fastforwardlabs.com/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html</loc>
+    <lastmod>2020-06-22T11:24:19+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2020-06-22T11:24:19+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2020-06.html</loc>
     <lastmod>2020-06-16T17:57:24+00:00</lastmod>
   </url>
   
@@ -19,11 +29,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html</loc>
-    <lastmod>2020-06-16T09:29:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2020-06-16T09:29:59+00:00</lastmod>
   </url>
   
