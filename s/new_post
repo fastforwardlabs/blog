@@ -35,12 +35,12 @@ echo "Enter the post type (this is just the label that appears above the headlin
 read post_type
 echo "post_type: $post_type" >> "$place"
 
-echo "If this is a post hosted elsewhere, enter a link to the post:"
+echo "If this is a post hosted somewhere else, enter a link to the post (leave blank for normal post):"
 read external_url
 echo "external_url: $external_url" >> "$place"
 
 echo "---
 " >> "$place"
 
-echo "$place"
+echo "your post has been created at $place"
 

@@ -3,23 +3,17 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 base=`echo $DIR | sed 's|\(.*\)/.*|\1|'`
 
-filename=$(basename -- "$1" | sed -e 's/[^A-Za-z0-9._-]/_/g')
+echo "Enter the current path of the image you want to use:"
+read original
+
+filename=$(basename -- "$original" | sed -e 's/[^A-Za-z0-9._-]/_/g')
 extension="${filename##*.}"
 filename="${filename%.*}"
 timestamp="$(date +%s)"
 newname="$filename-$timestamp.$extension"
 syntax="/images/hugo/$newname"
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]
-then
-  echo -n "$syntax" | xclip -sel clip
-elif [[ "$OSTYPE" == "darwin"* ]]
-then
-  echo -n "$syntax" | pbcopy
-fi
+cp $original $base/static/images/hugo/$newname
 
-cp $1 $base/static/images/hugo/$newname
-
-echo "Relative link:
-$syntax
-Copied to your clipboard"
+echo "Uploaded image path:
+$syntax"
