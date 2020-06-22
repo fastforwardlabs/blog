@@ -16,7 +16,7 @@ published: true
 ```
  
 ![](/images/hugo/explanation-1592852095.jpg)
-##### In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). It appears the token "subordinate .." is impactful in the selection of an answer to the question "Macedonia was under the rule of which country?". This makes sense .. good for BERTbase.
+##### In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token "subordinate .." is impactful in the selection of an answer to the question "Macedonia was under the rule of which country?". This makes sense .. good for BERTbase.
 
 Recently, our team at Fast Forward Labs have been exploring state of the art models for [Question Answering](https://qa.fastforwardlabs.com/) and have used the rather excellent HuggingFace [transformers](https://github.com/huggingface/transformers/) library. As we applied BERT for QA models (BERTQA) to datasets outside of wikipedia (e.g legal documents), we have observed a variety of results. Naturally, one of the things we have been exploring are methods to better understand why the model provides certain responses, especially when it fails. This post focuses on the following questions:
 
@@ -26,7 +26,7 @@ Recently, our team at Fast Forward Labs have been exploring state of the art mod
 - Some example results and visualizations!
 
 ![](/images/hugo/distilexplanation-1592852137.jpg)
-##### In this sample, we use distilbert for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBert..
+##### In this sample, we use DistilBERT for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBERT..
 
 Code used for this post (graphs above) is available in this [Colab notebook](https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing). Try it out!
 
