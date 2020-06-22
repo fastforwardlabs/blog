@@ -10,7 +10,7 @@ brew install hugo
 
 Otherwise read Hugo's [installation instructions](https://gohugo.io/getting-started/installing).
 
-Clone this repo. `CD` into the repo and run:
+Clone this repo. `cd` into the repo and run:
 
 ```
 hugo server
