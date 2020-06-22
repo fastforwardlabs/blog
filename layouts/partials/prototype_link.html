@@ -4,7 +4,7 @@
     <h2 style="padding-top: 0; margin-bottom: 0;"><a href="{{ .url }}" target="_blank">{{ .name }}</a></h2>
   </div>
   <div style="flex: 1 1 auto; position: relative;">
-    <a href="{{ .url }}" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('https://experiments.fastforwardlabs.com{{ .image }}'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+    <a href="{{ .url }}" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('{{ .image }}'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
   </div>
   <div>
     <div class="small">{{ .description }}</div>
