@@ -9,8 +9,8 @@
     
 <title>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</title>
 <meta property="og:title" content="How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0">
-<meta property="description" content="In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
-<meta property="og:description" content="In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
+<meta property="description" content="Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
+<meta property="og:description" content="Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/explanation-1592852095.jpg">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -56,8 +56,8 @@ if (!doNotTrack) {
     <h1>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h1>
     <!-- raw HTML omitted -->
 <pre><code class="language-Given" data-lang="Given"></code></pre><p><img src="/images/hugo/explanation-1592852095.jpg" alt=""></p>
-<h5 id="in-this-sample-a-bertbase-model-gets-the-answer-correct-achaemenid-persia-model-gradients-show-that-the-token-subordinate-is-impactful-in-the-selection-of-an-answer-to-the-question-macedonia-was-under-the-rule-of-which-country-this-makes-sense-good-for-bertbase">In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.</h5>
-<p>Recently, our team at Fast Forward Labs have been exploring state of the art models for <a href="https://qa.fastforwardlabs.com/">Question Answering</a> and have used the rather excellent HuggingFace <a href="https://github.com/huggingface/transformers/">transformers</a> library. As we applied BERT for QA models (BERTQA) to datasets outside of wikipedia (e.g legal documents), we have observed a variety of results. Naturally, one of the things we have been exploring are methods to better understand why the model provides certain responses, especially when it fails. This post focuses on the following questions:</p>
+<h5 id="figure-1-in-this-sample-a-bertbase-model-gets-the-answer-correct-achaemenid-persia-model-gradients-show-that-the-token-subordinate-is-impactful-in-the-selection-of-an-answer-to-the-question-macedonia-was-under-the-rule-of-which-country-this-makes-sense-good-for-bertbase">Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.</h5>
+<p>Recently, our team at Fast Forward Labs have been exploring state of the art models for <a href="https://qa.fastforwardlabs.com/">Question Answering</a> and have used the rather excellent HuggingFace <a href="https://github.com/huggingface/transformers/">transformers</a> library. As we applied BERT for QA models (BERTQA) to datasets outside of wikipedia (e.g legal documents), we have observed a variety of results. Naturally, one of the things we have been exploring are methods to better understand why the model provides certain responses, and especially when it fails. This post focuses on the following questions:</p>
 <ul>
 <li>What are some approaches for explaining a BERT based model?</li>
 <li>Why are Gradients a good approach?</li>
@@ -65,20 +65,26 @@ if (!doNotTrack) {
 <li>Some example results and visualizations!</li>
 </ul>
 <p><img src="/images/hugo/distilexplanation-1592852137.jpg" alt=""></p>
-<h5 id="in-this-sample-we-use-distilbert-for-the-same-questioncontext-pair-and-get-a-different-result-by-looking-at-the-gradients-we-see-that-while-the-model-sees-the-word-subordinate-as-impactful-it-also-sees-the-word-dominant-as-more-impactful-and-selects-an-answer-in-that-neighborhood-bad-for-distilbert">In this sample, we use DistilBERT for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBERT..</h5>
+<h5 id="figure-1-in-this-sample-we-use-distilbert-for-the-same-questioncontext-pair-and-get-a-different-result-by-looking-at-the-gradients-we-see-that-while-the-model-sees-the-word-subordinate-as-impactful-it-also-sees-the-word-dominant-as-more-impactful-and-selects-an-answer-in-that-neighborhood-bad-for-distilbert">Figure 1: In this sample, we use DistilBERT for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBERT..</h5>
+<!-- raw HTML omitted -->
 <p>Code used for this post (graphs above) is available in this <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing">Colab notebook</a>. Try it out!</p>
+<!-- raw HTML omitted -->
 <h2 id="how-do-we-build-an-explanation-interface-for-nlp-models-likebert">How Do We Build An Explanation Interface for NLP Models like BERT?</h2>
-<p>From the human computer interaction perspective, a primary requirement for such an interface is glanceabilty - i.e. the interface should provide an artifact  - text, number(s), or visualization that provides a complete picture of how each input contributes to the model prediction. There are several possible strategies for this. We can use model agnostic tools like ç or explore properties of the model such as self-attention weights or gradients in explaining behaviour.</p>
+<p>From the human computer interaction perspective, a primary requirement for such an interface is <strong>glanceabilty</strong> - i.e. the interface should provide an artifact  - text, number(s), or visualization - that provides a complete picture of how each input contributes to the model prediction. There are several possible strategies for this. We can use model agnostic tools like <a href="https://github.com/marcotcr/lime">LIME</a> and <a href="https://github.com/slundberg/shap">SHAP</a> or explore properties of the model such as self-attention weights or gradients in explaining behaviour.</p>
 <h3 id="blackbox-model-explanation-limeshap">Blackbox Model Explanation (LIME, SHAP)</h3>
-<p>Blackbox methods such as LIME and SHAP are perturbation based approaches (i.e. remove words from the input and observe its impact on results) and have a few limitations. In particular, LIME does not guarantee consistency  (LIME local models may not be faithful to the global model) and SHAP has known computation complexity issues(KernelSHAP explores multiple combinations of input where a feature is present/absent …. computing these combinations can take a while). See this <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N?usp=sharing">notebook</a> for some additional discussion on these methods. We&rsquo;ll skip this approach.</p>
+<p>Blackbox methods such as <a href="https://github.com/marcotcr/lime">LIME</a> and <a href="https://github.com/slundberg/shap">SHAP</a> are based on input perturbation (i.e. remove words from the input and observe its impact on model prediction) and have a few limitations. Of relevance here is that LIME does not guarantee consistency  (LIME local models may not be faithful to the global model) and SHAP has known computation complexity issues(KernelSHAP explores multiple combinations of input where a feature is present/absent …. computing these combinations can take a while). See this <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N?usp=sharing">notebook</a> for some additional discussion on these methods as well as their pros and cons.</p>
+<p>We&rsquo;ll skip this approach.</p>
 <h3 id="attention-based-explanation">Attention Based Explanation</h3>
-<p>Given that BERT is an attention based model, it is tempting to use attention weights as a way to explain its behaviour. After all, attention weights are a reflection of what inputs are important to some output task. This line of thought is not exactly bad, as attention weights have been useful in helping us understand the behaviour of sequence to sequence (seq2seq) models [5] . 
-However, BERT uses attention mechanisms differently (see this <a href="https://towardsdatascience.com/illustrated-self-attention-2d627e33b20a">relevant article</a> on self-attention mechanisms). While a traditional seq2seq model typically has a single attention mechanism [5], BERT (base) contains 12 layers, with 12 attention heads each (for a total of 144 attention mechanisms)! This immediately brings up the challenge of deciding which (combination of) mechanism(s) to use for explaining the model (see this <a href="https://towardsdatascience.com/deconstructing-bert-part-2-visualizing-the-inner-workings-of-attention-60a16d86b5c1">excellent post</a> by Jesse Vig for more info on visualizing attention heads in BERT). Furthermore, given that BERT layers are interconnected, attention is not over words but over hidden embeddings, which themselves can be mixed representations of multiple embeddings. Recent research shows that each of these attention heads focus on different patterns (e.g. heads that attend to the direct objects of verbs, determiners of nouns, objects of prepositions, and coreferent mentions [1]). Each of these different attention patterns are combined in opaque ways to enable BERTs complex language modeling capabilities. It has also been found that attention weights may be misleading as explanations in general [2] and that attention weights are not directly interpretable [3]. This is not to say attention weights are useless for debugging models .. far from it. They are valuable for scientific probing exercises that help us understand model behaviour, but perhaps not as a tool for end user interpretability.
-We will also skip this approach.</p>
+<p>Given that BERT is an attention based model, it is tempting to use attention weights as a way to explain its behaviour. After all, attention weights are a reflection of what inputs are important to some output task [5]. This line of thought is not exactly bad, as attention weights have been useful in helping us understand and debug sequence to sequence (seq2seq) models [5]. 
+However, BERT uses attention mechanisms differently (see this <a href="https://towardsdatascience.com/illustrated-self-attention-2d627e33b20a">relevant article</a> on self-attention mechanisms). While a traditional seq2seq model typically has a single attention mechanism [5] that reflects which input tokens are <code>attended to</code>, BERT (base) contains 12 layers, with 12 attention heads each (for a total of 144 attention mechanisms)!</p>
+<p>Furthermore, given that BERT layers are interconnected, attention is not over words but over hidden embeddings, which themselves can be mixed representations of multiple embeddings.
+Recent research shows that each of these attention heads focus on different patterns (e.g. heads that attend to the direct objects of verbs, determiners of nouns, objects of prepositions, and coreferent mentions [1]). Each of these different attention patterns are combined in opaque ways to enable BERTs complex language modeling capabilities. This immediately brings up the challenge of deciding which (combination of) mechanism(s) to use for explaining the model. For additional details on visual patterns within BERT attention heads, see this <a href="https://towardsdatascience.com/deconstructing-bert-part-2-visualizing-the-inner-workings-of-attention-60a16d86b5c1">excellent post</a> by Jesse Vig.</p>
+<p>Related research has also found that attention weights may be misleading as explanations in general [2] and that attention weights are not directly interpretable [3]. This is not to say attention weights are useless for debugging models .. far from it. They are valuable for scientific probing exercises [1] that help us understand model behaviour, but perhaps not as a tool for end user interpretability.</p>
+<p>We will also skip the <em>attention based explanation</em>  approach.</p>
 <h3 id="gradient-based-explanation">Gradient Based Explanation</h3>
-<p>It turns out that we can leverage the gradients in a trained deep neural network to efficiently infer the relationship between inputs and output. This works because, the gradient quantifies how much a change in each input dimension would change the predictions in a small neighborhood around the input. While this approach is simple, existing research suggest simple gradient explanations are stable, and faithful to the model/data generating process [4] compared to more sophisticated methods (e.g. GradCam and Integrated Gradients). Let&rsquo;s explore this approach!
-Gradients in TF 2.0 via GradientTape!
-Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api) standpoint, using GradientTape. Gradient tape allows us to record operations on a set of variables we want to perform automatic differentiation on. To explain the model&rsquo;s output on a given input we can</p>
+<p>It turns out that we can leverage the gradients in a trained deep neural network to efficiently infer the relationship between inputs and output. This works because, the gradient quantifies how much a change in each input dimension would change the predictions in a small neighborhood around the input. While this approach is simple, existing research suggest simple gradient explanations are stable, and faithful to the model/data generating process [4] compared to more sophisticated methods (e.g. GradCam and Integrated Gradients). It is also a fast and <em>easy</em> to implement. Let&rsquo;s explore this approach!</p>
+<h3 id="gradients-in-tf-20-via-gradienttape">Gradients in TF 2.0 via GradientTape!</h3>
+<p>Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api) standpoint, using <a href="https://www.tensorflow.org/api_docs/python/tf/GradientTape">GradientTape</a>. GradientTape allows us to record operations on a set of variables we want to perform automatic differentiation on. To explain the model&rsquo;s output on a given input we can:</p>
 <ul>
 <li>(i) instantiate the GradientTape and watch our input variable</li>
 <li>(ii) compute forward pass through the model</li>
@@ -87,11 +93,12 @@ Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api
 </ul>
 <script type="application/javascript" src="https://gist.github.com/victordibia/5394dcc919fc7e691c973f11703f737e.js"></script>
 
-<p>The code snippet above shows how these steps can be implemented  - where model  is a Hugging Face BERT model and tokenizer is a Hugging Face tokenizer. Snippet is adapted from Andreas Madsen&rsquo;s note on explaining a BERT language model using gradients.Full sample code can be found in this <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing">Colab notebook</a>. Visuals below show results from explaining 8 random question + context snippets.</p>
+<p>The code snippet above shows how these steps can be implemented  - where model  is a Hugging Face BERT model and tokenizer is a Hugging Face tokenizer. Snippet is adapted from <a href="https://colab.research.google.com/github/AndreasMadsen/python-textualheatmap/blob/master/notebooks/huggingface_bert_example.ipynb#scrollTo=IMyHY55SC24O">Andreas Madsen&rsquo;s note</a> on explaining a BERT language model using gradients. Full sample code can be found in this <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing">Colab notebook</a>.</p>
+<p>Visualizations below show some results from explaining 8 random question + context snippets.</p>
 <p><img src="/images/hugo/explanationsamples-1592852171.png" alt=""></p>
-<h5 id="additional-examples-of-explanations-via-good-old-gradients">Additional examples of explanations via good old gradients!</h5>
+<h5 id="figure-3-additional-examples-of-explanations-via-good-old-gradients">Figure 3: Additional examples of explanations via good old gradients!</h5>
 <p><img src="/images/hugo/answercomp-1592855082.jpg" alt=""></p>
-<h5 id="distlbert-vs-bert-base-vs-bert-large-models-for-qa-on-eight-random-questioncontext-pairsanswer-span-results-may-vary-slightly-across-each-run">DistlBERT vs BERT base vs BERT large models for QA on eight random question/context pairs. (Answer span results may vary slightly across each run)</h5>
+<h5 id="figure-4-distlbert-vs-bert-base-vs-bert-large-models-for-qa-on-eight-random-questioncontext-pairsanswer-span-results-may-vary-slightly-across-each-run">Figure 4: DistlBERT vs BERT base vs BERT large models for QA on eight random question/context pairs. (Answer span results may vary slightly across each run)</h5>
 <ul>
 <li>DistilBERT SQUAD1 (261M): returns 5/8. 2 correct answers.</li>
 <li>DistilBERT SQUAD2 (265MB): returns 7/8 answers. 7 correct answers</li>
@@ -106,13 +113,15 @@ Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api
 </ul>
 <p>In addition to these insights, explanations also enable sensemaking of model results by end users. In this case, sensemaking from the Human Computer Interaction perspective is focused on interface affordances that help the user build intuition on how, why and when these models work.</p>
 <h2 id="conclusions-whatsnext">Conclusions: Whats Next? </h2>
-<p>We have repurposed bar charts to visualize the impact of input tokens on how a BERTQA model selects answer spans. Perhaps an overlaid text approach (similar to <a href="https://github.com/AndreasMadsen/python-textualheatmap">textualheatmaps</a> by Andreas Madsen) would be better. I am working on some user interface that ties this together and will explore it in a future post. There are also a few other potential gradient based methods that can be used to yield explanations (e.g. Integrated Gradients, GradCam, SmoothGrad, see [4] for a complete list). </p>
+<p>We have repurposed bar charts (not so good idea) to visualize the impact of input tokens on answer spans selected by a BERTQA. Perhaps an overlaid text approach (similar to <a href="https://github.com/AndreasMadsen/python-textualheatmap">textualheatmaps</a> by Andreas Madsen) would be better. I am working on some user interface that ties this together and will explore results in a future post. There are also a few other potential gradient based methods that can be used to yield explanations (e.g. Integrated Gradients, GradCam, SmoothGrad, see [4] for a complete list). </p>
 <h1 id="references">References</h1>
-<p>[1] Clark, Kevin, et al. &ldquo;What does bert look at? an analysis of bert&rsquo;s attention.&rdquo; arXiv preprint arXiv:1906.04341 (2019).
-[2] Jain, Sarthak, and Byron C. Wallace. &ldquo;Attention is not explanation.&rdquo; arXiv preprint arXiv:1902.10186 (2019).
-[3] Brunner, Gino, et al. &ldquo;On identifiability in transformers.&rdquo; International Conference on Learning Representations. 2019.
-[4] Adebayo, Julius, et al. &ldquo;Sanity checks for saliency maps.&rdquo; Advances in Neural Information Processing Systems. 2018.
-[5] Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. &ldquo;Neural machine translation by jointly learning to align and translate.&rdquo; arXiv preprint arXiv:1409.0473 (2014).</p>
+<ul>
+<li>[1] Clark, Kevin, et al. &ldquo;What does bert look at? an analysis of bert&rsquo;s attention.&rdquo; arXiv preprint arXiv:1906.04341 (2019).</li>
+<li>[2] Jain, Sarthak, and Byron C. Wallace. &ldquo;Attention is not explanation.&rdquo; arXiv preprint arXiv:1902.10186 (2019).</li>
+<li>[3] Brunner, Gino, et al. &ldquo;On identifiability in transformers.&rdquo; International Conference on Learning Representations. 2019.</li>
+<li>[4] Adebayo, Julius, et al. &ldquo;Sanity checks for saliency maps.&rdquo; Advances in Neural Information Processing Systems. 2018.</li>
+<li>[5] Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. &ldquo;Neural machine translation by jointly learning to align and translate.&rdquo; arXiv preprint arXiv:1409.0473 (2014).</li>
+</ul>
 
     <div class="spacer"></div>
     <div>
@@ -199,7 +208,7 @@ Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api
         &middot; </span
       >
     </span>
-    In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
+    Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -637,6 +646,24 @@ image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs wit
   
   <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
   <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
     <h5 style="margin-bottom: 0">Notebooks</h5>
     <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
   </div>
@@ -682,24 +709,6 @@ image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs wit
   <div>
     <div class="small">Refractor predicts churn probabilities for telecom customers and shows which customer attributes contribute to those predictions.</div>
     <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://refractor.fastforwardlabs.com" target="_blank">https://refractor.fastforwardlabs.com</a></div>
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-  
-  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
-  <div>
-    <h5 style="margin-bottom: 0">Prototype</h5>
-    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">Anomagram</a></h2>
-  </div>
-  <div style="flex: 1 1 auto; position: relative;">
-    <a href="https://anomagram.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/anomagram.gif'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
-  </div>
-  <div>
-    <div class="small">An interactive visualization tool for exploring how a deep learning model can be applied to the task of anomaly detection.</div>
-    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://anomagram.fastforwardlabs.com" target="_blank">https://anomagram.fastforwardlabs.com</a></div>
   </div>
   <div class="spacer"></div>
   <div class="spacer"></div>
