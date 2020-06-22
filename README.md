@@ -1,18 +1,16 @@
-# Cloudera Fast Forward Blog
+# Blog dev
 
-## Quickstart
+## Install
 
-### Install
-
-The blog is built using Hugo. If you use Homebrew install with:
+The blog is built using Hugo. If you use Homebrew install Hugo with:
 
 ```
 brew install hugo
 ```
 
-Otherwise read their [installation instructions](https://gohugo.io/getting-started/installing).
+Otherwise read Hugo's [installation instructions](https://gohugo.io/getting-started/installing).
 
-Clone this blog directory. CD into the blog directory and run:
+Clone this repo. `cd` into the repo and run:
 
 ```
 hugo server
