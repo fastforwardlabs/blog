@@ -1,4 +1,11 @@
 [[experiments]]
+name = "Explain BERT for Question Answering Models"
+head = "Notebook"
+description = "Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model."
+url = "https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing"
+image = "/images/hugo/distilexplanation-1592852137.jpg"
+
+[[experiments]]
 name = "NLP for Question Answering"
 head = "Notebooks"
 description = "Ongoing posts and code documenting the process of building a question answering model."
