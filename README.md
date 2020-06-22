@@ -1,8 +1,6 @@
-# Cloudera Fast Forward Blog
+# Blog dev
 
-## Quickstart
-
-### Install
+## Install
 
 The blog is built using Hugo. If you use Homebrew install Hugo with:
 
