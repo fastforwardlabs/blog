@@ -26,7 +26,7 @@ You can use the script `s/upload` to upload an image to the proper directory and
 
 ## Publishing your post
 
-To publish your post `git push origin master`, an automatic Github action will rebuild the site and automatically deploy it. It usually takes around two minutes. You can look under the action tab to check its status.
+To publish your post commit your changes and do `git push origin master`, an automatic Github action will rebuild the site and automatically deploy it. It usually takes around two minutes. You can look under the action tab to check its status.
 
 # Adding a prototype link
 
