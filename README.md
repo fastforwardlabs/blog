@@ -2,7 +2,7 @@
 
 To update the blog you need to have Hugo and Node.js installed.
 
-## Install Hugo
+### Install Hugo
 
 If you use homebrew run:
 
@@ -12,11 +12,11 @@ brew install hugo
 
 Otherwise read Hugo's [installation instructions](https://gohugo.io/getting-started/installing).
 
-## Install Node and Node Package Manger
+### Install Node and Node Package Manger
 
 [Read the node installation instructions for your OS](https://nodejs.org/en/download/package-manager/)
 
-## Clone the repo
+### Clone the repo
 
 Clone this repo. It is a large repo because of all the images.
 
