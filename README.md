@@ -30,7 +30,7 @@ After you have everything installed run and have made sure your repo is up to da
 npm run dev
 ```
 
-![](https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-53-1592940260.png)
+<img src="https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-53-1592940260.png" style="max-width: 400px" />
 
 This runs a local version of the blog at `localhost:1313`. It will automatically update as you make changes. It also runs a form that makes it easy to upload images at `localhost:1314`.
 
@@ -48,7 +48,7 @@ that will guide you through creating the frontmatter. After you have run through
 
 ### Uploading an image
 
-![](https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-29-1592940269.png)
+<img src="https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-29-1592940269.png" style="max-width: 400px" />
 
 Go to `localhost:1314` to use a form for uploading an image to use in a post. The page also lists recently uploaded images. Use the relative link shown below the image to add the image in your post, using standard markdown image syntax: `![](relative_link)`. The relative link (no markdown syntax) will also work for the preview image field.
 
