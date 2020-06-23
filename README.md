@@ -36,7 +36,13 @@ This runs a local version of the blog at `localhost:1313`. It will automatically
 
 First, make sure you are running the dev environment.
 
-Posts are markdown files with YAML frontmatter. Run the script `s/new_post` that will guide you through creating the frontmatter. After you have run through that script you can edit the file it creates in the text editor of your choice. It is standard markdown syntax. Note that we generally use an H5 heading (syntax: `#####`) for image captions. Preview your post on the dev server at `localhost:1313`.
+Posts are markdown files with YAML frontmatter. Run the script 
+
+```
+s/new_post
+```
+
+that will guide you through creating the frontmatter. After you have run through that script you can edit the file it creates in the text editor of your choice. It is standard markdown syntax. Note that we generally use an H5 heading (syntax: `#####`) for image captions. Preview your post on the dev server at `localhost:1313`.
 
 ### Uploading an image
 
