@@ -32,7 +32,9 @@ npm run dev
 
 This runs a local version of the blog at `localhost:1313`. It will automatically update as you make changes. It also runs a form that makes it easy to upload images at `localhost:1314`.
 
-## Adding a post
+# Adding a post
+
+First, make sure you are running the dev environment.
 
 Posts are markdown files with YAML frontmatter. Run the script `s/new_post` that will guide you through creating the frontmatter. After you have run through that script you can edit the file it creates in the text editor of your choice. It is standard markdown syntax. Note that we generally use an H5 heading (syntax: `#####`) for image captions. Preview your post on the dev server at `localhost:1313`.
 
