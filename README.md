@@ -30,7 +30,7 @@ After you have everything installed run and have made sure your repo is up to da
 npm run dev
 ```
 
-<img src="https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-53-1592940260.png" style="max-width: 400px" />
+<img src="https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-53-1592940260.png" style="max-width: 400px;" />
 
 This runs a local version of the blog at `localhost:1313`. It will automatically update as you make changes. It also runs a form that makes it easy to upload images at `localhost:1314`.
 
