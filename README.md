@@ -46,13 +46,13 @@ s/new_post
 
 that will guide you through creating the frontmatter. After you have run through that script you can edit the file it creates in the text editor of your choice. It is standard markdown syntax. Note that we generally use an H5 heading (syntax: `#####`) for image captions. Preview your post on the dev server at `localhost:1313`.
 
-### Uploading an image
+## Uploading an image
 
 <img src="https://raw.githubusercontent.com/fastforwardlabs/blog/master/static/images/hugo/shotwin-2020-06-23_15-23-29-1592940269.png" width="600" />
 
 Go to `localhost:1314` to use a form for uploading an image to use in a post. The page also lists recently uploaded images. Use the relative link shown below the image to add the image in your post, using standard markdown image syntax: `![](relative_link)`. The relative link (no markdown syntax) will also work for the preview image field.
 
-### Publishing your post
+## Publishing your post
 
 To publish your post commit your changes and do `git push origin master`, an automatic Github action will rebuild the site and automatically deploy it. It usually takes around two minutes. You can look under the Github action tab to check its status.
 
