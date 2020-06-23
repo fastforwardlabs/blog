@@ -24,7 +24,7 @@ Clone this repo. It is a large repo because of all the images.
 
 # Run the dev environment
 
-After you have everything installed run and have made sure your repo is up to date with the latest changes run:
+After you have everything installed and have made sure your repo is up to date with the latest changes run:
 
 ```
 npm run dev
@@ -35,8 +35,6 @@ npm run dev
 This runs a local version of the blog at `localhost:1313`. It will automatically update as you make changes. It also runs a form that makes it easy to upload images at `localhost:1314`.
 
 # Adding a post
-
-First, make sure you are running the dev environment.
 
 Posts are markdown files with YAML frontmatter. Run the script 
 
