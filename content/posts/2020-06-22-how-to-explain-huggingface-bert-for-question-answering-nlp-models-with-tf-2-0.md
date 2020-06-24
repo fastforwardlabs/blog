@@ -26,7 +26,7 @@ Recently, our team at Fast Forward Labs have been exploring state of the art mod
 - Some example results and visualizations!
 
 ![](/images/hugo/distilexplanation-1592852137.jpg)
-##### Figure 1: In this sample, we use DistilBERT for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBERT..
+##### Figure 2: In this sample, we use DistilBERT for the same question/context pair and get a different result! By looking at the gradients, we see that while the model sees the word subordinate as impactful, it also sees the word dominant as more impactful and selects an answer in that neighborhood. Bad for DistilBERT..
 
 <!-- <div> -->
  Code used for this post (graphs above) is available in this [Colab notebook](https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing). Try it out!
@@ -52,7 +52,9 @@ Related research has also found that attention weights may be misleading as expl
 We will also skip the _attention based explanation_  approach.
 
 ### Gradient Based Explanation
-It turns out that we can leverage the gradients in a trained deep neural network to efficiently infer the relationship between inputs and output. This works because, the gradient quantifies how much a change in each input dimension would change the predictions in a small neighborhood around the input. While this approach is simple, existing research suggest simple gradient explanations are stable, and faithful to the model/data generating process [4] compared to more sophisticated methods (e.g. GradCam and Integrated Gradients). It is also a fast and _easy_ to implement. Let's explore this approach!
+It turns out that we can leverage the gradients in a trained deep neural network to efficiently infer the relationship between inputs and output. This works because, the gradient quantifies how much a change in each input dimension would change the predictions in a small neighborhood around the input. While this approach is simple, existing research suggest simple gradient explanations are stable, and faithful to the model/data generating process [4] compared to more sophisticated methods (e.g. GradCam and Integrated Gradients). 
+
+Let's explore this approach!
 
 ### Gradients in TF 2.0 via GradientTape!
 Luckily, this process is fairly straightforward from a Tensorflow 2.0 (keras api) standpoint, using [GradientTape](https://www.tensorflow.org/api_docs/python/tf/GradientTape). GradientTape allows us to record operations on a set of variables we want to perform automatic differentiation on. To explain the model's output on a given input we can: 
@@ -90,7 +92,7 @@ Explanations like the gradient method above and model output provide a few insig
 In addition to these insights, explanations also enable sensemaking of model results by end users. In this case, sensemaking from the Human Computer Interaction perspective is focused on interface affordances that help the user build intuition on how, why and when these models work.
 
 ## Conclusions: Whats Next? 
-We have repurposed bar charts (not so good idea) to visualize the impact of input tokens on answer spans selected by a BERTQA. Perhaps an overlaid text approach (similar to [textualheatmaps](https://github.com/AndreasMadsen/python-textualheatmap) by Andreas Madsen) would be better. I am working on some user interface that ties this together and will explore results in a future post. There are also a few other potential gradient based methods that can be used to yield explanations (e.g. Integrated Gradients, GradCam, SmoothGrad, see [4] for a complete list). 
+We have repurposed bar charts (not so good idea) to visualize the impact of input tokens on answer spans selected by a BERTQA. Perhaps an overlaid text approach (similar to [textualheatmaps](https://github.com/AndreasMadsen/python-textualheatmap) by Andreas Madsen) would be better. I am working on some user interface that ties this together and will explore results in a future post. There are also a few other potential gradient based methods that can be used to yield explanations (e.g. Integrated Gradients, GradCam, SmoothGrad, see [4] for a complete list). It may be interesting to compare explanations from each method. 
 
 # References
 - [1] Clark, Kevin, et al. "What does bert look at? an analysis of bert's attention." arXiv preprint arXiv:1906.04341 (2019).
