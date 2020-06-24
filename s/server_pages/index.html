@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog image uploader</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        font-family: sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        background: #ccc;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        max-width: 400px;
+        width: 100%;
+      }
+      input[type="file"] {
+        display: block;
+        background: #bbb;
+        padding: 8px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <form method="POST" action="/post" enctype="multipart/form-data">
+        <div>
+          <input type="file" name="image" />
+        </div>
+        <div>
+          <input type="submit" value="Upload" />
+        </div>
+      </form>
+      <hr />
+    </div>
+    <div>
+      <div>Recently uploaded images</div>
+      <div id="image-list"></div>
+    </div>
+    <script>
+      window.addEventListener('load', () => {
+        let $image_list = document.querySelector('#image-list')
+        fetch('image_list').then(r => {
+           r.text().then(html => {
+              $image_list.innerHTML = html
+          })
+        })
+      })
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,28 @@
+{
+  "name": "cff_blog",
+  "version": "1.0.0",
+  "description": "To update the blog you need to have Hugo and Node.js installed.",
+  "main": "s/upload_server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hugo": "hugo server",
+    "image_upload_server": "node s/image_upload_server.js",
+    "dev": "npm-run-all hugo image_upload_server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fastforwardlabs/blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fastforwardlabs/blog/issues"
+  },
+  "homepage": "https://github.com/fastforwardlabs/blog#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "npm-run-all": "^4.1.5",
+    "slugify": "^1.4.2"
+  }
+}
