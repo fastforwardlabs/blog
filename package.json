@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "hugo": "hugo server",
     "image_upload_server": "node s/image_upload_server.js",
-    "dev": "npm-run-all hugo image_upload_server"
+    "dev": "npm-run-all --parallel hugo image_upload_server"
   },
   "repository": {
     "type": "git",
