@@ -6,3 +6,8 @@ uglyurls = true
 googleAnalytics = "UA-53030428-5"
 [permalinks]
   "posts" = "/:year/:month/:day/:title/"
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
