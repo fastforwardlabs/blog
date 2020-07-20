@@ -411,7 +411,9 @@ if (!doNotTrack) {
         &middot; </span
       >
     </span>
-    import tensorflow as tf from tensorflow.examples.tutorials.mnist import input_data import vae # this is our model - to be explored in the next post IMG_DIM = 28 ARCHITECTURE = [IMG_DIM**2, # 784 pixels 500, 500, # intermediate encoding 50] # latent space dims # (and symmetrically back out again) HYPERPARAMS = { &#34;batch_size&#34;: 128, &#34;learning_rate&#34;: 1E-3, &#34;dropout&#34;: 0.9, &#34;lambda_l2_reg&#34;: 1E-5, &#34;nonlinearity&#34;: tf.nn.elu, &#34;squashing&#34;: tf.nn.sigmoid } mnist = input_data.read_data_sets(&#34;mnist_data&#34;) v = vae.VAE(ARCHITECTURE, HYPERPARAMS) v.
+    Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
+Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
+This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -446,7 +448,8 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    
+    It’s July 27. 89 degrees with high humidity on the sweltering New York City streets. We’re hard at work on our probabilistic programming report and prototype and looking forward to some good reads on the beach. Here are our recommendations for the dog days of summer!
+Homage to a great physicist, in a textbook: David MacKay, a Cambridge physicist, influenced the machine learning field by fusing together Bayesian methods with artificial neural nets.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -481,7 +484,7 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    PyGotham | July 16 | 2:15 pm Mike Williams on Text Summarization Legal Hackers International Summit | July 16 | 1:10 pm Kathryn Hume on the Ethics of Applying Machine Learning in Law 
+    If you’re a New Yorker looking for something interesting to do Saturday afternoon, Fast Forward Labs will be speaking at two events. PyGotham | July 16 | 2:15 pm Mike Williams on Text Summarization PyGotham is a conference for the Python developer community. Mike’s talk focuses on text summarization: taking some text in and returning a shorter document that contains the same information. Mike will use libraries like scikit-learn and keras, explain how to choose between different approaches, and show working prototypes.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -516,7 +519,7 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    
+    Over the past two months, the White House ran a series of workshops geared to “prepare for the future of artificial intelligence.” At each session, technologists, academics, policy makers, and social scientists discussed social and economic issues stemming from data technologies, which will feed into the development of a public report later this year (likely similar to the FTC’s January report on the social impact of big data). The last session took place yesterday in NYC.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -551,9 +554,9 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    <!-- raw HTML omitted -->
+    <figure data-orig-width="360" data-orig-height="270" class="tmblr-full"><img src="http://68.media.tumblr.com/5cfcc6b830aa09f63bf9e9b2333524a1/tumblr_inline_o8k7rqJDmA1ta78fg_540.png" alt="image" data-orig-width="360" data-orig-height="270"/></figure>
 <h5 id="a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components">A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.</h5>
-<!-- raw HTML omitted -->
+<p>What is music? Or rather, what differentiates music from noise?<b><br/></b></p><p>If you ask John Cage, “everything we do is music.” Forced to <a href="https://www.youtube.com/watch?v=JTEFKFiXSx4">sit silently for 4’33”</a>, we masters of <a href="https://en.wikipedia.org/wiki/Apophenia">apophenia</a> end up hearing music in noise (or just squirm in discomfort&hellip;), perceiving order and meaning in sounds that normally escape notice. For Cage, music is in the ears of the listener. To study it is to study how we perceive.</p><p>But Cage wrote 4’33” at time when many artists were challenging inherited notions of art. Others, dating back to Pythagoras (who defined harmony in terms of <a href="https://en.wikipedia.org/wiki/Pythagorean_hammers#cite_note-8">ratios and proportions</a>), have defined music through the structural properties that make music <i>music, </i>and separate different musical styles. </p><p>The latest efforts to understand music lie in the field of machine listening, where researchers use computers to analyze audio data to identify meaning and structure in it like humans do. Some machine listening researchers analyze urban and environmental sounds, as at <a href="https://wp.nyu.edu/sonyc/">SONYC</a>. </p><p>This August in NYC, researchers in machine listening and related fields will convene at the <a href="https://wp.nyu.edu/ismir2016/">International Society for Music Information Retrieval (ISMIR) conference</a>. The conference is of interest to anyone working in data or digital media, offering practical workshops and hackathons for the NYC data community. </p><p>We interviewed NYU Steinhardt Professor <a href="http://steinhardt.nyu.edu/marl/people/bello">Juan Pablo Bello</a>, an organizer of ISMIR 2016 working in machine listening, to learn more about the conference and the latest developments in the field. Keep reading for highlights!</p>
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -588,7 +591,7 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    
+    Alongside our research on emerging machine learning techniques, Fast Forward Labs advises organizations on data science issues like technical architecture, new product development, models and algorithms, and even hiring the right talent. Our client base is growing fast, and we’re excited to support many large financial services, insurance, and media companies, as well as startups building cutting-edge AI products. We work closely with our clients to identify opportunities where they can apply our research and take our prototypes the next mile by implementing them on their own data.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"

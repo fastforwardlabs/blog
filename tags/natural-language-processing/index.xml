@@ -19,7 +19,7 @@
       <pubDate>Thu, 25 Aug 2016 17:24:14 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2016/08/25/new-tensorflow-code-for-text-summarization.html</guid>
-      <description></description>
+      <description>Yesterday, Google released new TensorFlow model code for text summarization, specifically for generating news headlines on the Annotated English Gigaword dataset. We’re excited to see others working on summarization, as we did in our last report: our ability to “digest large amounts of information in a compressed form” will only become more important as unstructured information grows. The TensorFlow release uses sequence-to-sequence learning to train models that write headlines for news articles.</description>
     </item>
     
   </channel>

@@ -399,7 +399,8 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    Last Friday, Hilary joined Ira Flatow on Science Friday in the studio to discuss the question:Will Our Smartphones Know Us Better Than Ourselves?We love imagining what our future may look like with the technology we are building.
+    Last Friday, Hilary joined Ira Flatow on Science Friday in the studio to discuss the question:Will Our Smartphones Know Us Better Than Ourselves?
+We love imagining what our future may look like with the technology we are building.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -486,7 +487,8 @@ Research reveals that no one wants to drink a mug of hot brew once it settles to
         &middot; </span
       >
     </span>
-    Dramatizing Information Work Visualizing Thinking with the Tech Graph The graph has a pretty bare-bones feature set at the moment, topics and links can be created and deleted and that’s about about it. My goal is to keep adding and improving to the point where it becomes a useful brainstorming tool for us. I’m looking forward to exploring what kinds of features can aid our thinking process.A Starting Point 
+    We launched a redesign of the Fast Forward Labs website today. There are lots of parts of the design I’d like to write someday about but for this post I want to focus on the thinking behind the “Tech Graph” force-directed graph display in the Intro section.
+Dramatizing Information Work The response I want the intro section to provoke is something like: “Wow, there is some really interesting work being done here that I would like to be involved with it.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -521,7 +523,7 @@ Research reveals that no one wants to drink a mug of hot brew once it settles to
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    Our fearless leader Hilary Masonappeared yesterday on Bloomberg TV to discuss Selerity’s early acquisition of Twitter’s earnings data. The interview video is available here.
+    Our fearless leader Hilary Mason appeared yesterday on Bloomberg TV to discuss Selerity’s early acquisition of Twitter’s earnings data. The interview video is available here.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -564,8 +566,9 @@ Research reveals that no one wants to drink a mug of hot brew once it settles to
         &middot; </span
       >
     </span>
-    def factorial(N, result=1): if N == 1: return result return factorial(N-1, N*result) While this is not,
-def factorial(N): if N == 1: return 1 return N * factorial(N-1) def factorial(N, result=1): while True: if N == 1: return result N, result = N-1, N*result &gt;&gt;&gt; dis.dis(factorial) # bytecode # relevant python # -----------------------------------------------------#--------------------- 2 0 LOAD_FAST 0 (N) # if N == 1: 3 LOAD_CONST 1 (1) # 6 COMPARE_OP 2 (==) # 9 POP_JUMP_IF_FALSE 16 # # 3 12 LOAD_FAST 1 (result) # return result 15 RETURN_VALUE # # 4 &gt;&gt; 16 LOAD_GLOBAL 0 (factorial) # return factorial(N-1, N*result) 19 LOAD_FAST 0 (N) # 22 LOAD_CONST 1 (1) # 25 BINARY_SUBTRACT # 26 LOAD_FAST 0 (N) # 29 LOAD_FAST 1 (result) # 32 BINARY_MULTIPLY # 33 CALL_FUNCTION 2 # 36 RETURN_VALUE #  2 &gt;&gt; 0 LOAD_FAST 0 (N) 3 LOAD_CONST 1 (1) 6 COMPARE_OP 2 (==) 9 POP_JUMP_IF_FALSE 16 3 12 LOAD_FAST 1 (result) 15 RETURN_VALUE 4 &gt;&gt; 16 LOAD_FAST 0 (N) 19 LOAD_CONST 1 (1) 22 BINARY_SUBTRACT 23 LOAD_FAST 0 (N) 26 LOAD_FAST 1 (result) 29 BINARY_MULTIPLY 30 STORE_FAST 1 (result) 33 STORE_FAST 0 (N) 36 JUMP_ABSOLUTE 0 
+    DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!
+Check out the code at code at github.com/mynameisfiber/pytailcall
+As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas love to hate - tail call optimization! This isn&rsquo;t novel at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -608,7 +611,8 @@ def factorial(N): if N == 1: return 1 return N * factorial(N-1) def factorial(N,
         &middot; </span
       >
     </span>
-    
+    It&rsquo;s restyled blog day here at Fast Forward Labs! Having wrapped up our second report, I (Grant, Fast Forward Labs designer-dev) am now spending some time putting our web presence in order. The real big piece of that is a revamped Fast Forward website, which should be out next week, but as a warm-up today I worked on getting our blog into shape.
+I wanted to keep things clean and simple (to go with the grain).
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"

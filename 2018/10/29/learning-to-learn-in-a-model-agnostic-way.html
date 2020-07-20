@@ -74,7 +74,7 @@ learner, which learns new tasks, and the meta-learner, which trains the learner.
 Like other meta-learning methods, MAML trains over a wide range of tasks. It trains for a representation that can be quickly
 adapted to a new task, via a few gradient steps. The meta-learner seeks to find an initialization that is not only useful for
 adapting to various problems, but also can be adapted quickly (in a small number of steps) and efficiently (using only a few
-examples). Suppose we are seeking to find a set of parameters θ that are highly adaptable. During the course of meta-learning (the bold line), MAML optimizes for a set of parameters such that when a gradient step is taken with respect to a particular task i (the gray lines), the parameters are close to the optimal parameters θ<!-- raw HTML omitted -->∗<!-- raw HTML omitted --><!-- raw HTML omitted -->i<!-- raw HTML omitted --> for task i.</p>
+examples). Suppose we are seeking to find a set of parameters θ that are highly adaptable. During the course of meta-learning (the bold line), MAML optimizes for a set of parameters such that when a gradient step is taken with respect to a particular task i (the gray lines), the parameters are close to the optimal parameters θ<sup>∗</sup><sub>i</sub> for task i.</p>
 <p><img src="/images/2018/10/MAML-1538505613205.png" alt=""></p>
 <h5 id="image-sourcehttpsarxivorgpdf170303400pdf"><a href="https://arxiv.org/pdf/1703.03400.pdf">(image source)</a></h5>
 <p>This approach is quite simple and has some distinctive advantages:</p>
@@ -185,7 +185,7 @@ model trained with gradient descent procedure.</li>
         &middot; </span
       >
     </span>
-    Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
+    199  // ... code   -- Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"

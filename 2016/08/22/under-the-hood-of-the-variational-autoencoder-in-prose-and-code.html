@@ -10,9 +10,29 @@
 <title>Under the Hood of the Variational Autoencoder (in Prose and Code)</title>
 <meta property="og:title" content="Under the Hood of the Variational Autoencoder (in Prose and Code)">
 <meta property="description" content="The Variational Autoencoder (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In Part I of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—“machines that imagine and reason.”
-">
+To recap: VAEs put a probabilistic spin on the basic autoencoder paradigm—treating their inputs, hidden representations, and reconstructed outputs as probabilistic random variables within a directed graphical model. With this Bayesian perspective, the encoder becomes a variational inference network, mapping observed inputs to (approximate) posterior distributions over latent space, and the decoder becomes a generative network, capable of mapping arbitrary latent coordinates back to distributions over the original data space.
+
+
+The beauty of this setup is that we can take a principled Bayesian approach toward building systems with a rich internal “mental model” of the observed world, all by training a single, cleverly-designed deep neural network.
+These benefits derive from an enriched understanding of data as merely the tip of the iceberg—the observed result of an underlying causative probabilistic process.
+The power of the resulting model is captured by Feynman’s famous chalkboard quote: “What I cannot create, I do not understand.” When trained on MNIST handwritten digits, our VAE model can parse the information spread thinly over the high-dimensional observed world of pixels, and condense the most meaningful features into a structured distribution over reduced latent dimensions.
+Having recovered the latent manifold and assigned it a coordinate system, it becomes trivial to walk from one point to another along the manifold, creatively generating realistic digits all the while:
+
+
+In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in Part I.
+Along the way, we’ll show how to implement a VAE in TensorFlow—a library for efficient numerical computation using data flow graphs, with key features like automatic differentiation and parallelizability (across clusters, CPUs, GPUs…and TPUs if you’re lucky). You can find (and tinker with!) the full implementation here, along with a couple pre-trained models.">
 <meta property="og:description" content="The Variational Autoencoder (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In Part I of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—“machines that imagine and reason.”
-">
+To recap: VAEs put a probabilistic spin on the basic autoencoder paradigm—treating their inputs, hidden representations, and reconstructed outputs as probabilistic random variables within a directed graphical model. With this Bayesian perspective, the encoder becomes a variational inference network, mapping observed inputs to (approximate) posterior distributions over latent space, and the decoder becomes a generative network, capable of mapping arbitrary latent coordinates back to distributions over the original data space.
+
+
+The beauty of this setup is that we can take a principled Bayesian approach toward building systems with a rich internal “mental model” of the observed world, all by training a single, cleverly-designed deep neural network.
+These benefits derive from an enriched understanding of data as merely the tip of the iceberg—the observed result of an underlying causative probabilistic process.
+The power of the resulting model is captured by Feynman’s famous chalkboard quote: “What I cannot create, I do not understand.” When trained on MNIST handwritten digits, our VAE model can parse the information spread thinly over the high-dimensional observed world of pixels, and condense the most meaningful features into a structured distribution over reduced latent dimensions.
+Having recovered the latent manifold and assigned it a coordinate system, it becomes trivial to walk from one point to another along the manifold, creatively generating realistic digits all the while:
+
+
+In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in Part I.
+Along the way, we’ll show how to implement a VAE in TensorFlow—a library for efficient numerical computation using data flow graphs, with key features like automatic differentiation and parallelizability (across clusters, CPUs, GPUs…and TPUs if you’re lucky). You can find (and tinker with!) the full implementation here, along with a couple pre-trained models.">
 <meta property="og:image" content="https://blog.fastforwardlabs.comhttp://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -56,9 +76,22 @@ if (!doNotTrack) {
       </span>
     </h5>
     <h1>Under the Hood of the Variational Autoencoder (in Prose and Code)</h1>
-    <h5 id="the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona">The <!-- raw HTML omitted -->Variational<!-- raw HTML omitted --> <!-- raw HTML omitted -->Autoencoder<!-- raw HTML omitted --> (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In <!-- raw HTML omitted -->Part I<!-- raw HTML omitted --> of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—<!-- raw HTML omitted -->“machines that imagine and reason.”<!-- raw HTML omitted --></h5>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+    <h5 id="the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona">The <a href="https://arxiv.org/abs/1312.6114">Variational</a> <a href="https://arxiv.org/abs/1401.4082">Autoencoder</a> (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In <a href="http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a> of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—<a href="http://shakirm.com/slides/DLSummerSchool_Aug2016_compress.pdf">“machines that imagine and reason.”</a></h5>
+<p>To recap: VAEs put a probabilistic spin on the basic autoencoder paradigm—treating their inputs, hidden representations, and reconstructed outputs as probabilistic random variables within a directed graphical model. With this <a href="https://xkcd.com/1236/">Bayesian</a> perspective, the encoder becomes a variational <em>inference network</em>, mapping observed inputs to (approximate) posterior distributions over latent space, and the decoder becomes a <em>generative network</em>, capable of mapping arbitrary latent coordinates back to distributions over the original data space.</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/vae.4.png" title="A variational autoencoder" style="width:80.0%"/></div>
+<p>The beauty of this setup is that we can take a principled Bayesian approach toward building systems with a rich internal “mental model” of the observed world, all by training a single, cleverly-designed deep neural network.</p>
+<p>These benefits derive from an enriched understanding of data as merely the tip of the iceberg—the observed result of an underlying causative probabilistic process.</p>
+<p>The power of the resulting model is captured by Feynman’s famous <a href="http://archives-dc.library.caltech.edu/islandora/object/ct1:483">chalkboard quote</a>: “What I cannot create, I do not understand.” When trained on MNIST handwritten digits, our VAE model can parse the information spread thinly over the high-dimensional observed world of pixels, and condense the most meaningful features into a structured distribution over reduced latent dimensions.</p>
+<p>Having recovered the latent manifold and assigned it a coordinate system, it becomes trivial to walk from one point to another along the manifold, creatively generating realistic digits all the while:</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif" title="Generatively morphing digits"/></div>
+<p>In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in <a href="http://fastforwardlabs.github.io/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a>.</p>
+<p>Along the way, we’ll show how to implement a VAE in <a href="http://tensorflow.org/">TensorFlow</a>—a library for efficient numerical computation using data flow graphs, with key features like <a href="http://alexey.radul.name/ideas/2013/introduction-to-automatic-differentiation/">automatic differentiation</a> and parallelizability (across clusters, CPUs, GPUs…and <a href="https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html">TPUs</a> if you’re lucky). You can find (and tinker with!) the full implementation <a href="https://github.com/fastforwardlabs/vae-tf/tree/master">here</a>, along with a couple <a href="https://github.com/fastforwardlabs/vae-tf/tree/master/out">pre-trained models</a>.</p>
+<h2 id="building-the-model">Building the Model</h2>
+<p>Let’s dive into code (Python 3.4), starting with the necessary imports:</p>
+```python
+import functools
 <p>from functional import compose, partial
 import numpy as np
 import tensorflow as tf</p>
@@ -89,7 +122,12 @@ class Dense():
                     self.w, self.b = self.wbVars(x.get_shape()[1].value, self.size)
                     self.w = tf.nn.dropout(self.w, self.dropout)
     ...
-</code></pre><!-- raw HTML omitted -->
+</code></pre><p>We can initialize a <code>Dense</code> layer with our choice of <code>nonlinearity</code> for the layer nodes (i.e. neural network units that apply a nonlinear activation function to a linear combination of their inputs, as per line <code>18</code>).</p>
+<p>We’ll use <a href="https://arxiv.org/abs/1511.07289">ELUs</a> (Exponential Linear Units), a <a href="http://www.picalike.com/blog/2015/11/28/relu-was-yesterday-tomorrow-comes-elu/">recent advance</a> in building nodes that learn quickly by avoiding the problem of vanishing gradients. We wrap up the class with a <a href="https://github.com/fastforwardlabs/vae-tf/blob/master/layers.py#L26-L38">helper function</a> (<code>Dense.wbVars</code>) for compatible random initialization of weights and biases, to further accelerate learning.</p>
+<p>In TensorFlow, neural networks are defined as numerical computation graphs. We will build the graph using partial function composition of sequential layers, which is amenable to an arbitrary number of hidden layers.</p>
+```python
+def composeAll(*args):
+    """Util for multiple function composition
 <pre><code>i.e. composed = composeAll([f, g, h])
      composed(x) # == f(g(h(x)))
 &quot;&quot;&quot;
@@ -137,8 +175,21 @@ class VAE():
             handles = self._buildGraph()
             ...
             self.sesh.run(tf.initialize_all_variables())
-</code></pre><!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+</code></pre><p>Assuming that we are building a model from scratch (rather than restoring a <a href="https://www.tensorflow.org/versions/r0.9/how_tos/meta_graph/index.html">saved</a> <code>meta_graph</code>), the key initialization step is the call to <code>VAE._buildGraph</code> (line <code>32</code>). This internal method constructs nodes representing the placeholders and operations through which the data will flow—<em>before</em> any data is actually piped in.</p>
+<p>Finally, we unpack the iterable <code>handles</code> (populated by <code>_buildGraph</code>) into convenient class attributes—pointers not to numerical values, but rather to nodes in the graph:</p>
+```python
+        ...
+        # unpack handles for tensor ops to feed or fetch
+        (self.x_in, self.dropout_, self.z_mean, self.z_log_sigma,
+         self.x_reconstructed, self.z_, self.x_reconstructed_,
+         self.cost, self.global_step, self.train_op) = handles
+```
+<p>How are these nodes defined? The <code>_buildGraph</code> method encapsulates the core of the VAE model framework—starting with the encoder/inference network:</p>
+```python
+    def _buildGraph(self):
+        x_in = tf.placeholder(tf.float32, shape=[None, # enables variable batch size
+                                                 self.architecture[0]], name="x")
+        dropout = tf.placeholder_with_default(1., shape=[], name="dropout")
 <pre><code>    # encoding / &quot;recognition&quot;: q(z|x)
     encoding = [Dense(&quot;encoding&quot;, hidden_size, dropout, self.nonlinearity)
                 # hidden layers reversed for function composition: outer -&amp;gt; inner
@@ -156,7 +207,7 @@ class VAE():
 &lt;p&gt;Next, we sample from this latent distribution (in practice, &lt;a href=&quot;https://arxiv.org/abs/1312.6114&quot;&gt;one draw is enough&lt;/a&gt; given sufficient minibatch size, i.e. &amp;gt;100). This method involves a trick—can you figure out why?—that we will explore in more detail later.&lt;/p&gt;
 ```python
         z = self.sampleGaussian(z_mean, z_log_sigma)
-</code></pre><!-- raw HTML omitted -->
+</code></pre><p>The sampled <span class="math inline">\(z\)</span> is then passed to the decoder/generative network, which symmetrically builds back out to generate the conditional distribution over input space, reconstruction <span class="math inline">\(\tilde{x} \sim p_\theta(x|z)\)</span>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># decoding / &#34;generative&#34;: p(x|z)</span>
         decoding <span style="color:#f92672">=</span> [Dense(<span style="color:#e6db74">&#34;decoding&#34;</span>, hidden_size, dropout, self<span style="color:#f92672">.</span>nonlinearity)
                     <span style="color:#66d9ef">for</span> hidden_size <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>architecture[<span style="color:#ae81ff">1</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#75715e"># assumes symmetry</span>
@@ -164,21 +215,36 @@ class VAE():
         decoding<span style="color:#f92672">.</span>insert(<span style="color:#ae81ff">0</span>, Dense( <span style="color:#75715e"># prepend as outermost function</span>
             <span style="color:#e6db74">&#34;reconstruction&#34;</span>, self<span style="color:#f92672">.</span>architecture[<span style="color:#ae81ff">0</span>], dropout, self<span style="color:#f92672">.</span>squashing))
         x_reconstructed <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>identity(composeAll(decoding)(z), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x_reconstructed&#34;</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>Alternately, we add a placeholder to directly feed arbitrary values of <span class="math inline">\(z\)</span> to the generative network (to fabricate realistic outputs—no input data necessary!):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># ops to directly explore latent space</span>
         <span style="color:#75715e"># defaults to prior z ~ N(0, I)</span>
         z_ <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>placeholder_with_default(tf<span style="color:#f92672">.</span>random_normal([<span style="color:#ae81ff">1</span>, self<span style="color:#f92672">.</span>architecture[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]),
                                          shape<span style="color:#f92672">=</span>[None, self<span style="color:#f92672">.</span>architecture[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]],
                                          name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latent_in&#34;</span>)
         x_reconstructed_ <span style="color:#f92672">=</span> composeAll(decoding)(z_)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>TensorFlow automatically flows data through the appropriate subgraph, based on the nodes that we fetch and feed with the <code>tf.Session.run</code> method. Defining the <a href="https://github.com/fastforwardlabs/vae-tf/blob/master/vae.py#L190-L196">encoder</a>, <a href="https://github.com/fastforwardlabs/vae-tf/blob/master/vae.py#L198-L209">decoder</a>, and <a href="https://github.com/fastforwardlabs/vae-tf/blob/master/vae.py#L211-L214">end-to-end VAE</a> is then trivial (see linked code).</p>
+<p>We’ll finish the <code>VAE._buildGraph</code> method later in the post, as we walk through the nuances of the model.</p>
+<h2 id="the-reparameterization-trick">The Reparameterization Trick</h2>
+<p>In order to estimate the latent representation <span class="math inline">\(z\)</span> for a given observation <span class="math inline">\(x\)</span>, we want to sample from the approximate posterior <span class="math inline">\(q_\phi(z|x)\)</span> according to the distribution defined by the encoder.</p>
+<p>However, model training by <a href="http://mathworld.wolfram.com/MethodofSteepestDescent.html">gradient descent</a> requires that our model be differentiable with respect to its learned parameters (which is how we propagate the gradients). This presupposes that the model is deterministic—i.e. a given input always returns the same output for a fixed set of parameters, so the only source of stochasticity are the inputs. Incorporating a probabilistic “sampling” node would make the model itself stochastic!</p>
+<p>Instead, we inject randomness into the model by introducing input from an auxiliary random variable: <span class="math inline">\(\epsilon \sim p(\epsilon)\)</span>.</p>
+<p>For our purposes, rather than sampling <span class="math inline">\(z\)</span> directly from <span class="math inline">\(q_\phi(z|x) \sim \mathcal{N}(\mu, \sigma^2I)\)</span>, we generate Gaussian noise <span class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span> and compute <span class="math display">\[z = \mu + \sigma \odot \epsilon\]</span> (where <span class="math inline">\(\odot\)</span> is the element-wise product). In code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sampleGaussian</span>(self, mu, log_sigma):
         <span style="color:#e6db74">&#34;&#34;&#34;Draw sample from Gaussian with given shape, subject to random noise epsilon&#34;&#34;&#34;</span>
         <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;sample_gaussian&#34;</span>):
             <span style="color:#75715e"># reparameterization trick</span>
             epsilon <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>random_normal(tf<span style="color:#f92672">.</span>shape(log_sigma), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;epsilon&#34;</span>)
             <span style="color:#66d9ef">return</span> mu <span style="color:#f92672">+</span> epsilon <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>exp(log_sigma) <span style="color:#75715e"># N(mu, sigma**2)</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>By “reparameterizing” this step, inference and generation become entirely differentiable and hence, learnable.</p>
+<h2 id="cost-function">Cost Function</h2>
+<p>Now, in order to optimize the model, we need a metric for how well its parameters capture the true data-generating and latent distributions. That is, how likely is observation <span class="math inline">\(x\)</span> under the joint distribution <span class="math inline">\(p(x, z)\)</span>?</p>
+<p>Recall that we represent the global encoder and decoder parameters (i.e. neural network weights and biases) as <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\theta\)</span>, respectively.</p>
+<p>In other words, we want to simultaneously tune these complementary parameters such that we maximize <span class="math inline">\(log(p(x|\phi, \theta))\)</span>—the log-likelihood across all datapoints <span class="math inline">\(x\)</span> under the current model settings, after marginalizing out the latent variables <span class="math inline">\(z\)</span>. This term is also known as the model <em>evidence</em>.</p>
+<p>We can express this marginal likelihood as the sum of what we’ll call the <em>variational</em> or <em>evidence lower bound</em> <span class="math inline">\(\mathcal{L}\)</span> and the <em>Kullback-Leibler (KL) divergence</em> <span class="math inline">\(\mathcal{D}_{KL}\)</span> between the approximate and true latent posteriors: <span class="math display">\[ log(p(x)) = \mathcal{L}(\phi, \theta; x) + \mathcal{D}_{KL}(q_\phi(z|x) || p_\theta(z|x)) \]</span></p>
+<p>Here, the <!-- The --> KL divergence can be (<a href="http://mathworld.wolfram.com/RelativeEntropy.html">fuzzily</a>!) intuited as a metric for the misfit of the approximate posterior <span class="math inline">\(q_\phi\)</span>. We’ll delve into this further in a moment, but for now the important thing is that it is non-negative by definition; consequently, the first term acts as a <em>lower bound</em> on the total. So, we maximize the lower bound <span class="math inline">\(\mathcal{L}\)</span> as a (computationally-tractable) proxy for the total marginal likelihood of the data under the model. (And the better our approximate posterior, the tighter the gap between the lower bound and the total model evidence.)</p>
+<p>With some <a href="https://arxiv.org/abs/1312.6114">mathematical wrangling</a>, we can decompose <span class="math inline">\(\mathcal{L}\)</span> into the following objective function: <span class="math display">\[ \mathcal{L}(\phi, \theta; x) = \mathbb{E}_{z \sim q_\phi(z|x)}[log(p_\theta(x|z))] - \mathcal{D}_{KL}(q_\phi(z|x) || p_\theta(z)) \]</span> (Phrased as a cost, we optimize the model by minimizing <span class="math inline">\({-\mathcal{L}}\)</span>.)</p>
+<p>Here, the perhaps unfriendly-looking first term is, in fact, familiar! It’s the probability density of generated output <span class="math inline">\(\tilde{x}\)</span> given the inferred latent distribution over <span class="math inline">\(z\)</span>—i.e. the (negative) expected <em>reconstruction error</em>. This loss term is intrinsic to perhaps every autoencoder: how accurately does the output replicate the input?</p>
+<p>Choosing an appropriate metric for image resemblance is hard (but that’s another <a href="https://arxiv.org/abs/1512.09300">story</a>). We’ll use the binary <a href="http://neuralnetworksanddeeplearning.com/chap3.html#the_cross-entropy_cost_function">cross-entropy</a>, which is commonly used for data like MNIST that can be modeled as <a href="http://mathworld.wolfram.com/BernoulliDistribution.html">Bernoulli trials</a>. Expressed as a static method of the <code>VAE</code> class:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#a6e22e">@staticmethod</span>
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossEntropy</span>(obs, actual, offset<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-7</span>):
         <span style="color:#e6db74">&#34;&#34;&#34;Binary cross-entropy, per training example&#34;&#34;&#34;</span>
@@ -188,7 +254,12 @@ class VAE():
             obs_ <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>clip_by_value(obs, offset, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> offset)
             <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>tf<span style="color:#f92672">.</span>reduce_sum(actual <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>log(obs_) <span style="color:#f92672">+</span>
                                   (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> actual) <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> obs_), <span style="color:#ae81ff">1</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>The second term in the objective is the KL divergence of the prior <span class="math inline">\(p\)</span> from the (approximate) posterior <span class="math inline">\(q\)</span> over the latent space. We’ll approach this conceptually, then mathematically.</p>
+<p>The KL divergence <span class="math inline">\(\mathcal{D}_{KL}(q||p)\)</span> is defined as the relative entropy between probability density functions <span class="math inline">\(q\)</span> and <span class="math inline">\(p\)</span>. In information theory, entropy represents information content (measured in nats), so <span class="math inline">\(\mathcal{D}_{KL}\)</span> quantifies the information gained by revising the candidate prior <span class="math inline">\(p\)</span> to match some “ground truth” <span class="math inline">\(q\)</span>.</p>
+<p>In a related vein, the KL divergence between posterior and prior beliefs (i.e. distributions) can be conceived as a measure of “<a href="http://ilab.usc.edu/surprise">surprise</a>”: the extent to which the model must update its “worldview” (parameters) to accomodate new observations.</p>
+<p>(Note that the formula is asymmetric—i.e. <span class="math inline">\(\mathcal{D}_{KL}(q||p) \neq \mathcal{D}_{KL}(p||q)\)</span>—with <a href="http://www.inference.vc/how-to-train-your-generative-models-why-generative-adversarial-networks-work-so-well-2/">implications</a> for its use in generative models. This is also why it is not a true metric.)</p>
+<p>By inducing the learned approximation <span class="math inline">\(q_\phi(z|x)\)</span> (the encoder) to match the continuous imposed prior <span class="math inline">\(p(z)\)</span>, the KL term encourages robustness to small perturbations along the latent manifold, enabling smooth interpolation within and between classes (e.g. MNIST digits). This reduces “spottiness” in the latent space that is often observed in autoencoders without such regularization.</p>
+<p>Mathematical bonus: we can strategically choose certain conjugate priors over <span class="math inline">\(z\)</span> that let us analytically integrate the KL divergence, yielding a closed-form equation. This is true of the spherical Gaussian we chose, such that <span class="math display">\[ {-\mathcal{D}}_{KL}(q_\phi(z|x) || p_\theta(z)) = \frac{1} 2 \sum{(1 + log(\sigma^2) - \mu^2 - \sigma^2)} \]</span> (summed over the latent dimensions). In TensorFlow, that looks like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#a6e22e">@staticmethod</span>
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kullbackLeibler</span>(mu, log_sigma):
         <span style="color:#e6db74">&#34;&#34;&#34;(Gaussian) Kullback-Leibler divergence KL(q||p), per training example&#34;&#34;&#34;</span>
@@ -197,7 +268,8 @@ class VAE():
             <span style="color:#75715e"># = -0.5 * (1 + log(sigma**2) - mu**2 - sigma**2)</span>
             <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> tf<span style="color:#f92672">.</span>reduce_sum(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> log_sigma <span style="color:#f92672">-</span> mu<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span>
                                         tf<span style="color:#f92672">.</span>exp(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> log_sigma), <span style="color:#ae81ff">1</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>Together, these complementary loss terms capture the trade-off between expressivity and concision, between data complexity and simplicity of the prior. Reconstruction loss pushes the model toward perfectionist tendencies, while KL loss (along with the addition of auxiliary noise) encourages it to explore sensibly.</p>
+<p>To elaborate (building on the <code>VAE._buildGraph</code> method started above):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># reconstruction loss: mismatch b/w x &amp;amp; x_reconstructed</span>
         <span style="color:#75715e"># binary cross-entropy -- assumes p(x) &amp;amp; p(x|z) are iid Bernoullis</span>
         rec_loss <span style="color:#f92672">=</span> VAE<span style="color:#f92672">.</span>crossEntropy(x_reconstructed, x_in)
@@ -208,7 +280,11 @@ class VAE():
 
         <span style="color:#75715e"># average over minibatch</span>
         cost <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>reduce_mean(rec_loss <span style="color:#f92672">+</span> kl_loss, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cost&#34;</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>Beyond its concise elegance <!-- elegant concision  -->and solid grounding in Bayesian theory, the cost function lends itself well to intuitive metaphor:</p>
+<p>Information theory-wise, the VAE is a terse game of Telephone, with the aim of finding the <em>minimum description length</em> to convey the input from end to end. Here, reconstruction loss is the information “lost in translation,” while KL loss captures how overly “wordy” the model must be to convey the message through an unpredictable medium (hidden code imperfectly optimized for the input data).</p>
+<p>Or, framing the VAE as a lossy compression algorithm, reconstruction loss accounts for the fidelity of (de)compression while KL loss penalizes the model for using a sub-optimal compression scheme.</p>
+<h2 id="training">Training</h2>
+<p>At last, our VAE cost function in hand (after factoring in optional <a href="http://cs231n.github.io/neural-networks-2/#regularization"><span class="math inline">\(\ell_2\)</span>-regularization</a>), we finish <code>VAE._buildGraph</code> with optimization nodes to be evaluated at each step of SGD (with the <a href="https://arxiv.org/abs/1412.6980">Adam</a> optimizer)…</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># optimization</span>
         global_step <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>Variable(<span style="color:#ae81ff">0</span>, trainable<span style="color:#f92672">=</span>False)
         <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>name_scope(<span style="color:#e6db74">&#34;Adam_optimizer&#34;</span>):
@@ -219,10 +295,12 @@ class VAE():
                     <span style="color:#66d9ef">for</span> grad, tvar <span style="color:#f92672">in</span> grads_and_vars]
             train_op <span style="color:#f92672">=</span> optimizer<span style="color:#f92672">.</span>apply_gradients(clipped, global_step<span style="color:#f92672">=</span>global_step,
                                                  name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;minimize_cost&#34;</span>) <span style="color:#75715e"># back-prop</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>…and return all of the nodes we want to access in the future to the <code>VAE.__init__</code> method where <code>buildGraph</code> was called.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#66d9ef">return</span> (x_in, dropout, z_mean, z_log_sigma, x_reconstructed,
                 z_, x_reconstructed_, cost, global_step, train_op)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>Using SGD to optimize the function parameters of the inference and generative networks simultaneously is called <em>Stochastic Gradient Variational Bayes</em>.</p>
+<p>This is where TensorFlow really shines: all of the gradient backpropagation and parameter updates are performed via automatic differentation, and abstracted away from the researcher in the <code>train_op</code> (essentially) one-liner on line <code>48</code>.</p>
+<p>Model training (with optional cross-validation) is then as simple as feeding minibatches from dataset <code>X</code> to the <code>x_in</code> placeholder and evaluating (“fetching”) the <code>train_op</code>. Here are some relevant chunks, excerpted from the <a href="https://github.com/fastforwardlabs/vae-tf/blob/master/vae.py#L216-L295">full class method</a>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train</span>(self, X, max_iter<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>inf, max_epochs<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>inf, cross_validate<span style="color:#f92672">=</span>True,
               verbose<span style="color:#f92672">=</span>True, save<span style="color:#f92672">=</span>False, outdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./out&#34;</span>, plots_outdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./png&#34;</span>):
         <span style="color:#66d9ef">try</span>:
@@ -247,7 +325,31 @@ class VAE():
                     now <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>isoformat()[<span style="color:#ae81ff">11</span>:]
                     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;------- Training end: {} -------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(now))
                     <span style="color:#66d9ef">break</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>Helpfully, TensorFlow comes with a built-in <a href="https://www.tensorflow.org/versions/r0.10/how_tos/summaries_and_tensorboard/index.html">visualization dashboard</a>. Here’s the computational graph for an end-to-end VAE with two hidden encoder/decoder layers (that’s what all the <code>tf.name_scope</code>-ing was for):</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/tensorboard.png" title="TensorBoard" style="max-width: 398px !important"/><h2 id="wrapping-up">Wrapping Up
+</h2><p>The future of deep latent models lies in models that can reason about the world—“understanding” complex observations, transforming them into meaningful internal representations, and even leveraging these representations to make decisions—all while coping with scarce data, and in semisupervised or unsupervised settings. VAEs are an important step toward this future, demonstrating the power of new ways of thinking that result from unifying variational Bayesian methods and deep learning.</p>
+<p>We now understand how these fields come together to make the VAE possible, through a theoretically-sound objective function that balances accuracy (reconstruction loss) with variational regularization (KL loss), and efficient optimization of the fully differentiable model thanks to the reparameterization trick.</p>
+<p>We’ll wrap up for now with one more way of visualizing the condensed information encapsulated in VAE latent space.</p>
+<p><a href="http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Previously</a>, we showed the correspondence between the inference and generative networks by plotting the encoder and decoder perspectives of the latent space in the same 2-D coordinate system. For the decoder perspective, this meant feeding linearly spaced latent coordinates to the generative network and plotting their corresponding outputs.</p>
+<p>To get an undistorted sense of the full latent manifold, we can sample and decode latent space coordinates proportionally to the model’s distribution over latent space. In other words—thanks to variational regularization provided by the KL loss!—we simply sample relative to our chosen prior distribution over <span class="math inline">\(z\)</span>. In our case, this means sampling linearly spaced percentiles from the <a href="http://work.thaslwanter.at/Stats/html/statsDistributions.html#other-important-presentations-of-probability-densities">inverse CDF</a> of a spherical Gaussian.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Once again, evolving over (logarithmic) time:</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1813_latent_784_500_500_2_explore_ppf30_16.0.500x500.slower47.gif" title="Decoder's undistorted view of latent space, over training"/></div>
+<p>Interestingly, we can see that the slim tails of the distribution (edges of the frame) are not well-formed. Presumably, this results from few observed inputs being mapped to latent posteriors with significant density in these regions.</p>
+<p>Here are a few resulting constellations (from a single model):</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160805_1646_reloaded_latent_784_500_500_2_round_131072_explore_ppf_30.png" title="Generative view of latent space: 30x30"/></div>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160805_1646_reloaded_latent_784_500_500_2_round_131072_explore_ppf_60.png" title="Generative view of latent space: 60x60"/></div>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160805_1646_reloaded_latent_784_500_500_2_round_131072_explore_ppf_100.png" title="Generative view of latent space: 100x100"/></div>
+<p>Theoretically, we could subdivide the latent space into infinitely many points (limited in practice only by the computer’s floating point precision), and let the generative network dream up infinite constellations of creative variations on MNIST.</p>
+<p>That’s enough digits for now! Keep your eyes out for the next installment, where we’ll tinker with the vanilla VAE model in the context of a new dataset.</p>
+<p>– Miriam</p>
+<div class="footnotes">
+<hr><ol><li id="fn1"><p>Thanks Kyle McDonald (<span class="citation">@kcimc</span>) and Tom White (<span class="citation">@dribnet</span>) for noting this!<a href="#fnref1">↩</a></p></li>
+</ol></div> </div>
     <div class="spacer"></div>
     <div>
       <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
@@ -348,7 +450,7 @@ class VAE():
         &middot; </span
       >
     </span>
-    Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
+    199  // ... code   -- Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"

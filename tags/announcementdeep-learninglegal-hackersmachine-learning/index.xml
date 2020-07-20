@@ -19,7 +19,7 @@
       <pubDate>Mon, 11 Jul 2016 12:46:23 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2016/07/11/two-talks-in-nyc-this-saturday.html</guid>
-      <description>PyGotham | July 16 | 2:15 pm Mike Williams on Text Summarization Legal Hackers International Summit | July 16 | 1:10 pm Kathryn Hume on the Ethics of Applying Machine Learning in Law </description>
+      <description>If you’re a New Yorker looking for something interesting to do Saturday afternoon, Fast Forward Labs will be speaking at two events. PyGotham | July 16 | 2:15 pm Mike Williams on Text Summarization PyGotham is a conference for the Python developer community. Mike’s talk focuses on text summarization: taking some text in and returning a shorter document that contains the same information. Mike will use libraries like scikit-learn and keras, explain how to choose between different approaches, and show working prototypes.</description>
     </item>
     
   </channel>

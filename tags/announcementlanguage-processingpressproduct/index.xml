@@ -19,7 +19,8 @@
       <pubDate>Mon, 11 Apr 2016 11:25:26 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2016/04/11/new-tools-to-summarize-text.html</guid>
-      <description></description>
+      <description>We’re excited to introduce the latest report and prototype from our machine intelligence R&amp;amp;D group! In this iteration, we explore summarization, or neural network techniques for making unstructured text data computable.
+Making language computable has been a goal of computer science research for decades. Historically, it has been a challenge to merely collect and store data. But it’s now so cheap to store data that we often have the opposite problem: once we’ve data, how should we analyze it to find meaning and insights?</description>
     </item>
     
   </channel>

@@ -19,7 +19,8 @@
       <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
-      <description></description>
+      <description>Neural networks are generating a lot of excitement, as they are quickly proving to be a promising and practical form of machine intelligence. At Fast Forward Labs, we just finished a project researching and building systems that use neural networks for image analysis, as shown in our toy applicationPictograph. Our companion deep learning report explains this technology in depth and explores applications and opportunities across industries.
+As we built Pictograph, we came to appreciate just how challenging it is to understand how neural networks work.</description>
     </item>
     
   </channel>

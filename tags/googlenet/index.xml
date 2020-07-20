@@ -19,7 +19,8 @@
       <pubDate>Mon, 26 Oct 2015 16:20:07 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2015/10/26/hello-deep-learning.html</guid>
-      <description></description>
+      <description>Deep learning is a hot and fascinating research area, particularly when applied to classifying images. While researching the Fast Forward Labs Deep Learning: Image Analysis report, we played with a lot of very cool technology. In this blog post, we offer a guide to getting started with deep learning by using APIs from some of the most interesting deep-learning-as-a-service startups.
+These APIs accept images and/or video, and quickly classify objects, ideas, and items shown in the images and video.</description>
     </item>
     
   </channel>

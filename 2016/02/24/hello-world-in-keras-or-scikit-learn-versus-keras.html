@@ -9,8 +9,10 @@
     
 <title>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</title>
 <meta property="og:title" content="&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)">
-<meta property="description" content="&gt;&gt;&gt; %matplotlib inline &gt;&gt;&gt; import seaborn as sns &gt;&gt;&gt; import numpy as np &gt;&gt;&gt; from sklearn.cross_validation import train_test_split &gt;&gt;&gt; from sklearn.linear_model import LogisticRegressionCV &gt;&gt;&gt; from keras.models import Sequential &gt;&gt;&gt; from keras.layers.core import Dense, Activation &gt;&gt;&gt; from keras.utils import np_utils &gt;&gt;&gt; iris = sns.load_dataset(&#34;iris&#34;) &gt;&gt;&gt; iris.head() &gt;&gt;&gt; sns.pairplot(iris, hue=&#39;species&#39;) &gt;&gt;&gt; X = iris.values[:, 0:4] &gt;&gt;&gt; y = iris.values[:, 4] &gt;&gt;&gt; train_X, test_X, train_y, test_y = train_test_split(X, y, train_size=0.5, random_state=0) &gt;&gt;&gt; lr = LogisticRegressionCV() &gt;&gt;&gt; lr.">
-<meta property="og:description" content="&gt;&gt;&gt; %matplotlib inline &gt;&gt;&gt; import seaborn as sns &gt;&gt;&gt; import numpy as np &gt;&gt;&gt; from sklearn.cross_validation import train_test_split &gt;&gt;&gt; from sklearn.linear_model import LogisticRegressionCV &gt;&gt;&gt; from keras.models import Sequential &gt;&gt;&gt; from keras.layers.core import Dense, Activation &gt;&gt;&gt; from keras.utils import np_utils &gt;&gt;&gt; iris = sns.load_dataset(&#34;iris&#34;) &gt;&gt;&gt; iris.head() &gt;&gt;&gt; sns.pairplot(iris, hue=&#39;species&#39;) &gt;&gt;&gt; X = iris.values[:, 0:4] &gt;&gt;&gt; y = iris.values[:, 4] &gt;&gt;&gt; train_X, test_X, train_y, test_y = train_test_split(X, y, train_size=0.5, random_state=0) &gt;&gt;&gt; lr = LogisticRegressionCV() &gt;&gt;&gt; lr.">
+<meta property="description" content="This article is available as a notebook on Github. Please refer to that notebook for a more detailed discussion and code fixes and updates. Despite all the recent excitement around deep learning, neural networks have a reputation among non-specialists as complicated to build and difficult to interpret.
+And while interpretability remains an issue, there are now high-level neural network libraries that enable developers to quickly build neural network models without worrying about the numerical details of floating point operations and linear algebra.">
+<meta property="og:description" content="This article is available as a notebook on Github. Please refer to that notebook for a more detailed discussion and code fixes and updates. Despite all the recent excitement around deep learning, neural networks have a reputation among non-specialists as complicated to build and difficult to interpret.
+And while interpretability remains an issue, there are now high-level neural network libraries that enable developers to quickly build neural network models without worrying about the numerical details of floating point operations and linear algebra.">
 <meta property="og:image" content="https://blog.fastforwardlabs.comhttp://68.media.tumblr.com/a4cf05aa664f57b54fe5021ce966f5d6/tumblr_inline_o30qnzlyxi1qcg73w_540.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -54,10 +56,13 @@ if (!doNotTrack) {
       </span>
     </h5>
     <h1>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</h1>
-    <!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+    <h5>This article is <a
+href="https://github.com/fastforwardlabs/keras-hello-world">available as a
+notebook on Github</a>. Please refer to that notebook for a more detailed
+discussion and code fixes and updates.</h5>
+<p>Despite all the recent excitement around deep learning, neural networks have a reputation among non-specialists as complicated to build and difficult to  interpret.</p><p>And while interpretability remains an issue, there are now high-level neural network libraries that enable developers to quickly build neural network models without worrying about the numerical details of floating point operations and linear algebra.</p><p>This post compares keras with scikit-learn, the most popular, feature-complete classical machine learning library used by Python developers.</p>
+<p>Keras is a high-level neural network library that wraps an API similar to scikit-learn around the Theano or TensorFlow backend. Scikit-learn has a simple, coherent API built around <code>Estimator</code> objects. It is carefully designed and is a good description of machine learning workflow with which many engineers are already comfortable.</p>
+<p>Let&rsquo;s get started by importing the libraries we&rsquo;ll need: scikit-learn, keras and some plotting features.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">%</span>matplotlib inline
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> seaborn <span style="color:#f92672">as</span> sns
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
@@ -66,36 +71,39 @@ if (!doNotTrack) {
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.models <span style="color:#f92672">import</span> Sequential
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.layers.core <span style="color:#f92672">import</span> Dense, Activation
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> keras.utils <span style="color:#f92672">import</span> np_utils
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><h2>Iris data</h2><p>The famous <a href="https://archive.ics.uci.edu/ml/datasets/Iris">iris dataset</a> is a great way of demonstrating the API of a machine learning framework. In some ways it&rsquo;s the &ldquo;Hello world&rdquo; of machine learning.</p><p>The data is simple, and it&rsquo;s possible to get high accuracy with an extremely simple classifier. Using a neural network here would be like using a sledghammer to crack a nut. But this is fine for us; we want to show the code required to get from data to working classifier, not the details of model design.</p><p>The iris dataset is built into many machine learning libraries. We like the copy in seaborn because it comes as a labelled dataframe that can be easily visualized. Let&rsquo;s load it and look at the first 5 examples.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> iris <span style="color:#f92672">=</span> sns<span style="color:#f92672">.</span>load_dataset(<span style="color:#e6db74">&#34;iris&#34;</span>)
 <span style="color:#f92672">&gt;&gt;&gt;</span> iris<span style="color:#f92672">.</span>head()
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><figure data-orig-width="450" data-orig-height="183" class="tmblr-full"><img src="http://68.media.tumblr.com/d7c32a4d56195a39fb609287cbf9987c/tumblr_inline_o30ql2XBMK1qcg73w_540.png" alt="image" data-orig-width="450" data-orig-height="183"/></figure><p>For each example (i.e., flower), there are five pieces of data. Four are standard measurements of the flower&rsquo;s size (in centimeters), and the fifth is the species of iris. There are three species: setosa, verscicolor and virginica. Our job is to build a classifier that, given the two petal and two sepal measurements, can predict the species of an iris. Let&rsquo;s do a quick visualization before we start model building (always a good idea!):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> sns<span style="color:#f92672">.</span>pairplot(iris, hue<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;species&#39;</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><figure data-orig-width="811" data-orig-height="721" class="tmblr-full"><img src="http://68.media.tumblr.com/a4cf05aa664f57b54fe5021ce966f5d6/tumblr_inline_o30qnzlyxi1qcg73w_540.png" alt="image" data-orig-width="811" data-orig-height="721"/></figure><h2>Munge and split the data for training and testing</h2><p>First we need to pull the raw data out of the <code>iris</code> dataframe. We&rsquo;ll hold the petal and sepal data in an array <code>X</code> and the species labels in a corresponding array <code>y</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> X <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>values[:, <span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">4</span>]
 <span style="color:#f92672">&gt;&gt;&gt;</span> y <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>values[:, <span style="color:#ae81ff">4</span>]
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>Now we split <code>X</code> and <code>y</code> in half. As is standard in supervised machine learning, we&rsquo;ll train with half the data, and measure the performance of our model with the other half. This is simple to do by hand, but is built into scikit-learn as the <code>train_test_split()</code>function.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> train_X, test_X, train_y, test_y <span style="color:#f92672">=</span> train_test_split(X, y, train_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><h2>Train a scikit-learn classifier</h2><p>We&rsquo;ll train a logisitic regression classifier. Doing this, with built-in hyper-paramter cross validation, requires one line in scikit-learn. Like all scikit-learn <code>Estimator</code> objects, a <code>LogisticRegressionCV</code> classifier has a <code>.fit()</code> method that takes care of the gory numerical details of learning model parameters that best fit the training data. So that method is all we need to do:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> lr <span style="color:#f92672">=</span> LogisticRegressionCV()
 <span style="color:#f92672">&gt;&gt;&gt;</span> lr<span style="color:#f92672">.</span>fit(train_X, train_y)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><h2>Assess the classifier using accuracy</h2><p>Now we can measure the fraction of of the test set the trained classifer classifies correctly (i.e., accuracy).</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> pred_y <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(test_X)
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Test fraction correct (Accuracy) = {:.2f}&#34;</span><span style="color:#f92672">.</span>format(lr<span style="color:#f92672">.</span>score(test_X, test_y)))
 <span style="color:#75715e"># Test fraction correct (Accuracy) = 0.83</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><h2>Now do something very similar with Keras</h2><p>Scikit-learn makes building a classifier very simple:</p><ul><li>one line to instantiate the classifier</li>
+    <li>one line to train it</li>
+    <li>and one line to measure its performance</li>
+</ul><p>It&rsquo;s only a little bit more complicated in keras.</p><p>First a bit of data-munging: scikit-learn&rsquo;s classifiers accept string labels, e.g. <code>"setosa"</code>. But keras requires that labels be one-hot-encoded. This means we need to convert data that looks like</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">setosa
 versicolor
 setosa
 virginica
 <span style="color:#f92672">...</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>to a table that looks like</p>
 <pre><code>setosa versicolor virginica
      1          0         0
      0          1         0
      1          0         0
      0          0         1
-</code></pre><!-- raw HTML omitted -->
+</code></pre> <p>There are lots of ways of doing this. We&rsquo;ll use a keras utility and some numpy.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">one_hot_encode_object_array</span>(arr):
     <span style="color:#e6db74">&#39;&#39;&#39;One hot encode a numpy array of objects (e.g. strings)&#39;&#39;&#39;</span>
     uniques, ids <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>unique(arr, return_inverse<span style="color:#f92672">=</span>True)
@@ -103,23 +111,25 @@ virginica
 
 <span style="color:#f92672">&gt;&gt;&gt;</span> train_y_ohe <span style="color:#f92672">=</span> one_hot_encode_object_array(train_y)
 <span style="color:#f92672">&gt;&gt;&gt;</span> test_y_ohe <span style="color:#f92672">=</span> one_hot_encode_object_array(test_y)
-</code></pre></div><!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+</code></pre></div><h2>Build the neural network model</h2>
+<p>Building the model is the only aspect of using keras that is substantially more code than in scikit-learn.</p><p>Keras is a neural network library. As such, while the number of features/classes in your data provide constraints, you can determine all other aspects of model structure. This means that instaniating the classifier requires more work than the one line required by scikit-learn.</p>
+<p>In this case, we&rsquo;ll build an extremely simple network: 4 features in the input layer (the four flower measurements), 3 classes in the ouput layer (corresponding to the 3 species), and 16 hidden units because (from the point of view of a GPU, 16 is a round number!)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> model <span style="color:#f92672">=</span> Sequential()
 <span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">16</span>, input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">4</span>,)))
 <span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;sigmoid&#39;</span>))
 <span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Dense(<span style="color:#ae81ff">3</span>))
 <span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>add(Activation(<span style="color:#e6db74">&#39;softmax&#39;</span>))
 <span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;categorical_crossentropy&#39;</span>, optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>But now we&rsquo;ve instantiated the keras model, we have an object whose API is almost identical to a classifier in scikit-learn. In particular, it has <code>.fit()</code> and <code>.predict()</code> methods. Let&rsquo;s <code>fit</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> model<span style="color:#f92672">.</span>fit(train_X, train_y_ohe, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>For basic use, the only syntactic API difference between a compiled keras model and a sklearn classifier is that keras&rsquo;s equivalent of the sklearn <code>.score()</code> method is called <code>.evaluate()</code>. By default it returns whatever loss function you set when you compile the model, but we can ask it to return the accuracy too. In this case, the second number it returns is exactly what you&rsquo;d get from <code>.score()</code> in sklearn.<br/></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> loss, accuracy <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_X, test_y_ohe, show_accuracy<span style="color:#f92672">=</span>True, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Test fraction correct (Accuracy) = {:.2f}&#34;</span><span style="color:#f92672">.</span>format(accuracy))
 
 <span style="color:#75715e"># Test fraction correct (Accuracy) = 0.99</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><p>As you can see, the test accuracy of the neural network model is better than that of the simple logistic regression classifier.</p><p>While reassuring, this misses the point: a neural network model is overkill for this problem. But note that using a batteries-included, high-level library like keras requires only marginally more code to build, train, and apply a neural network model than a traditional model.</p><h2>What&rsquo;s next</h2><p>There&rsquo;s a point where the high-level keras approach does not provide the flexibility needed to build a complex or novel neural network model, but fortunately most work won&rsquo;t reach that level of complexity.</p><p>We built an extremely simple feed-forward network model. To learn more, have a look at <a href="https://github.com/wxs/keras-mnist-tutorial/blob/master/MNIST%20in%20Keras.ipynb">this MNIST tutorial</a>, which demonstrates a slighty more complex use case: the MNIST handwritten digits data. This data requires the complexity a neural network model can afford, with performance improved via a deeper model with some <a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf">dropout</a> (an approach to regularization in neural networks).</p><p>keras also has layers that allow you to build models with:</p><ul><li><a href="http://deeplearning.net/tutorial/lenet.html">convolutional neural networks</a>, which give state-of-the-art results for computer vsion problems</li>
+    <li><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">recurrent neural networks</a>, which are particularly well suited to modelling language and other sequence data.</li>
+</ul><p>In fact, one key strength of neural networks (along with sheer predictive power) is their composability. Using a high-level library like keras, it only takes a few seconds of work to create a very different network. Models can be built up like legos. Sure, the computer then has to grind through training on a GPU, and that&rsquo;s still relatively expensive. But while the computer slaves away, you get to have fun.</p><p>- Mike</p>
 
     <div class="spacer"></div>
     <div>
@@ -221,7 +231,7 @@ virginica
         &middot; </span
       >
     </span>
-    Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
+    199  // ... code   -- Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"

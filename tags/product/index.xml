@@ -19,7 +19,8 @@
       <pubDate>Thu, 21 Apr 2016 19:38:37 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</guid>
-      <description>Summaries make documents more manageable The technologies we use to summarize documents have many other potential uses </description>
+      <description>Analyzing unstructured text data such as news, emails, chats, narrative prose, legal documents, or transcribed speech is an extremely tough problem. Thanks to massive leaps in data engineering, we can just about store and retrieve this torrent of information. But we can&amp;rsquo;t yet conduct the kind of rich and fast analyses that we take for granted with structured, quantitative data.
+Our newly released summarization report is a response to this problem in two senses.</description>
     </item>
     
     <item>
@@ -30,7 +31,7 @@
       <pubDate>Fri, 25 Mar 2016 16:25:43 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2016/03/25/h.p.-luhn-and-the-heuristic-value-of-simplicity.html</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;</description>
+      <description>&lt;figure data-orig-width=&#34;600&#34; data-orig-height=&#34;385&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/8ad092dc44ae1ad68bad697a55274b30/tumblr_inline_o4lon7By6N1ta78fg_540.gif&#34; alt=&#34;image&#34; data-orig-width=&#34;600&#34; data-orig-height=&#34;385&#34;/&gt;&lt;/figure&gt;&lt;p&gt;The Fast Forward Labs team is putting final touches on our &lt;i&gt;Summarization &lt;/i&gt;research, which explains approaches to making text quantifiable and computable. Stay tuned for a series of resources on the topic, including an online talk May 24 where we’ll cover technical details and survey use cases for financial services, media, and professional services with &lt;a href=&#34;http://www.agolo.com/&#34;&gt;Agolo&lt;/a&gt;. Sign up &lt;a href=&#34;https://textsummarizationwebinar.splashthat.com/&#34;&gt;here&lt;/a&gt;! &lt;br/&gt;&lt;/p&gt;&lt;p&gt;In writing our reports, we try not only to inform readers about the libraries, math, and techniques they can use to put a system into production today, but also the lessons they can learn from historical approaches to a given topic. Turning a retrospective eye towards past work can be particularly helpful when using an algorithm like a &lt;a href=&#34;http://karpathy.github.io/2015/05/21/rnn-effectiveness/&#34;&gt;recurrent neural network&lt;/a&gt;. That’s because neural networks are notoriously hard to interpret: feature engineering is left to the algorithm, and involves a &lt;a href=&#34;http://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html&#34;&gt;complex interplay&lt;/a&gt; between the weight of individual computing nodes and the connections that link them together. In the face of this complexity, it can be helpful to keep former, more simple techniques in mind as a heuristic guide - or model - to shape our intuition about how contemporary algorithms work. &lt;/p&gt;&lt;p&gt;For example, we found that &lt;a href=&#34;https://en.wikipedia.org/wiki/Hans_Peter_Luhn&#34;&gt;H.P. Luhn&lt;/a&gt;’s 1958 paper &lt;i&gt;&lt;a href=&#34;http://courses.ischool.berkeley.edu/i256/f06/papers/luhn58.pdf&#34;&gt;The Automatic Creation of Literary Abstracts&lt;/a&gt; &lt;/i&gt;provided a simple heuristic to help wrap our heads around the basic steps that go into probabilistic models for summarizing text. (For those interested in history, Luhn also wrote &lt;a href=&#34;http://altaplana.com/ibmrd0204H.pdf&#34;&gt;a paper about business intelligence&lt;/a&gt; in 1958 that feels like it could have been written today, as it highlights the growing need to automate information retrieval to manage an unwieldy amount of information.) Our design lead, &lt;a href=&#34;https://twitter.com/GrantCuster&#34;&gt;Grant Custer&lt;/a&gt;, designed a prototype you can play with to walk through Luhn’s method. &lt;/p&gt;&lt;p&gt;&lt;a href=&#34;http://fastforwardlabs.github.io/luhn/&#34;&gt;Here’s the link&lt;/a&gt; to access the live demo. Feel free to use the suggested text, or to play around your own (and share results on Twitter!). &lt;br/&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -53,7 +54,8 @@ Our prototype demonstrated these algorithms running on large amounts of social c
       <pubDate>Fri, 19 Dec 2014 21:17:09 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</guid>
-      <description></description>
+      <description>We&amp;rsquo;re very pleased to announce our second research report topic will be realtime stream analysis, with a focus on probabilistic data structures. Using these techniques, we&amp;rsquo;re able to build systems that enable extremely fast and memory efficient computation over very large data sets. For example, imagine being able to do comparisons between two sets of billions of items in milliseconds using only a few megabytes of memory.
+We&amp;rsquo;re exploring applications with partners in marketing, healthcare, and science.</description>
     </item>
     
     <item>
