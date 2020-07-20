@@ -6,6 +6,7 @@ To update the blog you need to have Hugo and Node.js installed.
 
 If you use homebrew run:
 
+
 ```
 brew install hugo
 ```
