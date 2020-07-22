@@ -58,3 +58,7 @@ To publish your post commit your changes and do `git push origin master`, an aut
 # Adding a prototype link
 
 The prototype section contains links to notebooks and prototypes. It is visible at the bottom of the front page and on its own at https://blog.fastforwardlabs.com/prototypes. To add a prototype add the new entry to the top of `data/prototypes.toml`. Use the previous entries as a guide. The image link can be relative (to an image you added using the process described above) or absolute (to another website) just make sure it is `https` if it is to another site or it won't show up. Look up the TOML format if you have any formatting issues. Just like adding a post, any new entries will be automatically built and deployed after you commit your changes and do `git push origin master`.
+
+# Adding a newsletter
+
+We use the blog to generate the newsetter (which is sent through Cloudera marketing ops). Newsletters go here: https://github.com/fastforwardlabs/blog/tree/master/content/newsletters and the html version can be found at URLs like https://blog.fastforwardlabs.com/newsletters/2020-06.html. You also need to inline the CSS (usually we use a Mailchimp tool, maybe someday we'll clean up this process more).
