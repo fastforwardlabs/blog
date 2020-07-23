@@ -18,11 +18,16 @@
       <div>
       <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
       </div>
-    <p>Welcome to the July edition of Cloudera Fast Forward&rsquo;s monthly newsletter. This month, we have new research, new blog posts, new recommended reading, and we&rsquo;re very excited to invite you to our next research webinar - <a href="https://www.cloudera.com/about/events/webinars/deep-learning-for-automated-question-answering.html?internal_keyplay=ODL&amp;internal_campaign=FY21-Q2_CW_AMER_CFFL_14_Report_EP_2020-07-30&amp;cid=7012H000000sW8u&amp;internal_link=p07">Deep Learning for Automated Question Answering</a>!</p>
+    <p>Welcome to the July edition of Cloudera Fast Forward&rsquo;s monthly newsletter. This month, we have new research, new blog posts, new recommended reading, and we&rsquo;re very excited to invite you to our next research webinar <em>tomorrow</em> &ndash; <a href="https://www.cloudera.com/about/events/webinars/deep-learning-for-automated-question-answering.html?internal_keyplay=ODL&amp;internal_campaign=FY21-Q2_CW_AMER_CFFL_14_Report_EP_2020-07-30&amp;cid=7012H000000sW8u&amp;internal_link=p07">Deep Learning for Automated Question Answering</a>!</p>
 <hr>
-<h2 id="new-research">New research:</h2>
+<h2 id="new-research-nlp-for-question-answering">New research: NLP for Question Answering</h2>
+<p>We&rsquo;re rounding out our blog series on Question Answering with these three recent posts.</p>
 <p><a href="https://qa.fastforwardlabs.com/elasticsearch/mean%20average%20precision/recall%20for%20irqa/qa%20system%20design/2020/06/30/Evaluating_the_Retriever_&amp;_End_to_End_System.html">Evaluating QA: the Retriever &amp; the Full QA System</a></p>
-<p>Continuing our Question Answering research, the our latest post focusses on a vital component of a modern Information Retrieval-based (IR) QA system: the Retriever. Specifically, we introduce Elasticsearch as a powerful and efficient IR tool that can be used to scour through large corpora and retrieve relevant documents. We explain how to implement and evaluate a Retriever in the context of Question Answering and demonstrate its impact on an IR QA system.</p>
+<p>This post focuses on a vital component of a modern Information Retrieval-based (IR) QA system: the Retriever. Specifically, we introduce Elasticsearch as a powerful and efficient IR tool that can be used to scour through large corpora and retrieve relevant documents. We explain how to implement and evaluate a Retriever in the context of Question Answering and demonstrate its impact on an IR QA system.</p>
+<p><a href="https://qa.fastforwardlabs.com/elasticsearch/qa%20system%20design/passage%20ranking/masked%20language%20model/word%20embeddings/2020/07/22/Improving_the_Retriever_on_Natural_Questions.html">How to Maximize Retriever Performance on a More Natural Dataset</a></p>
+<p>Implementing question answering for real-world use cases is a bit more nuanced than evaluating system performance against a toy dataset. In this post, we explore several challenges faced by the Retriever when applying IR-QA to a more realistic dataset, as well as a few practical approaches for overcoming them.</p>
+<p><a href="https://qa.fastforwardlabs.com/domain%20adaptation/transfer%20learning/specialized%20datasets/qa/medical%20qa/2020/07/22/QA-for-Specialized-Data.html">Beyond SQuAD: How to Apply a Transformer QA Model to <em>Your</em> Data</a></p>
+<p>Finally, we discuss how a Reader trained on SQuAD2.0 might perform on different datasets, particularly on highly specialized data — such as a collection of legal contracts, financial reports, or technical manuals. In this post we perform experiments designed to highlight how to adapt Transformer models to specialized domains and provide guidelines for practical applications.</p>
 <p>If you&rsquo;re just catching up to our Question Answering series, check out the first three posts:</p>
 <p><a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html">Intro to Automated Question Answering</a></p>
 <p><a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html">Building a QA System with BERT on Wikipedia</a></p>
@@ -30,6 +35,7 @@
 <hr>
 <h2 id="new-on-the-blog">New on the blog</h2>
 <p><a href="https://blog.fastforwardlabs.com/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</a></p>
+<p><img src="July%202020%20b4741cd64cc340a5bda5cd18245396c8/Untitled.png" alt="July%202020%20b4741cd64cc340a5bda5cd18245396c8/Untitled.png"></p>
 <p>Recently, our team at Fast Forward Labs have been exploring state of the art models for <a href="https://qa.fastforwardlabs.com/">Question Answering</a> and have used the rather excellent HuggingFace <a href="https://github.com/huggingface/transformers/">transformers</a> library. As we applied BERT for QA models (BERTQA) to datasets outside of wikipedia (e.g legal documents), we have observed a variety of results. Naturally, one of the things we have been exploring are methods to better understand why the model provides certain responses, and especially when it fails. This post focuses on the following questions:</p>
 <ul>
 <li>What are some approaches for explaining a BERT based model?</li>
@@ -37,6 +43,7 @@
 <li>How to implement Gradient explanations for BERT in Tensorflow 2.0?</li>
 <li>Some example results and visualizations!</li>
 </ul>
+<p>The post comes along with an <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing">interactive Colab notebook</a> which you can try out! - <a href="https://twitter.com/vykthur">Victor</a></p>
 <hr>
 <h2 id="recommended-reading">Recommended reading</h2>
 <p>Our research engineers share their favourite reads of the month.</p>
@@ -62,7 +69,7 @@ OpenAI recently released their GPT-3 API to beta users, and the accompanying pap
 </li>
 <li>
 <p><a href="https://arxiv.org/abs/2002.06305">Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping</a>
-A must-read for any NLP practitioner! The authors perform a deep study into how fine-tuning language models (like BERT and XLNet) is a very brittle process. They demonstrate that even with a fixed set of hyperparameters like batch size, learning rate, etc., results vary substantially due to the value of the random seed and even by the order of the training examples during training! They then offer practical guidance on how and when to stop training less promising models in favor of those more likely to converge, thus saving time and, ultimately, producing better models. - <a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></p>
+A must-read for any NLP practitioner! The authors perform a deep study into how fine-tuning language models (like BERT and XLNet) is a very brittle process. They demonstrate that, even with a fixed set of hyperparameters, results vary substantially due to the value of the random seed and even by the order of the training examples during training! They then offer practical guidance on how and when to stop training less promising models in favor of those more likely to converge, thus saving time and, ultimately, producing better models. - <a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></p>
 </li>
 <li>
 <p><a href="https://arxiv.org/abs/2006.14547">Estimating Displaced Populations from Overhead</a> - This paper uses overhead drone imagery (sub-meter, 10cm Ground Sample Distance), population polygons, Open Street Map (OSM) segmentation masks and convolutional network to estimate refugee camp population. It&rsquo;s a great illustration of using ML and improved sensor capabilities for social good. - Shioulin</p>
@@ -71,6 +78,7 @@ A must-read for any NLP practitioner! The authors perform a deep study into how 
 <hr>
 <h2 id="events">Events</h2>
 <h3 id="webinar-deep-learning-for-automated-question-answeringhttpswwwclouderacomabouteventswebinarsdeep-learning-for-automated-question-answeringhtmlinternal_keyplayodlinternal_campaignfy21-q2_cw_amer_cffl_14_report_ep_2020-07-30cid7012h000000sw8uinternal_linkp07">Webinar: <a href="https://www.cloudera.com/about/events/webinars/deep-learning-for-automated-question-answering.html?internal_keyplay=ODL&amp;internal_campaign=FY21-Q2_CW_AMER_CFFL_14_Report_EP_2020-07-30&amp;cid=7012H000000sW8u&amp;internal_link=p07">Deep Learning for Automated Question Answering</a></h3>
+<p><em>July 30, 2020 10:00am PT</em>  | <em>1:00pm ET</em></p>
 <p>What if you could ask your email client, “Who sent me the link with the latest financial report?” Automated question answering is a human-machine interaction to extract information from data using natural language. This general capability can take many forms, but one of the most exciting developments has been question answering from unstructured text data, including the massive amounts of information contained in emails, social media posts, blogs, log files, financial statements &ndash; and the list goes on. Thanks to a series of advances in deep learning techniques in the past two years, question answering capabilities have grown rapidly, and while still emerging, it’s the perfect time to examine how this technology works, when it works well, and where it might still fall short.</p>
 <p>In this webinar, we&rsquo;ll cover</p>
 <ul>
