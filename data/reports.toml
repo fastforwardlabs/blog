@@ -1,4 +1,13 @@
 [[entries]]
+number = "FF14"
+name = "Automated Question Answering"
+blurb = "Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system."
+img = "ff14-combo.png"
+link = "https://qa.fastforwardlabs.com"
+
+
+
+[[entries]]
 number = "FF13"
 name = "Causality for Maching Learning"
 blurb = "The intersection of causal inference and machine learning is a rapidly expanding area of research that's already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases."

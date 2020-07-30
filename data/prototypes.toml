@@ -1,4 +1,11 @@
 [[experiments]]
+name = "NeuralQA"
+head = "Library"
+description = "A usable library for question answering on large datasets."
+url = "https://neuralqa.fastforwardlabs.com"
+image = "/images/hugo/neuralqa-1596123511.jpg"
+
+[[experiments]]
 name = "Explain BERT for Question Answering Models"
 head = "Notebook"
 description = "Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model."
