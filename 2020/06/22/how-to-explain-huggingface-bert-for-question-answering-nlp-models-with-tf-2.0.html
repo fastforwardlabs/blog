@@ -9,8 +9,10 @@
     
 <title>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</title>
 <meta property="og:title" content="How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0">
-<meta property="description" content="199  // ... code   -- Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
-<meta property="og:description" content="199  // ... code   -- Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.">
+<meta property="description" content="Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.">
+<meta property="og:description" content="Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.">
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/explanation-1592852095.jpg">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -54,16 +56,8 @@ if (!doNotTrack) {
       </span>
     </h5>
     <h1>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h1>
-    <!-- <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">199
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">//</span> <span style="color:#f92672">...</span> <span style="color:#a6e22e">code</span></code></pre></td></tr></table>
-</div>
-</div> -->
-<pre><code class="language-Given" data-lang="Given">
-</code></pre><p><img src="/images/hugo/explanation-1592852095.jpg" alt=""></p>
+    <p>Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.</p>
+<p><img src="/images/hugo/explanation-1592852095.jpg" alt=""></p>
 <h5 id="figure-1-in-this-sample-a-bertbase-model-gets-the-answer-correct-achaemenid-persia-model-gradients-show-that-the-token-subordinate-is-impactful-in-the-selection-of-an-answer-to-the-question-macedonia-was-under-the-rule-of-which-country-this-makes-sense-good-for-bertbase">Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.</h5>
 <p>Recently, our team at Fast Forward Labs have been exploring state of the art models for <a href="https://qa.fastforwardlabs.com/">Question Answering</a> and have used the rather excellent HuggingFace <a href="https://github.com/huggingface/transformers/">transformers</a> library. As we applied BERT for QA models (BERTQA) to datasets outside of wikipedia (e.g legal documents), we have observed a variety of results. Naturally, one of the things we have been exploring are methods to better understand why the model provides certain responses, and especially when it fails. This post focuses on the following questions:</p>
 <ul>
@@ -217,7 +211,8 @@ Recent research shows that each of these attention heads focus on different patt
         &middot; </span
       >
     </span>
-    199  // ... code   -- Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase. Recently, our team at Fast Forward Labs have been exploring state of the art models for Question Answering and have used the rather excellent HuggingFace transformers library.
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
