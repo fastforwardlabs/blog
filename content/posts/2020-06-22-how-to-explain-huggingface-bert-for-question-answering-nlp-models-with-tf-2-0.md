@@ -8,13 +8,7 @@ post_type: POST
 published: true
 ---
 
-<!-- {{< highlight go "linenos=table,hl_lines=8 15-17,linenostart=199" >}}
-// ... code
-{{< / highlight >}} -->
-
-```Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
-
-```
+Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
 
 ![](/images/hugo/explanation-1592852095.jpg)
 
