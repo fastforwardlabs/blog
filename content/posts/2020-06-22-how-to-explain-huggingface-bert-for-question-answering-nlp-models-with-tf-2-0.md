@@ -5,7 +5,7 @@ author: Victor
 author_link: https://twitter.com/vykthur
 preview_image: /images/hugo/explanation-1592852095.jpg
 post_type: POST
-published: false
+published: true
 ---
 
 <!-- {{< highlight go "linenos=table,hl_lines=8 15-17,linenostart=199" >}}
