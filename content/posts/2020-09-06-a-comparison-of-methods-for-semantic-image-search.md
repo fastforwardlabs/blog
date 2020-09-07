@@ -4,8 +4,8 @@ date: 2020-09-06T19:55:21
 author: Victor Dibia
 author_link: https://twitter.com/vykthur
 preview_image:
-post_type:
-published: true
+post_type: POST
+published: false
 ---
 
 ```Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
