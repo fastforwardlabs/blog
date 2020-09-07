@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2020-07.html</loc>
-    <lastmod>2020-07-23T12:28:14+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/2020/09/06/a-comparison-of-methods-for-semantic-image-search.html</loc>
+    <lastmod>2020-09-06T19:55:21+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2020-09-06T19:55:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2020-09-06T19:55:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2020-07.html</loc>
     <lastmod>2020-07-23T12:28:14+00:00</lastmod>
   </url>
   
@@ -24,11 +34,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html</loc>
-    <lastmod>2020-06-16T09:29:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2020-06-16T09:29:59+00:00</lastmod>
   </url>
   
