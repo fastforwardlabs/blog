@@ -1,11 +1,16 @@
 [[entries]]
+number = "FF15"
+name = "Meta-Learning"
+blurb = "In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time"
+img = "ff15-combo.png"
+link = "https://meta-learning.fastforwardlabs.com"
+
+[[entries]]
 number = "FF14"
 name = "Automated Question Answering"
 blurb = "Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system."
 img = "ff14-combo.png"
 link = "https://qa.fastforwardlabs.com"
-
-
 
 [[entries]]
 number = "FF13"
