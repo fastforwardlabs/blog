@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</title>
+<meta property="og:title" content="Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters">
+<meta property="description" content="Probabilistic data structures store data compactly with low memory and provide approximate answers to queries about stored data. They are designed to answer queries in a space-efficient manner, which can mean sacrificing accuracy. However, they typically provide guarantees and bounds on error rates depending on specifications of the data structure in question. Because they provide low memory footprints, probabilisitic data structures are particularly useful ink streaming and low power settings.">
+<meta property="og:description" content="Probabilistic data structures store data compactly with low memory and provide approximate answers to queries about stored data. They are designed to answer queries in a space-efficient manner, which can mean sacrificing accuracy. However, they typically provide guarantees and bounds on error rates depending on specifications of the data structure in question. Because they provide low memory footprints, probabilisitic data structures are particularly useful ink streaming and low power settings.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/tumblr_files/pmrs-test.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Nov 23, 2016</span> &middot;
+      <span style="text-transform: capitalize;">
+        whitepaper
+      </span>
+    </h5>
+    <h1>Probabilistic Data Structure Showdown: Cuckoo Filters vs. Bloom Filters</h1>
+    <p><figure data-orig-width="600" data-orig-height="241" class="tmblr-full"><img src="http://68.media.tumblr.com/02f8acc9218bd0faa09ab3c373629884/tumblr_inline_oh29g1UjZy1qcg73w_540.png" data-orig-width="600" data-orig-height="241"/></figure></p>
+<p>Probabilistic data structures store data compactly with low memory and provide approximate answers to queries about stored data. They are designed to answer queries in a space-efficient manner, which can mean sacrificing accuracy. However, they typically provide guarantees and bounds on error rates depending on specifications of the data structure in question. Because they provide low memory footprints, probabilisitic data structures are particularly useful ink streaming and low power settings. As such, they are extremely useful in big data situations like counting views on a video or maintaining a list of unique tweets in the past. A single <a href="https://research.neustar.biz/2012/10/25/sketch-of-the-day-hyperloglog-cornerstone-of-a-big-data-infrastructure/">HyperLogLog++</a> <a href="https://en.wikipedia.org/wiki/HyperLogLog">structure</a>, for example, can count up to 7.9 billion unique items using 2.56KB of memory with only a 1.65% error rate.</p>
+<p>The Fast Forward Labs team explored probabilistic data structures in our &ldquo;Probabilistic Methods for Real-time Streams&rdquo; report and prototype (contact us if you&rsquo;re interested in this topic). This post provides an update by exploring Cuckoo filters, a <a href="https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf">new</a> probabilistic data structure that improves upon the standard Bloom filter. The Cuckoo filter provides a few advantages: 1) it enables dynamic deletion and addition of items 2) it can be easily implemented compared to Bloom filter variants with similar capabilities, and 3) for similar space constraints, the Cuckoo filter provides lower false positives, particularly at lower capacities. We provide a python implementation of the Cuckoo filter here, and compare it to a counting Bloom filter (a Bloom filter variant).</p>
+<h2>Application</h2>
+<p>While they seem esoteric, probabilistic data structures are very useful. Consider large scale internet applications like Twitter that struggle to keep new users engaged. To tackle this, Twitter&rsquo;s growth &amp; engagement team develop marketing campaigns to encourage new and unengaged users to use Twitter more often. To aid this work, every new user can be added to a Cuckoo filter. When he/she becomes active, he/she can be removed, and the engagement team can target growth campaigns to individuals currently in the Cuckoo filter. The Cuckoo filter can add and remove users down the line depending on their activity level. Cuckoo filters are easy to implement, so are a good choice for this use case. With hundreds of millions of users, it helps to have a low memory footprint and low false positive rates.</p>
+<h2>What&rsquo;s in a name: &ldquo;Cuckoo&rdquo;</h2>
+<p>Like Bloom filters, the Cuckoo filter is a probabilistic data structure for testing set membership. The &lsquo;Cuckoo&rsquo; in the name comes from the filter&rsquo;s use of the Cuckoo hashtable as its underlying storage structure. The Cuckoo hashtable is named after the <a href="https://en.wikipedia.org/wiki/Cuckoo">cuckoo bird</a> becauses it leverages the <a href="https://en.wikipedia.org/wiki/Brood_parasite">brood parasitic</a> behavior of the bird in its design. Cuckoo birds are known to lay eggs in the nests of other birds, and once an egg hatches, the young bird typically ejects the host&rsquo;s eggs from the nest. A Cuckoo hash table employs similar behavior in dealing with items to be inserted into occupied 'buckets&rsquo; in a Cuckoo hash table. We explain this behavior in the section on Cuckoo filter. Now, we&rsquo;ll provide a brief overview of a Bloom filter before exploring Cuckoo filters.</p>
+<h2>Bloom filter overview</h2>
+<p><a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filters</a> are a popular probabilistic data structure that allow space-efficient testing of set membership. When monitoring a real-time stream of tweets, for example, a Bloom filter allows us to test whether a tweet is new or has been seen before. Bloom filters use hash functions to compactly encode items as integers; these serve as indices of a bit array that is then set. To test if an item has been seen before, a Bloom filter hashes the item to produce its set of indices, and each index is checked to see if it has been set. Since it&rsquo;s possible to hash multiple items to the same indices, a membership test returns either false or maybe. That means, Bloom filters give no false negatives but a controllable rate of false positives. If a Bloom filter indicates that an item has not been seen before, we can be certain that&rsquo;s the case; but if it indicates an item has been seen, it&rsquo;s possible that&rsquo;s not the case (a false positive).</p><figure data-orig-width="600" data-orig-height="289" class="tmblr-full"><img src="http://68.media.tumblr.com/d81cde7cca090981ae8fe3fb45e6db91/tumblr_inline_oh29hewgi21qcg73w_540.png" data-orig-width="600" data-orig-height="289"/></figure><p>
+<p>Traditional Bloom filters do not support deletions because hashing is lossy and irreversible. That means, deletions require the entire filter to be rebuilt. But what if we want to delete items seen in the past, like certain tweets in the Twitter example above? The counting Bloom filter was introduced to solve this problem. To support deletions, counting Bloom filters extend buckets in traditional Bloom filters from single bit values to n-bit counters. Here, insertions increment rather than set Bloom filter indices.</p><h2>Cuckoo filter</h2><p>The Cuckoo filter is an alternative to the Bloom filter when one requires support for deletions. They were introduced in <a href="https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf">2014</a> by Fan et. al. Like the counting Bloom filter, Cuckoo filters provide insert, delete, and lookup capabilities. However, Cuckoo filters use different underlying data structures and different insertion procedures than Bloom filters.</p><p>The Cuckoo filter consists of a <a href="http://web.stanford.edu/class/archive/cs/cs166/cs166.1146/lectures/13/Small13.pdf">Cuckoo hash table</a> that stores the &lsquo;fingerprints’ of items inserted. The fingerprint of an item is a bit string derived from the hash of that item. A cuckoo hash table consists of an array of buckets where an item to be inserted is mapped to two possible buckets based on two hash functions. Each bucket can be configured to store a variable number of fingerprints. Typically, a Cuckoo filter is identified by its fingerprint and bucket size. For example, a (2,4) Cuckoo filter stores 2 bit length fingerprints and each bucket in the Cuckoo hash table can store up to 4 fingerprints. Following the above <a href="https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf">paper</a>, we implemented the cuckoo filter in <a href="https://github.com/fastforwardlabs/cuckoofilter">python</a>. Below, we initialize an example cuckoo filter and test simple inserts and deletions. We also implement a counting Bloom filter to compare performance.</p></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> cuckoofilter <span style="color:#f92672">import</span> CuckooFilter
+c_filter <span style="color:#f92672">=</span> CuckooFilter(<span style="color:#ae81ff">10000</span>, <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#specify capacity and fingerprint size</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">c_filter<span style="color:#f92672">.</span>insert(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in c_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> c_filter))
+<span style="color:#75715e"># James in c_filter == True</span>
+
+c_filter<span style="color:#f92672">.</span>remove(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in c_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> c_filter))
+<span style="color:#75715e"># James in c_filter == False</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> cuckoofilter <span style="color:#f92672">import</span> CountingBloomFilter
+b_filter <span style="color:#f92672">=</span> CountingBloomFilter(<span style="color:#ae81ff">10000</span>) <span style="color:#75715e">#specify the capacity of a counting bloom filter</span>
+
+b_filter<span style="color:#f92672">.</span>add(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in b_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> b_filter))
+<span style="color:#75715e"># James in b_filter == True</span>
+
+b_filter<span style="color:#f92672">.</span>remove(<span style="color:#e6db74">&#34;James&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;James in b_filter == {}&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#e6db74">&#34;James&#34;</span> <span style="color:#f92672">in</span> b_filter))
+<span style="color:#75715e"># James in b_filter == False</span>
+</code></pre></div><h2>Inserting into a Cuckoo filter</h2><figure data-orig-width="1224" data-orig-height="439" class="tmblr-full"><img src="http://68.media.tumblr.com/0ea03a886e0ae985263a915d45b2d370/tumblr_inline_oh29vg1Nx41qcg73w_540.png" data-orig-width="1224" data-orig-height="439"/></figure><p>The Cuckoo filter supports three key operations: insert, delete, and lookup. The figure above, from the Fan et. al. paper, shows how insertion into the Cuckoo filter works. Of all the Cuckoo filter operations, the insert operation is most involved. To insert an item into the Cuckoo filter, one derives two indices from the item based on hashing the item and its fingerprint. On obtaining these indices, one then inserts the item&rsquo;s fingerprint into one of the two possible buckets that correspond to the derived indices. In our implementation, we default to the first index.</p><p>As the Cuckoo hash table begins to fill up, one can encounter a situation where the two possible indices where an item can be inserted has been filled. In this case, items currently in the Cuckoo hash table are swapped to their alternative indices to free up space for inserting the new item. By implementing insertion in this manner, one can easily delete an item from the table by looking up its fingerprint in one of two possible indices, and deleting this fingerprint if present. To make the insertion procedure more concrete, we provide code below implementing the insertion procedure.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#example function to demonstrate how to insert into a cuckoo filter.</span>
+
+<span style="color:#f92672">import</span> mmh3
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">obtain_indices_from_item</span>(item_to_insert, fingerprint_size, capacity):
+
+    <span style="color:#75715e">#hash the string item</span>
+    hash_value <span style="color:#f92672">=</span> mmh3<span style="color:#f92672">.</span>hash_bytes(item_to_insert)
+
+    <span style="color:#75715e">#subset the hash to a fingerprint size</span>
+    fingerprint <span style="color:#f92672">=</span> hash_value[:fingerprint_size]
+
+    <span style="color:#75715e">#derive the index</span>
+    index_1 <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(hash_value, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;big&#34;</span>)
+    index_1 <span style="color:#f92672">=</span> index_1 <span style="color:#f92672">%</span> capacity
+
+    <span style="color:#75715e">#derive the index from the fingerprint</span>
+    hashed_fingerprint <span style="color:#f92672">=</span> mmh3<span style="color:#f92672">.</span>hash_bytes(fingerprint)
+    finger_print_index <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(hashed_fingerprint, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;big&#34;</span>)
+    finger_print_index <span style="color:#f92672">=</span> finger_print_index <span style="color:#f92672">%</span> capacity
+
+    <span style="color:#75715e">#second index -&amp;gt; first_index xor index derived from hash(fingerprint)</span>
+    index_2 <span style="color:#f92672">=</span> index_1 <span style="color:#f92672">^</span> finger_print_index
+    index_2 <span style="color:#f92672">=</span> index_2 <span style="color:#f92672">%</span> capacity
+
+    <span style="color:#66d9ef">return</span> index_1, index_2, fingerprint
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">insert_into_table</span>(table, index_1, index_2, bucket_capacity):
+    <span style="color:#75715e">#now insert item into the table</span>
+    <span style="color:#66d9ef">if</span> len(table[index_1]) <span style="color:#75715e">#let&#39;s create a crude cuckoo hashtable</span>
+        capacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e">#capacity of our cuckoo hashtable</span>
+        bucket_capacity <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+        table <span style="color:#f92672">=</span> [[] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(capacity)]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#obtain possibe indices</span>
+index_1, index_2, fp <span style="color:#f92672">=</span> obtain_indices_from_item(<span style="color:#e6db74">&#34;James&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>)
+
+<span style="color:#75715e">#now let&#39;s insert &#34;James into the table&#34;</span>
+table, _ <span style="color:#f92672">=</span> insert_into_table(table, index_1, index_2, bucket_capacity)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Table after James is inserted.&#34;</span>)
+<span style="color:#75715e">#check to see that &#34;james&#34; has been inserted</span>
+<span style="color:#66d9ef">print</span>(table)
+<span style="color:#75715e"># Table after James is inserted.</span>
+<span style="color:#75715e"># [[], [], [], [], [], [], [], [], [], [b&#39;\xc0\n&#39;]]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#let&#39;s insert &#34;james&#34; again.</span>
+index_1, index_2, fp <span style="color:#f92672">=</span> obtain_indices_from_item(<span style="color:#e6db74">&#34;James&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>)
+
+<span style="color:#75715e">#now let&#39;s insert &#34;James into the table&#34;</span>
+table, _ <span style="color:#f92672">=</span> insert_into_table(table, index_1, index_2, bucket_capacity)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Table after James is inserted a second time.&#34;</span>)
+<span style="color:#75715e">#now let&#39;s check to see that &#34;James&#34; has been inserted again</span>
+<span style="color:#66d9ef">print</span>(table)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#75715e"># Table after James is inserted a second time.</span>
+<span style="color:#75715e"># [[], [], [], [], [], [], [], [], [], [b&#39;\xc0\n&#39;, b&#39;\xc0\n&#39;]]</span>
+
+<span style="color:#75715e">#let&#39;s insert a different item now</span>
+index_1, index_2, fp <span style="color:#f92672">=</span> obtain_indices_from_item(<span style="color:#e6db74">&#34;Henry&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>)
+
+table, _ <span style="color:#f92672">=</span> insert_into_table(table, index_1, index_2, bucket_capacity)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Table after Henry is inserted.&#34;</span>)
+<span style="color:#75715e">#now let&#39;s check to see that &#34;Henry&#34; has been inserted into the table.</span>
+<span style="color:#66d9ef">print</span>(table)
+<span style="color:#75715e"># Table after Henry is inserted.</span>
+<span style="color:#75715e"># [[], [], [b&#39;\x1c\xb2&#39;], [], [], [], [], [], [], [b&#39;\xc0\n&#39;, b&#39;\xc0\n&#39;]]</span>
+</code></pre></div><h2>Bench marking against counting Bloom filter<a href="https://render.githubusercontent.com/view/ipynb?commit=ce071c6161a944424bb1f2ef546b1bcd228458f1&amp;enc_url=68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f66617374666f72776172646c6162732f6375636b6f6f66696c7465722f636530373163363136316139343434323462623166326566353436623162636432323834353866312f6375636b6f6f5f66696c7465725f6e6f7465626f6f6b2e6970796e623f746f6b656e3d41417064326b4b664c645f39303839534c526949794c687158704845554c54676b7335594e4b697a7741253344253344&amp;nwo=fastforwardlabs%2Fcuckoofilter&amp;path=cuckoo_filter_notebook.ipynb&amp;repository_id=69265767#Bench-marking-against-counting-Bloom-filter"></a></h2><h3>False positive rate comparison</h3><p>Let&rsquo;s compare the Cuckoo filter to the counting Bloom filter. A critical metric for probabilistic data structures like the Bloom and Cuckoo filters is the false positive rate. As shown in the insertion section, comparing the Cuckoo filter and the Bloom filter can be tricky given the difference in their internal workings. To tackle the issue of false positive rates, we fix the space allocation for both filters and then vary the capacities in order to observe the change in false positive rate. Below we show a graph of the false positive rate vs the capacity for both structures.</p><figure data-orig-width="714" data-orig-height="494" class="tmblr-full"><img src="http://68.media.tumblr.com/953cf79fb096626b9d7b931f1fe605b1/tumblr_inline_oh2b4bgQtZ1qcg73w_540.png" data-orig-width="714" data-orig-height="494"/></figure><p><br/>As seen in the graph, a key advantage of the Cuckoo filter is that with fixed space, the Cuckoo filter provides much lower false positive rates at smaller capacities. As noted in the original paper, for applications that desire lower than 3 percent false positive rate (blue dashed line), the Cuckoo filter is particularly ideal. Of note is that the Cuckoo filter here is a straightforward implementation without any space optimizations. This further indicates that a Cuckoo filter provides better performance without any tuning compared to optimized Bloom filters. See <a href="https://github.com/fastforwardlabs/cuckoofilter/blob/master/bench_marking_notebook.ipynb">Notebook</a> for other performance benchmarks comparing the counting Bloom filter to the Cuckoo filter.</p><h3>Insertion throughput comparison</h3><p>Another important metric to consider is the insertion throughput. Insertion throughput is essentially how long it takes to insert an item in an existing filter. From the design of the Counting Bloom filter, time to insert into the filter does not change as the filter fills up. However, with the Cuckoo filter, time to insert into the filter increases as the filter fills up to capacity. If an item is to be inserted into a Cuckoo table, and both of its possible indices are fully occupied, then the current items are swapped to their alternative indices to free up space for the item being inserted. As the Cuckoo table fills up, more swapping would typically occur as there are more items to relocate.</p><p>The figure below shows the insertion time for a counting Bloom filter and a Cuckoo filter of the same capacities as both fill up (See <a href="https://github.com/fastforwardlabs/cuckoofilter/blob/master/bench_marking_notebook.ipynb">Notebook</a> for details). With the Cuckoo filter, we notice an insertion throughput increase of up to 85 percent as it fills up to 80 percent capacity, while the insertion throughput for the counting Bloom filter remains relatively stable over this range. In the figure, we further notice that the Cuckoo filter is about 3 times faster than the counting Bloom filter over the entire range despite the significant increase in insertion throughput for the Cuckoo filter. While such differences are significant here, counting Bloom filters can be optimized to provide similar insertion speeds to Cuckoo filters. Here we seek to emphasize the significant change in insertion throughput that occurs as a Cuckoo filter fills up.</p><figure data-orig-width="715" data-orig-height="497" class="tmblr-full"><img src="http://68.media.tumblr.com/01724fa5dfa126e5b020fb646d4b68d4/tumblr_inline_oh2b5ykZg71qcg73w_540.png" data-orig-width="715" data-orig-height="497"/></figure><h2><br/>Conclusion<a href="https://render.githubusercontent.com/view/ipynb?commit=ce071c6161a944424bb1f2ef546b1bcd228458f1&amp;enc_url=68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f66617374666f72776172646c6162732f6375636b6f6f66696c7465722f636530373163363136316139343434323462623166326566353436623162636432323834353866312f6375636b6f6f5f66696c7465725f6e6f7465626f6f6b2e6970796e623f746f6b656e3d41417064326b4b664c645f39303839534c526949794c687158704845554c54676b7335594e4b697a7741253344253344&amp;nwo=fastforwardlabs%2Fcuckoofilter&amp;path=cuckoo_filter_notebook.ipynb&amp;repository_id=69265767#Conclusion"></a></h2><p>Bloom filters and its variants have proven useful in streaming applications and others where membership testing is critical. In this post, we have shown how a Cuckoo filter, which can be implemented simply, provides better practical performance, under certain circumstances, out of the box and without tuning than counting Bloom filters. Ultimately, Cuckoo filters can serve as alternatives in scenarios where a counting Bloom filter would normally be used.</p><p>– <a href="https://twitter.com/julius_adebayo">Julius</a></p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Dec 8, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/12/08/dimensionality-reduction-and-intuition.html"><strong>Dimensionality Reduction and Intuition</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 26, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      guest post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/26/exploring-deep-learning-on-satellite-data.html"><strong>Exploring Deep Learning on Satellite Data</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

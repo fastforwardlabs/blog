@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>machine listening on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/machine-listening.html</link>
+    <description>Recent content in machine listening on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Jun 2016 14:23:11 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/machine-listening/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Machine Listening: Interview with Juan Pablo Bello</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</link>
+      
+      <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</guid>
+      <description>&lt;figure data-orig-width=&#34;360&#34; data-orig-height=&#34;270&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/5cfcc6b830aa09f63bf9e9b2333524a1/tumblr_inline_o8k7rqJDmA1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;360&#34; data-orig-height=&#34;270&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components&#34;&gt;A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.&lt;/h5&gt;
+&lt;p&gt;What is music? Or rather, what differentiates music from noise?&lt;b&gt;&lt;br/&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;If you ask John Cage, “everything we do is music.” Forced to &lt;a href=&#34;https://www.youtube.com/watch?v=JTEFKFiXSx4&#34;&gt;sit silently for 4’33”&lt;/a&gt;, we masters of &lt;a href=&#34;https://en.wikipedia.org/wiki/Apophenia&#34;&gt;apophenia&lt;/a&gt; end up hearing music in noise (or just squirm in discomfort&amp;hellip;), perceiving order and meaning in sounds that normally escape notice. For Cage, music is in the ears of the listener. To study it is to study how we perceive.&lt;/p&gt;&lt;p&gt;But Cage wrote 4’33” at time when many artists were challenging inherited notions of art. Others, dating back to Pythagoras (who defined harmony in terms of &lt;a href=&#34;https://en.wikipedia.org/wiki/Pythagorean_hammers#cite_note-8&#34;&gt;ratios and proportions&lt;/a&gt;), have defined music through the structural properties that make music &lt;i&gt;music, &lt;/i&gt;and separate different musical styles. &lt;/p&gt;&lt;p&gt;The latest efforts to understand music lie in the field of machine listening, where researchers use computers to analyze audio data to identify meaning and structure in it like humans do. Some machine listening researchers analyze urban and environmental sounds, as at &lt;a href=&#34;https://wp.nyu.edu/sonyc/&#34;&gt;SONYC&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;This August in NYC, researchers in machine listening and related fields will convene at the &lt;a href=&#34;https://wp.nyu.edu/ismir2016/&#34;&gt;International Society for Music Information Retrieval (ISMIR) conference&lt;/a&gt;. The conference is of interest to anyone working in data or digital media, offering practical workshops and hackathons for the NYC data community. &lt;/p&gt;&lt;p&gt;We interviewed NYU Steinhardt Professor &lt;a href=&#34;http://steinhardt.nyu.edu/marl/people/bello&#34;&gt;Juan Pablo Bello&lt;/a&gt;, an organizer of ISMIR 2016 working in machine listening, to learn more about the conference and the latest developments in the field. Keep reading for highlights!&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

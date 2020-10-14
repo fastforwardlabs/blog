@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1871chicago on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/1871chicago.html</link>
+    <description>Recent content in 1871chicago on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Nov 2015 19:00:20 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/1871chicago/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FFL in the Bay Area, Chicago, and DC</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</link>
+      
+      <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</guid>
+      <description>We’ve got three events on the horizon. Join us, or contact us with questions if you’d like to learn more but are unable to attend!
+Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H2O World, where participants discuss how to use machine learning to build intelligent applications. Hilary will explain how Fast Forward Labs helps companies discover and build exciting new products from their existing data assets.</description>
+    </item>
+    
+  </channel>
+</rss>

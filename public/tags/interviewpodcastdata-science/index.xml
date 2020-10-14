@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>interview,podcast,data science on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/interviewpodcastdata-science.html</link>
+    <description>Recent content in interview,podcast,data science on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Dec 2015 16:15:34 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/interviewpodcastdata-science/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>NextView Ventures Podcast</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/12/15/nextview-ventures-podcast.html</link>
+      
+      <pubDate>Tue, 15 Dec 2015 16:15:34 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/12/15/nextview-ventures-podcast.html</guid>
+      <description>Boston-based NextView Ventures runs a podcast series called Traction that features interviews with exciting new startups. Their latest podcast features an interview with our own Hilary Mason. Some highlights:
+ In its essence, data science is the practice of learning insights from a data set and building a product based upon these learnings.
+  The Fast Forward Labs team starts every data advisory engagement, be this with small startup or large enterprise clients, with a data census comprising three questions:</description>
+    </item>
+    
+  </channel>
+</rss>

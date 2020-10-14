@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>smart home,deep learning,connected home,data science,whitepaper on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/smart-homedeep-learningconnected-homedata-sciencewhitepaper.html</link>
+    <description>Recent content in smart home,deep learning,connected home,data science,whitepaper on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Aug 2016 16:09:29 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/smart-homedeep-learningconnected-homedata-sciencewhitepaper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Giving Speech a Voice in the Home</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/08/18/giving-speech-a-voice-in-the-home.html</link>
+      
+      <pubDate>Thu, 18 Aug 2016 16:09:29 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/08/18/giving-speech-a-voice-in-the-home.html</guid>
+      <description>This is a guest post by Sean Lorenz, the Founder &amp;amp; CEO of SENTER, a Boston-based startup using sensors and data science to support healthcare in the home. Sean explains how techniques from computational neuroscience can help make the smart home smarter and describes the speech recognition hurdles developers have to overcome to realize smart home potential. Consumer IoT pundits rave about the “smart home,” where our lights, shades, sprinklers and coffeemakers do what we want them to do automatically as they learn about our behaviors and habits.</description>
+    </item>
+    
+  </channel>
+</rss>

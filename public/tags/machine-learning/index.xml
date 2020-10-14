@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>machine learning on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/machine-learning.html</link>
+    <description>Recent content in machine learning on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Aug 2016 16:18:12 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Next Economics: Interview with Jimi Crawford</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/08/24/next-economics-interview-with-jimi-crawford.html</link>
+      
+      <pubDate>Wed, 24 Aug 2016 16:18:12 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/08/24/next-economics-interview-with-jimi-crawford.html</guid>
+      <description>&lt;figure class=&#34;tmblr-full&#34; data-orig-height=&#34;656&#34; data-orig-width=&#34;1629&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/de9fc93bc4bda585c1bb51a785fc7801/tumblr_inline_ocf6npUoHK1ta78fg_540.png&#34; data-orig-height=&#34;656&#34; data-orig-width=&#34;1629&#34;/&gt;&lt;/figure&gt;&lt;figure class=&#34;tmblr-full&#34; data-orig-height=&#34;923&#34; data-orig-width=&#34;2291&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/e65b096c51449dd8ad7ef4b2f0e4ad10/tumblr_inline_ocf6k5SHv61ta78fg_540.png&#34; data-orig-height=&#34;923&#34; data-orig-width=&#34;2291&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;building-shadows-as-proxies-for-construction-rates-in-shanghai-photos-courtesy-of-orbital-insightdigital-globe&#34;&gt;Building shadows as proxies for construction rates in Shanghai. Photos courtesy of Orbital Insight/Digital Globe.&lt;/h5&gt;
+&lt;p&gt;It’s no small feat to commercialize new technologies that arise from scientific and academic research. The useful is a small subset of the possible, and the features technology users (let alone corporate buyers) care about rarely align with the problems researchers want to solve. But it’s immensely exciting when it works. When the phase transition is complete. When the general public starts to appreciate how a bunch of mathematics can impact their business, their lives, and their understanding of how the world works. It’s why the Fast Forward Labs team wakes up every day. It’s why we love what we do. It drives us. And it’s why we’re always on the lookout for people who are doing it well. &lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://orbitalinsight.com/&#34;&gt;Orbital Insight&lt;/a&gt; is an excellent example of a company that is successfully commercializing deep learning technologies. 2015 saw a &lt;a href=&#34;http://www.nytimes.com/2015/12/11/science/an-advance-in-artificial-intelligence-rivals-human-vision-abilities.html?_r=0&#34;&gt;series of improvements&lt;/a&gt; in the performance of object recognition and computer vision systems. The technology is being applied across domains, to &lt;a href=&#34;http://www.enlitic.com/&#34;&gt;improve medical diagnosis&lt;/a&gt;, gain &lt;a href=&#34;https://www.clarifai.com/&#34;&gt;brand insights&lt;/a&gt;, or update our &lt;a href=&#34;http://pictograph.us&#34;&gt;social media experience&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;Building on his experience at The Climate Corporation, Orbital Insight CEO  &amp;amp; Founder &lt;a href=&#34;https://www.linkedin.com/in/jmcrawfordjr&#34;&gt;Jimi Crawford&lt;/a&gt; decided to aim big and apply the latest in computer vision to satellite imagery. His team focused their first commercial offering on the financial services industry, honing their tools to count cars in parking lots to infer company performance and, transitively, stock market behavior. But hedge funds are just the beginning. Crawford’s long-term ambition (as that of &lt;a href=&#34;http://www.featurex.ai/&#34;&gt;FeatureX&lt;/a&gt;) is to reform macroeconomics, to replace government reports with quantified observations about the physical world. &lt;a href=&#34;https://techcrunch.com/2016/06/27/orbital-insight-lands-20-million-from-investors-led-by-gv/&#34;&gt;Investors have taken notice&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;We interviewed Jimi, discussing what he learned in the past, what he does in the present, and what he envisions for the future. Read on for highlights. &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Late Summer Reading List</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</link>
+      
+      <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</guid>
+      <description>It’s July 27. 89 degrees with high humidity on the sweltering New York City streets. We’re hard at work on our probabilistic programming report and prototype and looking forward to some good reads on the beach. Here are our recommendations for the dog days of summer!
+Homage to a great physicist, in a textbook: David MacKay, a Cambridge physicist, influenced the machine learning field by fusing together Bayesian methods with artificial neural nets.</description>
+    </item>
+    
+    <item>
+      <title>Human-Machine Algorithms: Interview with Eric Colson</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</link>
+      
+      <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</guid>
+      <description>&lt;figure data-orig-width=&#34;780&#34; data-orig-height=&#34;396&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/dd7cacb29c66b0d8ac385f37fde89d2d/tumblr_inline_o7qmpkkMD11qcg73w_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;780&#34; data-orig-height=&#34;396&#34;/&gt;&lt;/figure&gt;
+&lt;blockquote&gt;Therefore render unto Caesar the things that are Caesar&amp;rsquo;s, and unto God the things that are God&amp;rsquo;s.&lt;/blockquote&gt;
+&lt;h5 id=&#34;ndash-matthew-2221&#34;&gt;– Matthew, 22:21&lt;/h5&gt;
+&lt;p&gt;We tend to think that recommender systems are old hat. ECommerce platforms like Amazon have been using techniques like &lt;a href=&#34;https://www.quora.com/How-does-Amazons-collaborative-filtering-recommendation-engine-work&#34;&gt;collaborative filtering&lt;/a&gt; for years to help shoppers navigate vast catalogues by inferring consumer taste from past behavior. And yet, we’ve all experienced the limitations of these approaches (that time you bought a toilet bowl plunger to subsequently be flooded by recommendations for strange bathroom accessories). This may be a nuisance for consumers, but it doesn’t jeopardize eCommerce business models: only 35% of Amazon’s sales, for example, are driven from recommendations.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;But what would happen if the stakes were higher? What kind of algorithmic creativity would it take to build a company with revenue based entirely on recommendations?&lt;/p&gt;&lt;p&gt;This is the challenge faced by &lt;a href=&#34;https://twitter.com/ericcolson&#34;&gt;Eric Colson&lt;/a&gt;’s team at &lt;a href=&#34;http://multithreaded.stitchfix.com/&#34;&gt;Stitch Fix&lt;/a&gt;. Stitch Fix is an online “personal styling service” that selects clothing apparel for customers (they also have a &lt;a href=&#34;http://multithreaded.stitchfix.com/blog/&#34;&gt;solid technical blog&lt;/a&gt;). Instead of recommending items for shoppers to choose from, Stitch Fix goes a step further and simply ships items its algorithms and stylists choose to customers. The key to making this work, according to Colson, is to optimize the division of labor between human and machine.&lt;/p&gt;&lt;p&gt;Colson &lt;a href=&#34;https://www.youtube.com/watch?v=-rId42xabXY&#34;&gt;spoke about&lt;/a&gt; the value of human-machine collaborations at the March &lt;a href=&#34;http://datadrivennyc.com/&#34;&gt;Data Driven NYC Meetup&lt;/a&gt;. We interviewed him to learn more about the approach.&lt;br/&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Active Learning in the Law</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</link>
+      
+      <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</guid>
+      <description>&lt;figure data-orig-width=&#34;782&#34; data-orig-height=&#34;438&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/5419ce3290efb6634bdefc85748cbe2e/tumblr_inline_o67a1hhHOk1ta78fg_540.gif&#34; alt=&#34;image&#34; data-orig-width=&#34;782&#34; data-orig-height=&#34;438&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;the-nist-text-retrieval-conference-trec-logo&#34;&gt;The NIST Text Retrieval Conference (TREC) Logo&lt;/h5&gt;
+&lt;p&gt;We &lt;a href=&#34;http://blog.fastforwardlabs.com/2016/04/11/new-tools-to-summarize-text.html&#34;&gt;recently released research&lt;/a&gt; on neural network methods to summarize text. Systems like &lt;a href=&#34;http://fastforwardlabs.github.io/brief/&#34;&gt;Brief&lt;/a&gt;, our summarization prototype, are poised to modify how we consume text. Content systems were historically designed to help humans find, read, and research documents. But as electronically stored information continues to proliferate, systems will inevitably evolve to support research conducted by a man-machine partnership: machines will take the first pass to synthesize vast amounts of information, and humans will step in to derive more nuanced conclusions. &lt;/p&gt;&lt;p&gt;One field where this man-machine partnership is increasingly important is electronic discovery (eDiscovery), the processes lawyers use to discover information relevant for litigation. The traditional model, where armies of associates and paralegals read documents to find relevant information, does not scale to contemporary information volumes. To promote efficiency and curb the exorbitant costs of review, judges have issued opinions permitting the use of software that automatically finds evidence (&lt;a href=&#34;http://www.insidecounsel.com/2012/04/30/da-silva-moore-sets-stage-for-predictive-codings-a&#34;&gt;&lt;i&gt;Da Silva Moore&lt;/i&gt; v. &lt;i&gt;Publicis Groupe&lt;/i&gt;&lt;/a&gt;) and sometimes even requiring it (&lt;a href=&#34;https://e-discoveryteam.com/2012/10/25/news-flash-surprise-ruling-by-delaware-judge-orders-both-sides-to-use-predictive-coding/&#34;&gt;&lt;i&gt;EORHB Inc.&lt;/i&gt; v. &lt;i&gt;HOA Holdings LLC&lt;/i&gt;&lt;/a&gt;). &lt;/p&gt;&lt;p&gt;This shift in practice has created a large market for “technology-assisted review” (TAR) or “predictive coding” software. The industry is quite large, and vendors use TAR to refer to products that use rules-based Boolean logic as well as more advanced machine learning techniques. &lt;/p&gt;&lt;p&gt;But two voices in the space remain clear and constant. Since they met at the 2009 &lt;a href=&#34;http://trec.nist.gov/&#34;&gt;Text Retrieval Conference&lt;/a&gt; (TREC), &lt;a href=&#34;http://plg.uwaterloo.ca/~gvcormac/&#34;&gt;Gordon Cormack&lt;/a&gt; and &lt;a href=&#34;http://www.wlrk.com/MRGrossman/&#34;&gt;Maura Grossman&lt;/a&gt; have &lt;a href=&#34;http://cormack.uwaterloo.ca/cormack/calstudy/&#34;&gt;published multiple papers&lt;/a&gt; demonstrating that continuous active learning (CAL) is the most accurate and effective technique to find “substantially all” relevant information in a document collection. As they write in their recent &lt;a href=&#34;http://us.practicallaw.com/w-001-8253&#34;&gt;&lt;i&gt;Practical Law &lt;/i&gt;article&lt;/a&gt; on the topic:&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;CAL is a method for finding substantially all relevant information on a particular subject within a vast sea of electronically stored information (ESI). At the outset, CAL resembles a web search engine, presenting first the documents that are most likely to be of interest, followed by those that are somewhat less likely to be of interest. Unlike a typical search engine, however, CAL repeatedly refines its understanding about which of the remaining documents are most likely to be of interest, based on the user’s feedback regarding the documents already presented. CAL continues to present documents, learning from user feedback, until none of the documents presented are of interest.&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;We met with Cormack and Grossman to learn more about why they believe CAL is the best approach for eDiscovery and how the landscape is evolving. Keep reading for highlights.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Shivon Zilis on the Machine Intelligence Landscape</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
+      
+      <pubDate>Wed, 30 Mar 2016 15:00:03 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
+      <description>&lt;figure data-orig-width=&#34;727&#34; data-orig-height=&#34;541&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/74ea2d9c04837d672993d887788dcd76/tumblr_inline_o4tb0bi8wF1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;727&#34; data-orig-height=&#34;541&#34;/&gt;&lt;/figure&gt;&lt;p&gt;2016 is shaping up to be a big year for machine intelligence. Achievements like &lt;a href=&#34;http://t.umblr.com/redirect?z=https%3A%2F%2Fdeepmind.com%2Falpha-go.html&amp;amp;t=OWFhNGUyZTg5YTZhMDA5YzMxMjhkZTcwZTA3ZjVkNTlkMTM5OWI5OCxXelB4R3dDVA%3D%3D&#34;&gt;DeepMind’s AlphaGo&lt;/a&gt; are making headlines in the popular press, large tech companies have started a “&lt;a href=&#34;http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.nytimes.com%2F2016%2F03%2F26%2Ftechnology%2Fthe-race-is-on-to-control-artificial-intelligence-and-techs-future.html%3Faction%3Dclick%26contentCollection%3DTechnology%26module%3DRelatedCoverage%26region%3DEndOfArticle%26pgtype%3Darticle&amp;amp;t=NzFhYjEzNjJiMmY1NmNhZDFiMjQ2MWY0ZDQxYTc2MGUxODA2ZmZjNixXelB4R3dDVA%3D%3D&#34;&gt;platform war&lt;/a&gt;” to become the go-to company for A.I., and entrepreneurs are increasingly building machine learning products that have the potential to &lt;a href=&#34;http://t.umblr.com/redirect?z=http%3A%2F%2Ftechcrunch.com%2F2016%2F03%2F19%2Fhow-real-businesses-are-using-machine-learning%2F&amp;amp;t=MzRiYTE2MmVjYjBiN2UyZjQ3Zjc4YWRjOGI0ZjVmYmViODViZGY2OSxXelB4R3dDVA%3D%3D&#34;&gt;transform how companies operate&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;Exciting though the hype may be, the commercial potential of machine intelligence won’t be realized unless entrepreneurs and data scientists can clearly communicate the business value of new tools to non-technical executives. And the first step to communicating clearly is to define a vocabulary to think through what machine intelligence is, how the different algorithms work, and, most importantly, what practical benefits they can provide across verticals and industries. &lt;/p&gt;&lt;p&gt;&lt;a href=&#34;http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.shivonzilis.com%2F&amp;amp;t=Y2UyNGUzNGI0YTMxYmNhYzFlNzQxMWJmMDMwZGI4YjBlN2ZmMTI3NCxXelB4R3dDVA%3D%3D&#34;&gt;Shivon Zilis&lt;/a&gt;, a partner and founding member of &lt;a href=&#34;http://t.umblr.com/redirect?z=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FBloomberg_Beta&amp;amp;t=NTM4NjA1ZDJkZWU2M2FjZTgzNDk0Nzk0NzkwZDdlNjdiYWQwYjRkNCxXelB4R3dDVA%3D%3D&#34;&gt;Bloomberg Beta&lt;/a&gt;, is doing just that. She has spent the past few years focused exclusively on machine intelligence, building out a vocabulary and taxonomy to help the community understand activity in the field and communicate new developments clearly and effectively. &lt;/p&gt;&lt;p&gt;We interviewed Zilis to learn her views on the past, present, and future of machine intelligence. Keep reading for highlights!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>NeuralTalk with Kyle McDonald</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</link>
+      
+      <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</guid>
+      <description>&lt;figure data-orig-width=&#34;640&#34; data-orig-height=&#34;427&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/806e99a04e9f647a198d0d887942562b/tumblr_inline_o2pgqgwhP01ta78fg_540.jpg&#34; alt=&#34;image&#34; data-orig-width=&#34;640&#34; data-orig-height=&#34;427&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;image-from-a-hrefhttpsvimeocom90547410social-soula-an-immersive-experience-of-being-inside-a-social-media-stream-by-a-hrefhttplauren-mccarthycomlauren-mccarthya-and-kyle-mcdonald&#34;&gt;Image from &lt;a href=&#34;https://vimeo.com/90547410&#34;&gt;Social Soul&lt;/a&gt;, an immersive experience of being inside a social media stream, by &lt;a href=&#34;http://lauren-mccarthy.com/&#34;&gt;Lauren McCarthy&lt;/a&gt; and Kyle McDonald&lt;/h5&gt;
+&lt;p&gt;A few weeks ago, &lt;a href=&#34;http://siliconangle.tv/&#34;&gt;theCUBE&lt;/a&gt; stopped by the Fast Forward Labs offices to &lt;a href=&#34;http://siliconangle.tv/innovation-day-fast-forward-labs/&#34;&gt;interview us &lt;/a&gt;about our approach to innovation. In the interview, we highlighted that &lt;a href=&#34;http://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html&#34;&gt;artists have an important role to play&lt;/a&gt; in shaping the future of machine intelligence. Unconstrained by market demands and product management requirements, artists are free to probe the potential of new technologies. And by optimizing for intuitive power or emotional resonance over theoretical accuracy or usability, they open channels to understand how machine intelligence is always, at its essence, a study of our own humanity.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;One provocative artist exploring the creative potential of new machine learning tools is &lt;a href=&#34;http://kylemcdonald.net/&#34;&gt;Kyle McDonald&lt;/a&gt;. McDonald has seized the deep learning moment, undertaking projects that use neural networks to document a stroll down the Amsterdam canals, &lt;a href=&#34;https://medium.com/@kcimc/comparing-artificial-artists-7d889428fce4#.ltnl33b5p&#34;&gt;recreate images&lt;/a&gt; in the style of famous painters, or challenge our awareness of what we hold to be reality. &lt;/p&gt;&lt;p&gt;We interviewed Kyle to understand how he understands his work. Keep reading for highlights:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Machines and Metaphors</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</link>
+      
+      <pubDate>Tue, 16 Feb 2016 16:35:11 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</guid>
+      <description>&lt;figure data-orig-width=&#34;703&#34; data-orig-height=&#34;376&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/2cf1b0924a1bfc66737d96f4797ef6f7/tumblr_inline_o2neravFOu1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;703&#34; data-orig-height=&#34;376&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;this-is-a-guest-post-by-a-hrefhttpwwwgenekogancomgene-kogana-an-artist-and-programmer-who-applies-emerging-technology-into-artistic-and-expressive-contexts-and-teaches-courses-and-workshops-on-topics-related-to-code-and-art&#34;&gt;This is a guest post by &lt;a href=&#34;http://www.genekogan.com/&#34;&gt;Gene Kogan&lt;/a&gt;, an artist and programmer who applies emerging technology into artistic and expressive contexts, and teaches courses and workshops on topics related to code and art.&lt;/h5&gt;
+&lt;p&gt;Recent advances in deep learning research have renewed popular interest in machine intelligence. With new benchmarks set in tough problems (e.g., image classification and speech recognition), researchers are exploring unexpected and exciting applications, and eliciting public engagement and private investment. These recent breakthroughs have captured the attention of many for whom AI was previously obscure, as new capabilities spur applications of interest to wider public audiences.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;But these advances have captured more than just our attention; they&amp;rsquo;ve captured our  imagination. Artists have been quick to apply these new techniques for novel creations, exploring the uncharted territories of machine creativity, slyly provoking questions of greater importance. What is creativity anyway? How do machines perceive, learn, and imitate?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>When Dog Is Enough: Using Hypernyms To Improve Neural Network Predictions</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/11/17/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</link>
+      
+      <pubDate>Tue, 17 Nov 2015 16:35:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/11/17/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</guid>
+      <description>&lt;p&gt;Possibly true statement: the Fast Forward Labs dog is the cutest dog in the world. &lt;br/&gt;&lt;/p&gt;&lt;figure data-orig-width=&#34;399&#34; data-orig-height=&#34;288&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/7df25fbff433a17f0a2d414666eff600/tumblr_inline_nxxgbxBEMd1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;399&#34; data-orig-height=&#34;288&#34;/&gt;&lt;/figure&gt;&lt;p&gt;Our General Counsel Ryan picked up the puppy a month ago and we’ve yet to name him. Ryan likes Renfield, which, as Bram Stoker fans know, evokes slightly different thoughts than “super cute,” particularly when &lt;a href=&#34;https://www.youtube.com/watch?v=WaVZmo8CsGQ&#34;&gt;played by&lt;/a&gt; the ever-guttural Tom Waits. But the fact that we’re in no rush to name him tells us something about how we label and identify things. We know he’s a dog, we love him for his dogness, and thus far that’s been just fine. I personally tend to forget what breed he is, as my knowledge of dog breeds is shamefully sparse. &lt;/p&gt;&lt;p&gt;Pictograph, in contrast, does an excellent job recognizing that our puppy is in fact a blenheim spaniel. Pictograph is the public app we built to illustrate how neural nets identify objects in images. &lt;a href=&#34;http://pictograph.us&#34;&gt;Try it&lt;/a&gt; on your personal Instagram feed!&lt;/p&gt;&lt;figure data-orig-width=&#34;658&#34; data-orig-height=&#34;216&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/36ad21fb7fbc61e892ca66af5f684fe4/tumblr_inline_nxxgkiSgKa1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;658&#34; data-orig-height=&#34;216&#34;/&gt;&lt;/figure&gt;&lt;p&gt;A 97% confidence rate in the accuracy of the prediction is a dream for automated classification. Here, the confidence is so high for two reasons. &lt;/p&gt;&lt;p&gt;First, the &lt;a href=&#34;http://www.image-net.org/&#34;&gt;ImageNet &lt;/a&gt;database used to train the Pictograph neural network has a lot of pictures of blenheim spaniels (971&amp;hellip;and yep, it’s prime). This labelled data informs the network what a correct classification &lt;i&gt;should&lt;/i&gt; look like. The learning mechanism (called &lt;a href=&#34;http://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html&#34;&gt;backpropagation&lt;/a&gt;) then steps in and learns the network to predict the label “blenheim spaniel” when presented with new images that have similar features.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Second, the images in Ryan’s Instagram feed aren’t noisy. Note how the two images with 97% confidence rates show our puppy alone and facing the camera. This pose is similar to the stock images available on ImageNet, rendering it easier for the neural net to detect similarities. The confidence rate in the right-hand image including the human face drops to 62% because the data is noisier. It would likely drop further when presented an image of our puppy unconsciously playing &lt;a href=&#34;https://en.wikipedia.org/wiki/Ouroboros&#34;&gt;Ouroboros&lt;/a&gt; (the mythical snake that eats its own tail).&lt;/p&gt;&lt;figure data-orig-width=&#34;462&#34; data-orig-height=&#34;328&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/bac3509687c5af7c21fd2fc853bf0501/tumblr_inline_nxxhlkZ4zi1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;462&#34; data-orig-height=&#34;328&#34;/&gt;&lt;/figure&gt;&lt;p&gt;But Instagram, like most data in the wild, rarely contains clean data that maps neatly to a model’s parameters or the stock photos in a training set like ImageNet. In turn, classification systems can yield confidence rates as low as 20% or 30% (or lower), generating doubts as to whether it’s worth using the technology at all. One way to improve unsatisfying results from a machine learning tool is to adopt a “&lt;a href=&#34;https://medium.com/the-wtf-economy/artificial-intelligence-and-the-future-of-work-a0eaabea7c41&#34;&gt;human in the loop&lt;/a&gt;” approach, where humans step in and manually label images technology misclassifies or classifies with low confidence rates. But we decided to adopt a different approach.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FFL in the Bay Area, Chicago, and DC</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</link>
+      
+      <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</guid>
+      <description>We’ve got three events on the horizon. Join us, or contact us with questions if you’d like to learn more but are unable to attend!
+Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H2O World, where participants discuss how to use machine learning to build intelligent applications. Hilary will explain how Fast Forward Labs helps companies discover and build exciting new products from their existing data assets.</description>
+    </item>
+    
+    <item>
+      <title>Interview with Pedro Domingos</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</link>
+      
+      <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</guid>
+      <description>&lt;figure data-orig-width=&#34;1000&#34; data-orig-height=&#34;614&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/4886047f032d47b832630a0ad0a72841/tumblr_inline_nwzgbcEPkQ1ta78fg_540.jpg&#34; alt=&#34;image&#34; data-orig-width=&#34;1000&#34; data-orig-height=&#34;614&#34;/&gt;&lt;/figure&gt;&lt;p&gt;Machine learning technologies increasingly shape our sense of reality and the choices we make in our daily lives. They power Amazon’s product recommendations. They classify documents relevant for a lawsuit. They enable computers to play chess like the masters.&lt;b&gt;&lt;br/&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;As machine learning applications expand to influence our civic, professional and private lives, it’s important that we all have a basic understanding of how they work and what potential they offer. &lt;a href=&#34;https://homes.cs.washington.edu/~pedrod/&#34;&gt;Pedro Domingos&lt;/a&gt; undertook the challenge of providing the first comprehensive, nontechnical overview of machine learning in his new book, &lt;i&gt;The Master Algorithm&lt;/i&gt;. &lt;/p&gt;&lt;p&gt;In &lt;i&gt;The Master Algorithm, &lt;/i&gt;Domingos divides the field into five different “tribes” &amp;ndash; symbolism, connectionism (neural networks), evolutionary algorithms, Bayesian networks, and analogical reasoning &amp;ndash; which he challenges his readers to unify in one future “master algorithm” capable of learning nearly anything. This will towards universality informs his book’s bold central hypothesis: “all knowledge - past, present, and future - can be derived from data by a single, universal learning algorithm.” It’s up to us to find it. &lt;/p&gt;&lt;p&gt;We had the pleasure of interviewing Domingos last week. Keep reading to see the highlights. &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Breaking Down Memes</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</link>
+      
+      <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</guid>
+      <description>Last week, Hilary spoke about opportunities for mid-sized companies to use data at Accelerating America’s Middle Market, hosted by the Wall Street Journal. This morning, I spoke about opportunities for large, established companies to use data at a Corporate Longevity Leadership Briefing, hosted by the Financial Times. Here are two key takeaways from the panels: Memes generate excitement; excitement generates hype; hype generates confusion. In her panel, Hilary aimed to demystify some of the sorcery surrounding ‘big data’ that risks rendering data projects intimidating to mid-sized companies with limited resources.</description>
+    </item>
+    
+    <item>
+      <title>How do neural networks learn?</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</link>
+      
+      <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
+      <description>Neural networks are generating a lot of excitement, as they are quickly proving to be a promising and practical form of machine intelligence. At Fast Forward Labs, we just finished a project researching and building systems that use neural networks for image analysis, as shown in our toy applicationPictograph. Our companion deep learning report explains this technology in depth and explores applications and opportunities across industries.
+As we built Pictograph, we came to appreciate just how challenging it is to understand how neural networks work.</description>
+    </item>
+    
+  </channel>
+</rss>

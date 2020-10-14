@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>art on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/art.html</link>
+    <description>Recent content in art on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Feb 2016 15:09:51 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/art/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>NeuralTalk with Kyle McDonald</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</link>
+      
+      <pubDate>Thu, 18 Feb 2016 15:09:51 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/18/neuraltalk-with-kyle-mcdonald.html</guid>
+      <description>&lt;figure data-orig-width=&#34;640&#34; data-orig-height=&#34;427&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/806e99a04e9f647a198d0d887942562b/tumblr_inline_o2pgqgwhP01ta78fg_540.jpg&#34; alt=&#34;image&#34; data-orig-width=&#34;640&#34; data-orig-height=&#34;427&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;image-from-a-hrefhttpsvimeocom90547410social-soula-an-immersive-experience-of-being-inside-a-social-media-stream-by-a-hrefhttplauren-mccarthycomlauren-mccarthya-and-kyle-mcdonald&#34;&gt;Image from &lt;a href=&#34;https://vimeo.com/90547410&#34;&gt;Social Soul&lt;/a&gt;, an immersive experience of being inside a social media stream, by &lt;a href=&#34;http://lauren-mccarthy.com/&#34;&gt;Lauren McCarthy&lt;/a&gt; and Kyle McDonald&lt;/h5&gt;
+&lt;p&gt;A few weeks ago, &lt;a href=&#34;http://siliconangle.tv/&#34;&gt;theCUBE&lt;/a&gt; stopped by the Fast Forward Labs offices to &lt;a href=&#34;http://siliconangle.tv/innovation-day-fast-forward-labs/&#34;&gt;interview us &lt;/a&gt;about our approach to innovation. In the interview, we highlighted that &lt;a href=&#34;http://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html&#34;&gt;artists have an important role to play&lt;/a&gt; in shaping the future of machine intelligence. Unconstrained by market demands and product management requirements, artists are free to probe the potential of new technologies. And by optimizing for intuitive power or emotional resonance over theoretical accuracy or usability, they open channels to understand how machine intelligence is always, at its essence, a study of our own humanity.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;One provocative artist exploring the creative potential of new machine learning tools is &lt;a href=&#34;http://kylemcdonald.net/&#34;&gt;Kyle McDonald&lt;/a&gt;. McDonald has seized the deep learning moment, undertaking projects that use neural networks to document a stroll down the Amsterdam canals, &lt;a href=&#34;https://medium.com/@kcimc/comparing-artificial-artists-7d889428fce4#.ltnl33b5p&#34;&gt;recreate images&lt;/a&gt; in the style of famous painters, or challenge our awareness of what we hold to be reality. &lt;/p&gt;&lt;p&gt;We interviewed Kyle to understand how he understands his work. Keep reading for highlights:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Machines and Metaphors</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</link>
+      
+      <pubDate>Tue, 16 Feb 2016 16:35:11 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/16/machines-and-metaphors.html</guid>
+      <description>&lt;figure data-orig-width=&#34;703&#34; data-orig-height=&#34;376&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/2cf1b0924a1bfc66737d96f4797ef6f7/tumblr_inline_o2neravFOu1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;703&#34; data-orig-height=&#34;376&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;this-is-a-guest-post-by-a-hrefhttpwwwgenekogancomgene-kogana-an-artist-and-programmer-who-applies-emerging-technology-into-artistic-and-expressive-contexts-and-teaches-courses-and-workshops-on-topics-related-to-code-and-art&#34;&gt;This is a guest post by &lt;a href=&#34;http://www.genekogan.com/&#34;&gt;Gene Kogan&lt;/a&gt;, an artist and programmer who applies emerging technology into artistic and expressive contexts, and teaches courses and workshops on topics related to code and art.&lt;/h5&gt;
+&lt;p&gt;Recent advances in deep learning research have renewed popular interest in machine intelligence. With new benchmarks set in tough problems (e.g., image classification and speech recognition), researchers are exploring unexpected and exciting applications, and eliciting public engagement and private investment. These recent breakthroughs have captured the attention of many for whom AI was previously obscure, as new capabilities spur applications of interest to wider public audiences.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;But these advances have captured more than just our attention; they&amp;rsquo;ve captured our  imagination. Artists have been quick to apply these new techniques for novel creations, exploring the uncharted territories of machine creativity, slyly provoking questions of greater importance. What is creativity anyway? How do machines perceive, learn, and imitate?&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

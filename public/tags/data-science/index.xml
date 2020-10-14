@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>data science on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/data-science.html</link>
+    <description>Recent content in data science on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Dec 2016 17:22:58 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dimensionality Reduction and Intuition</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/12/08/dimensionality-reduction-and-intuition.html</link>
+      
+      <pubDate>Thu, 08 Dec 2016 17:22:58 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/12/08/dimensionality-reduction-and-intuition.html</guid>
+      <description>&lt;figure data-orig-width=&#34;651&#34; data-orig-height=&#34;513&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/a97d30b7577d5fb32955853cb2ec7b17/tumblr_inline_ohvie7chq81ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;651&#34; data-orig-height=&#34;513&#34;/&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“I call our world Flatland, not because we call it so, but to make its nature clearer to you, my happy readers, who are privileged to live in Space.&amp;quot;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So reads the first sentence of Edwin Abbott Abbott’s 1884 work of science fiction and social satire, &lt;i&gt;&lt;a href=&#34;http://www.gutenberg.org/ebooks/201&#34;&gt;Flatland: A Romance of Many Dimensions&lt;/a&gt;.&lt;/i&gt; At the time, Abbott used contemporary developments in the fields of geometry and topology (he was a contemporary of &lt;a href=&#34;https://en.wikipedia.org/wiki/Henri_Poincar%C3%A9&#34;&gt;Poincaré&lt;/a&gt;) to illustrate the rigid social hierarchies in Victorian England. A century later, with machine learning algorithms playing an increasingly prominent role in our daily lives, Abbott’s play on the conceptual leaps required to cross dimensions is relevant again. This time, however, the dimensionality shifts lie not between two human social classes, but between the domains of human reasoning and intuition and machine reasoning and computation.&lt;/p&gt;
+&lt;p&gt;Much of the recent excitement around artificial intelligence stems from the fact that computers are newly able to process data historically too complex to analyze. At Fast Forward Labs, we’ve been excited by new capabilities to use computers to &lt;a href=&#34;http://pictograph.us&#34;&gt;perceive objects in images&lt;/a&gt;, extract the &lt;a href=&#34;http://fastforwardlabs.github.io/brief/&#34;&gt;most important sentences from long bodies of text&lt;/a&gt;, and &lt;a href=&#34;https://research.googleblog.com/2016/11/zero-shot-translation-with-googles.html&#34;&gt;translate between languages&lt;/a&gt;. But making complex data like images or text tractable for machines involves representing the data in high-dimensional vectors, long strings of numbers that encode the complexity of pixel clusters or relationships between words. The problem is these vectors become so large that it’s hard for humans to make sense of them: plotting them often requires a space of way more than the three dimensions we live in and perceive!&lt;/p&gt;&lt;p&gt;On the other hand, machine learning techniques that entirely remove humans from the loop, like &lt;a href=&#34;http://www.automl.org/&#34;&gt;automatic machine learning&lt;/a&gt; and unsupervised learning, are still active areas of research. For now, machines perform best when nudged by humans. And that means we need a way to reverse engineer the high-dimensionality vectors machines compute in back down to the two and three dimensional spaces our visual systems have evolved to make sense of. &lt;/p&gt;&lt;p&gt;What follows is a brief survey of some tools available to reduce and visualize high-dimensional data. Send us a note at contact@fastforwardlabs.com if you know of others!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Late Summer Reading List</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</link>
+      
+      <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</guid>
+      <description>It’s July 27. 89 degrees with high humidity on the sweltering New York City streets. We’re hard at work on our probabilistic programming report and prototype and looking forward to some good reads on the beach. Here are our recommendations for the dog days of summer!
+Homage to a great physicist, in a textbook: David MacKay, a Cambridge physicist, influenced the machine learning field by fusing together Bayesian methods with artificial neural nets.</description>
+    </item>
+    
+    <item>
+      <title>Machine Listening: Interview with Juan Pablo Bello</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</link>
+      
+      <pubDate>Fri, 10 Jun 2016 14:23:11 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html</guid>
+      <description>&lt;figure data-orig-width=&#34;360&#34; data-orig-height=&#34;270&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/5cfcc6b830aa09f63bf9e9b2333524a1/tumblr_inline_o8k7rqJDmA1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;360&#34; data-orig-height=&#34;270&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components&#34;&gt;A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.&lt;/h5&gt;
+&lt;p&gt;What is music? Or rather, what differentiates music from noise?&lt;b&gt;&lt;br/&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;If you ask John Cage, “everything we do is music.” Forced to &lt;a href=&#34;https://www.youtube.com/watch?v=JTEFKFiXSx4&#34;&gt;sit silently for 4’33”&lt;/a&gt;, we masters of &lt;a href=&#34;https://en.wikipedia.org/wiki/Apophenia&#34;&gt;apophenia&lt;/a&gt; end up hearing music in noise (or just squirm in discomfort&amp;hellip;), perceiving order and meaning in sounds that normally escape notice. For Cage, music is in the ears of the listener. To study it is to study how we perceive.&lt;/p&gt;&lt;p&gt;But Cage wrote 4’33” at time when many artists were challenging inherited notions of art. Others, dating back to Pythagoras (who defined harmony in terms of &lt;a href=&#34;https://en.wikipedia.org/wiki/Pythagorean_hammers#cite_note-8&#34;&gt;ratios and proportions&lt;/a&gt;), have defined music through the structural properties that make music &lt;i&gt;music, &lt;/i&gt;and separate different musical styles. &lt;/p&gt;&lt;p&gt;The latest efforts to understand music lie in the field of machine listening, where researchers use computers to analyze audio data to identify meaning and structure in it like humans do. Some machine listening researchers analyze urban and environmental sounds, as at &lt;a href=&#34;https://wp.nyu.edu/sonyc/&#34;&gt;SONYC&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;This August in NYC, researchers in machine listening and related fields will convene at the &lt;a href=&#34;https://wp.nyu.edu/ismir2016/&#34;&gt;International Society for Music Information Retrieval (ISMIR) conference&lt;/a&gt;. The conference is of interest to anyone working in data or digital media, offering practical workshops and hackathons for the NYC data community. &lt;/p&gt;&lt;p&gt;We interviewed NYU Steinhardt Professor &lt;a href=&#34;http://steinhardt.nyu.edu/marl/people/bello&#34;&gt;Juan Pablo Bello&lt;/a&gt;, an organizer of ISMIR 2016 working in machine listening, to learn more about the conference and the latest developments in the field. Keep reading for highlights!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Online Talk: Summarization Algorithms</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</link>
+      
+      <pubDate>Fri, 27 May 2016 17:16:23 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</guid>
+      <description>This week, we had the pleasure of hosting an online talk with the team from Agolo, an NYC-based startup with a great product that automatically summarizes articles (and can even generate new titles for a group of summarized articles). During the event, we discussed:
+why summarization has suddenly become interestinghow different industries are applying the technologyhow algorithms work (LDA, word2vec, and recurrent neural networks)related applications (realtime translation, speech recognition)what’s next in the fieldCheck out the recording below!</description>
+    </item>
+    
+    <item>
+      <title>Human-Machine Algorithms: Interview with Eric Colson</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</link>
+      
+      <pubDate>Wed, 25 May 2016 12:37:15 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html</guid>
+      <description>&lt;figure data-orig-width=&#34;780&#34; data-orig-height=&#34;396&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/dd7cacb29c66b0d8ac385f37fde89d2d/tumblr_inline_o7qmpkkMD11qcg73w_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;780&#34; data-orig-height=&#34;396&#34;/&gt;&lt;/figure&gt;
+&lt;blockquote&gt;Therefore render unto Caesar the things that are Caesar&amp;rsquo;s, and unto God the things that are God&amp;rsquo;s.&lt;/blockquote&gt;
+&lt;h5 id=&#34;ndash-matthew-2221&#34;&gt;– Matthew, 22:21&lt;/h5&gt;
+&lt;p&gt;We tend to think that recommender systems are old hat. ECommerce platforms like Amazon have been using techniques like &lt;a href=&#34;https://www.quora.com/How-does-Amazons-collaborative-filtering-recommendation-engine-work&#34;&gt;collaborative filtering&lt;/a&gt; for years to help shoppers navigate vast catalogues by inferring consumer taste from past behavior. And yet, we’ve all experienced the limitations of these approaches (that time you bought a toilet bowl plunger to subsequently be flooded by recommendations for strange bathroom accessories). This may be a nuisance for consumers, but it doesn’t jeopardize eCommerce business models: only 35% of Amazon’s sales, for example, are driven from recommendations.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;But what would happen if the stakes were higher? What kind of algorithmic creativity would it take to build a company with revenue based entirely on recommendations?&lt;/p&gt;&lt;p&gt;This is the challenge faced by &lt;a href=&#34;https://twitter.com/ericcolson&#34;&gt;Eric Colson&lt;/a&gt;’s team at &lt;a href=&#34;http://multithreaded.stitchfix.com/&#34;&gt;Stitch Fix&lt;/a&gt;. Stitch Fix is an online “personal styling service” that selects clothing apparel for customers (they also have a &lt;a href=&#34;http://multithreaded.stitchfix.com/blog/&#34;&gt;solid technical blog&lt;/a&gt;). Instead of recommending items for shoppers to choose from, Stitch Fix goes a step further and simply ships items its algorithms and stylists choose to customers. The key to making this work, according to Colson, is to optimize the division of labor between human and machine.&lt;/p&gt;&lt;p&gt;Colson &lt;a href=&#34;https://www.youtube.com/watch?v=-rId42xabXY&#34;&gt;spoke about&lt;/a&gt; the value of human-machine collaborations at the March &lt;a href=&#34;http://datadrivennyc.com/&#34;&gt;Data Driven NYC Meetup&lt;/a&gt;. We interviewed him to learn more about the approach.&lt;br/&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Making a Case for Machine Learning to Legal Departments</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</link>
+      
+      <pubDate>Tue, 26 Apr 2016 18:41:17 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html</guid>
+      <description>Since we released our text summarization resources, the legal technology community has shown interest in leveraging summarization technology to support litigation document review, deposition digests, and contract analysis. Data scientist interest to use machine learning to mine legal document corpuses and support legal strategy was also one factor motivating our summarization research. The time is therefore ripe for data scientists to apply new text analytics capabilities for legal use cases.</description>
+    </item>
+    
+    <item>
+      <title>Active Learning in the Law</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</link>
+      
+      <pubDate>Mon, 25 Apr 2016 17:41:02 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html</guid>
+      <description>&lt;figure data-orig-width=&#34;782&#34; data-orig-height=&#34;438&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/5419ce3290efb6634bdefc85748cbe2e/tumblr_inline_o67a1hhHOk1ta78fg_540.gif&#34; alt=&#34;image&#34; data-orig-width=&#34;782&#34; data-orig-height=&#34;438&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;the-nist-text-retrieval-conference-trec-logo&#34;&gt;The NIST Text Retrieval Conference (TREC) Logo&lt;/h5&gt;
+&lt;p&gt;We &lt;a href=&#34;http://blog.fastforwardlabs.com/2016/04/11/new-tools-to-summarize-text.html&#34;&gt;recently released research&lt;/a&gt; on neural network methods to summarize text. Systems like &lt;a href=&#34;http://fastforwardlabs.github.io/brief/&#34;&gt;Brief&lt;/a&gt;, our summarization prototype, are poised to modify how we consume text. Content systems were historically designed to help humans find, read, and research documents. But as electronically stored information continues to proliferate, systems will inevitably evolve to support research conducted by a man-machine partnership: machines will take the first pass to synthesize vast amounts of information, and humans will step in to derive more nuanced conclusions. &lt;/p&gt;&lt;p&gt;One field where this man-machine partnership is increasingly important is electronic discovery (eDiscovery), the processes lawyers use to discover information relevant for litigation. The traditional model, where armies of associates and paralegals read documents to find relevant information, does not scale to contemporary information volumes. To promote efficiency and curb the exorbitant costs of review, judges have issued opinions permitting the use of software that automatically finds evidence (&lt;a href=&#34;http://www.insidecounsel.com/2012/04/30/da-silva-moore-sets-stage-for-predictive-codings-a&#34;&gt;&lt;i&gt;Da Silva Moore&lt;/i&gt; v. &lt;i&gt;Publicis Groupe&lt;/i&gt;&lt;/a&gt;) and sometimes even requiring it (&lt;a href=&#34;https://e-discoveryteam.com/2012/10/25/news-flash-surprise-ruling-by-delaware-judge-orders-both-sides-to-use-predictive-coding/&#34;&gt;&lt;i&gt;EORHB Inc.&lt;/i&gt; v. &lt;i&gt;HOA Holdings LLC&lt;/i&gt;&lt;/a&gt;). &lt;/p&gt;&lt;p&gt;This shift in practice has created a large market for “technology-assisted review” (TAR) or “predictive coding” software. The industry is quite large, and vendors use TAR to refer to products that use rules-based Boolean logic as well as more advanced machine learning techniques. &lt;/p&gt;&lt;p&gt;But two voices in the space remain clear and constant. Since they met at the 2009 &lt;a href=&#34;http://trec.nist.gov/&#34;&gt;Text Retrieval Conference&lt;/a&gt; (TREC), &lt;a href=&#34;http://plg.uwaterloo.ca/~gvcormac/&#34;&gt;Gordon Cormack&lt;/a&gt; and &lt;a href=&#34;http://www.wlrk.com/MRGrossman/&#34;&gt;Maura Grossman&lt;/a&gt; have &lt;a href=&#34;http://cormack.uwaterloo.ca/cormack/calstudy/&#34;&gt;published multiple papers&lt;/a&gt; demonstrating that continuous active learning (CAL) is the most accurate and effective technique to find “substantially all” relevant information in a document collection. As they write in their recent &lt;a href=&#34;http://us.practicallaw.com/w-001-8253&#34;&gt;&lt;i&gt;Practical Law &lt;/i&gt;article&lt;/a&gt; on the topic:&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;CAL is a method for finding substantially all relevant information on a particular subject within a vast sea of electronically stored information (ESI). At the outset, CAL resembles a web search engine, presenting first the documents that are most likely to be of interest, followed by those that are somewhat less likely to be of interest. Unlike a typical search engine, however, CAL repeatedly refines its understanding about which of the remaining documents are most likely to be of interest, based on the user’s feedback regarding the documents already presented. CAL continues to present documents, learning from user feedback, until none of the documents presented are of interest.&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;We met with Cormack and Grossman to learn more about why they believe CAL is the best approach for eDiscovery and how the landscape is evolving. Keep reading for highlights.  &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Assessing Data Science Maturity</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/15/assessing-data-science-maturity.html</link>
+      
+      <pubDate>Fri, 15 Apr 2016 18:07:33 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/15/assessing-data-science-maturity.html</guid>
+      <description>We’re getting excited for our Data Leadership Conference, which is set for April 28 in New York City! The conference will feature an expert panel where Haile Owusu (Mashable), Claudia Perlich (Dstillery), and Kirk Borne (Booz Allen Hamilton) will share practical insights on how to build data capabilities within complex organizations. We’ll discuss questions like: What skills should organizations combine in data science teams?Why should organizations invest in experiments that may fail?</description>
+    </item>
+    
+    <item>
+      <title>Where Do You Put Your Data Scientists?</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/06/where-do-you-put-your-data-scientists.html</link>
+      
+      <pubDate>Wed, 06 Apr 2016 15:41:33 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/06/where-do-you-put-your-data-scientists.html</guid>
+      <description>This is a guest post by Daniel Tunkelang, a data scientist and engineering executive, to preview the keynote he’ll deliver at our April 28 Data Leadership Conference in New York City! In 2012, Harvard Business Review proclaimed that &amp;ldquo;data scientist&amp;rdquo; was the sexiest job of the 21st century. That&amp;rsquo;s pretty amazing, considering that the job title was less than five years old at the time.
+The Rapid Rise of Data Science DJ Patil and Jeff Hammerbacher, then at LinkedIn and Facebook, coined the term in 2008 to capture the intersection of analytics, engineering, and product skills that was becoming critical to their companies.</description>
+    </item>
+    
+    <item>
+      <title>Shivon Zilis on the Machine Intelligence Landscape</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</link>
+      
+      <pubDate>Wed, 30 Mar 2016 15:00:03 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/03/30/shivon-zilis-on-the-machine-intelligence-landscape.html</guid>
+      <description>&lt;figure data-orig-width=&#34;727&#34; data-orig-height=&#34;541&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/74ea2d9c04837d672993d887788dcd76/tumblr_inline_o4tb0bi8wF1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;727&#34; data-orig-height=&#34;541&#34;/&gt;&lt;/figure&gt;&lt;p&gt;2016 is shaping up to be a big year for machine intelligence. Achievements like &lt;a href=&#34;http://t.umblr.com/redirect?z=https%3A%2F%2Fdeepmind.com%2Falpha-go.html&amp;amp;t=OWFhNGUyZTg5YTZhMDA5YzMxMjhkZTcwZTA3ZjVkNTlkMTM5OWI5OCxXelB4R3dDVA%3D%3D&#34;&gt;DeepMind’s AlphaGo&lt;/a&gt; are making headlines in the popular press, large tech companies have started a “&lt;a href=&#34;http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.nytimes.com%2F2016%2F03%2F26%2Ftechnology%2Fthe-race-is-on-to-control-artificial-intelligence-and-techs-future.html%3Faction%3Dclick%26contentCollection%3DTechnology%26module%3DRelatedCoverage%26region%3DEndOfArticle%26pgtype%3Darticle&amp;amp;t=NzFhYjEzNjJiMmY1NmNhZDFiMjQ2MWY0ZDQxYTc2MGUxODA2ZmZjNixXelB4R3dDVA%3D%3D&#34;&gt;platform war&lt;/a&gt;” to become the go-to company for A.I., and entrepreneurs are increasingly building machine learning products that have the potential to &lt;a href=&#34;http://t.umblr.com/redirect?z=http%3A%2F%2Ftechcrunch.com%2F2016%2F03%2F19%2Fhow-real-businesses-are-using-machine-learning%2F&amp;amp;t=MzRiYTE2MmVjYjBiN2UyZjQ3Zjc4YWRjOGI0ZjVmYmViODViZGY2OSxXelB4R3dDVA%3D%3D&#34;&gt;transform how companies operate&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;Exciting though the hype may be, the commercial potential of machine intelligence won’t be realized unless entrepreneurs and data scientists can clearly communicate the business value of new tools to non-technical executives. And the first step to communicating clearly is to define a vocabulary to think through what machine intelligence is, how the different algorithms work, and, most importantly, what practical benefits they can provide across verticals and industries. &lt;/p&gt;&lt;p&gt;&lt;a href=&#34;http://t.umblr.com/redirect?z=http%3A%2F%2Fwww.shivonzilis.com%2F&amp;amp;t=Y2UyNGUzNGI0YTMxYmNhYzFlNzQxMWJmMDMwZGI4YjBlN2ZmMTI3NCxXelB4R3dDVA%3D%3D&#34;&gt;Shivon Zilis&lt;/a&gt;, a partner and founding member of &lt;a href=&#34;http://t.umblr.com/redirect?z=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FBloomberg_Beta&amp;amp;t=NTM4NjA1ZDJkZWU2M2FjZTgzNDk0Nzk0NzkwZDdlNjdiYWQwYjRkNCxXelB4R3dDVA%3D%3D&#34;&gt;Bloomberg Beta&lt;/a&gt;, is doing just that. She has spent the past few years focused exclusively on machine intelligence, building out a vocabulary and taxonomy to help the community understand activity in the field and communicate new developments clearly and effectively. &lt;/p&gt;&lt;p&gt;We interviewed Zilis to learn her views on the past, present, and future of machine intelligence. Keep reading for highlights!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>What History Teaches Us About Data Science</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
+      
+      <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>
+      <description>The FFL team at the New York Historical Society&amp;rsquo;s Silicon City exhibit  Study the past if you would define the future. — Confucius
+ Until April 17, 2016, the New York Historical Society is featuring an exhibition called Silicon City: Computer History Made in New York. The Fast Forward Labs team took a field trip to the museum back in December to augment our perspective on our current machine intelligence research (and, of course, to geek out and have fun).</description>
+    </item>
+    
+    <item>
+      <title>Eli Pariser on the Ethics of Algorithmic Filtering</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</link>
+      
+      <pubDate>Fri, 22 Jan 2016 14:06:46 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/01/22/eli-pariser-on-the-ethics-of-algorithmic-filtering.html</guid>
+      <description>&lt;figure data-orig-width=&#34;1442&#34; data-orig-height=&#34;1440&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/3172e6d87c1d99d12058845989f9041f/tumblr_inline_o1bgwg1jOS1ta78fg_540.jpg&#34; alt=&#34;image&#34; data-orig-width=&#34;1442&#34; data-orig-height=&#34;1440&#34;/&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Chiefly his reflection, of which the portrait / Is the reflection, of which the portrait / Is the reflection once removed. / The glass chose to reflect only what he saw / Which was enough for his purpose: his image / Glazed, embalmed, projected at a 180-degree angle.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;-parmagiano-and-john-ashbery---self-portrait-in-a-convex-mirror&#34;&gt;— Parmagiano and John Ashbery - Self-Portrait in a Convex Mirror&lt;/h5&gt;
+&lt;p&gt;Personalizing experiences and recommendations for consumers is the goal of many data science efforts, so much so that the NYC Media Lab created &lt;a href=&#34;http://www.nycmedialab.org/personalizationpalooza-16/&#34;&gt;Personalizationpalooza&lt;/a&gt; to unite technicians and media leadership around the topic. And while &lt;a href=&#34;http://papers.ssrn.com/sol3/papers.cfm?abstract_id=1321962&#34;&gt;studies have shown&lt;/a&gt; that recommendation algorithms promote happy consumers, it’s questionable that also they promote healthy citizens.&lt;b&gt;&lt;br/&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;http://technosociology.org/&#34;&gt;Zeynep Tufecki&lt;/a&gt;, for example, recently wrote a &lt;a href=&#34;https://medium.com/message/how-facebook-s-tyranny-of-the-like-and-engagement-can-be-an-obstacle-to-an-open-and-connected-dddc03a0d39b#.2tc1yluvx&#34;&gt;Medium post &lt;/a&gt;explaining how Facebook’s focus on “engagement” as a metric for deciding which content to share on user news feeds can happen “to the detriment of the substantive experiences and interactions” she (and others) wants on Facebook. Zufecki illustrates her point with an instance where users felt morally unable to “like” a video with child refugees surrounded by dead bodies. She argues that the platform needs different mechanisms and metrics to ensure that content worth viewing can compete with the content we’re more apt to “like.” &lt;/p&gt;&lt;p&gt;Tufecki is not alone in her concerns. In 2011, &lt;a href=&#34;https://en.wikipedia.org/wiki/Eli_Pariser&#34;&gt;Eli Pariser&lt;/a&gt;, CEO of &lt;a href=&#34;https://www.upworthy.com/&#34;&gt;Upworthy&lt;/a&gt;, wrote the first monograph about the risks algorithmic filtering poses to citizenship and society. &lt;a href=&#34;http://www.amazon.com/The-Filter-Bubble-Personalized-Changing/dp/0143121235&#34;&gt;The Filter Bubble&lt;/a&gt; is still worth reading today, as it provides a framework for understanding how filtering algorithms work and what personal, social, and political consequences they may have. It’s critical we understand these tools now that the 2016 election season is in full swing. &lt;/p&gt;&lt;p&gt;We recently interviewed Pariser to see how his thinking has evolved in light of recent algorithmic progress. Keep reading for highlights. &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fashion Goes Deep: Data Science at Lyst</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/12/09/fashion-goes-deep-data-science-at-lyst.html</link>
+      
+      <pubDate>Wed, 09 Dec 2015 17:44:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/12/09/fashion-goes-deep-data-science-at-lyst.html</guid>
+      <description>&lt;figure data-orig-width=&#34;694&#34; data-orig-height=&#34;376&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/993f6c53159f5715d9c127b790bb4bf5/tumblr_inline_nz3b9rPB5w1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;694&#34; data-orig-height=&#34;376&#34;/&gt;&lt;/figure&gt;&lt;p&gt;On November 16, 2015, Lyst, an online fashion marketplace based in the United Kingdom, &lt;a href=&#34;https://www.linkedin.com/pulse/lyst-ad-campaign-fashion-meets-data-science-flavia-young&#34;&gt;launched its first advertising campaign&lt;/a&gt;. Featuring a series of ironic headlines (one simply says “Rip-off”) etched over beautiful images, the campaign emphasizes the company’s identity as a “challenger brand,” whose success “has been driven by marrying insights from data science with the emotional nature of fashion.” (CEO Chris Morton) &lt;/p&gt;&lt;p&gt;&lt;a href=&#34;http://www.lyst.com&#34;&gt;Lyst&lt;/a&gt; provides fashion consumers with a central platform where they can mix and match millions of products from 11,500 different brands. In this context, data science serves as a virtual personal shopper, recommending products to users based upon insights from their behavior using the site. One might think these recommendations are powered by &lt;a href=&#34;https://en.wikipedia.org/wiki/Collaborative_filtering&#34;&gt;collaborative filtering&lt;/a&gt;, but the world of fashion is far too transient and fickle to support data models matching similar users. Matrices are sparse and inventory drains rapidly (consider flash sales sites like &lt;a href=&#34;http://www.gilt.com/&#34;&gt;Gilt&lt;/a&gt;). Instead, recommendation algorithms align consumer behavior with product features. And as the world of fashion is one dominated by image and appearance, fashion data science has a lot to do with image analysis. &lt;/p&gt;&lt;p&gt;We interviewed &lt;a href=&#34;https://twitter.com/ejlbell&#34;&gt;Eddie Bell&lt;/a&gt;, Lyst’s lead data scientist, about his team’s current efforts to use deep learning to analyze images and personalize recommendations to consumers. We talked about his past, his team’s present, and the fashion industry’s future. &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FFL in the Bay Area, Chicago, and DC</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</link>
+      
+      <pubDate>Tue, 03 Nov 2015 19:00:20 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</guid>
+      <description>We’ve got three events on the horizon. Join us, or contact us with questions if you’d like to learn more but are unable to attend!
+Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H2O World, where participants discuss how to use machine learning to build intelligent applications. Hilary will explain how Fast Forward Labs helps companies discover and build exciting new products from their existing data assets.</description>
+    </item>
+    
+    <item>
+      <title>Interview with Pedro Domingos</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</link>
+      
+      <pubDate>Thu, 29 Oct 2015 13:13:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/10/29/interview-with-pedro-domingos.html</guid>
+      <description>&lt;figure data-orig-width=&#34;1000&#34; data-orig-height=&#34;614&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/4886047f032d47b832630a0ad0a72841/tumblr_inline_nwzgbcEPkQ1ta78fg_540.jpg&#34; alt=&#34;image&#34; data-orig-width=&#34;1000&#34; data-orig-height=&#34;614&#34;/&gt;&lt;/figure&gt;&lt;p&gt;Machine learning technologies increasingly shape our sense of reality and the choices we make in our daily lives. They power Amazon’s product recommendations. They classify documents relevant for a lawsuit. They enable computers to play chess like the masters.&lt;b&gt;&lt;br/&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;As machine learning applications expand to influence our civic, professional and private lives, it’s important that we all have a basic understanding of how they work and what potential they offer. &lt;a href=&#34;https://homes.cs.washington.edu/~pedrod/&#34;&gt;Pedro Domingos&lt;/a&gt; undertook the challenge of providing the first comprehensive, nontechnical overview of machine learning in his new book, &lt;i&gt;The Master Algorithm&lt;/i&gt;. &lt;/p&gt;&lt;p&gt;In &lt;i&gt;The Master Algorithm, &lt;/i&gt;Domingos divides the field into five different “tribes” &amp;ndash; symbolism, connectionism (neural networks), evolutionary algorithms, Bayesian networks, and analogical reasoning &amp;ndash; which he challenges his readers to unify in one future “master algorithm” capable of learning nearly anything. This will towards universality informs his book’s bold central hypothesis: “all knowledge - past, present, and future - can be derived from data by a single, universal learning algorithm.” It’s up to us to find it. &lt;/p&gt;&lt;p&gt;We had the pleasure of interviewing Domingos last week. Keep reading to see the highlights. &lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Flip the Paradigm</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</link>
+      
+      <pubDate>Tue, 20 Oct 2015 19:14:08 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/10/20/flip-the-paradigm.html</guid>
+      <description>Last week, Hilary, Fast Forward Labs founder and CEO, gave the opening keynote at the Grace Hopper Celebration of Women in Computing in Houston, TX. Her talk inspired an audience of over 12,000 women to embrace the unimaginable possibilities that will shape the careers of future technologists. Sure, aspiring engineers and data scientists have to endure the angst that they can no longer chart their future by emulating role models from their past.</description>
+    </item>
+    
+    <item>
+      <title>How do neural networks learn?</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</link>
+      
+      <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
+      <description>Neural networks are generating a lot of excitement, as they are quickly proving to be a promising and practical form of machine intelligence. At Fast Forward Labs, we just finished a project researching and building systems that use neural networks for image analysis, as shown in our toy applicationPictograph. Our companion deep learning report explains this technology in depth and explores applications and opportunities across industries.
+As we built Pictograph, we came to appreciate just how challenging it is to understand how neural networks work.</description>
+    </item>
+    
+    <item>
+      <title>Fast Forward Labs Interviews Clarifai about Deep Learning</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</link>
+      
+      <pubDate>Tue, 22 Sep 2015 18:58:45 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
+      <description>Last Thursday Hilary and I headed to Clarifai’s offices in the Flatiron District to ask CEO Matt Zeiler about using deep learning for image analysis. A few highlights from the interview:
+1) The success of a deep learning project depends on the quality of the initial training data set. Deep learning algorithms start by scanning massive data sets to identify features (inputs) that can be correlated with categories (outputs) to make sense of the data.</description>
+    </item>
+    
+  </channel>
+</rss>

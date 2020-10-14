@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Machine Learning Applications in Fashion Retail</title>
+<meta property="og:title" content="Machine Learning Applications in Fashion Retail">
+<meta property="description" content="
+This is the first of two articles about recent developments in fashion technology. Part two will focus on implications for consumer privacy.
+The next frontier for recommender systems is the retail store. We’re used to associating machine learning with ecommerce giants like Gilt and Lyst, but can data science transform physical stores like Rebecca Minkoff and Zara? The impact would be significant, as more than 90% of retail sales still occur in brick-and-mortar stores, which could use data to redefine in-store personalization.The introduction of data collection in the retail space does not always require new tools; rather, retailers can gather granular data on customers and products by repurposing existing hardware like security cameras and clothing sensors in new ways. Developments in machine learning have made it possible to auto-process existing video feeds to track customers, from simple movement analytics to full body profiles. Smart mirrors, security cameras (CCTV) and radio-frequency identification (RFID) sensors which create rich datasets that make automated personalization in bricks &amp; mortar scalable.">
+<meta property="og:description" content="
+This is the first of two articles about recent developments in fashion technology. Part two will focus on implications for consumer privacy.
+The next frontier for recommender systems is the retail store. We’re used to associating machine learning with ecommerce giants like Gilt and Lyst, but can data science transform physical stores like Rebecca Minkoff and Zara? The impact would be significant, as more than 90% of retail sales still occur in brick-and-mortar stores, which could use data to redefine in-store personalization.The introduction of data collection in the retail space does not always require new tools; rather, retailers can gather granular data on customers and products by repurposing existing hardware like security cameras and clothing sensors in new ways. Developments in machine learning have made it possible to auto-process existing video feeds to track customers, from simple movement analytics to full body profiles. Smart mirrors, security cameras (CCTV) and radio-frequency identification (RFID) sensors which create rich datasets that make automated personalization in bricks &amp; mortar scalable.">
+<meta property="og:image" content="https://blog.fastforwardlabs.comhttp://68.media.tumblr.com/1ea7d218b3ec206decfb85436ead953d/tumblr_inline_ntcf1hms2i1ta78fg_540.jpg">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Aug 19, 2015</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Machine Learning Applications in Fashion Retail</h1>
+    <figure data-orig-width="1080" data-orig-height="572" class="tmblr-full"><img src="http://68.media.tumblr.com/1ea7d218b3ec206decfb85436ead953d/tumblr_inline_ntcf1hms2i1ta78fg_540.jpg" data-orig-width="1080" data-orig-height="572"/></figure>
+<h5 id="this-is-the-first-of-two-articles-about-recent-developments-in-fashion-technology-part-two-will-focus-on-implications-for-consumer-privacy">This is the first of two articles about recent developments in fashion technology. Part two will focus on implications for consumer privacy.</h5>
+<p>The next frontier for recommender systems is the retail store. We’re used to associating machine learning with ecommerce giants like Gilt and Lyst, but can data science transform physical stores like Rebecca Minkoff and Zara? The impact would be significant, as more than <a href="http://www2.deloitte.com/us/en/pages/about-deloitte/articles/press-releases/digital-influences-in-retail-store-sales.html">90% of retail sales still occur in brick-and-mortar stores</a>, which could use data to redefine in-store personalization.</p><p>The introduction of data collection in the retail space does not always require new tools; rather, retailers can gather granular data on customers and products by repurposing existing hardware like security cameras and clothing sensors in new ways. Developments in machine learning have made it possible to auto-process existing video feeds to track customers, from simple movement analytics to full body profiles. Smart mirrors, security cameras (CCTV) and radio-frequency identification (RFID) sensors which create rich datasets that make automated personalization in bricks &amp; mortar scalable.</p>
+<p>The first application of new technologies occurs before customers even enter the store. Skybox Imaging and other satellite companies use visual analytics to<a href="http://www.ibtimes.com/googles-new-satellites-can-spy-apples-supply-chains-skybox-ceo-says-1603642"> predict quarterly earnings from parking lot</a> patterns over time. Companies like Nomi/Brickstream, ShopperTrak, and RetailNext, for example, focus on customer traffic analytics before and after store entry. Inside stores, analytics on customer movement inform display layout and product placement, and further quantify where to place featured products. With tools that transform brick and mortar operations into an online clickstream, <a href="http://euclidanalytics.com/product/case-studies/high-value_customers.pdf">Euclid</a> boasts the ability to segment shoppers into groups based on an individual’s total number of visits and average shop time. Others anonymize this data. Prism Skylabs, <a href="https://gigaom.com/2014/07/10/with-privacy-concerns-rising-in-retail-prism-skylabs-says-video-analytics-are-the-future/">for example</a>, “uses advanced computer vision techniques so that the video feeds it presents back to its customers don’t show any people at all.” Before the interior is even constructed, architects can take advantage of massively improved virtual reality technology to go on pre-construction walkthroughs with <a href="http://www.irisvr.com/">IrisVR</a> or <a href="https://www.insitevr.com/">InsiteVR</a>. It’s technically possible, then, to collect similar movement data from a focus group of shoppers in advance of a building out new interiors. </p><p>Increasingly sophisticated research on body size estimation from a 2D image or video enables CCTV feeds to find humans in-store and, more recently, calculate their body measurements. Smart mirrors, like those used by <a href="http://www.fastcocreate.com/3041516/master-class/mirror-mirror">Rebecca Minkoff</a>, enable customers to request new items from inside a fitting room and checkout on their cell phone. It’s unclear, however, which retailers repurpose smart mirrors to read body data or estimate age from customers. Security cameras, as described by a 2011 <a href="http://www.ece.northwestern.edu/~mya671/mypapers/ICIP11_Yang_Yu.pdf">NEC Laboratories</a> paper, can find shoppers on video with facial recognition, then analyze their pose and other attributes to classify their clothing into pre-set categories. In late 2014, eBay Research proposed a refined method using clothing detection (identifying only whether objects of interest were present within an image) instead of segmentation (classifying all of the pixels of a given image). Companies like <a href="http://www.alvanon.com/">Alvanon</a> are taking steps toward commercializing the automatic creation of body profiles of customers from video feeds with devices selected specifically for this purpose. President Ed Gribbin <a href="http://www.tc2.com/can-virtual-dressing-rooms-and-sizing-apps-fix-fashions-fit-issues/">explains</a>, </p><blockquote><p>“Using a single-scan device we capture data anonymously and we can tell the retailer how many people walked into the store, in what size and how many of those people will fit into their clothing or not,” he explained. “By understanding the size and shape of their customers they will then be able to design clothes specifically for those customers, thereby enhancing fit satisfaction while increasing customer loyalty and retail conversion rates.” </p></blockquote><p>Because clothing is often produced weeks to months in advance of shipping, data about body measurements improves distribution by matching sizes to local customer body shapes. In the same field of body metrics, Body Labs uses research from <a href="http://mpi-inf-mpg.academia.edu/NilsHasler">Nils Halser</a> and <a href="http://ps.is.tue.mpg.de/person/black#tabs-publications">Michael J. Black</a> to translate noisy body scans into full, movable models that are automatically processed and visualized from measurements (currently via license agreement at Brown University and the Max Planck Institute). As their tools are <a href="http://blog.bodylabs.com/2015/03/03/introducing-bodykit-beta/">accessible via API</a>, they are affordable for small-scale retailers: a Surface Pro and a single Kinect scanner suffice to <a href="http://www.bodylabs.com/products.html">create a digital avatar on the spot</a>. If model simulation companies like <a href="http://www.wsj.com/articles/SB10001424127887323468604578249752619254898">Looklet</a> expand to cover diverse body types, we might imagine a Body Labs avatar, with realistic clothing and facial features provided by Looklet, moving realistically through an advertisement on a local display.  </p><p>The missing piece is automated inventory management, to ensure the right pieces make it to the right zip codes, storage rooms, displays, and fitting rooms in the first place. Most stores still manually request new styles after running low, and physically count in-stock items when taking inventory. By contrast, using <a href="http://www.wsj.com/articles/at-zara-fast-fashion-meets-smarter-inventory-1410884519">data from RFID chips</a>, Zara obtains highly accurate information about inventory in minutes instead of hours, with a much smaller team of associates and less human error. RFID is nothing new, but adapting RFID such that it would not interfere with security sensors or walk away with the customers proved a major barrier for retailers in the past. </p><p>For existing inventory, stores can build automated recommender systems that encourage customers to try items that are in-stock, but may not be on display. Early research from a collaboration between <a href="https://www.ibm.com/developerworks/community/blogs/jfp/entry/zara?lang=en">Zara and MIT</a> links product performance to the type of sizes available on the sales floor. When the standard sizes are missing (small, medium, or large) and only the endpoints of the size range are on display (extra-small or extra-large), the product will perform worse than a complete set of sizes and takes space from items more likely to sell. In their research, it was recommended for Zara to quickly replenish the standard sizes, remove the item from the floor entirely, or send it off to a store with a more complete set of sizes. That’s why smarter sensor inventory and smart mirrors in fitting rooms are even more important for moving excess inventory - what you see (on the floor) is not what you get. More complete information from improved sensors empowers sales associates to find related items without needing to physically check the stockroom, minimizing customer abandonment of the sale, and helping maximize local inventory turnaround. With companies like <a href="https://evrythng.com/technology/">EVRYTHNG</a> bringing Internet-of-Things thinking to items with tags as standard as barcodes, it’s possible that some of these benefits of smart tagging are accessible without a major investment in new sensors. </p><p>There is already a strong precedent for pulling up unique displays when an RFID-enabled product passes by a screen at <a href="http://www.businessoffashion.com/articles/retail-recon/retail-recon-burberrys-bet-on-retail-entertainment">Burberry</a>. Like any ecommerce recommender system using collaborative filtering, it becomes increasingly easy to track whether customers wearing item x, of body size y, and estimated age range z are likely to be interested in item a, based on thousands of other customers interacting with item a. Combining the technologies surveyed in this article, retail marketing becomes: reading the body shape of a person near a display, using the RFID tag to identify the product they are interested in, generating a body avatar on the spot, overlaying a realistic simulation of the item onto the model, adding an item similar to something the person is already wearing, and triggering a hyper-personalized advertisement using in-stock merchandise. </p><p>The question is, do the privacy risks outweigh the benefits, and do the consumers understand the implications? </p><p>- Jessica Graves <a href="https://twitter.com/sefleuria">@sefleuria</a></p><p>Sources: </p><p>Business of Fashion [<a href="http://www.businessoffashion.com/articles/retail-recon/retail-recon-burberrys-bet-on-retail-entertainment">1</a>], Fast Company [<a href="http://www.fastcocreate.com/3041516/master-class/mirror-mirror">1</a>], U.S. Census [<a href="http://www.census.gov/retail/index.html">1</a>], Nomi [<a href="http://www.nomi.com/platform/technology/accuracy/">1</a>], Gigaom [<a href="https://gigaom.com/2014/07/10/with-privacy-concerns-rising-in-retail-prism-skylabs-says-video-analytics-are-the-future/">1</a>], Genetec [<a href="http://www.genetec.com/about-us/news/press-center/press-releases/genetec-and-prism-skylabs-help-retailers-gain-in-store-insights-with-retail-analytics-suite">1</a>], Sourcing Journal Online [<a href="https://sourcingjournalonline.com/can-virtual-dressing-rooms-sizing-apps-fix-fashions-fit-issues-lm/">1</a>], TC2 [<a href="http://www.tc2.com/can-virtual-dressing-rooms-and-sizing-apps-fix-fashions-fit-issues/">1</a>], CB Insights [<a href="https://www.cbinsights.com/company/control4">1</a>], International Business Times [<a href="http://www.ibtimes.com/googles-new-satellites-can-spy-apples-supply-chains-skybox-ceo-says-1603642">1</a>], EVRYTHNG [<a href="https://evrythng.com/technology/active-digital-identities">1</a>] [<a href="https://evrythng.com/technology/">2</a>], Deloitte [<a href="http://www2.deloitte.com/us/en/pages/about-deloitte/articles/press-releases/digital-influences-in-retail-store-sales.html">1</a>], Euclid [<a href="http://euclidanalytics.com/product/case-studies/high-value_customers.pdf">1-PDF</a>], IrisVR [<a href="http://www.irisvr.com/">1</a>], InsiteVR [<a href="https://www.insitevr.com/">1</a>], Northwestern [<a href="http://www.ece.northwestern.edu/~mya671/mypapers/ICIP11_Yang_Yu.pdf">1</a>], Alvanon [<a href="http://www.alvanon.com/">1</a>], Body Labs [<a href="http://blog.bodylabs.com/2015/03/03/introducing-bodykit-beta/">1</a>] [<a href="http://www.bodylabs.com/products.html">2</a>], Brown University [<a href="http://ps.is.tue.mpg.de/person/black#tabs-publications">1</a>], Max Planck Institute [<a href="http://mpi-inf-mpg.academia.edu/NilsHasler">1</a>], Looklet [<a href="https://looklet.com/">1</a>], Wall Street Journal [<a href="http://www.wsj.com/articles/SB10001424127887323468604578249752619254898">1</a>] [<a href="http://www.wsj.com/articles/at-zara-fast-fashion-meets-smarter-inventory-1410884519">2</a>], IBM Developerworks [<a href="https://www.ibm.com/developerworks/community/blogs/jfp/entry/zara?lang=en">1</a>], 3D Printing Industry [<a href="http://3dprintingindustry.com/2015/06/05/body-labs-is-closer-to-offering-full-out-of-body-3d-interaction/">1</a>], ShopperTrak [<a href="http://www.shoppertrak.com/solutions/perimeter-analytics/">1</a>], RetailNext [<a href="http://retailnext.net/products/shopper-activity-maps/">1</a>], Time [<a href="http://time.com/3938488/retail-displays/">1</a>]</p>
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Sep 2, 2015</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2015/09/02/dalemberts-deep-dream-bees-and-nonlinear-transformations.html"><strong>D’Alembert’s Deep Dream: Bees and Nonlinear Transformations</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 14, 2015</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2015/08/14/why-now-some-preconditions-for-technology-innovations.html"><strong>Why Now? Some Preconditions for Technology Innovations</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

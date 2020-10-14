@@ -1,4 +1,11 @@
 [[entries]]
+number = "FF16"
+name = "Structural Time Series"
+blurb = "Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem."
+img = "ff16-combo.png"
+link = "https://structural-time-series.fastforwardlabs.com"
+
+[[entries]]
 number = "FF15"
 name = "Meta-Learning"
 blurb = "In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time"

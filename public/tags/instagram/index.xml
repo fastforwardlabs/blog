@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>instagram on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/instagram.html</link>
+    <description>Recent content in instagram on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Sep 2015 19:16:19 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/instagram/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pictograph: Unlock Your Images</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/09/15/pictograph-unlock-your-images.html</link>
+      
+      <pubDate>Tue, 15 Sep 2015 19:16:19 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/09/15/pictograph-unlock-your-images.html</guid>
+      <description>Have you ever wondered what your photos say about how you look at the world and who you are? Your images won’t say much about what types of things you tend to post unless you routinely tag them. Our new toy application, Pictograph, catalogs the objects that make up your Instagram identity. Pictograph analyzes your Instagram photos and creates a visualization, or pictograph, of what you like to photograph. It’s a fun way to play with new deep learning algorithms for image analysis, and it makes some pretty hilarious mistakes.</description>
+    </item>
+    
+  </channel>
+</rss>

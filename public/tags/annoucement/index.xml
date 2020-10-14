@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>annoucement on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/annoucement.html</link>
+    <description>Recent content in annoucement on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Apr 2016 15:41:33 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/annoucement/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Where Do You Put Your Data Scientists?</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/06/where-do-you-put-your-data-scientists.html</link>
+      
+      <pubDate>Wed, 06 Apr 2016 15:41:33 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/06/where-do-you-put-your-data-scientists.html</guid>
+      <description>This is a guest post by Daniel Tunkelang, a data scientist and engineering executive, to preview the keynote he’ll deliver at our April 28 Data Leadership Conference in New York City! In 2012, Harvard Business Review proclaimed that &amp;ldquo;data scientist&amp;rdquo; was the sexiest job of the 21st century. That&amp;rsquo;s pretty amazing, considering that the job title was less than five years old at the time.
+The Rapid Rise of Data Science DJ Patil and Jeff Hammerbacher, then at LinkedIn and Facebook, coined the term in 2008 to capture the intersection of analytics, engineering, and product skills that was becoming critical to their companies.</description>
+    </item>
+    
+  </channel>
+</rss>

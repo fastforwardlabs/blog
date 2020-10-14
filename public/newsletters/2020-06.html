@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2020-06.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the June edition of Cloudera Fast Forward&rsquo;s monthly newsletter. This month, alongside our regular recommended reading, we have two exciting research announcements!</p>
+<hr>
+<h2 id="new-research-nlp-for-question-answering">New research: NLP for Question Answering</h2>
+<p>Here in the Fast Forward lab, we&rsquo;re always asking ourselves a lot of questions. Now we&rsquo;re asking BERT a lot of questions too! Our current research focus is question answering systems. In place of a report with all our learnings at the end of our research, we&rsquo;re inviting you to follow along as we explore building a question answering system using modern neural architectures. We just released our third blog in the series, and you can check out each of them below:</p>
+<p><a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html">Intro to Automated Question Answering</a></p>
+<p>This introductory post discusses what QA is and isn’t, where this technology is being employed, and what techniques are used to accomplish this natural language task.</p>
+<p><a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html">Building a QA System with BERT on Wikipedia</a></p>
+<p>Follow along with this post to build a working Information Retrieval-based QA system, with BERT as the document reader and Wikipedia&rsquo;s search engine as the document retriever. This is a fun toy model that that hints at potential real-world use cases.</p>
+<p><a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html">Evaluating QA: Metrics, Predictions, and the Null Response</a></p>
+<p>In this post, we look at how to assess the quality of a BERT-like model for Question Answering. We cover what metrics are used to quantify quality, how to evaluate your model using the Hugging Face framework, and the importance of the &ldquo;null response&rdquo; &ndash; questions that don&rsquo;t have answers &ndash; for both improved performance and more realistic QA output.</p>
+<hr>
+<h2 id="new-report-causality-for-machine-learning">New report: Causality for Machine Learning</h2>
+<p>Our latest research report — <a href="http://ff13.fastforwardlabs.com/">Causality for Machine Learning</a> — is live, and the <a href="https://www.cloudera.com/about/events/webinars/causality-for-machine-learning.html">webinar</a> is available on demand!</p>
+<p>Causality is an emerging area of focus in data science practice, especially when we want to make decisions based on our models. Causality provides a framework for understanding which statistical relationships are true, and which only appear to be true in some circumstances. Our report provides guidance on when and how we need to think about causality.</p>
+<p>Even when a problem does not require causal reasoning, we can greatly improve the robustness and generalizability of our machine learning models by taking some lessons from causality. The report outlines techniques that enable machine learning models to perform well across diverse unseen environments, including those that they were not trained on. This is applicable to any machine learning problem where we would like our models to perform well across diverse environments. In particular there are applications in natural language processing and computer vision, which we demonstrate in the accompanying prototype, <a href="https://scene.fastforwardlabs.com/">Scene</a>.</p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<ul>
+<li>
+<p><a href="https://arxiv.org/abs/1911.01429">The frontier of simulation based inference</a>
+Deep learning gets a lot of attention, but it is not the only area of machine learning where progress has been made. Performing inference over intractable likelihoods is widely applicable, and especially where a sophisticated simulator already exists. Examples discussed focus mostly on physical phenomena, from particle colliders, to the structure of the Universe, to epidemics. Personally, I suspect that useful simulators could be constructed for many applied and industrial use cases. This paper outlines recent developments that are enabling statistical inference over these highly complex simulators. - <a href="https://twitter.com/_cjwallace">Chris</a></p>
+</li>
+<li>
+<p><a href="https://sigir.org/wp-content/uploads/2019/01/p040.pdf">The Neural Hype and Comparisons Against Weak Baselines</a>
+This paper illustrates how the use of weak baselines can artificially inflate the &ldquo;value&rdquo; of neural methods in the information retrieval domain. In a particularly interesting example, the authors demonstrate how a well designed query expansion approach (BM25 + RM3) provide comparable performance to neural retrieval methods at a fraction of the cost and complexity. - <a href="https://twitter.com/vykthur">Victor</a></p>
+</li>
+<li>
+<p><a href="https://www.pragmatic.ml/a-survey-of-methods-for-model-compression-in-nlp/">A Survey of Methods for Model Compression in NLP</a>
+Transformer-based language models have dramatically advanced the performance of several NLP capabilities like machine translation, summarization, and question answering. However, these models are huge and computationally complex, and implementing them in practice remains challenging with traditional computational constraints. This post summarizes several avenues of research that aim to reduce the size of these beastly models without sacrificing the quality of their output — from software efficiency tricks to techniques like knowledge distillation — making them smaller, lighter, faster and, ultimately, more accessible for practical applications. - <a href="https://twitter.com/highzgal">Melanie</a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/pdf/2004.07780.pdf">Shortcut Learning in Deep Neural Networks</a>
+While the era of deep learning has brought about significant progress and advancement in the field of machine intelligence, a general focus on shattering traditional performance benchmarks has overshadowed the due diligence needed to truly understand model limitations. This paper discusses shortcut learning — the idea that deep learning models often learn superficial rules to perform well on a given benchmark and consequently fail to transfer that level of performance to real-world scenarios. The authors present a set of recommendations for proper model interpretation and performance benchmarking. - <a href="https://www.linkedin.com/in/andrew-r-reed/">Andrew</a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2004.09456">StereoSet: Measuring stereotypical bias in pretrained language models</a>
+This paper releases a thoughtfully crowdsourced dataset along with an evaluation metric (ICAT) to measure biases in four domains: race, gender, religion and professions. The authors tested various pretrained models including BERT, RoBERTA, XLNet, GPT2. They show, not surprisingly, that these models exhibit strong stereotypical biases from both a within-sentence and intra-sentence perspective. Dataset and leaderboard can be found at <a href="https://stereoset.mit.edu/">https://stereoset.mit.edu/</a> - Shioulin</p>
+</li>
+<li>
+<p><a href="https://medium.com/@seanjtaylor/designing-and-evaluating-metrics-5902ad6873bf">Designing and evaluating metrics</a>
+Our ability to capture data and measure outcomes enables us to improve our products, decisions, user experience and such. And while this is increasingly applicable in the data science world, it’s been how scientific pursuits have been long accomplished. This blogpost by Sean Taylor discusses five main properties to keep in mind when designing a metric: cost, simplicity, faithfulness (which is often invalidated due to sampling bias or by measuring the wrong thing), precision and causal proximity (that measures how closely your product or decision changes affect the metric). Further, he discusses how metric design is an iterative process that requires input from multiple stakeholders and like code involves testing, re-evaluation, tweaking and could be eventually replaced. - <a href="https://twitter.com/NishaMuktewar">Nisha</a></p>
+</li>
+</ul>
+
+  </div>
+
+

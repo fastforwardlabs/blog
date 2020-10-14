@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>summarization on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/summarization.html</link>
+    <description>Recent content in summarization on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Aug 2016 17:24:14 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/summarization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>New TensorFlow Code for Text Summarization</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/08/25/new-tensorflow-code-for-text-summarization.html</link>
+      
+      <pubDate>Thu, 25 Aug 2016 17:24:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/08/25/new-tensorflow-code-for-text-summarization.html</guid>
+      <description>Yesterday, Google released new TensorFlow model code for text summarization, specifically for generating news headlines on the Annotated English Gigaword dataset. We’re excited to see others working on summarization, as we did in our last report: our ability to “digest large amounts of information in a compressed form” will only become more important as unstructured information grows. The TensorFlow release uses sequence-to-sequence learning to train models that write headlines for news articles.</description>
+    </item>
+    
+    <item>
+      <title>Evaluating Summarization Systems</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</link>
+      
+      <pubDate>Mon, 23 May 2016 17:09:13 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</guid>
+      <description>We’re excited for tomorrow’s online discussion about automatic text summarization! You can register here. During the event, Mohamed AlTantawy, CTO of Agolo, will explain the tech behind their summarization tool. In this blog post, he describes how his team evaluates the quality of summaries produced by their system. Join us tomorrow to learn more and ask questions about the approach! Evaluating the quality of algorithmically created summaries is a very hard task.</description>
+    </item>
+    
+    <item>
+      <title>Summarization as a Gateway to Computable Language</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</link>
+      
+      <pubDate>Thu, 21 Apr 2016 19:38:37 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/04/21/summarization-as-a-gateway-to-computable-language.html</guid>
+      <description>Analyzing unstructured text data such as news, emails, chats, narrative prose, legal documents, or transcribed speech is an extremely tough problem. Thanks to massive leaps in data engineering, we can just about store and retrieve this torrent of information. But we can&amp;rsquo;t yet conduct the kind of rich and fast analyses that we take for granted with structured, quantitative data.
+Our newly released summarization report is a response to this problem in two senses.</description>
+    </item>
+    
+  </channel>
+</rss>

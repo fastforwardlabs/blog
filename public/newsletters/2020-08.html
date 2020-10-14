@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2020-08.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the August edition of Cloudera Fast Forward&rsquo;s monthly newsletter. Our team have been taking some well-deserved vacation this month, but we have several new research projects underway that we&rsquo;re excited to share with you soon. In the meantime, several of our recent webinars are available to watch on-demand, and our research engineers have some new recommended reading to share.</p>
+<hr>
+<h2 id="our-recent-research">Our Recent Research</h2>
+<h3 id="nlp-for-question-answering">NLP for Question Answering</h3>
+<p>What if you could ask your email client, “Who sent me the link with the latest financial report?” Automated question answering is a human-machine interaction to extract information from data using natural language. This general capability can take many forms, but one of the most exciting developments has been question answering from unstructured text data, including the massive amounts of information contained in emails, social media posts, blogs, log files, financial statements &ndash; and the list goes on. Thanks to a series of advances in deep learning techniques in the past two years, question answering capabilities have grown rapidly, and while still emerging, it’s the perfect time to examine how this technology works, when it works well, and where it might still fall short.</p>
+<ul>
+<li>Blog: <a href="https://qa.fastforwardlabs.com/">NLP for Question Answering</a></li>
+<li>Prototype: <a href="https://neuralqa.fastforwardlabs.com/">Neural QA</a></li>
+<li>Webinar: <a href="https://www.cloudera.com/about/events/webinars/deep-learning-for-automated-question-answering.html">Deep Learning for Automated Question Answering</a></li>
+</ul>
+<h3 id="causality-for-machine-learning">Causality for Machine Learning</h3>
+<p>Machine learning allows us to detect subtle correlations in large data sets, and use those correlations to make accurate predictions. However, these subtle correlations are often spurious - they exist only in a particular dataset - and the resultant model performs poorly, or gives unexpected results in the real world. Moreover, reasoning based on spurious correlations is dangerous. Business decisions should be based on things that are true, not things that are true only in a limited dataset. The trouble, of course, is identifying what is spurious and what is not. In this report, we explain how combining causal inference with machine learning can help us address these problems.</p>
+<ul>
+<li>Report: <a href="https://ff13.fastforwardlabs.com/">Causality for Machine Learning</a></li>
+<li>Prototype: <a href="http://scene.fastforwardlabs.com/">Scene</a></li>
+<li>Webinar: <a href="https://www.cloudera.com/about/events/webinars/causality-for-machine-learning.html">Causality for Machine Learning</a></li>
+</ul>
+<h3 id="interpretability">Interpretability</h3>
+<p>Machine learning (ML) techniques like deep learning can deliver transformative business outcomes, yet the black-box nature of these approaches creates barriers of understanding that can slow adoption to a halt. ML model interpretability, or the ability to explain why and how a model makes a prediction, can enable enterprises to quickly understand predictive outcomes and confidently make decisions that optimize for future business results.</p>
+<ul>
+<li>Report: <a href="https://ff06-2020.fastforwardlabs.com/">Interpretability</a></li>
+<li>Prototype: <a href="https://refractor.fastforwardlabs.com/">Refractor</a></li>
+<li>Webinar: <a href="https://www.cloudera.com/content/dam/www/marketing/resources/webinars/opening-the-machine-learning-black-box.png.landing.html">Opening the Machine Learning Black Box: Deploying Interpretable Models to Business Users</a></li>
+</ul>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favourite reads of the month.</p>
+<ul>
+<li><a href="https://joeddav.github.io/blog/2020/05/29/ZSL.html">Zero-Shot Learning in Modern NLP</a>
+One of the hallmarks of large NLP models is their propensity for transfer learning — models trained on massive unsupervised datasets can be leveraged for new tasks by training them further on smaller, supervised training sets. But even these &ldquo;smaller&rdquo; datasets are often composed of thousands or tens of thousands of examples, and generating that much labeled data for specific use cases can be costly. This blog post details new techniques that harness powerful NLP models for text classification with few or no labeled training data, known as few-shot or zero-shot learning, respectively. — <a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></li>
+<li><a href="https://www.aclweb.org/anthology/D19-1250.pdf">Language Models as Knowledge Bases?</a>
+****Whilst learning linguistic knowledge, pretrained bidirectional language models like BERT may also be storing relational knowledge present in the training data, and may be able to answer queries structured as &ldquo;fill-in-the-blank&rdquo; cloze statements (similar to masked language training objective). This paper brings attention to how knowledge encoded in the weights of these models can be leveraged as knowledge bases. — <a href="https://twitter.com/vykthur">Victor</a></li>
+<li><a href="https://www.youtube.com/watch?v=4WVelCswXo4">Statistical Rethinking</a> (recommended watching)
+My colleagues will tell you how tiresome I am about probabilistic methods. Recently, I&rsquo;ve been enjoying Richard McElreath&rsquo;s Statistical Rethinking lecture series, and now wish this is how I had first encountered Bayesian statistics. I highly recommend it, even to those who are as nerdy about Bayesian methods as I am. — <a href="https://twitter.com/_cjwallace">Chris</a></li>
+<li><a href="https://openai.com/blog/image-gpt/">Image-GPT</a>
+Transformer models like BERT, RoBERT, GPT and their variants have made enormous progress in natural language tasks. These models have been trained on large corpus of data and are utilized for many tasks like predicting the next word in some given text. In a similar vein, an image-based transformer model can predict the next pixel. This could be a promising route to learning unsupervised image representations (similar to word representations), which in turn could be utilized for image completion tasks or applications involving learning from low resolution images. - <a href="https://twitter.com/NishaMuktewar">Nisha</a></li>
+<li><a href="https://arxiv.org/abs/2007.14435">Towards Ecologically Valid Research on Language User Interfaces</a>
+Why have we not seen an explosion in Language User Interfaces (Siri is a well known example of a personal assistant, others include assistants for business analysts and visually impaired) given the breakthroughs in NLP? This paper suggests that the data collection process is to blame, and offers an ideal methodology. In the earlier days of LUI research, researchers focused on collecting data that closely simulated the LUI&rsquo;s anticipated use-case. These days, due to the massive data requirements of ML approaches used to build LUIs, tasks have become artificial and have sacrificed &ldquo;ecological validity&rdquo;. Read to find out five common ways current benchmarks deviate from the ideal research methodology. — <a href="https://www.linkedin.com/in/shioulinsam/">Shioulin</a></li>
+<li><a href="https://archive.org/details/KID_PIX_DOS">Kid Pix 1.0</a>
+Kid Pix, which I used to use in computer lab in elementary school, is playable via the Internet Archive’s emulator. Looking back at it, I’m impressed by how whimsical and playful many of the effects and icons are — something we could use more of in modern software design. — <a href="https://twitter.com/grantcuster">Grant</a></li>
+</ul>
+<hr>
+<h2 id="events">Events</h2>
+<h3 id="conference-deep-learning-for-anomaly-detectionhttpsodsccomspeakersdeep-learning-for-anomaly-detection">Conference: <a href="https://odsc.com/speakers/deep-learning-for-anomaly-detection/">Deep Learning for Anomaly Detection</a></h3>
+<p>Nisha Muktewar will be speaking about <a href="https://ff12.fastforwardlabs.com/">our research</a> on Deep Learning for Anomaly Detection at <a href="https://odsc.com/europe/">Open Data Science Conference Europe</a> on September 17th.</p>
+
+  </div>
+
+

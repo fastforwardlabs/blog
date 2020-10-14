@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Introducing Variational Autoencoders (in Prose and Code)</title>
+<meta property="og:title" content="Introducing Variational Autoencoders (in Prose and Code)">
+<meta property="description" content="Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
+Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
+This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.">
+<meta property="og:description" content="Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
+Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
+This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.">
+<meta property="og:image" content="https://blog.fastforwardlabs.comhttp://fastforwardlabs.github.io/blog-images/miriam/160727_1340_explore.gray_del11_492x490.slower40.gif">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Aug 12, 2016</span> &middot;
+      <span style="text-transform: capitalize;">
+        whitepaper
+      </span>
+    </h5>
+    <h1>Introducing Variational Autoencoders (in Prose and Code)</h1>
+    <p>Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.</p>
+<p>Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?</p>
+<p>This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.</p>
+<p><strong>Cue the Variational Autoencoder</strong>, a fascinating development in unsupervised machine learning that marries probabilistic Bayesian inference with deep learning.</p>
+<p>Benefiting from advances in both research communities, the Variational Autoencoder addresses these challenges by leveraging innovative deep learning techniques grounded in a solid Bayesian theoretical framework&hellip;and can be explained through mesmerizing GIFs:</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/160727_1340_explore.gray_del11_492x490.slower40.gif" title="Shameless GIF for your attention" style="max-width:60.0% !important"/></div>
+<p>(Read on, and all will become clear&hellip;)</p>
+<h2 id="intro">Intro</h2>
+<p>Traditional <a href="http://www.deeplearningbook.org/contents/autoencoders.html"><em>autoencoders</em></a> are models (usually multilayer <a href="http://karpathy.github.io/neuralnets/">artificial neural networks</a>) designed to output a reconstruction of their input. Specifically, autoencoders sequentially deconstruct input data into hidden representations, then use these representations to sequentially reconstruct outputs that resemble the originals. Fittingly, this process of teasing out a mapping from input to hidden representation is called <a href="http://www.deeplearningbook.org/contents/representation.html"><em>representation learning</em></a>.</p>
+<p>The appeal of this setup is that the model learns its own definition of a &ldquo;meaningful&rdquo; representation based only on the data—no human-derived heuristics or labels! This approach stands in contrast to the majority of deep learning systems in production today, which rely on expensive-to-obtain labeled data (&ldquo;This image is a kitten; this image is a panda.&rdquo;). Alternatives to such <em>supervised learning</em> frameworks provide a way to benefit from a world brimming with valuable raw data.</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/miriams-figure.png" title="A basic autoencoder" style="max-width:80.0% !important"/></div>
+<p>Though trained holistically, autoencoders are often built for the part instead of the whole: researchers might exploit the data-to-representation mapping for <a href="https://arxiv.org/abs/1511.01432">semantic embeddings</a>, or the representation-to-output mapping for extraordinarily complex <a href="https://github.com/Newmu/dcgan_code">generative modeling</a></p>
+<p>But an autoencoder with unlimited capacity is doomed to the role of a wonky, computationally-expensive Xerox machine. To ensure that the transformations to or from the hidden representation are useful, we impose some type of <a href="http://www.deeplearningbook.org/contents/regularization.html"><em>regularization</em></a> or constraint. As a tradeoff for some loss in fidelity, such impositions push the model to distill the most salient features from a cacophonous real-world dataset.</p>
+<p><a href="https://arxiv.org/abs/1312.6114">Variational</a> <a href="https://arxiv.org/abs/1401.4082">Autoencoders</a> (VAEs) incorporate regularization by explicitly learning the joint distribution over data and a set of latent variables that is most compatible with observed datapoints and some designated prior distribution over latent space. The prior informs the model by shaping the corresponding posterior, conditioned on a given observation, into a regularized distribution over latent space (the coordinate system spanned by the hidden representation).</p>
+<p>As a result, VAEs are an excellent tool for <a href="http://scikit-learn.org/stable/modules/manifold.html"><em>manifold learning</em></a>—recovering the &ldquo;true&rdquo; manifold in lower-dimensional space along which the observed data lives with high probability mass—and <a href="https://openai.com/blog/generative-models/"><em>generative modeling</em></a> of complex datasets like images, text, and audio—conjuring up brand new examples, consistent with the observed training set, that do not exist in nature.</p>
+<p>Building on other <a href="http://blog.keras.io/building-autoencoders-in-keras.html">informative</a> <a href="https://jmetzen.github.io/2015-11-27/vae.html">posts</a>, this is the first installment of a guide to Variational Autoencoders: the lovechild of Bayesian inference and unsupervised deep learning.</p>
+<p>In this post, we&rsquo;ll sketch out the model and provide an intuitive context for the math- and code-flavored follow-up. In Post II, we&rsquo;ll walk through a technical implementation of a VAE (in <a href="http://tensorflow.org/">TensorFlow</a> and Python 3). In Post III, we&rsquo;ll venture beyond the popular <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> dataset using a twist on the vanilla VAE.</p>
+<h2 id="the-variational-autoencoder-setup">The Variational Autoencoder Setup</h2>
+<p>An end-to-end autoencoder (input to reconstructed input) can be split into two complementary networks: an <em>encoder</em> and a <em>decoder</em>. The encoder maps input <span class="math inline">\(x\)</span> to a latent representation, or so-called <em>hidden code</em>, <span class="math inline">\(z\)</span>. The decoder maps the hidden code to a reconstructed input value <span class="math inline">\(\tilde x\)</span>.</p>
+<p>Whereas a vanilla autoencoder is deterministic, a Variational Autoencoder is stochastic—a mashup of:</p>
+<ul><li>a probabilistic encoder <span class="math inline">\(q_\phi(z|x)\)</span>, approximating the true (but intractable) posterior distribution <span class="math inline">\(p(z|x)\)</span>, and</li>
+<li>a generative decoder <span class="math inline">\(p_\theta(x|z)\)</span>, which notably does not rely on any particular input <span class="math inline">\(x\)</span>.</li>
+</ul><p>Both the encoder and decoder are artificial neural networks (i.e. hierarchical, highly nonlinear functions) with tunable parameters <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\theta\)</span>, respectively.</p>
+<p>Learning these conditional distributions is facilitated by enforcing a plausible mathematically-convenient prior over the latent variables, generally a standard <a href="https://www.statlect.com/probability-distributions/multivariate-normal-distribution">spherical Gaussian</a>: <span class="math inline">\(z \sim \mathcal{N}(0, I)\)</span>.</p>
+<p>Given this conjugate prior, the encoder&rsquo;s job is to supply the mean and variance of the Gaussian posterior over each latent space dimension corresponding to a given input. Latent <span class="math inline">\(z\)</span> is sampled from this distribution, then passed to the decoder to be transformed back into a distribution over the original data space.</p>
+<p>In other words, a VAE represents a <a href="http://blog.forty.to/2013/08/24/graphical-models-theory/">directed probabilistic graphical model</a>, in which approximate inference is performed by the encoder and optimized alongside an easy-to-sample generative decoder. For this reason, these complementary halves are also known as the <em>inference</em> (or <em>recognition</em>) <em>network</em> and the <em>generative network</em>. By reformulating this graphical model as a differentiable neural net with a single, pithy cost function (derived from the variational lower bound), the whole package can be trained by <a href="http://neuralnetworksanddeeplearning.com/chap1.html">stochastic gradient descent</a> (SGD) thanks to the <a href="http://karpathy.github.io/2016/05/31/rl/">&ldquo;amusing&rdquo; universe</a> we live in.</p>
+<h2 id="bayes-meet-neural-networks">Bayes, Meet Neural Networks</h2>
+<p>In fact, many developments in deep learning research can also be understood through a probabilistic, or <a href="http://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter1_Introduction/Chapter1.ipynb">Bayesian</a>, lens. Some of these analogies are more theoretical, whereas others share a parallel mathematical interpretation. For example, <a href="https://arxiv.org/abs/1505.05424"><span class="math inline">\(\ell_2\)</span>-regularization</a> can be viewed as imposing a Gaussian prior over neural network weights, and <a href="http://arkitus.com/files/nips-15-weber-reinforced-inference.pdf">reinforcement learning</a> can be formalized through variational inference.</p>
+<p>VAEs exemplify a case where this relationship is made explicit and elegant, and variational Bayesian inference is the guiding principle shaping the model&rsquo;s cost function and instrinsic architecture.</p>
+<p>Why does this setup make sense?</p>
+<p>In the Bayesian worldview, datapoints are observations drawn from some data-generating distribution: (observed) variable <span class="math inline">\(x \sim p(x)\)</span>. So, the <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> dataset of handwritten digits describes a random variable with an intricate set of dependencies among all 28*28 pixels. Each MNIST image offers a glimpse into one arrangement of 784 pixel values with high probability—whereas a 28*28 block of white noise, or the <a href="https://en.wikipedia.org/wiki/Jolly_Roger">Jolly Roger</a>, (theoretically) occupy low probability mass under the distribution.</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/mnist_%5B6%5D.png" title="MNIST digit" style="max-width:40.0% !important"/></div>
+<p>It would be a headache to model the conditional dependencies <!-- among all 784 pixels. --> in 784-dimensional pixel space. Instead, we make the simplifying assumption that the distribution over these observed variables is the consequence of a distribution over some set of hidden variables: <span class="math inline">\(z \sim p(z)\)</span>. Intuitively, this paradigm is analogous to how scientists study the natural world, by working backwards from observed phenomena to recover the unifying hidden laws that govern them. In the case of MNIST, these latent variables could represent concepts like number identity and tiltedness, whereas more complex natural images like the <a href="http://www.cs.nyu.edu/~roweis/data/frey_rawface.jpg">Frey faces</a> could have latent dimensions for facial expression and azimuth.</p>
+<p><em>Inference</em> is the process of disentangling these rich real-world dependencies into simplified latent dependencies, by predicting <span class="math inline">\(p(z|x) -\)</span> the distribution over one set of variables (the latent variables) conditioned on another variable (the observed data). (This is where <a href="https://xkcd.com/1236/">Bayes&rsquo; theorem</a> enters the picture.)</p>
+<p>With this Bayesian frame-of-mind, training a generative model is the same as learning the joint distribution over the data and latent variables: <span class="math inline">\(p(x, z)\)</span>. This approach lends itself well to small datasets, since inference relies on the data-generating distribution rather than individual datapoints <em>per se</em>. It also lets us bake prior knowledge into the model by imposing simplifying <em>a priori</em> distributions over variables.</p>
+<p>Classical (iterative, non-learned) approaches to inference are often inefficient and do not scale well to large datasets. With a few theoretical and mathematical tricks, we can train a neural network to do the dirty work of both variational inference <em>and</em> generative modeling&hellip;while reaping the additional benefits deep learning provides (universal approximating power, cheap test-time evaluation, minibatched SGD, advances like batch normalization and dropout, etc).</p>
+<p>The next post in the series will delve into these theoretical and mathematical tricks and show how to implement them in <a href="https://www.tensorflow.org/">TensorFlow</a> (a toolbox for efficient numerical computation with data flow graphs).</p>
+<h2 id="mnist">MNIST</h2>
+<p>For now, we will take our VAE model for a spin using handwritten MNIST digits.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+<span style="color:#f92672">from</span> tensorflow.examples.tutorials.mnist <span style="color:#f92672">import</span> input_data
+
+<span style="color:#f92672">import</span> vae <span style="color:#75715e"># this is our model - to be explored in the next post</span>
+
+
+IMG_DIM <span style="color:#f92672">=</span> <span style="color:#ae81ff">28</span>
+ARCHITECTURE <span style="color:#f92672">=</span> [IMG_DIM<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>, <span style="color:#75715e"># 784 pixels</span>
+                <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>, <span style="color:#75715e"># intermediate encoding</span>
+                <span style="color:#ae81ff">50</span>] <span style="color:#75715e"># latent space dims</span>
+<span style="color:#75715e"># (and symmetrically back out again)</span>
+HYPERPARAMS <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;batch_size&#34;</span>: <span style="color:#ae81ff">128</span>,
+    <span style="color:#e6db74">&#34;learning_rate&#34;</span>: <span style="color:#ae81ff">1E-3</span>,
+    <span style="color:#e6db74">&#34;dropout&#34;</span>: <span style="color:#ae81ff">0.9</span>,
+    <span style="color:#e6db74">&#34;lambda_l2_reg&#34;</span>: <span style="color:#ae81ff">1E-5</span>,
+    <span style="color:#e6db74">&#34;nonlinearity&#34;</span>: tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>elu,
+    <span style="color:#e6db74">&#34;squashing&#34;</span>: tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>sigmoid
+}
+
+mnist <span style="color:#f92672">=</span> input_data<span style="color:#f92672">.</span>read_data_sets(<span style="color:#e6db74">&#34;mnist_data&#34;</span>)
+v <span style="color:#f92672">=</span> vae<span style="color:#f92672">.</span>VAE(ARCHITECTURE, HYPERPARAMS)
+v<span style="color:#f92672">.</span>train(mnist, max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">20000</span>)
+</code></pre></div><p>Let&rsquo;s verify the model by eye, by plotting how well it parses random MNIST inputs (top) and reconstructs them (bottom):</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/160801_1234_reloaded_batch_784_500_500_50_round_20000_test.png" title="Inputs and reconstructions"/></div>
+<p>Note that these inputs are from the test set, so the model has never seen them before. Not bad!</p>
+<p>For latent space visualizations, we can train a VAE with 2-D latent variables (though this space is generally too small for the intrinsic dimensionality of real-world data). Picturing this compressed latent space lets us see how the model has disentangled complex raw data into abstract higher-order features.</p>
+<p>We&rsquo;ll visualize the latent manifold over the course of training in two ways, to see the complementary evolution of the encoder and decoder over (logarithmic) time.</p>
+<p>This is how the encoder/inference network learns to map the training set from the input data space to the latent space&hellip;</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/160805_1646_train_16.0.col256_qual100_del11_nodith.gif" title="Latent space encoding"/></div>
+<p>&hellip;and <em>this</em> is how the decoder/generative network learns to map latent coordinates into reconstructions of the original data space:</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/160805_1646_explore_16.0.gray_del11_492x490.slower47.gif" title="Latent space decoding" style="max-width:90.0% !important"/></div>
+<p>Here we are sampling evenly-spaced percentiles along the latent manifold and plotting their corresponding output from the decoder, with the same axis labels as above.</p>
+<p>Looking at both plots side-by-side clarifies how optimizing the encoder and decoder in tandem enables efficient pairing of inference and generation:</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/tableau.1493x693.png" title="Latent space (encoder + decoder perspective)" style="max-width:95.0% !important"/></div>
+<p>This tableau highlights the overall smoothness of the latent manifold—and how any &ldquo;unrealistic&rdquo; outputs from the generative decoder correspond to apparent discontinuities in the variational posterior of the encoder (e.g. between the &ldquo;7-space&rdquo; and the &ldquo;1-space&rdquo;). These gaps could probably be improved by experimenting with model hyperparameters.</p>
+<p>Whereas the original data dotted a sparse landscape in 784 dimensions, where &ldquo;realistic&rdquo; images were few and far between, this 2-dimensional latent manifold is densely populated with such samples. Beyond its inherent visual coolness, latent space smoothness shows the model&rsquo;s ability to leverage its &ldquo;understanding&rdquo; of the underlying data-generating process to generalize beyond the training set.</p>
+<p>Smooth interpolation within and between digits—in contrast to the spotty latent space characteristic of many autoencoders—is a direct result of the variational regularization intrinsic to VAEs.</p>
+<h2 id="take-aways">Take-aways</h2>
+<p>Bayesian methods provide a framework for reasoning about uncertainty. Deep learning provides an efficient way to approximate arbitrarily complex functions, and ripe opportunities to probe uncertainty (over parameters, hyperparameters, data, model architectures&hellip;).</p>
+<p>While differences in language can obscure overlapping ideas, recent research has revealed not just the power of cross-validating theories across fields (interesting in itself), but also a productive new methodology through a unified synthesis of the two.</p>
+<p>This research becomes ever more relevant as we seek to leverage today&rsquo;s most interesting real-world data, which is often high-dimensional and rich in structure, yet limited in number and wholly or partially unlabeled.</p>
+<p>(<a href="http://edwardlib.org/">But</a> <a href="http://blog.shakirm.com/2015/11/talk-memory-based-bayesian-reasoning-and-deep-learning/">don&rsquo;t</a> <a href="http://videolectures.net/course_information_theory_pattern_recognition/">take</a> <a href="http://dustintran.com/blog/a-quick-update-edward-and-some-motivations/">my</a> <a href="http://twiecki.github.io/blog/2016/06/01/bayesian-deep-learning/">word</a> <a href="http://link.springer.com/book/10.1007/978-1-4612-0745-0">for</a> <a href="https://arxiv.org/abs/1604.01662">it</a><a href="https://blog.dominodatalab.com/an-introduction-to-model-based-machine-learning/">.</a>)</p>
+<p>Variational Autoencoders are:</p>
+<ul><li>A reminder that productive sparks fly when deep learning and Bayesian methods are not treated as alternatives, but combined.</li>
+<li>Just the beginning of creative applications for deep learning.</li>
+</ul><p>Stay tuned for more technical details (math and code!) in Part II.</p>
+<p>- Miriam</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 18, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      guest post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/18/giving-speech-a-voice-in-the-home.html"><strong>Giving Speech a Voice in the Home</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jul 27, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/07/27/late-summer-reading-list.html"><strong>Late Summer Reading List</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>
