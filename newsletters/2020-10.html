@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2020-10.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the October edition of Cloudera Fast Forward&rsquo;s monthly newsletter. We&rsquo;re happy to share some our latest research, and invite you to our next webinar: tomorrow!</p>
+<hr>
+<h2 id="new-research-release">New research release!</h2>
+<h3 id="structural-time-series">Structural Time Series</h3>
+<p><img src="/images/hugo/ff16-cover-splash-1603487224.png" alt="Structural Time Series cover image"></p>
+<p>Time series data is ubiquitous, and forecasting has a long history. Generalized additive models give us a simple, flexible and interpretable means for modeling some kinds of time series, especially where there is seasonality. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook&rsquo;s Prophet library on a demand forecasting problem.</p>
+<p>Our report, <a href="https://structural-time-series.fastforwardlabs.com/">Structural Time Series</a>, is freely available online, and accompanied by <a href="https://github.com/fastforwardlabs/structural-time-series/">code</a> applying the techniques discussed to forecasting electricity demand in California.</p>
+<h3 id="research-preview-semantic-image-search">Research preview: Semantic Image Search</h3>
+<p>Within this research cycle, we will be revisiting the topic of semantic search on image data. We explore two critical requirements for semantic search at scale - strategies for creating semantic representations of images (supervised, unsupervised, semi supervised methods) and methods for fast approximate nearest neighbor search  (e.g. FAISS). We will also be releasing an update to the well used <a href="http://convnetplayground.fastforwardlabs.com/">ConvNet Playground App</a>, and a set of scripts and tutorials for implementing semantic image search on the Cloudera Machine Learning platform.</p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favorite reads of the month.</p>
+<ul>
+<li><a href="https://arxiv.org/abs/2008.10588">What makes fake images detectable?</a>
+Detecting fake images is a constantly evolving problem with a number of ethical considerations. The approach discussed in the paper helps determine whether an image was produced from a camera or doctored from a deep neural network or was partially manipulated. It does so by focussing on textures in the local area in hair, backgrounds, mouths, and eyes, rather than the global semantics of the image. The approach uses a fully-convolutional patch-based classifier to focus on these local patches, and tests on different model resolutions, initialization seeds, network architectures, and image datasets. The idea being that CNNs are sensitive to these textures which makes them well suited for this purpose. While detecting fake images is a cat-and-mouse problem, approaches like these can help practitioners understand where manipulations can occur and better anticipate them. — <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></li>
+<li><a href="https://arxiv.org/abs/2007.06299">Monitoring and Explainability of Models in Production</a>
+Monitoring of deployed machine learning models is a critical (and often overlooked) step in the machine learning lifecycle. The authors of this paper outline four important components following model deployment that help ensure the continued success of machine learning services in production: monitoring model performance, monitoring metrics related to incoming data, detecting outliers and data drift, and explaining model predictions. — <a href="https://twitter.com/andrew_reed_r"><em>Andrew</em></a></li>
+<li><a href="https://www.edwardtufte.com/tufte/books_vdqi">The Visual Display of Quantitative Information</a>
+I recently re-read Edward Tufte&rsquo;s classic treatise on data viz. I do not agree with everything in the book. Over-optimizing on maximizing the data-ink ratio (which the book encourages) sacrifices understanding, and Tufte presents a &ldquo;preferred form&rdquo; of a quartile chart I find absurd. Nonetheless, there is much wisdom within, and while the book may no longer represent the state of the art, very many data graphics would be substantially improved by adopting its edicts. - <a href="https://twitter.com/_cjwallace"><em>Chris</em></a></li>
+<li><a href="https://distill.pub/2016/misread-tsne/">How to Use t-SNE Effectively</a>
+While the UMAP algorithm is quickly becoming ubiquitous for dimensionality reduction and visualization, many applications still use the traditional t-SNE approach.  The flexibility of the t-SNE algorithm provides usability, but also complexity. t-SNE figures can be difficult to interpret, sometimes displaying structure that doesn&rsquo;t exist, or masking true relationships as noise. This classic <a href="https://distill.pub/about/">Distill</a> article details best practices for using t-SNE through a series of gorgeous illustrations on simple datasets, and provides tips on how to develop your t-SNE intuition. — <a href="www.linkedin.com/in/melanierbeck"><em>Melanie</em></a></li>
+<li><a href="https://maxbittker.com/making-sandspiel">Making Sandspiel</a>
+I&rsquo;ve been working on learning WebGL and I&rsquo;ve myself returning often to Max Bittker&rsquo;s write-up on how he made the web-based falling sand game Sandspiel. <a href="https://sandspiel.club/">Sandspiel</a> is wonderful in its own right, but what I love about the write-up is that it&rsquo;s a pragmatic and human account of building an application that incorporates some pretty cutting-edge web technologies (Rust compiled to WebAssembly for particle simulation and WebGL shaders for fluid simulation). I think it captures the process of prototyping something, where you&rsquo;re perpetually experimenting and adjusting, really well. — <a href="https://twitter.com/grantcuster"><em>Grant</em></a></li>
+<li><a href="https://arxiv.org/abs/1902.06162">Self-supervised Visual Feature Learning with Deep Neural Networks: A Survey</a>
+****Self-supervised and unsupervised learning methods allow us train models without the costs associated with data annotation. This extensive review covers the motivations, general pipelines and methods that have been used for self-supervised visual feature learning. I find the treatment on strategies used to construct **pretext tasks particularly useful. These strategies can be adapted in deriving semantic representations for multiple data domains beyond images e.g. system logs, network traffic sequences, multimodal text and image data, tabular data.  **Pretext tasks are (mostly artificial) tasks designed for a neural network to solve that results in learning useful representations. — <a href="https://twitter.com/vykthur"><em>Victor</em></a></li>
+</ul>
+<hr>
+<h2 id="events">Events</h2>
+<p>Our first ever <a href="https://www.cloudera.com/about/events/webinars/fast-forward-research-roundup.html">Research Roundup</a> webinar is tomorrow! Join us to hear about our two recent releases: meta-learning, and structural time series. If you can&rsquo;t make it, catch up on-demand later!</p>
+
+  </div>
+
+
