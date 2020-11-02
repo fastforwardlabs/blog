@@ -39,3 +39,10 @@ name = "Deep Learning for Anomaly Detection"
 blurb = "From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities."
 img = "ff12-combo.png"
 link = "https://ff12.fastforwardlabs.com"
+
+[[entries]]
+number = "FF09"
+name = "Federated Learning"
+blurb = "Federated Learning makes it possible to build machine learning systems without direct access to training data. The data remains in its original location, which helps to ensure privacy and reduces communication costs. Federated learning is a great fit for smartphones and edge hardware, healthcare and other privacy-sensitive use cases, and industrial applications such as predictive maintenance."
+img = "ff09-combo.png"
+link = "https://federated.fastforwardlabs.com/"
