@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>anomaly detection on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/anomaly-detection.html</link>
+    <description>Recent content in anomaly detection on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 May 2016 14:51:14 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/anomaly-detection/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Probabilistic Programming for Anomaly Detection</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</link>
+      
+      <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
+      <description>The Fast Forward Labs research team is developing our next prototype, which will demonstrate an application of probabilistic programming. Probabilistic programming languages are a set of high-level languages that lower the barrier to entry for Bayesian data analysis.
+Bayesian data analysis is often seen as the best approach to machine learning. Models derived by this process are highly interpretable, in contrast to other modern models like neural networks and support vector machines.</description>
+    </item>
+    
+  </channel>
+</rss>

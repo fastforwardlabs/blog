@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hello world on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/hello-world.html</link>
+    <description>Recent content in hello world on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Feb 2016 18:58:10 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/hello-world/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</link>
+      
+      <pubDate>Wed, 24 Feb 2016 18:58:10 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
+      <description>This article is available as a notebook on Github. Please refer to that notebook for a more detailed discussion and code fixes and updates. Despite all the recent excitement around deep learning, neural networks have a reputation among non-specialists as complicated to build and difficult to interpret.
+And while interpretability remains an issue, there are now high-level neural network libraries that enable developers to quickly build neural network models without worrying about the numerical details of floating point operations and linear algebra.</description>
+    </item>
+    
+  </channel>
+</rss>

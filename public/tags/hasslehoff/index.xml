@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hasslehoff on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/hasslehoff.html</link>
+    <description>Recent content in hasslehoff on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Mar 2015 18:44:43 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/hasslehoff/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Hoff</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/03/31/the-hoff.html</link>
+      
+      <pubDate>Tue, 31 Mar 2015 18:44:43 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/03/31/the-hoff.html</guid>
+      <description>The Hoff stopped by Fast Forward Labs!</description>
+    </item>
+    
+  </channel>
+</rss>

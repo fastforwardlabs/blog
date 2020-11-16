@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>A Guide to Learning with Limited Labeled Data</title>
+<meta property="og:title" content="A Guide to Learning with Limited Labeled Data">
+<meta property="description" content="We are excited to release Learning with Limited Labeled Data, the latest report and prototype from Cloudera Fast Forward Labs.
+Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. Our report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly.
+Active learning makes it possible to build applications using a small set of labeled data, and enables enterprises to leverage their large pools of unlabeled data.">
+<meta property="og:description" content="We are excited to release Learning with Limited Labeled Data, the latest report and prototype from Cloudera Fast Forward Labs.
+Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. Our report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly.
+Active learning makes it possible to build applications using a small set of labeled data, and enables enterprises to leverage their large pools of unlabeled data.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/2019/03/fig_15-1553784931001.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2019/04/02/a-guide-to-learning-with-limited-labeled-data.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Apr 2, 2019</span> &middot;
+      <span style="text-transform: capitalize;">
+        featured post
+      </span>
+    </h5>
+    <h1>A Guide to Learning with Limited Labeled Data</h1>
+    <p>We are excited to release <em>Learning with Limited Labeled Data</em>, the latest report and prototype from Cloudera Fast Forward Labs.</p>
+<p>Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. Our report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly.</p>
+<p>Active learning makes it possible to build applications using a small set of labeled data, and enables enterprises to leverage their large pools of unlabeled data. In this blog post, we explore how active learning works. (For a higher level introduction, please see <a href="https://blog.fastforwardlabs.com/2019/03/20/learning-with-limited-labeled-data.html">our previous blogpost</a>.)</p>
+<h2 id="the-active-learning-loop">The active learning loop</h2>
+<p>Active learning takes advantage of the collaboration between humans and machines to smartly select a small subset of datapoints for which to obtain labels. It is an iterative process, and ideally access is available to some initial labels to start. These initial labels allow a human to build a baseline machine learning model, and use it to predict outputs for all the unlabeled datapoints. The model then looks through all its predictions, flags the one with which it has the most difficulty, and requests a label for it. A human steps in to provide the label, and the newly labeled data is combined with the initial labeled data to improve the model. Model performance is recorded, and the process repeats.</p>
+<p><img src="/images/2019/03/fig_15-1553784931001.png" alt=""></p>
+<h5 id="_the-active-learning-loop_"><em>The active learning loop</em></h5>
+<h2 id="how-to-select-datapoints">How to select datapoints</h2>
+<p>At the heart of active learning is a machine (<em>learner</em>) that requests labels
+for datapoints that it finds particularly hard to predict. The learner follows a
+<em>strategy</em>, and uses it to identify these datapoints. To evaluate the
+effectiveness of the strategy, a simple approach for choosing datapoints needs
+to be defined. A good starting point is to remove the intelligence of the
+learner; the datapoints are chosen independently of what the learner thinks.</p>
+<h3 id="random-sampling">Random sampling</h3>
+<p>When we take the learner out of the picture, what is left is a pool of unlabeled
+data and some labeled data from which a model can be built. To improve the
+model, the only reasonable option is to randomly start labeling more data. This
+strategy is known as <em>random sampling</em>, and selects unlabeled datapoints from
+the pool according to no particular criteria. You can think of it as being akin
+to picking a card from the top of a shuffled deck, then reshuffling the deck without the
+previously chosen card and repeating the action. Because the learner does not help with the
+selection process, random sampling is also known as <em>passive learning</em>.</p>
+<p><img src="/images/2019/03/fig_19-1553784863589.png" alt=""></p>
+<h5 id="_random-sampling-is-like-picking-the-top-card-from-a-shuffled-deck_"><em>Random sampling is like picking the top card from a shuffled deck</em></h5>
+<h3 id="uncertainty-sampling">Uncertainty sampling</h3>
+<p>A slightly more complex strategy is to select datapoints that the model is
+uncertain about. In <em>uncertainty sampling</em>, the learner looks at all unlabeled
+datapoints and surfaces the ones about which it is uncertain. Labels are then
+provided by a human, and fed back into the model to refine it.</p>
+<p>But how do we quantify uncertainty? One way is to use the <em>distance between the
+datapoint and the decision boundary</em>. Datapoints far away from the decision
+boundary are safe from changes in the decision boundary. This implies that the
+model has high certainty in these classifications.  Datapoints close to the
+boundary, however, can easily be affected by small changes in the boundary. The
+model (learner) is not certain about them; a slight shift in the decision
+boundary will cause them to be classified differently. The <em>margin sampling</em> strategy
+therefore dictates that we surface the datapoint closest to the boundary and
+obtain a label for it.</p>
+<p>There are many other selection strategies that can be used with active
+learning. Our report explores some of them in detail.</p>
+<h2 id="when-to-stop">When to stop</h2>
+<p>Because active learning is an iterative process, when should we stop? Each label comes with a cost of acquisition - the amount of money and time it takes to acquire the label. With this cost in mind, the stopping criteria can either be static or dynamic. A static criteria sets a budget limit or performance target in the beginning. A dynamic criteria looks at the incremental gain in performance over each round of active learning and stops when it is no longer worthwhile to acquire more labels (the incremental performance plateaus).</p>
+<p><img src="/images/2019/03/fig_9-1553784742213.png" alt=""></p>
+<h5 id="_stopping-criteria-for-active-learning_"><em>Stopping criteria for active learning</em></h5>
+<h2 id="does-it-work-for-deep-learning">Does it work for deep learning?</h2>
+<p>Deep learning introduces a couple of wrinkles that make direct application of
+active learning ineffective. The most obvious issue is that adding a single
+labeled datapoint does not have much impact on deep learning models, which train
+on batches of data. In addition, because the models need to be retrained until
+convergence after each point is added, this can become an expensive undertaking &ndash;
+especially when viewed in terms of the performance improvement vs. acquisition
+cost (time and money) trade-off. One straightforward solution is to select a
+very large subset of datapoints to label. But depending on the type of
+heuristics used, this could result in correlated datapoints. Obtaining labels
+for these datapoints is not ideal &ndash; datapoints that are independent and diverse
+are much more effective at capturing the relationship between input and output.</p>
+<p>The second problem is that existing criteria used to help select datapoints do
+not translate to deep learning easily. Some require computation that does not
+scale to models with high-dimensional parameters. These approaches are rendered
+impossible with deep learning. For the criteria that are computationally viable,
+reinterpretation under the light of deep learning is necessary.</p>
+<p>In our report, we take the idea of uncertainty and examine it in the context of
+deep learning.</p>
+<h2 id="practical-considerations">Practical considerations</h2>
+<p>Active learning sounds tempting - with this approach, it is possible to build
+applications previously constrained by lack of labeled data. But active learning
+is not a silver bullet.</p>
+<h3 id="choosing-a-learner-and-a-strategy">Choosing a learner and a strategy</h3>
+<p>Active learning relies on a small subset of labeled data at the beginning to
+choose both the learner and strategy. The learner is used to make predictions
+for all the unlabeled data and the strategy selects the datapoints that are
+difficult. Choosing a learner (or model) for any machine learning problem is
+difficult, but it is made even more difficult with active learning for two
+reasons. First, the choice of a learner needs to be made very early on when we
+only have a small subset of labeled data. Second, the learner is not just used
+to make predictions, it is used in conjunction with the strategy to surface
+datapoints that will help refine itself. This tight feedback loop amplifies the
+effect of a wrong learner.</p>
+<p>In addition, some selection strategies result in a labeled dataset that is
+biased. Margin sampling, for example, surfaces datapoints right around the
+decision boundary to be labeled. Most datapoints far from the boundary might not
+even be used in building the model, resulting in a labeled dataset that may not be
+representative of the entire pool of unlabeled data.</p>
+<h3 id="human-biases">Human biases</h3>
+<p>Because a human needs to step in to provide labels, this restricts the type of
+use cases to which active learning can be applied. Humans can label images and
+annotate text, but we cannot tell if a financial transaction is fraudulent just
+by looking at the data.</p>
+<p>In addition, the data that requires human labeling is by definition more
+difficult. Under these circumstances, it is easy for a human to inject his own
+bias and judgement when making labeling decisions.</p>
+<h3 id="a-pause-between-iterations">A pause between iterations</h3>
+<p>When applying active learning in real life, surfaced datapoints will need to be
+sent to a human for labeling. The next round of active learning cannot proceed
+until the newly labeled datapoints are ready.</p>
+<p>The length of time between each active learning iteration varies depending on
+who provides the label. In a research scenario, a data scientist who builds the
+model and also creates labels will be able to iterate through each round of
+active learning quickly. In a production scenario, an outsourced labeling team
+will need more time for data exchange and label (knowledge) transfer to occur.</p>
+<p>For active learning to be successful, the pause between iterations should be as
+small as practically possible. In addition to considering different types of
+labeling workforce, an efficient pipeline needs to be set up. This pipeline
+should include a platform for exchanging unlabeled datapoints, a user interface
+for creating labels, and a platform for transferring the labeled datapoints.</p>
+<h2 id="active-learner">Active Learner</h2>
+<p><img src="/images/2019/04/clip0-1554230510947.gif" alt="A GIF showing the Active Learner prototype"></p>
+<h5 id="we-built-the-active-learner-prototypehttpsactivelearnerfastforwardlabscom-to-accompany-this-report">We built the <a href="https://activelearner.fastforwardlabs.com/">Active Learner prototype</a> to accompany this report.</h5>
+<p>Every Cloudera Fast Forward Labs report comes with a prototype. We don&rsquo;t just
+write about a new exciting capability in machine learning; we also experiment with
+it to understand what it can and cannot do.</p>
+<p>The prototype for our report on Learning with Limited Labeled Data is called Active
+Learner. It is a tool that sheds light on and provides intuition for how and why
+active learning works. The prototype allows one to visualize the process of
+active learning over different types of datasets and selection strategies. <a href="https://activelearner.fastforwardlabs.com/">We hope you
+enjoy exploring it</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Active learning makes it possible to build machine learning models with a small
+set of labeled data. It offers one way for enterprises to leverage their large
+pools of unlabeled data for building new products, but it is not the only
+solution to learning with limited labeled data.</p>
+<p>Our report goes into much more detail (including strategies specific to deep
+learning, resources and recommendations for setting up an active learning
+production environment, and technical and ethical implications). Join our
+<a href="https://www.cloudera.com/about/events/webinars/learning_with_limited_labeled_data.html?utm_medium=organicsocial&amp;utm_source=blog&amp;utm_campaign=ml&amp;src=organicsocial&amp;cid=70134000001YifA&amp;utm_content=FF10_Blog_AMER_Webinar_2019-04-03">webinar</a> to learn more, <a href="https://activelearner.fastforwardlabs.com/">explore the
+prototype</a> and <a href="https://www.cloudera.com/products/fast-forward-labs-research.html">get in
+touch</a> if you
+are interested in accessing the full report (which is available by subscription
+to our research and advising services).</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 3, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2019/04/03/an-invitation-to-active-learning.html"><strong>An Invitation to Active Learning</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Mar 29, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/03/29/three-exciting-developments-at-tensorflow-dev-summit-2019.html"><strong>Three exciting developments at TensorFlow Dev Summit 2019</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

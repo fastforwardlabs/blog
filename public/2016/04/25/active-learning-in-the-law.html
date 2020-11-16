@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Active Learning in the Law</title>
+<meta property="og:title" content="Active Learning in the Law">
+<meta property="description" content="
+The NIST Text Retrieval Conference (TREC) Logo
+We recently released research on neural network methods to summarize text. Systems like Brief, our summarization prototype, are poised to modify how we consume text. Content systems were historically designed to help humans find, read, and research documents. But as electronically stored information continues to proliferate, systems will inevitably evolve to support research conducted by a man-machine partnership: machines will take the first pass to synthesize vast amounts of information, and humans will step in to derive more nuanced conclusions. One field where this man-machine partnership is increasingly important is electronic discovery (eDiscovery), the processes lawyers use to discover information relevant for litigation. The traditional model, where armies of associates and paralegals read documents to find relevant information, does not scale to contemporary information volumes. To promote efficiency and curb the exorbitant costs of review, judges have issued opinions permitting the use of software that automatically finds evidence (Da Silva Moore v. Publicis Groupe) and sometimes even requiring it (EORHB Inc. v. HOA Holdings LLC). This shift in practice has created a large market for “technology-assisted review” (TAR) or “predictive coding” software. The industry is quite large, and vendors use TAR to refer to products that use rules-based Boolean logic as well as more advanced machine learning techniques. But two voices in the space remain clear and constant. Since they met at the 2009 Text Retrieval Conference (TREC), Gordon Cormack and Maura Grossman have published multiple papers demonstrating that continuous active learning (CAL) is the most accurate and effective technique to find “substantially all” relevant information in a document collection. As they write in their recent Practical Law article on the topic:CAL is a method for finding substantially all relevant information on a particular subject within a vast sea of electronically stored information (ESI). At the outset, CAL resembles a web search engine, presenting first the documents that are most likely to be of interest, followed by those that are somewhat less likely to be of interest. Unlike a typical search engine, however, CAL repeatedly refines its understanding about which of the remaining documents are most likely to be of interest, based on the user’s feedback regarding the documents already presented. CAL continues to present documents, learning from user feedback, until none of the documents presented are of interest.We met with Cormack and Grossman to learn more about why they believe CAL is the best approach for eDiscovery and how the landscape is evolving. Keep reading for highlights.  ">
+<meta property="og:description" content="
+The NIST Text Retrieval Conference (TREC) Logo
+We recently released research on neural network methods to summarize text. Systems like Brief, our summarization prototype, are poised to modify how we consume text. Content systems were historically designed to help humans find, read, and research documents. But as electronically stored information continues to proliferate, systems will inevitably evolve to support research conducted by a man-machine partnership: machines will take the first pass to synthesize vast amounts of information, and humans will step in to derive more nuanced conclusions. One field where this man-machine partnership is increasingly important is electronic discovery (eDiscovery), the processes lawyers use to discover information relevant for litigation. The traditional model, where armies of associates and paralegals read documents to find relevant information, does not scale to contemporary information volumes. To promote efficiency and curb the exorbitant costs of review, judges have issued opinions permitting the use of software that automatically finds evidence (Da Silva Moore v. Publicis Groupe) and sometimes even requiring it (EORHB Inc. v. HOA Holdings LLC). This shift in practice has created a large market for “technology-assisted review” (TAR) or “predictive coding” software. The industry is quite large, and vendors use TAR to refer to products that use rules-based Boolean logic as well as more advanced machine learning techniques. But two voices in the space remain clear and constant. Since they met at the 2009 Text Retrieval Conference (TREC), Gordon Cormack and Maura Grossman have published multiple papers demonstrating that continuous active learning (CAL) is the most accurate and effective technique to find “substantially all” relevant information in a document collection. As they write in their recent Practical Law article on the topic:CAL is a method for finding substantially all relevant information on a particular subject within a vast sea of electronically stored information (ESI). At the outset, CAL resembles a web search engine, presenting first the documents that are most likely to be of interest, followed by those that are somewhat less likely to be of interest. Unlike a typical search engine, however, CAL repeatedly refines its understanding about which of the remaining documents are most likely to be of interest, based on the user’s feedback regarding the documents already presented. CAL continues to present documents, learning from user feedback, until none of the documents presented are of interest.We met with Cormack and Grossman to learn more about why they believe CAL is the best approach for eDiscovery and how the landscape is evolving. Keep reading for highlights.  ">
+<meta property="og:image" content="https://blog.fastforwardlabs.comhttp://68.media.tumblr.com/5419ce3290efb6634bdefc85748cbe2e/tumblr_inline_o67a1hhHOk1ta78fg_540.gif">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2016/04/25/active-learning-in-the-law.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Apr 25, 2016</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Active Learning in the Law</h1>
+    <figure data-orig-width="782" data-orig-height="438" class="tmblr-full"><img src="http://68.media.tumblr.com/5419ce3290efb6634bdefc85748cbe2e/tumblr_inline_o67a1hhHOk1ta78fg_540.gif" alt="image" data-orig-width="782" data-orig-height="438"/></figure>
+<h5 id="the-nist-text-retrieval-conference-trec-logo">The NIST Text Retrieval Conference (TREC) Logo</h5>
+<p>We <a href="http://blog.fastforwardlabs.com/2016/04/11/new-tools-to-summarize-text.html">recently released research</a> on neural network methods to summarize text. Systems like <a href="http://fastforwardlabs.github.io/brief/">Brief</a>, our summarization prototype, are poised to modify how we consume text. Content systems were historically designed to help humans find, read, and research documents. But as electronically stored information continues to proliferate, systems will inevitably evolve to support research conducted by a man-machine partnership: machines will take the first pass to synthesize vast amounts of information, and humans will step in to derive more nuanced conclusions. </p><p>One field where this man-machine partnership is increasingly important is electronic discovery (eDiscovery), the processes lawyers use to discover information relevant for litigation. The traditional model, where armies of associates and paralegals read documents to find relevant information, does not scale to contemporary information volumes. To promote efficiency and curb the exorbitant costs of review, judges have issued opinions permitting the use of software that automatically finds evidence (<a href="http://www.insidecounsel.com/2012/04/30/da-silva-moore-sets-stage-for-predictive-codings-a"><i>Da Silva Moore</i> v. <i>Publicis Groupe</i></a>) and sometimes even requiring it (<a href="https://e-discoveryteam.com/2012/10/25/news-flash-surprise-ruling-by-delaware-judge-orders-both-sides-to-use-predictive-coding/"><i>EORHB Inc.</i> v. <i>HOA Holdings LLC</i></a>). </p><p>This shift in practice has created a large market for “technology-assisted review” (TAR) or “predictive coding” software. The industry is quite large, and vendors use TAR to refer to products that use rules-based Boolean logic as well as more advanced machine learning techniques. </p><p>But two voices in the space remain clear and constant. Since they met at the 2009 <a href="http://trec.nist.gov/">Text Retrieval Conference</a> (TREC), <a href="http://plg.uwaterloo.ca/~gvcormac/">Gordon Cormack</a> and <a href="http://www.wlrk.com/MRGrossman/">Maura Grossman</a> have <a href="http://cormack.uwaterloo.ca/cormack/calstudy/">published multiple papers</a> demonstrating that continuous active learning (CAL) is the most accurate and effective technique to find “substantially all” relevant information in a document collection. As they write in their recent <a href="http://us.practicallaw.com/w-001-8253"><i>Practical Law </i>article</a> on the topic:</p><blockquote><p>CAL is a method for finding substantially all relevant information on a particular subject within a vast sea of electronically stored information (ESI). At the outset, CAL resembles a web search engine, presenting first the documents that are most likely to be of interest, followed by those that are somewhat less likely to be of interest. Unlike a typical search engine, however, CAL repeatedly refines its understanding about which of the remaining documents are most likely to be of interest, based on the user’s feedback regarding the documents already presented. CAL continues to present documents, learning from user feedback, until none of the documents presented are of interest.</p></blockquote><p>We met with Cormack and Grossman to learn more about why they believe CAL is the best approach for eDiscovery and how the landscape is evolving. Keep reading for highlights.  </p>
+<p><b>Let’s start with your background, Maura. How did you end up using TAR?</b></p><p><i>MG</i>: The law firm where I practice has a different partner-to-associate ratio than many others that work on large-scale litigation. Most firms have multiple associates per partner. We have close to one associate per partner, which makes it challenging to handle document-intensive litigation, especially when you prefer using your own resources rather than outside contract attorneys. When I was promoted to counsel in about 2006-07, I turned to technology for help. I got involved in the TREC Legal Track in 2008, and quickly became convinced that TAR was a better, faster, and cheaper approach to document review. The big challenge was to convince lawyers, clients, and judges to adopt these methods. Today, many – but not all – lawyers and clients are comfortable relying on technology to sift through electronic evidence. So, to answer your question, my engagement with TAR resulted from an effort to solve a real problem I faced in my practice. </p><p><b>Gordon, how about you? </b></p><p><i>GC:</i> I’ve spent most of my life as an academic, often working to optimize models on toy data sets with artificial constraints. But I’ve always been keen to test models on real-world problems. My first foray into the information retrieval space was in 1980, when I built a full-text library search system. In the 2000s, I worked on spam filtering and ran the Spam Track at TREC. In 2009, I tried my spam classification algorithms in the Legal Track and met Maura, who was a Topic Authority in the mock litigation, advising teams producing documents and resolving disagreements about whether particular documents were relevant or not. Encouraged by the promising results the University of Waterloo team achieved on the TREC 2009 task, Maura and I decided to see how the system would perform on a real legal matter. But before that, we collaborated on an experiment following TREC 2009, using the TREC 2009 data, comparing the performance of human reviewers with a review using two different TAR systems. The TAR systems were as, if not more, effective than the manual reviews, and were much more efficient. </p><p><b>We also focus on applied (v. theoretical) machine learning research at Fast Forward Labs. How would you characterize the difference between the two research styles? </b></p><p><i>GC</i>: Natural scientists have long followed <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam’s razor</a>, choosing the simpler over the more complex model when evaluating competing hypotheses. In theoretical computer science research, we often aim for complexity just because we can, egged on by constant increases in computational power and speed that support more complex models. But we have to sit back and ask ourselves what the complexity really buys us. In the 1980s, I invented a method for data compression called <a href="http://webhome.cs.uvic.ca/~nigelh/Publications/DMC.pdf">Dynamic Markov Compression</a>. It’s relatively simple: with 200 lines of code, you can compress an average data set down to 2.1 bits per character. Sure, you could build a system that was 1000 times more complex and get the results down to 2.0 bits per character… but is it really the best use of your time? I’ve participated in the <a href="http://www.kdd.org/kdd-cup">KDD Cup</a> a few times, and always find that in one evening, people can come up with a tool that’s relatively close to a solution that may require thousands of hours more work to achieve some performance threshold. The interesting thing about applied research is that it forces you to make pragmatic decisions to judge the relative value of returns for complexity, and to focus efforts on problems that may have broader returns. </p><p><b>Why are spam identification and legal eDiscovery comparable problems?</b></p><p><i>GC</i>: They’re both incremental classification problems, involving binary categories (spam v. ham; relevant v. non-relevant), and a finite number of objects to classify. In a standard supervised learning problem, you have a set of well-defined training examples and then go classify the universe. With spam, you have a finite data set that comes in as a stream. With TAR, you are presented with a large but finite document set within which you have to find the information you care about. In both instances, however, the classifiers are means to an end and not an end in itself; they’re moving targets that are disposable as you learn more about your document set. Let’s say, in a legal document collection, you start by training your classifier on 10 documents (which are 10 you don’t later have to classify). You’ll then use these results to identify the next batch of documents, refining your classifier and the target you are looking to classify. You can iterate this process until you’ve seen all (or at least substantially all) the documents relevant to your case.  </p><figure data-orig-width="720" data-orig-height="726" class="tmblr-full"><img src="http://68.media.tumblr.com/352526594b0579281d9bd35b9fe09a3a/tumblr_inline_o67a7pr5v31ta78fg_540.png" alt="image" data-orig-width="720" data-orig-height="726"/></figure>
+<h5 id="excerpt-from-continuous-active-learning-for-tar-practical-law-journal--litigation-aprilmay-2016">Excerpt from “Continuous Active Learning for TAR,” Practical Law Journal – Litigation, April/May 2016</h5>
+<p><b>Machine learning algorithms classify edge cases poorly (e.g., </b><a href="http://www.cnet.com/news/google-apologizes-for-algorithm-mistakenly-calling-black-people-gorillas/"><b>Google’s neural net classifying</b></a><b> a black man as a gorilla). What are the risks in CAL? </b></p><p><i>MG</i>: Although some lawyers are skeptical about using TAR for discovery because they fear they’ll miss the smoking-gun evidence that could make or break their case, edge cases don’t often contain the most important or dispositive information. You can think about searching for evidence like drinking a milkshake. You start off at the top with the good stuff. As you keep drinking, it begins to thin out.  Maybe you tilt the cup a little to get some more, but eventually you end up sucking air through the straw and you finally stop. It’s similar with CAL, at first your batches will contain lots of relevant documents.  Eventually, the relevant documents are further and further apart.  You try a few things to find some more, but at some point, you decide that there’s no longer a return on your investment for combing through the remainder of the document set to find a few more. </p><p><b>Are there any standards to evaluate what it means to find “substantially all” documents? How can lawyers judge whether their search is complete? </b></p><p><i>MG</i>: This is one of the biggest challenges right now: how do you know when you’re done?  Many of the sampling methods in use today don’t work well in collections with low prevalence of relevant information (e.g., where only one in 1000 documents is relevant). In that case, sampling isn’t reliable, because finding no relevant documents in your sample doesn’t mean you’ve done a perfect job, and the size of the sample you would need to reliably demonstrate that you’ve found “substantially all” would be too large to be practical. </p><p><i>GC</i>: We actually have paper about this coming out in the 2016 <a href="http://sigir.org/">SIGIR</a> (the Special Interest Group for Information Retrieval) conference. The question is basically: can you give a statistical guarantee of reliability that you’ve found the documents you need, or should you do this empirically? Consider the metaphor of designing an airplane: You cannot undeniably prove there is no storm that can bring down the plane, but you can do tests to establish sufficient reliability. We’re planning to test this out during the <a href="http://plg.uwaterloo.ca/~gvcormac/total-recall/">TREC Total Recall Track</a> this year. This track explores <a href="https://en.wikipedia.org/wiki/Precision_and_recall">recall performance</a> across multiple domains, not just eDiscovery. Law is one of highest stakes applications for high-recall retrieval, but we’re also working with two state archivists on classifying governors’ emails into public v. non-public records, and exploring other consumer applications (e.g., identifying all social media information about a company, individual, or presidential candidate) – the kind of stuff that’s relevant for mining the Panama Papers. </p><p><b>What’s the current consensus in the courts regarding the use of algorithms for discovery? Given the size of data sets, will lawyers soon have a legal or ethical requirement to use this technology? </b></p><p><i>MG</i>: There is still some disagreement over the degree of transparency required when a party decides to use TAR, and the extent to which counsel for one side in a lawsuit gets to participate in and drive the process for identifying relevant evidence on the other side. Tensions can arise when one party asserts that the others side’s production of relevant evidence is inadequate. It helps to move away from reliance solely on metrics based on strict percentages (i.e., we will only accept +/- 2% error rates), and to look for practical methods to resolve the problem. For example, parties can start by saying they want to be given the results of an audit of 200 random documents that the human reviewers marked non-relevant but the algorithm ranked as likely relevant; or 200 random documents that the algorithm ranked as likely non-relevant.  If the results of the audit suggest a problem, this approach can provide a concrete basis to determine what was missed and serve as the starting point for a solution to refine the search going forward. </p><p><i>GC</i>: The issue here is that many practitioners don’t understand how hard it is to measure recall to gauge performance. Technically, a sample may be inadequate; on top of that, different people judge relevance differently. It’s not an absolute standard. So, parties may demand 90% recall, when 70% is really a good number. </p><p><i>MG</i>:  The man-machine partnership can achieve recall percentages in the mid-80s or low-90s, which is great, but lawyers are still surprised that they’re missing 10 or 15% of the relevant documents. They don’t believe that humans, alone, do worse, and they are concerned they will miss the one “hot” document that will make or break their case. </p><figure data-orig-width="1237" data-orig-height="429" class="tmblr-full"><img src="http://68.media.tumblr.com/495d620d9f25807b9027aa862ca17b48/tumblr_inline_o67acwPZF41ta78fg_540.png" alt="image" data-orig-width="1237" data-orig-height="429"/></figure>
+<h5 id="screenshot-from-the-a-hrefhttpwwwcomputationallegalstudiescomcomputational-legal-studiesa-homepage">Screenshot from the <a href="http://www.computationallegalstudies.com/">Computational Legal Studies</a> homepage</h5>
+<p><b>Data science is slowly but surely making its way into law firms. A few </b><a href="http://www.bizjournals.com/"><b>firms now have Chief Data Scientists</b></a><b> and professors are teaching </b><a href="http://www.computationallegalstudies.com/"><b>computational legal studies</b></a><b>. Where can data science have impact in law firms?  </b></p><p><i>MG</i>: The venture capital community has started to pour money into startups like <a href="http://www.lexmachina.com">Lex Machina</a> (now part of LexisNexis), which are trying to use data to predict case outcomes and inform strategy. It’s interesting to look at some of the new applications that are emerging to predict litigation outcomes.  I saw a demo of a tool where the provider had collected everything they could find that certain judges had ever written or said, and they were using those prior opinions, articles, and speeches to predict how the same judge would decide a future case. Some software could even have interesting effects on the dynamics of the marketplace: one tool claimed to look at win-loss rates for different firms, on different kinds of motions, in different jurisdictions.  They told me that when you look at the data, it may not show that the big Wall Street law firm wins the most motions in a particular court; a small firm in the local mall may have the best record. For now, my mission is to continue working to provide parties, their lawyers, and the courts the empirical support they need to increase the adoption of TAR. But clients pushing back on eDiscovery costs may win that battle for me. </p>
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 26, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      guest post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/04/26/making-a-case-for-machine-learning-to-legal-departments.html"><strong>Making a Case for Machine Learning to Legal Departments</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 21, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/04/21/summarization-as-a-gateway-to-computable-language.html"><strong>Summarization as a Gateway to Computable Language</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

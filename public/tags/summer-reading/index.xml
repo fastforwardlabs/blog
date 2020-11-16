@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>summer reading on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/summer-reading.html</link>
+    <description>Recent content in summer reading on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 Jul 2016 16:45:52 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/summer-reading/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Late Summer Reading List</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</link>
+      
+      <pubDate>Wed, 27 Jul 2016 16:45:52 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html</guid>
+      <description>It’s July 27. 89 degrees with high humidity on the sweltering New York City streets. We’re hard at work on our probabilistic programming report and prototype and looking forward to some good reads on the beach. Here are our recommendations for the dog days of summer!
+Homage to a great physicist, in a textbook: David MacKay, a Cambridge physicist, influenced the machine learning field by fusing together Bayesian methods with artificial neural nets.</description>
+    </item>
+    
+  </channel>
+</rss>

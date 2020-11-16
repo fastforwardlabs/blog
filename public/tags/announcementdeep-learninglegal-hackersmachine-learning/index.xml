@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>announcement,deep learning,legal hackers,machine learning on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/announcementdeep-learninglegal-hackersmachine-learning.html</link>
+    <description>Recent content in announcement,deep learning,legal hackers,machine learning on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 Jul 2016 12:46:23 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/announcementdeep-learninglegal-hackersmachine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Two Talks in NYC this Saturday</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/07/11/two-talks-in-nyc-this-saturday.html</link>
+      
+      <pubDate>Mon, 11 Jul 2016 12:46:23 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/07/11/two-talks-in-nyc-this-saturday.html</guid>
+      <description>If you’re a New Yorker looking for something interesting to do Saturday afternoon, Fast Forward Labs will be speaking at two events. PyGotham | July 16 | 2:15 pm Mike Williams on Text Summarization PyGotham is a conference for the Python developer community. Mike’s talk focuses on text summarization: taking some text in and returning a shorter document that contains the same information. Mike will use libraries like scikit-learn and keras, explain how to choose between different approaches, and show working prototypes.</description>
+    </item>
+    
+  </channel>
+</rss>

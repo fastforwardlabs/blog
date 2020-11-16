@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Bytecode Hacking for Great Justice</title>
+<meta property="og:title" content="Bytecode Hacking for Great Justice">
+<meta property="description" content="DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!
+Check out the code at code at github.com/mynameisfiber/pytailcall
+As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas love to hate - tail call optimization! This isn&rsquo;t novel at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode.">
+<meta property="og:description" content="DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!
+Check out the code at code at github.com/mynameisfiber/pytailcall
+As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas love to hate - tail call optimization! This isn&rsquo;t novel at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode.">
+<meta property="og:image" content="https://blog.fastforwardlabs.comhttp://i.imgur.com/OodCK0c.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Apr 23, 2015</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Bytecode Hacking for Great Justice</h1>
+    <p><em>DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!</em></p>
+<p>Check out the code at code at <a href="http://github.com/mynameisfiber/pytailcall">github.com/mynameisfiber/pytailcall</a></p>
+<p>As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas <a href="http://neopythonic.blogspot.com/2009/04/tail-recursion-elimination.html">love to hate</a> - tail call optimization! This isn&rsquo;t <a href="http://www.teamrubber.com/blog/python-tail-optimisation-using-byteplay/">novel</a> at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode. As a result, I&rsquo;m sure there are <em>many</em> edge cases that I don&rsquo;t consider so please, keep your sys-ops sane and <em>do not use this code in production</em>. <a href="https://github.com/mynameisfiber/pytailcall/">In the end</a>, even though the code is fun it is a filthy hack that shouldn&rsquo;t be used in production code and should never be considered to make it&rsquo;s way into the python source. One point I really like on <a href="http://neopythonic.blogspot.com/2009/04/tail-recursion-elimination.html">Guido&rsquo;s blog post</a> about this issue is tail recursion optimization ruins the stack traces and detracts from python&rsquo;s ability to debug easily.</p>
+<p>Tail calls are when a function is recursing and returns simply on a function call to itself. This is different than normal recursion where multiple things can be happening on our recursed return statement. So, for example, this is tail recursion,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(N, result<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+    <span style="color:#66d9ef">if</span> N <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> result
+    <span style="color:#66d9ef">return</span> factorial(N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, N<span style="color:#f92672">*</span>result)
+</code></pre></div><p>While this is not,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(N):
+    <span style="color:#66d9ef">if</span> N <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> N <span style="color:#f92672">*</span> factorial(N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</code></pre></div><p>So we can see that normal recursion uses the return register in order to maintain the state of the calculation. By contrast, tail recursion uses a function parameter. This is made particularly simple in python because you can have keyword arguments with default values to initialize the calculation.</p>
+<p>The thing that makes tail calls particularly useful is the ability to optimize them. Generally when a function gets called, the system must set up a function stack in memory that maintains the state of the function, including local variables and code pointers, so that the function can go on its merry way. However, when we do a tail recursion we are trying to enter the same function stack that we are already in, just with changes to the values of the arguments! This can be quickly optimized by never creating the new function stack and instead just modifying the argument values and starting the function from the beginning!</p>
+<p>One way of doing this is manually unravelling the recursion. For our example above, the factorial would become,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(N, result<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+    <span style="color:#66d9ef">while</span> True:
+        <span style="color:#66d9ef">if</span> N <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+            <span style="color:#66d9ef">return</span> result
+        N, result <span style="color:#f92672">=</span> N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, N<span style="color:#f92672">*</span>result
+</code></pre></div><p>Not only will this speed up our code, but we also don&rsquo;t have to worry about those pesky <a href="https://docs.python.org/2/library/sys.html#sys.setrecursionlimit">recursion limits</a> that python imposes on us. Furthermore, the transformation is quite simple. All we did was add a <code>while True:</code> to the beginning of the function and change any tail calls with changes to the argument variables.</p>
+<p>There are a whole host of methods to do this automatically (<a href="http://tomforb.es/adding-tail-call-optimization-to-python">partial functions</a>, <a href="http://lambda-the-ultimate.org/node/1331">exceptions</a>, etc., but I thought it would be fun to do this by re-writing the bytecode of the function itself. Let&rsquo;s start by looking at the actual bytecode of the <code>factorial</code> function using the <code>dis</code> module from the standard library.</p>
+<pre><code>&gt;&gt;&gt; dis.dis(factorial)
+# bytecode                                             # relevant python
+# -----------------------------------------------------#---------------------
+  2           0 LOAD_FAST                0 (N)         # if N == 1:
+              3 LOAD_CONST               1 (1)         #
+              6 COMPARE_OP               2 (==)        #
+              9 POP_JUMP_IF_FALSE       16             #
+                                                       #
+  3          12 LOAD_FAST               1 (result)     #    return result
+             15 RETURN_VALUE                           #
+                                                       #
+  4     &gt;&gt;   16 LOAD_GLOBAL              0 (factorial) # return factorial(N-1, N*result)
+             19 LOAD_FAST                0 (N)         #
+             22 LOAD_CONST               1 (1)         #
+             25 BINARY_SUBTRACT                        #
+             26 LOAD_FAST                0 (N)         #
+             29 LOAD_FAST                1 (result)    #
+             32 BINARY_MULTIPLY                        #
+             33 CALL_FUNCTION            2             #
+             36 RETURN_VALUE                           #
+</code></pre><p>We can see the full structure of our function in the bytecode. First we load up <code>N</code> and the constant <code>1</code> and compare them using the <code>COMPARE_OP</code> bytecode. If the result if false, we jump to line 16 and if not we load the variable <code>result</code> into the stack and return it. On line 16, we first load the reference to the function named <code>factorial</code> (which happens to be the same function we&rsquo;re in!) and start building up the arguments. First we load up <code>N</code> and <code>1</code> and call <code>BINARY_SUBTRACT</code> which will leave the value of <code>N-1</code> on the stack. Then we load up <code>N</code> and <code>result</code> and multiply them with <code>BINARY_MULTIPLY</code> which will push the value of <code>N-1</code> onto the stack. By calling the <code>CALL_FUNCTION</code> bytecode (with the argument <code>2</code> indicating that there are two arguments to the function), python can go out and start running the function in another context until it returns and we can call <code>RETURN_VALUE</code> on line 36 to return whatever is left in the stack. This may seem like a convoluted way of approaching how a function works (although it <a href="http://shop.oreilly.com/product/0636920028963.do">has its uses</a>!), but after a while spent looking at <a href="http://unpyc.sourceforge.net/Opcodes.html">opcodes</a> this starts to make just as much sense as python itself!</p>
+<p>In an ideal world, what would we want this bytecode to look like? Looking up the references on <code>JUMP_ABSOLUTE</code>, we can rewrite the above bytecode to be,</p>
+<pre><code>  2     &gt;&gt;    0 LOAD_FAST                0 (N)
+              3 LOAD_CONST               1 (1)
+              6 COMPARE_OP               2 (==)
+              9 POP_JUMP_IF_FALSE       16
+
+  3          12 LOAD_FAST               1 (result)
+             15 RETURN_VALUE
+
+  4     &gt;&gt;   16 LOAD_FAST                0 (N)
+             19 LOAD_CONST               1 (1)
+             22 BINARY_SUBTRACT
+             23 LOAD_FAST                0 (N)
+             26 LOAD_FAST                1 (result)
+             29 BINARY_MULTIPLY
+             30 STORE_FAST               1 (result)
+             33 STORE_FAST               0 (N)
+             36 JUMP_ABSOLUTE            0
+</code></pre><p>The differences here start at line 16. Instead of loading a reference to the recursed function, we immediately start filling up the stack with what <em>were</em> the arguments to the function. Then, once our arguments have been computed, instead of doing a <code>CALL_FUNCTION</code>, we start running a sequence of <code>STORE_FAST</code> to pop the calculated arguments off the stack and into the actual argument variables. Now that the arguments have been modified, we can call <code>JUMP_ABSOLUTE</code> with an argument of <code>0</code> in order to jump back to the beginning of the function and starting again. This last aspect, the <code>JUMP_ABSOLUTE</code> back to the beginning of the function as oppose to setting up a while loop, is one of the reasons this function is faster than the manual unrolling of the recursion we did above; we don&rsquo;t need to calculate the conditions of the loop or do any modifications to our state, we simply start processing opcodes at line 0 again.</p>
+<p>This may seem simple, but there are many corner cases that will get you (and in fact got me in the hours of <code>SystemError</code> exceptions I wrestled with). First of all, if the recursive return is already within what python calls a block (ie: a loop or a try..except..finally block), we need to call the <code>POP_BLOCK</code> opcode the right amount of times before our <code>JUMP_ABSOLUTE</code> so that we properly terminate any setup those sections need.</p>
+<p>Another problem, and probably much more annoying than the block counts, is that of changing the size and thus the addresses of the bytecodes. When bytecode is represented, it is simply a list of unsigned four-bit integers. Some of these integers represent jumps to other points in the list, and it refers to those other points by either relative offsets (e.g., jump five integers to the right) or by absolute addresses (e.g., jump to the tenth integer). In order to make sure these jumps go to the correct place after we modify the bytecode, we must keep a list of what we added (and where) and, once our editing is done, go back through and modify any addresses to again point to the correct place.</p>
+<p>Once all these problems are solved, we are left with a <a href="https://github.com/mynameisfiber/pytailcall/blob/master/pytailcall/internal_loop.py#L77">general decorator</a> to transform all of our tail recursion into the iterative versions! And this is indeed much faster. Looking at the benchmark supplied with <a href="https://github.com/mynameisfiber/pytailcall/">pytailcall</a>, we can see that we reduce the overhead of recursion (by eliminating it) and are able to recurse much more than we were previously able to.</p>
+<p><a href="http://i.imgur.com/OodCK0c.png"><img src="http://i.imgur.com/OodCK0c.png" alt="pytailcall benchmarks"/></a></p>
+<p>In the <a href="https://github.com/mynameisfiber/pytailcall/blob/master/pytailcall/examples.py">benchmark</a> above, <code>native</code> is the original function (note that native python could not complete all of the benchmarks due to maximum recursion errors). <code>partial_func</code> is a trick which wraps the function in a partial and changes it&rsquo;s internal reference to itself. <code>return_tuple</code> is another bytecode hack that changes the recursion into a specialized return statement that triggers another call to the function. Finally, <code>internal_loop</code> is the bytecode hack described above.</p>
+<p>So, by committing this ungodly sin against all things python stands for, we can get a 33% speedup over python tail recursed code! In general though, this was a great exercise in learning much more about how python bytecode works and the underlying structure of a function. While this sort of bytecode hacking is exactly that, a hack, being able to read bytecode and understand the output of <code>dis.dis</code> is incredibly useful when optimizing python code for actual production systems. If you want to know more about <em>that</em> aspect of the optimization, and other more rigorous methods of optimization, check out <a href="http://shop.oreilly.com/product/0636920028963.do">High Performance Python</a>.</p>
+<p>-Micha</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 30, 2015</span> &middot;
+    <span style="text-transform: capitalize;">
+      announcement
+    </span>
+  </h5>
+  
+    <div><a href="/2015/04/30/hilary-on-bloomberg-tv.html"><strong>Hilary on Bloomberg TV</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 6, 2015</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2015/04/06/blog-design-refresh.html"><strong>Blog Design Refresh</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

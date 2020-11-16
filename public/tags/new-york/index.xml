@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>new york on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/new-york.html</link>
+    <description>Recent content in new york on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 03 Feb 2016 22:05:44 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/new-york/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What History Teaches Us About Data Science</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</link>
+      
+      <pubDate>Wed, 03 Feb 2016 22:05:44 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/02/03/what-history-teaches-us-about-data-science.html</guid>
+      <description>The FFL team at the New York Historical Society&amp;rsquo;s Silicon City exhibit  Study the past if you would define the future. — Confucius
+ Until April 17, 2016, the New York Historical Society is featuring an exhibition called Silicon City: Computer History Made in New York. The Fast Forward Labs team took a field trip to the museum back in December to augment our perspective on our current machine intelligence research (and, of course, to geek out and have fun).</description>
+    </item>
+    
+  </channel>
+</rss>

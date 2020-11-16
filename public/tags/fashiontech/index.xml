@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fashiontech on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/fashiontech.html</link>
+    <description>Recent content in fashiontech on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Aug 2015 18:08:14 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/fashiontech/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Machine Learning Applications in Fashion Retail</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</link>
+      
+      <pubDate>Wed, 19 Aug 2015 18:08:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/08/19/machine-learning-applications-in-fashion-retail.html</guid>
+      <description>&lt;figure data-orig-width=&#34;1080&#34; data-orig-height=&#34;572&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/1ea7d218b3ec206decfb85436ead953d/tumblr_inline_ntcf1hms2i1ta78fg_540.jpg&#34; data-orig-width=&#34;1080&#34; data-orig-height=&#34;572&#34;/&gt;&lt;/figure&gt;
+&lt;h5 id=&#34;this-is-the-first-of-two-articles-about-recent-developments-in-fashion-technology-part-two-will-focus-on-implications-for-consumer-privacy&#34;&gt;This is the first of two articles about recent developments in fashion technology. Part two will focus on implications for consumer privacy.&lt;/h5&gt;
+&lt;p&gt;The next frontier for recommender systems is the retail store. We’re used to associating machine learning with ecommerce giants like Gilt and Lyst, but can data science transform physical stores like Rebecca Minkoff and Zara? The impact would be significant, as more than &lt;a href=&#34;http://www2.deloitte.com/us/en/pages/about-deloitte/articles/press-releases/digital-influences-in-retail-store-sales.html&#34;&gt;90% of retail sales still occur in brick-and-mortar stores&lt;/a&gt;, which could use data to redefine in-store personalization.&lt;/p&gt;&lt;p&gt;The introduction of data collection in the retail space does not always require new tools; rather, retailers can gather granular data on customers and products by repurposing existing hardware like security cameras and clothing sensors in new ways. Developments in machine learning have made it possible to auto-process existing video feeds to track customers, from simple movement analytics to full body profiles. Smart mirrors, security cameras (CCTV) and radio-frequency identification (RFID) sensors which create rich datasets that make automated personalization in bricks &amp;amp; mortar scalable.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

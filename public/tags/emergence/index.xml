@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>emergence on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/emergence.html</link>
+    <description>Recent content in emergence on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Sep 2015 18:56:09 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/emergence/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How do neural networks learn?</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</link>
+      
+      <pubDate>Thu, 24 Sep 2015 18:56:09 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
+      <description>Neural networks are generating a lot of excitement, as they are quickly proving to be a promising and practical form of machine intelligence. At Fast Forward Labs, we just finished a project researching and building systems that use neural networks for image analysis, as shown in our toy applicationPictograph. Our companion deep learning report explains this technology in depth and explores applications and opportunities across industries.
+As we built Pictograph, we came to appreciate just how challenging it is to understand how neural networks work.</description>
+    </item>
+    
+    <item>
+      <title>D’Alembert’s Deep Dream: Bees and Nonlinear Transformations</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/09/02/dalemberts-deep-dream-bees-and-nonlinear-transformations.html</link>
+      
+      <pubDate>Wed, 02 Sep 2015 14:08:33 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/09/02/dalemberts-deep-dream-bees-and-nonlinear-transformations.html</guid>
+      <description>&lt;figure data-orig-width=&#34;284&#34; data-orig-height=&#34;178&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/5e441cb1ef3adcd99999f7b29da5ee5e/tumblr_inline_nu1ujeo4cc1ta78fg_540.jpg&#34; alt=&#34;image&#34; data-orig-width=&#34;284&#34; data-orig-height=&#34;178&#34;/&gt;&lt;/figure&gt;&lt;p&gt;Hold your hats! In the next couple of weeks we’re launching an arsenal of deep learning resources, including a feature report, a public prototype that will classify your Instagram identity and a webinar exploring the past, present and future of deep learning. Sign up &lt;a href=&#34;https://deeplearningwebinar.splashthat.com/&#34;&gt;here&lt;/a&gt;!&lt;/p&gt;&lt;p&gt;As a philosophical prelude to the upcoming report, we wanted to invite you to think about the emergent properties of neural nets. Let’s explore what 18th-century philosopher Denis Diderot can teach us about artificial intelligence.&lt;/p&gt;&lt;p&gt;Diderot was not your average Enlightenment philosopher. A &lt;i&gt;philosophe, &lt;/i&gt;he grappled with the colossal inheritance of mechanical philosophy that dominated 18th-century intellectual circles. Spearheaded by Descartes and Newton, the mechanical view held that the material world was composed of complicated machines governed and determined by immutable laws. &lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

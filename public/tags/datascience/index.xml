@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>datascience on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/datascience.html</link>
+    <description>Recent content in datascience on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Nov 2015 16:35:14 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/datascience/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>When Dog Is Enough: Using Hypernyms To Improve Neural Network Predictions</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/11/17/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</link>
+      
+      <pubDate>Tue, 17 Nov 2015 16:35:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/11/17/when-dog-is-enough-using-hypernyms-to-improve-neural-network-predictions.html</guid>
+      <description>&lt;p&gt;Possibly true statement: the Fast Forward Labs dog is the cutest dog in the world. &lt;br/&gt;&lt;/p&gt;&lt;figure data-orig-width=&#34;399&#34; data-orig-height=&#34;288&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/7df25fbff433a17f0a2d414666eff600/tumblr_inline_nxxgbxBEMd1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;399&#34; data-orig-height=&#34;288&#34;/&gt;&lt;/figure&gt;&lt;p&gt;Our General Counsel Ryan picked up the puppy a month ago and we’ve yet to name him. Ryan likes Renfield, which, as Bram Stoker fans know, evokes slightly different thoughts than “super cute,” particularly when &lt;a href=&#34;https://www.youtube.com/watch?v=WaVZmo8CsGQ&#34;&gt;played by&lt;/a&gt; the ever-guttural Tom Waits. But the fact that we’re in no rush to name him tells us something about how we label and identify things. We know he’s a dog, we love him for his dogness, and thus far that’s been just fine. I personally tend to forget what breed he is, as my knowledge of dog breeds is shamefully sparse. &lt;/p&gt;&lt;p&gt;Pictograph, in contrast, does an excellent job recognizing that our puppy is in fact a blenheim spaniel. Pictograph is the public app we built to illustrate how neural nets identify objects in images. &lt;a href=&#34;http://pictograph.us&#34;&gt;Try it&lt;/a&gt; on your personal Instagram feed!&lt;/p&gt;&lt;figure data-orig-width=&#34;658&#34; data-orig-height=&#34;216&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/36ad21fb7fbc61e892ca66af5f684fe4/tumblr_inline_nxxgkiSgKa1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;658&#34; data-orig-height=&#34;216&#34;/&gt;&lt;/figure&gt;&lt;p&gt;A 97% confidence rate in the accuracy of the prediction is a dream for automated classification. Here, the confidence is so high for two reasons. &lt;/p&gt;&lt;p&gt;First, the &lt;a href=&#34;http://www.image-net.org/&#34;&gt;ImageNet &lt;/a&gt;database used to train the Pictograph neural network has a lot of pictures of blenheim spaniels (971&amp;hellip;and yep, it’s prime). This labelled data informs the network what a correct classification &lt;i&gt;should&lt;/i&gt; look like. The learning mechanism (called &lt;a href=&#34;http://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html&#34;&gt;backpropagation&lt;/a&gt;) then steps in and learns the network to predict the label “blenheim spaniel” when presented with new images that have similar features.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Second, the images in Ryan’s Instagram feed aren’t noisy. Note how the two images with 97% confidence rates show our puppy alone and facing the camera. This pose is similar to the stock images available on ImageNet, rendering it easier for the neural net to detect similarities. The confidence rate in the right-hand image including the human face drops to 62% because the data is noisier. It would likely drop further when presented an image of our puppy unconsciously playing &lt;a href=&#34;https://en.wikipedia.org/wiki/Ouroboros&#34;&gt;Ouroboros&lt;/a&gt; (the mythical snake that eats its own tail).&lt;/p&gt;&lt;figure data-orig-width=&#34;462&#34; data-orig-height=&#34;328&#34; class=&#34;tmblr-full&#34;&gt;&lt;img src=&#34;http://68.media.tumblr.com/bac3509687c5af7c21fd2fc853bf0501/tumblr_inline_nxxhlkZ4zi1ta78fg_540.png&#34; alt=&#34;image&#34; data-orig-width=&#34;462&#34; data-orig-height=&#34;328&#34;/&gt;&lt;/figure&gt;&lt;p&gt;But Instagram, like most data in the wild, rarely contains clean data that maps neatly to a model’s parameters or the stock photos in a training set like ImageNet. In turn, classification systems can yield confidence rates as low as 20% or 30% (or lower), generating doubts as to whether it’s worth using the technology at all. One way to improve unsatisfying results from a machine learning tool is to adopt a “&lt;a href=&#34;https://medium.com/the-wtf-economy/artificial-intelligence-and-the-future-of-work-a0eaabea7c41&#34;&gt;human in the loop&lt;/a&gt;” approach, where humans step in and manually label images technology misclassifies or classifies with low confidence rates. But we decided to adopt a different approach.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

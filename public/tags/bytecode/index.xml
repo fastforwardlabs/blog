@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bytecode on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/bytecode.html</link>
+    <description>Recent content in bytecode on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Apr 2015 15:16:56 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/bytecode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bytecode Hacking for Great Justice</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html</link>
+      
+      <pubDate>Thu, 23 Apr 2015 15:16:56 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/04/23/bytecode-hacking-for-great-justice.html</guid>
+      <description>DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!
+Check out the code at code at github.com/mynameisfiber/pytailcall
+As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas love to hate - tail call optimization! This isn&amp;rsquo;t novel at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>probabilistic programming on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/probabilistic-programming.html</link>
+    <description>Recent content in probabilistic programming on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 22 Aug 2016 18:02:08 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/probabilistic-programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Under the Hood of the Variational Autoencoder (in Prose and Code)</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</link>
+      
+      <pubDate>Mon, 22 Aug 2016 18:02:08 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html</guid>
+      <description>&lt;h5 id=&#34;the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona&#34;&gt;The &lt;a href=&#34;https://arxiv.org/abs/1312.6114&#34;&gt;Variational&lt;/a&gt; &lt;a href=&#34;https://arxiv.org/abs/1401.4082&#34;&gt;Autoencoder&lt;/a&gt; (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In &lt;a href=&#34;http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html&#34;&gt;Part I&lt;/a&gt; of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—&lt;a href=&#34;http://shakirm.com/slides/DLSummerSchool_Aug2016_compress.pdf&#34;&gt;“machines that imagine and reason.”&lt;/a&gt;&lt;/h5&gt;
+&lt;p&gt;To recap: VAEs put a probabilistic spin on the basic autoencoder paradigm—treating their inputs, hidden representations, and reconstructed outputs as probabilistic random variables within a directed graphical model. With this &lt;a href=&#34;https://xkcd.com/1236/&#34;&gt;Bayesian&lt;/a&gt; perspective, the encoder becomes a variational &lt;em&gt;inference network&lt;/em&gt;, mapping observed inputs to (approximate) posterior distributions over latent space, and the decoder becomes a &lt;em&gt;generative network&lt;/em&gt;, capable of mapping arbitrary latent coordinates back to distributions over the original data space.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/vae.4.png&#34; title=&#34;A variational autoencoder&#34; style=&#34;width:80.0%&#34;/&gt;&lt;/div&gt;
+&lt;p&gt;The beauty of this setup is that we can take a principled Bayesian approach toward building systems with a rich internal “mental model” of the observed world, all by training a single, cleverly-designed deep neural network.&lt;/p&gt;
+&lt;p&gt;These benefits derive from an enriched understanding of data as merely the tip of the iceberg—the observed result of an underlying causative probabilistic process.&lt;/p&gt;
+&lt;p&gt;The power of the resulting model is captured by Feynman’s famous &lt;a href=&#34;http://archives-dc.library.caltech.edu/islandora/object/ct1:483&#34;&gt;chalkboard quote&lt;/a&gt;: “What I cannot create, I do not understand.” When trained on MNIST handwritten digits, our VAE model can parse the information spread thinly over the high-dimensional observed world of pixels, and condense the most meaningful features into a structured distribution over reduced latent dimensions.&lt;/p&gt;
+&lt;p&gt;Having recovered the latent manifold and assigned it a coordinate system, it becomes trivial to walk from one point to another along the manifold, creatively generating realistic digits all the while:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif&#34; title=&#34;Generatively morphing digits&#34;/&gt;&lt;/div&gt;
+&lt;p&gt;In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in &lt;a href=&#34;http://fastforwardlabs.github.io/2016/08/12/introducing-variational-autoencoders-in-prose-and.html&#34;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Along the way, we’ll show how to implement a VAE in &lt;a href=&#34;http://tensorflow.org/&#34;&gt;TensorFlow&lt;/a&gt;—a library for efficient numerical computation using data flow graphs, with key features like &lt;a href=&#34;http://alexey.radul.name/ideas/2013/introduction-to-automatic-differentiation/&#34;&gt;automatic differentiation&lt;/a&gt; and parallelizability (across clusters, CPUs, GPUs…and &lt;a href=&#34;https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html&#34;&gt;TPUs&lt;/a&gt; if you’re lucky). You can find (and tinker with!) the full implementation &lt;a href=&#34;https://github.com/fastforwardlabs/vae-tf/tree/master&#34;&gt;here&lt;/a&gt;, along with a couple &lt;a href=&#34;https://github.com/fastforwardlabs/vae-tf/tree/master/out&#34;&gt;pre-trained models&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Introducing Variational Autoencoders (in Prose and Code)</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</link>
+      
+      <pubDate>Fri, 12 Aug 2016 17:09:50 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html</guid>
+      <description>Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
+Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
+This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.</description>
+    </item>
+    
+    <item>
+      <title>Probabilistic Programming for Anomaly Detection</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</link>
+      
+      <pubDate>Tue, 03 May 2016 14:51:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
+      <description>The Fast Forward Labs research team is developing our next prototype, which will demonstrate an application of probabilistic programming. Probabilistic programming languages are a set of high-level languages that lower the barrier to entry for Bayesian data analysis.
+Bayesian data analysis is often seen as the best approach to machine learning. Models derived by this process are highly interpretable, in contrast to other modern models like neural networks and support vector machines.</description>
+    </item>
+    
+  </channel>
+</rss>

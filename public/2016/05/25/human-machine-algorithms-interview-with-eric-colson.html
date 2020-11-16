@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Human-Machine Algorithms: Interview with Eric Colson</title>
+<meta property="og:title" content="Human-Machine Algorithms: Interview with Eric Colson">
+<meta property="description" content="
+Therefore render unto Caesar the things that are Caesar&rsquo;s, and unto God the things that are God&rsquo;s.
+– Matthew, 22:21
+We tend to think that recommender systems are old hat. ECommerce platforms like Amazon have been using techniques like collaborative filtering for years to help shoppers navigate vast catalogues by inferring consumer taste from past behavior. And yet, we’ve all experienced the limitations of these approaches (that time you bought a toilet bowl plunger to subsequently be flooded by recommendations for strange bathroom accessories). This may be a nuisance for consumers, but it doesn’t jeopardize eCommerce business models: only 35% of Amazon’s sales, for example, are driven from recommendations.But what would happen if the stakes were higher? What kind of algorithmic creativity would it take to build a company with revenue based entirely on recommendations?This is the challenge faced by Eric Colson’s team at Stitch Fix. Stitch Fix is an online “personal styling service” that selects clothing apparel for customers (they also have a solid technical blog). Instead of recommending items for shoppers to choose from, Stitch Fix goes a step further and simply ships items its algorithms and stylists choose to customers. The key to making this work, according to Colson, is to optimize the division of labor between human and machine.Colson spoke about the value of human-machine collaborations at the March Data Driven NYC Meetup. We interviewed him to learn more about the approach.">
+<meta property="og:description" content="
+Therefore render unto Caesar the things that are Caesar&rsquo;s, and unto God the things that are God&rsquo;s.
+– Matthew, 22:21
+We tend to think that recommender systems are old hat. ECommerce platforms like Amazon have been using techniques like collaborative filtering for years to help shoppers navigate vast catalogues by inferring consumer taste from past behavior. And yet, we’ve all experienced the limitations of these approaches (that time you bought a toilet bowl plunger to subsequently be flooded by recommendations for strange bathroom accessories). This may be a nuisance for consumers, but it doesn’t jeopardize eCommerce business models: only 35% of Amazon’s sales, for example, are driven from recommendations.But what would happen if the stakes were higher? What kind of algorithmic creativity would it take to build a company with revenue based entirely on recommendations?This is the challenge faced by Eric Colson’s team at Stitch Fix. Stitch Fix is an online “personal styling service” that selects clothing apparel for customers (they also have a solid technical blog). Instead of recommending items for shoppers to choose from, Stitch Fix goes a step further and simply ships items its algorithms and stylists choose to customers. The key to making this work, according to Colson, is to optimize the division of labor between human and machine.Colson spoke about the value of human-machine collaborations at the March Data Driven NYC Meetup. We interviewed him to learn more about the approach.">
+<meta property="og:image" content="https://blog.fastforwardlabs.comhttp://68.media.tumblr.com/dd7cacb29c66b0d8ac385f37fde89d2d/tumblr_inline_o7qmpkkMD11qcg73w_540.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2016/05/25/human-machine-algorithms-interview-with-eric-colson.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>May 25, 2016</span> &middot;
+      <span style="text-transform: capitalize;">
+        interview
+      </span>
+    </h5>
+    <h1>Human-Machine Algorithms: Interview with Eric Colson</h1>
+    <figure data-orig-width="780" data-orig-height="396" class="tmblr-full"><img src="http://68.media.tumblr.com/dd7cacb29c66b0d8ac385f37fde89d2d/tumblr_inline_o7qmpkkMD11qcg73w_540.png" alt="image" data-orig-width="780" data-orig-height="396"/></figure>
+<blockquote>Therefore render unto Caesar the things that are Caesar&rsquo;s, and unto God the things that are God&rsquo;s.</blockquote>
+<h5 id="ndash-matthew-2221">– Matthew, 22:21</h5>
+<p>We tend to think that recommender systems are old hat. ECommerce platforms like Amazon have been using techniques like <a href="https://www.quora.com/How-does-Amazons-collaborative-filtering-recommendation-engine-work">collaborative filtering</a> for years to help shoppers navigate vast catalogues by inferring consumer taste from past behavior. And yet, we’ve all experienced the limitations of these approaches (that time you bought a toilet bowl plunger to subsequently be flooded by recommendations for strange bathroom accessories). This may be a nuisance for consumers, but it doesn’t jeopardize eCommerce business models: only 35% of Amazon’s sales, for example, are driven from recommendations.<br/></p><p>But what would happen if the stakes were higher? What kind of algorithmic creativity would it take to build a company with revenue based entirely on recommendations?</p><p>This is the challenge faced by <a href="https://twitter.com/ericcolson">Eric Colson</a>’s team at <a href="http://multithreaded.stitchfix.com/">Stitch Fix</a>. Stitch Fix is an online “personal styling service” that selects clothing apparel for customers (they also have a <a href="http://multithreaded.stitchfix.com/blog/">solid technical blog</a>). Instead of recommending items for shoppers to choose from, Stitch Fix goes a step further and simply ships items its algorithms and stylists choose to customers. The key to making this work, according to Colson, is to optimize the division of labor between human and machine.</p><p>Colson <a href="https://www.youtube.com/watch?v=-rId42xabXY">spoke about</a> the value of human-machine collaborations at the March <a href="http://datadrivennyc.com/">Data Driven NYC Meetup</a>. We interviewed him to learn more about the approach.<br/></p>
+<p><b>Let’s start with your background. How did you become a data scientist?</b></p><p>My father was a physicist, and physics features the most exotic math out there.  Apparently – although this was too early for me to remember – he used to tape handwritten exotic math symbols inside my crib when I was a baby. I suppose this early exposure shaped my future obsession with microeconomics, and particularly graphs. Graphs are so pure, so elegant: I love how the smooth lines clearly show the theoretical relationship between things like price and demand (even if it’s always more complex in practice). I was lucky, as I entered the job market just when it was becoming viable to do price things like elasticity in the tech industry. You could record transactions and, with a bit of statistics, actually capture elasticity curves. Once in business, I had to learn how to get the data required to build these graphs. That meant learning the engineering behind data warehouses and ETL. It meant learning more sophisticated stats. At Yahoo, it eventually meant teasing relationships out of big data to optimize insights for human decision making. And, finally, at Netflix, it meant building systems for machine consumption - that is, automated decision-making or ‘algorithms’. You could even say I became a data scientist as a natural evolution of my sole pursuit: to optimize microeconomic graphs.</p><p><b>How did you choose your title? Chief Algorithms Officer isn’t something you see every day.</b></p><p>I’m not the only one, trust me. <a href="https://en.wikipedia.org/wiki/Udi_Manber">Udi Manber</a> was the former algorithms officer at Amazon. I came to Stitch Fix to assume an officer role, and played with different words. I consider the title to play a recruiting function to attract the right talent. Chief Analytics Officer sounded too much like BI. Chief Data Officer sounded like a CIO, connoting data storage. I did consider Chief Data Scientist, and I love the word, but think there’s still confusion about what it means – it’s hard to capture a role that combines statistics, engineering, and business problems, and it’s getting more complicated now that artificial intelligence is used to describe machine learning algorithms. At any rate, I chose the title because the essence of what we do is to work with algorithms.</p><p><b>What inspired you to leave Netflix for Stitch Fix?</b></p><p><a href="https://www.linkedin.com/in/kmlake">Katrina Lake</a>, Stitch Fix’s Founder and CEO, engaged me in early 2012 as an advisor. I had no intentions of joining at the time, but was drawn to the work because it sought to mix algorithmic decision making with human decision-making in a way I thought merited exploration. At Netflix, I started to appreciate the limitations of a purely algorithmic approach for complex business tasks with an algorithm we built to predict the popularity of our content. This was critical when we shifted from the DVD model to streaming. With DVDs, you just buy and manage the inventory, and you can always buy more if needed; with streaming, you license content from studios, and pay high-dollar fixed costs over a set time period. That means, if no one watches a movie, Netflix still pays. It was therefore important to pick movies and shows many people would watch to cover costs. We gathered data from every source we could to build these models. They usually did well but there were anomalies where non-mainstream films with average ratings performed way better than expected. But if we just looked at the website we immediately knew why: the box shots would have sexy women in provocative positions, or even branding with subliminal effects (like the yellow National Geographic covers). Humans see this immediately, but it was not a feature we thought to engineer at the time (deep learning was not what it is today). So we built a little app where Netflix employees could indicate whether a movie had a sexually appealing image on it – we added human input to our models where human judgment performs better than algorithms. This, of course, is key to fashion image data and at Stitch Fix the entire company’s success was predicated on the algorithms working well. After six months of advising Stitch Fix, I decided to join full time.</p><p><b>How does human-machine collaboration work at Stitch Fix?</b></p><p>The machine learning happens first, and we combine all sorts of algorithms for different sub tasks, be they neural nets, collaborative filtering, mixed effects models, naïve Bayes, etc. to do a first pass at recommending styles for individual customers. Machines are far more efficient than humans and we leverage them for the rote calculations in our process. We leave the other types of activities - like synthesizing ambient information, improvising, fostering a relationship with the customer, applying empathy - to humans. The final step is logistics to manage delivery. It’s a division of labor modeled after Daniel Kahneman’s two systems of thinking in <a href="https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow">Thinking, Fast and Slow</a>. The machines take the calculations and probabilities; the humans take the intuition. But there are overlapping tasks they share. </p><p><b>For example?</b></p><p>When it comes to fashion, customers have a hard time saying what they like. They’d rather show what they like. The vast majority of customers pin examples of styles the like on Pinterest that we can process in two ways. Machines can vectorize the pinned image and compare it to our inventory using convolutional neural nets (<a href="https://github.com/BVLC/caffe/tree/master/models/bvlc_alexnet">AlexNet</a>) to find items that are similar, with similarity measured as Euclidean distance. Once we have this short list of items, we pass this to humans who process ambient information, recognize if the recommended items are too similar to the pinned image, or even judge whether the images are more aspirational than literal and modify suggestions accordingly.  Take something like a leopard print dress. Machines are very pedantic: they can distinguish leopard print from cheetah print, but don’t have the social sense to know that a woman who likes leopard print would very likely also like cheetah print.</p><p><b>It can take a long time and a lot of data to train a convolutional neural net. Does your team have any creative techniques to speed up the process?</b></p><p>We’ve experimented with <a href="http://evjang.com/articles/genadv1">generative adversarial networks</a> for our image processing. You use one “discriminative” neural net to break down images and find the elements of style, and then a generative net to put the building blocks back together to reproduce the images. It’s pretty quick to train another machine to then distinguish between real and machine-generated images.</p><figure data-orig-width="541" data-orig-height="390" class="tmblr-full"><img src="http://68.media.tumblr.com/bdaebc66b0fb6a0c2f3f1987b4bbeaac/tumblr_inline_o7qg1yDhGO1ta78fg_540.png" alt="image" data-orig-width="541" data-orig-height="390"/></figure>
+<h5 id="visualization-of-samples-from-a-generative-adversarial-net-in-a-hrefhttparxivorgabs14062661a-2014-articlea-by-goodfellow-et-al">Visualization of samples from a generative adversarial net in <a href="http://arxiv.org/abs/1406.2661">a 2014 article</a> by Goodfellow et al.</h5>
+<p><b>What about improving the performance of the human stylists?</b></p><p>Humans are classic overfitters. As Kahneman explains, we don’t naturally think statistically, but tend to build narratives around the details most prominent in our consciousness. Say a stylist receives a tall customer, suggests some item she thinks would be good for tall people, and receives positive feedback from the customer. She’ll then reinforce the association between tallness and the product feature from this one win, often overlooking the hundreds of other instances where this didn’t work. Statistics are therefore a wonderful (and necessary) support to mitigate associative fallacies. The other challenge with our system is that there’s often a long delay between a stylist’s decision to pick a certain item and feedback from the customer on whether they like it (or it’s the right size, fit, etc.). Humans work best with instantaneous, unambiguous feedback: they forget why they did something by the time we have input from customers. So we built a parallel, “labs” version of the interface to give stylists realtime feedback. We use historical shipment data to simulate how a customer would react to give this quick feedback.  </p><p><b>What percent of your recommendations are informed by collaborative filtering?</b></p><p>It’s true that matrix factorization is the most intuitive place to start for product recommendations, but they tend to fall short in the fashion industry because trends change so fast. The stuff we have now will be gone next month, so we have really sparse matrices.  Most clients are getting boxes only on a monthly - or even less frequent - basis. This means we only get feedback on about 5 items per month per client on average.  As such, it’s better to use other features to inform our recommendations, and our techniques run the gambit from neural networks to mixed effects models. That said, there are customers who get more items more frequently and where we have enough information to compare them with others. In those cases, collaborative filtering works.</p><p><b>How do you organize your team to support this diversity of algorithms and workflows?</b></p><p>Five groups report into me, and they are designed for autonomy. They have as few people as possible to work with and have to build their own pipelines: they do the math, learn the algorithms, communicate with the business, manage projects. I think this is better because it’s faster (there’s no coordination cost so you can iterate faster), attracts top talent, and supports long-term systems as data scientists understand things deeply and can make gradual tweaks to code. Three teams – merchandise algorithms, styling algorithms, and client algorithms – align with current business functions. The Merchandise Algorithms team works with merchants on procurement. The Styling Algorithms team works with stylists - it’s the recommendation workflow. The Client Algorithms team works with marketing on acquisition and retention: are clients happy? What’s the right action to take with them? Next, the data platform team is responsible for the infrastructure required to make the different algorithms run. We don’t have <a href="http://multithreaded.stitchfix.com/blog/2016/03/16/engineers-shouldnt-write-etl/">data engineers writing ETL on purpose</a>. The final team is the labs team, which handles experimental stuff that hasn’t yet made it into the product (they are exploring the use of NLP and computer vision algorithms). Labs also manages our tech branding, like the <a href="http://multithreaded.stitchfix.com/">Multithreaded blog</a>.</p><p><b>What’s next for Stitch Fix?</b></p><p>One exciting piece of news is that we now have five proprietary, data-driven clothing lines. The items are like Frankenstyles, combining attributes (sleeve length, flair, etc…) that work well for a particular demographic but may not yet coexist in a single piece. We refine the items based on feedback, tweaking until it works. These will be shipped soon!</p>
+<div class="video-holder">
+  <iframe id="youtube_iframe" src="https://www.youtube.com/embed/-rId42xabXY?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque" frameborder="0" allowfullscreen=""></iframe>
+</div>
+<h5 id="colsons-talk-at-firstmarks-data-driven-nyc">Colson’s talk at FirstMark’s Data Driven NYC.</h5>
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>May 27, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      announcement
+    </span>
+  </h5>
+  
+    <div><a href="/2016/05/27/online-talk-summarization-algorithms.html"><strong>Online Talk: Summarization Algorithms</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>May 23, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      guest post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/05/23/evaluating-summarization-systems.html"><strong>Evaluating Summarization Systems</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&rdquo;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/editor_uploads/2020-03-28-150645-balance_2108024_1920.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html"
+       ><h2 style="margin-bottom: 4px;">Bias in Knowledge Graphs - Part 1</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/keitabr">Keita</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This is the first part of a series to review Bias in Knowledge Graphs (KG). We aim to describe methods of identifying bias, measuring its impact, and mitigating that impact. For this part, we’ll give a broad overview of this topic.
+image credit: Mediamodifier from Pixabay Motivation Knowledge graphs, graphs with built-in ontologies, create unique opportunities for data analytics, machine learning, and data mining. They do this by enhancing data with the power of connections and human knowledge.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/bias-in-knowledge-graphs-part-1.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

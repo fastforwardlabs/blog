@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>big data on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/big-data.html</link>
+    <description>Recent content in big data on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Oct 2015 21:12:57 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/big-data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Breaking Down Memes</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</link>
+      
+      <pubDate>Tue, 06 Oct 2015 21:12:57 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/10/06/breaking-down-memes.html</guid>
+      <description>Last week, Hilary spoke about opportunities for mid-sized companies to use data at Accelerating America’s Middle Market, hosted by the Wall Street Journal. This morning, I spoke about opportunities for large, established companies to use data at a Corporate Longevity Leadership Briefing, hosted by the Financial Times. Here are two key takeaways from the panels: Memes generate excitement; excitement generates hype; hype generates confusion. In her panel, Hilary aimed to demystify some of the sorcery surrounding ‘big data’ that risks rendering data projects intimidating to mid-sized companies with limited resources.</description>
+    </item>
+    
+  </channel>
+</rss>

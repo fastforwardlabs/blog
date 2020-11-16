@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>policy on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/policy.html</link>
+    <description>Recent content in policy on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Jul 2016 17:29:52 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/policy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What We Liked at AINow</title>
+       
+      <link>https://blog.fastforwardlabs.com/2016/07/08/what-we-liked-at-ainow.html</link>
+      
+      <pubDate>Fri, 08 Jul 2016 17:29:52 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2016/07/08/what-we-liked-at-ainow.html</guid>
+      <description>Over the past two months, the White House ran a series of workshops geared to “prepare for the future of artificial intelligence.” At each session, technologists, academics, policy makers, and social scientists discussed social and economic issues stemming from data technologies, which will feed into the development of a public report later this year (likely similar to the FTC’s January report on the social impact of big data). The last session took place yesterday in NYC.</description>
+    </item>
+    
+  </channel>
+</rss>

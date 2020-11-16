@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>papers on Blog</title>
+    <link>https://blog.fastforwardlabs.com/tags/papers.html</link>
+    <description>Recent content in papers on Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Dec 2015 17:13:49 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.fastforwardlabs.com/tags/papers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Five Good Books* of 2015</title>
+       
+      <link>https://blog.fastforwardlabs.com/2015/12/21/five-good-books-of-2015.html</link>
+      
+      <pubDate>Mon, 21 Dec 2015 17:13:49 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2015/12/21/five-good-books-of-2015.html</guid>
+      <description>* Plus a few papers, videos, and other fun things. We love books, and it feels fitting to end 2015 with a round-up of a few that we thought were particularly excellent this year. Our favorite book for data science beginners: Data Science from Scratch: First Principles with Python by Joel Grus (and if you order from O’Reilly directly, use discount code PCBW and get 50% off most ebooks/videos and 40% off most print books).</description>
+    </item>
+    
+  </channel>
+</rss>
