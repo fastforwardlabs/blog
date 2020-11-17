@@ -35,7 +35,13 @@ To build intuition on why representation learning is valuable, we can review the
 
 <!-- For machines, this task is particularly complicated as there is usually no clear linear relationship between real world data (e.g. pixels within an image) and  -->
 
-Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g. image pixels) into a set of representations (e.g. eyes, ears, legs, whiskers etc) that are useful for the task. Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objectively carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
+Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g. image pixels) into a set of representations (e.g. eyes, ears, legs, whiskers etc) that are useful for the task.
+
+![](/images/hugo/representation_densenet.png)
+
+##### Figure 1:Shows layers in a pretrained DenseNet121 model(a) Layer 2 contains neurons that mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
+
+Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objectively carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
 
 <!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
 
@@ -48,9 +54,9 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 - Generic Classification
   The approach assumes the availability of large labeled datasets. The most commmon example of this is the use of models pretrained on the imagenet dataset. Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks.
 
-![](/images/hugo/representation_densenet.png)
+![](/images/hugo/embed.gif)
 
-##### Figure 1:(a) Layer 2 in a pretrained DenseNet121 model shows neurons in this layer mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
+##### Figure 2: Shows a UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, volkswagen beetle, eiffel tower, empire state building, ferrari, pickup truck, sedan, stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
 
 - Metric Learning
 
@@ -94,7 +100,7 @@ In some situations, it may be challenging to design good pretext tasks. For thes
 
 Requires a bit of data, might require the use of pretrained models to bootstrap the precess [6](https://arxiv.org/pdf/2009.04091.pdf). Some recent work include
 
-![](/images/hugo/replearning.jpg)
+<!-- ![](/images/hugo/replearning.jpg) -->
 
 ---
 
