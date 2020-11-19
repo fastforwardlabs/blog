@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Representation Learning 101 for Software Engineers</title>
+<meta property="og:title" content="Representation Learning 101 for Software Engineers">
+<meta property="description" content="Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an FAISS index to enable search queries. See full source code here.  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.">
+<meta property="og:description" content="Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an FAISS index to enable search queries. See full source code here.  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/embed.gif">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2020/11/15/representation-learning-101-for-software-engineers.html">
+<meta property="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 1.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 0.8rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Nov 15, 2020</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Representation Learning 101 for Software Engineers</h1>
+    <p><img src="/images/hugo/representation_screen.jpg" alt=""></p>
+<h5 id="figure-1-screenshots-from-a-web-application-we-built-that-allows-you-to-explore-semantic-search-query-results-explore-a-visualization-of-embeddings-and-perform-live-search">Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search.</h5>
+<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
+To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
+<a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>.</div>
+<hr>
+<h2 id="introduction">Introduction</h2>
+<p>Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive <em>tasks</em> for users. Examples include neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user&rsquo;s profile or few shot face verification systems.</p>
+<p>For many of these systems, their performance is gated on the ability to create representations of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current <em>task</em>. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of <em>relevance</em> that compare the user&rsquo;s picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of <em>relevance</em> e.g. a measure of similarity between a user and all products.</p>
+<p>DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data - a field known as <em>representation learning</em>.</p>
+<!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
+<p>In this article, we will focus on discussing aspects of representation learning:</p>
+<ul>
+<li>What is representation learning and why?</li>
+<li>What are methods for representation learning?</li>
+<li>Example implementation using supervised representation learning for the task of semantic image search.</li>
+</ul>
+<hr>
+<h2 id="deep-representation-learning-what-and-why">Deep Representation Learning: What and Why!</h2>
+<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
+Generally speaking, a good representation is one that makes a subsequent learning task easier. The choice of representation will usually depend on the choice of the subsequent learning task.
+<a target="_blank" href="https://www.deeplearningbook.org/contents/representation.html">[1](Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning, 2017)</a>.</div>
+<p>Based on the above, we can define deep representation learning as <em>training DNN models that yield numerical representations of data, suitable for solving a set of tasks</em>.</p>
+<p>To build intuition on why representation learning is valuable, we can review the question of <em>how humans solve cognitive tasks</em>? In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks - does it have 4 legs, two pointy ears, fur, whiskers etc. Based on the presence/absence of these salient features, we might determine with some level of confidence that it indeed, is a cat.</p>
+<!-- For machines, this task is particularly complicated as there is usually no clear linear relationship between real world data (e.g. pixels within an image) and  -->
+<p>Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g. image pixels) into a set of representations (e.g. eyes, ears, legs, whiskers etc) that are useful for the task.</p>
+<p><img src="/images/hugo/representation_densenet.png" alt=""></p>
+<h5 id="figure-1shows-layers-in-a-pretrained-densenet121-modela-layer-2-contains-neurons-that-mostly-respond-to-colors-and-simple-textures-b-layer-202-contains-neurons-that-respond-to-more-complex-level-concepts-such-as-tree-patterns-and-an-eye-to-visually-explore-more-representations-learned-by-pretrained-models-see-herehttpsvictordibiagithubioneuraldreams">Figure 1:Shows layers in a pretrained DenseNet121 model(a) Layer 2 contains neurons that mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see <a href="https://victordibia.github.io/neuraldreams/#/">here</a>.</h5>
+<p>Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objectively carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.</p>
+<!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
+<h2 id="methods-for-representation-learning">Methods for Representation Learning</h2>
+<h3 id="supervised-learning">Supervised Learning</h3>
+<p>When we train a DNN on a supervised learning task (e.g. classification), the training objective naturally yields representations that are useful for solving the task. In practice, this approach takes two main forms:</p>
+<ul>
+<li><strong>Generic Classification</strong>:
+The most commmon example of this is the use of models pretrained on the imagenet dataset (1 millions images, 100 classes) and more recently the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)<a href="https://arxiv.org/pdf/1912.11370.pdf">[13]</a>. Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks. The approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice.</li>
+</ul>
+<p><img src="/images/hugo/embed.gif" alt=""></p>
+<h5 id="figure-2-shows-a-2d-umap-plot-of-features-extracted-using-intermediate-models-constructed-from-a-pretrained-efficientnetb0-model-for-a-set-of-200-natural-images-across-10-classes-arch-banana-volkswagen-beetle-eiffel-tower-empire-state-building-ferrari-pickup-truck-sedan-stonehenge-tractor-given-that-the-salient-attributes-for-this-specific-set-of-natural-images-are-high-level-features-eg-wheels-doors-etc-we-see-that-layers-closest-to-the-final-classifier-show-the-best-performance-ie-clean-separation-between-classes">Figure 2: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, volkswagen beetle, eiffel tower, empire state building, ferrari, pickup truck, sedan, stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.</h5>
+<ul>
+<li>
+<p><strong>Metric Learning</strong>:
+Metric learning approaches aim to learn a good embedding space such that the similarity between samples are preserved as distance between embedding vectors of the sample <a href="https://arxiv.org/pdf/1811.12649.pdf">[9]</a>.
+To this end, we can train DNN models with loss functions that yield this embedding space. Traditional metric loss functions include contrastive loss <a href="http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf">[8]</a> and triplet loss <a href="https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7">[7]</a>, which are formulated to minimize intra-class distances and maximize inter-class distances&rdquo;. One limitation here is that we frequently need to build training data pairs consisting of positive and negative pairs which can be challenging in practice. Furthermore, the performance of the model is <em>sensitive</em> to the strategies used for sampling these pairs <a href="https://arxiv.org/pdf/1801.05599.pdf">[10]</a>. To address this issue, variants of the softmax loss function (e.g. large margin softmax <a href="https://arxiv.org/abs/1612.02295">[11]</a>, angular softmax <a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_SphereFace_Deep_Hypersphere_CVPR_2017_paper.pdf">[12]</a>), optimized for reducting the intra-class variation (i.e., making features of the same class compact) have been proposed, yield state of the art results which minimal complexity.
+Existing research also shows it is valuable to add L2 normalization prior to the softmax loss as this more explicitly optimizes for cosine similarity <a href="https://arxiv.org/pdf/1703.09507.pdf">[4]</a><a href="https://arxiv.org/pdf/1801.05599.pdf">[10]</a>. Finally, researchers have also explored ensembling (training and combining results from multiple learners) <a href="https://arxiv.org/pdf/1801.04815.pdf">[3]</a> for even better perfromance but with drawbacks in system complexity and additional hyperparameters that need to be optimized.</p>
+<p>Note: while much of the academic literature on metric learning focuses on applications in face recognition/verification, they can be adapted to other media modalities.</p>
+</li>
+</ul>
+<p>As an applied example of representation learning, researchers at Pinterest <a href="https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf">[14]</a> train a multitask model where they use engagement data (clicks and repins) as a measure of similarity between text queries.</p>
+<!-- [TODO .. notes from bengio talk, book]  -->
+<h3 id="self-supervised-learning-pretext-tasks">Self Supervised Learning (Pretext Tasks)</h3>
+<p>In this paradigm, the goal remains to train a supervised learning model, but find creative ways of automatically generating meaningful labels. Historically, this is done by designing pretext tasks - tasks that if solved, yield semantically meaningful representations as a side effect. Some example pretext tasks used in the image domain include:</p>
+<ul>
+<li>Predict the angle of rotation (geometric tranformations)</li>
+<li>Predict if two image patches come from the same image (image jigsaw puzzles)</li>
+<li>Temporal order of image frames from a video sequence</li>
+<li>For an extensive treatment on methods for self-supervised visual feature learning, see the survey paper<a href="https://arxiv.org/abs/1902.06162">[15]</a>.</li>
+</ul>
+<p>Note that the self supervised approach (commonly known as pretraining) is also well known in the NLP field</p>
+<ul>
+<li>Predict the next word from a sequence of words</li>
+<li>Predict the masked word in a sentence</li>
+<li>Given two sentences, predict if one follows the other.</li>
+</ul>
+<p>It is important to note that a good pretext task should be one which requires semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning.</p>
+<p>Advances in these area is particularly exciting. Recent research shows suggest we can learn representations that achieve results close to supervised learning! For example, <a href="https://arxiv.org/pdf/2006.09882.pdf">SwAV[2]</a> is only 1.2% below the performance of a fully supervised model.</p>
+<h3 id="unsupervised-learning">Unsupervised Learning</h3>
+<p>In some situations, it may be challenging to design good pretext tasks. For these situations, fully unsupervisedd methods are useful. For example an autoencoder used to reconstruct data, denoising autoencoder, VAE, GAN. While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may <em>sometimes</em> have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.</p>
+<!-- ## Evaluating Representation Learning
+
+How do we know if we have good representations? It turns out that this is hard to mathematically quantify and historically has been evaluated based on task performance. For example, representations learned using any of the methods listed above can be evaluated by using them as input for a linear logistic regression classifier on a downstream task. -->
+<h2 id="semantic-image-search-with-pretrained-neural-network-models-in-tensorflow">Semantic Image Search with Pretrained Neural Network Models in Tensorflow</h2>
+<p>To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search. We define semantic search as follows</p>
+<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
+ Given a dataset of existing images, and a new arbitrary image (query image), find a subset of images from the dataset that are most similar to the query image.
+</div>
+<p>A simplified implementation of semantic search outlined as a three-step process.</p>
+<ul>
+<li>Feature Extraction: First, a pretrained CNN model is used to extract features (represented as vectors) from each image in the dataset.</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">0
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> tensorflow.keras.applications <span style="color:#f92672">import</span> EfficientNetB0
+<span style="color:#f92672">from</span> tensorflow.keras.models <span style="color:#f92672">import</span> Model
+
+<span style="color:#75715e"># ...</span>
+
+model <span style="color:#f92672">=</span> EfficientNetB0(weights<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;imagenet&#39;</span>, include_top<span style="color:#f92672">=</span>False)
+img_array <span style="color:#f92672">=</span> image_array_from_dir(dir_path)
+<span style="display:block;width:100%;background-color:#3c3d38">features <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(img)</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>Indexing: Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive.</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">0
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> faiss
+
+<span style="color:#75715e"># ...</span>
+
+feature_dim <span style="color:#f92672">=</span> features<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+faiss_index <span style="color:#f92672">=</span> faiss<span style="color:#f92672">.</span>IndexFlatL2(feature_dim)
+faiss_index<span style="color:#f92672">.</span>add(features)</code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>Search : Finally, to return results for a search query, we retrieve the precomputed distance values between the searched image and all other images, sorted in the order of closest to farthest.</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">0
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">k <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>  <span style="color:#75715e"># number of similar items to return  </span>
+distances, indices <span style="color:#f92672">=</span> faiss_index<span style="color:#f92672">.</span>search(query, k) </code></pre></td></tr></table>
+</div>
+</div>
+<br/>  
+<p>Full source code the steps above is provided <a href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>.
+Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features <a href="https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf">[4]</a>, and the use of multi-task embeddings.</p>
+<!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
+<!-- ## Semantic Image Search with Supervised Pretrained Models -->
+<!-- ## Case Studies
+
+Pinterest - PinText
+https://medium.com/pinterest-engineering/pintext-a-multitask-text-embedding-system-in-pinterest-b80ece364555
+
+They use user interaction as a signal in learning relevant embeddings.
+Custom embedding on their data
+Standard embedddings dont work well.
+
+https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-visual-discovery-experience-at-pinterest-8527ba9728a9 -->
+<h2 id="references">References</h2>
+<p>[1] Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning. Vol. 1. Massachusetts, USA, MIT press, 2017. <a href="https://www.deeplearningbook.org/contents/representation.html">https://www.deeplearningbook.org/contents/representation.html</a></p>
+<p>[2] Caron, Mathilde, et al. &ldquo;Unsupervised learning of visual features by contrasting cluster assignments.&rdquo; Advances in Neural Information Processing Systems 33 (2020).</p>
+<p>[3] Opitz, Michael, et al. &ldquo;Deep metric learning with bier: Boosting independent embeddings robustly.&rdquo; IEEE transactions on pattern analysis and machine intelligence (2018).</p>
+<p>[4] Ranjan, Rajeev, Carlos D. Castillo, and Rama Chellappa. &ldquo;L2-constrained softmax loss for discriminative face verification.&rdquo; arXiv preprint arXiv:1703.09507 (2017).</p>
+<p>[5] Fefferman, Charles, Sanjoy Mitter, and Hariharan Narayanan. &ldquo;Testing the manifold hypothesis.&rdquo; Journal of the American Mathematical Society 29.4 (2016): 983-1049.</p>
+<p>[6] Nguyen, Binh X., et al. &ldquo;Deep Metric Learning Meets Deep Clustering: An Novel Unsupervised Approach for Feature Embedding.&rdquo; arXiv preprint arXiv:2009.04091 (2020).</p>
+<p>[7] Hoffer, Elad, and Nir Ailon. &ldquo;Deep metric learning using triplet network.&rdquo; International Workshop on Similarity-Based Pattern Recognition. Springer, Cham, 2015.</p>
+<p>[8] Chopra, Sumit, Raia Hadsell, and Yann LeCun. &ldquo;Learning a similarity metric discriminatively, with application to face verification.&rdquo; 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05). Vol. 1. IEEE, 2005.</p>
+<p>[9] Zhai, Andrew, and Hao-Yu Wu. &ldquo;Classification is a strong baseline for deep metric learning.&rdquo; arXiv preprint arXiv:1811.12649 (2018).</p>
+<p>[10] Wang, Feng, et al. &ldquo;Additive margin softmax for face verification.&rdquo; IEEE Signal Processing Letters 25.7 (2018): 926-930.</p>
+<p>[11] Liu, Weiyang, et al. &ldquo;Large-margin softmax loss for convolutional neural networks.&rdquo; ICML. Vol. 2. No. 3. 2016.</p>
+<p>[12] Liu, Weiyang, et al. &ldquo;Sphereface: Deep hypersphere embedding for face recognition.&rdquo; Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.</p>
+<p>[13] Kolesnikov, Alexander, et al. &ldquo;Big transfer (BiT): General visual representation learning.&rdquo; arXiv preprint arXiv:1912.11370 6 (2019).</p>
+<p>[14] Zhuang, Jinfeng, and Yu Liu. &ldquo;PinText: A Multitask Text Embedding System in Pinterest.&rdquo; Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining. 2019.</p>
+<p>[15] Jing, Longlong, and Yingli Tian. &ldquo;Self-supervised visual feature learning with deep neural networks: A survey.&rdquo; IEEE Transactions on Pattern Analysis and Machine Intelligence (2020).</p>
+<!--
+Semantic search is useful across many business application domains and data types.
+Semantic search relies on the existence of a representation of eaech data item which encodes semantic meaning.
+
+For example, the following problems can be cast as a semnatic search problem: identifying fraudulent signatures, recommending the right fashion content,
+
+While this remains an interesting area, constructing the right representation remains a difficult challenge.
+
+In general, deep neural networks are good candidates for use as feature extractors. If we recall that deep models are composed of "layers" of stacked computation units with weights and biases which are learned during training to support some objective; we can assume that if these weights are correctly selected to support this obejctive and this objective requires semantic inforation, we can assume these features become good at this sort of task. Furthermore, deep models are heirarchiccal (cite bertology where attention show behaviour of bert layers, and simonyan paper on visualizing convnets), where early layers learn low level functions and later laters laern more complex functions; thus we can make informed decisions on what layeers within the netowrk to use as feature extractors.
+
+At this point, it is abundantly clear that the training paradigm and training objective are critical components in achieving a model for semantic feature extraction. In the next section, we catagorize the methods for building such a model into 3 main paradigms and provide an overview with examples. -->
+<!--
+Resources
+
+http://www.offconvex.org/2019/03/19/CURL/
+https://dl.acm.org/doi/10.1145/3331184.3331320'
+https://arxiv.org/abs/1711.02209
+https://app.wandb.ai/authors/swav-tf/reports/Unsupervised-Visual-Representation-Learning-with-SwAV--VmlldzoyMjg3Mzg
+
+https://wandb.ai/authors/image-retrieval/reports/Towards-Representation-Learning-for-an-Image-Retrieval-Task--VmlldzoxOTY4MDI
+
+https://github.com/ariG23498/G-SimCLR
+
+https://github.com/google-research/simclr
+https://www.inovex.de/blog/transfer-learning-siamese-networks/
+
+https://arxiv.org/abs/2010.00578
+
+https://arxiv.org/abs/2006.09882 Unsupervised Learning of Visual Features by Contrasting Cluster Assignments
+
+Recommending What Video to Watch Next: A Multitask
+Ranking System
+https://www.youtube.com/watch?v=sr1KscMfBOY&ab_channel=ACMRecSys
+https://daiwk.github.io/assets/youtube-multitask.pdf
+
+Approximate nearest neighbor search in high dimensions – Piotr Indyk – ICM2018
+https://www.youtube.com/watch?v=cn15P8vgB1A&feature=youtu.be&ab_channel=RioICM2018
+
+Review of Metric Learning - https://arxiv.org/pdf/2003.08505.pdf -->
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"><strong>How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Nov 15, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/11/15/representation-learning-101-for-software-engineers.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/embed.gif" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/11/15/representation-learning-101-for-software-engineers.html"
+       ><h2 style="margin-bottom: 4px;">Representation Learning 101 for Software Engineers</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor Dibia</a>
+        &middot; </span
+      >
+    </span>
+    Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an FAISS index to enable search queries. See full source code here.  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/11/15/representation-learning-101-for-software-engineers.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 22, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/explanation-1592852095.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html"
+       ><h2 style="margin-bottom: 4px;">How to Explain HuggingFace BERT for Question Answering NLP Models with TF 2.0</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor</a>
+        &middot; </span
+      >
+    </span>
+    Given a question and a passage, the task of Question Answering (QA) focuses on identifying the exact span within the passage that answers the question.
+Figure 1: In this sample, a BERTbase model gets the answer correct (Achaemenid Persia). Model gradients show that the token &ldquo;subordinate ..&rdquo; is impactful in the selection of an answer to the question &ldquo;Macedonia was under the rule of which country?&quot;. This makes sense .. good for BERTbase.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 16, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/06/16/evaluating-qa-metrics-predictions-and-the-null-response.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/shotwin-2020-06-16_09-31-48-1592314597.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Evaluating QA: Metrics, Predictions, and the Null Response →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    A deep dive into computing QA predictions and when to tell BERT to zip it! In our last post, Building a QA System with BERT on Wikipedia, we used the HuggingFace framework to train BERT on the SQuAD2.0 dataset and built a simple QA system on top of the Wikipedia search engine. This time, we&rsquo;ll look at how to assess the quality of a BERT-like model for Question Answering.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/no%20answer/null%20threshold/bert/distilbert/exact%20match/f1/robust%20predictions/2020/06/09/Evaluating_BERT_on_SQuAD.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 19, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/05/19/building-a-qa-system-with-bert-on-wikipedia.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/markus-spiske-C0koz3G1I4I-unsplash.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Building a QA System with BERT on Wikipedia →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    So you&rsquo;ve decided to build a QA system. You want to start with something simple and general so you plan to make it open domain using Wikipedia as a corpus for answering questions. You want to use the best NLP that your compute resources allow (you&rsquo;re lucky enough to have access to a GPU) so you&rsquo;re going to focus on the big, flashy Transformer models that are all the rage these days.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/pytorch/hugging%20face/wikipedia/bert/transformers/2020/05/19/Getting_Started_with_QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 28, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      notebook
+    </span>
+  </h5>
+  
+  <a href="/2020/04/28/intro-to-automated-question-answering.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/qa-workflow.png" />
+  </a>
+  
+  <div>
+    
+    <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+      <h2 style="margin-bottom: 4px;">Intro to Automated Question Answering →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a>
+        &middot; </span
+      >
+    </span>
+    Welcome to the first edition of the Cloudera Fast Forward blog on Natural Language Processing for Question Answering! Throughout this series, we’ll build a Question Answering (QA) system with off-the-shelf algorithms and libraries and blog about our process and what we find along the way. We hope to wind up with a beginning-to-end documentary that provides:
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="https://qa.fastforwardlabs.com/methods/background/2020/04/28/Intro-to-QA.html" target="_blank">
+        	
+        qa.fastforwardlabs.com
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Apr 1, 2020</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/2020/04/01/enterprise-grade-ml.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/2020/03/Screen_Shot_2020_03_27_at_4_17_39_PM-1585340376058.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2020/04/01/enterprise-grade-ml.html"
+       ><h2 style="margin-bottom: 4px;">Enterprise Grade ML</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/shioulin_sam">Shioulin</a>
+        &middot; </span
+      >
+    </span>
+    At Cloudera Fast Forward, one of the mechanisms we use to tightly couple machine learning research with application is through application development projects for both internal and external clients. The problems we tackle in these projects are wide ranging and cut across various industries; the end goal is a production system that translates data into business impact.
+What is Enterprise Grade Machine Learning? Enterprise grade ML, a term mentioned in a paper put forth by Microsoft, refers to ML applications where there is a high level of scrutiny for data handling, model fairness, user privacy, and debuggability.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2020/04/01/enterprise-grade-ml.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF09</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://federated.fastforwardlabs.com/" target="_blank">Federated Learning</a></h2>
+  <a class="report-image" href="https://federated.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff09-combo.png" />
+  </a>
+  <div class="small">Federated Learning makes it possible to build machine learning systems without direct access to training data. The data remains in its original location, which helps to ensure privacy and reduces communication costs. Federated learning is a great fit for smartphones and edge hardware, healthcare and other privacy-sensitive use cases, and industrial applications such as predictive maintenance.</div>
+  <div><a href="https://federated.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

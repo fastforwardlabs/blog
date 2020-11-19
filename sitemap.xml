@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2020-10.html</loc>
-    <lastmod>2020-10-23T21:15:01+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2020-11-15T21:09:50+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/</loc>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2020-11-15T21:09:50+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/2020/11/15/representation-learning-101-for-software-engineers.html</loc>
+    <lastmod>2020-11-15T21:09:50+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2020-10.html</loc>
     <lastmod>2020-10-23T21:15:01+00:00</lastmod>
   </url>
   
@@ -29,11 +39,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/2020/06/22/how-to-explain-huggingface-bert-for-question-answering-nlp-models-with-tf-2.0.html</loc>
-    <lastmod>2020-06-22T11:24:19+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2020-06-22T11:24:19+00:00</lastmod>
   </url>
   
