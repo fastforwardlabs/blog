@@ -3,22 +3,36 @@ title: "Representation Learning 101 for Software Engineers"
 date: 2020-11-15T21:09:50
 author: Victor Dibia
 author_link: https://twitter.com/vykthur
-preview_image: /images/hugo/representation_densenet.jpg
+preview_image: /images/hugo/embed.gif
 post_type: post
-published: false
+published: true
 # external_url:
 ---
 
-Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive _tasks_ for users. Examples include neural search systems that identify the most relevant results given a natural language or image query, and recommendation systems that provide personalized recommendations based on the user's profile.
+![](/images/hugo/representation_screen.jpg)
 
-For many of these systems, their performance is gated on the ability to create representations of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the _task_. For example, to enable customers find relevant clothes in our dataset that are similar to images of a picture they have (see Pinterest use case ), we need good measures of _relevance_ that compare the user's picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of _relevance_ e.g. a measure of similarity between a user and all products.
+##### Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search.
 
-DNN models are the tool of choice because they excel at building complex, distributed and semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data - a field known as _representation learning_. This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).).
+<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
+To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
+<a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>.</div>
+
+---
+
+## Introduction
+
+Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive _tasks_ for users. Examples include neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user's profile or few shot face verification systems.
+
+For many of these systems, their performance is gated on the ability to create representations of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of _relevance_ that compare the user's picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of _relevance_ e.g. a measure of similarity between a user and all products.
+
+DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data - a field known as _representation learning_.
+
+<!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
 
 In this article, we will focus on discussing aspects of representation learning:
 
 - What is representation learning and why?
-- What are practical methods for representation learning?
+- What are methods for representation learning?
 - Example implementation using supervised representation learning for the task of semantic image search.
 
 ---
@@ -29,9 +43,9 @@ In this article, we will focus on discussing aspects of representation learning:
 Generally speaking, a good representation is one that makes a subsequent learning task easier. The choice of representation will usually depend on the choice of the subsequent learning task.
 <a target="_blank" href="https://www.deeplearningbook.org/contents/representation.html">[1](Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning, 2017)</a>.</div>
 
-Based on the above, we can define deep representation learning as _training DDN models that yield numerical representations of data, suitable for solving a set of tasks_.
+Based on the above, we can define deep representation learning as _training DNN models that yield numerical representations of data, suitable for solving a set of tasks_.
 
-To build intuition on why representation learning is valuable, we can review the question of _how humans solve cognitive tasks_? In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks - does it have 4 legs, two pointy ears, fur, whiskers etc. Based on the answers to these questions, we might determine with some level of confidence that it indeed, is a cat.
+To build intuition on why representation learning is valuable, we can review the question of _how humans solve cognitive tasks_? In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks - does it have 4 legs, two pointy ears, fur, whiskers etc. Based on the presence/absence of these salient features, we might determine with some level of confidence that it indeed, is a cat.
 
 <!-- For machines, this task is particularly complicated as there is usually no clear linear relationship between real world data (e.g. pixels within an image) and  -->
 
@@ -51,68 +65,103 @@ Keep in mind that layers within a DNNs are stacked units of computation comprise
 
 When we train a DNN on a supervised learning task (e.g. classification), the training objective naturally yields representations that are useful for solving the task. In practice, this approach takes two main forms:
 
-- Generic Classification
-  The approach assumes the availability of large labeled datasets. The most commmon example of this is the use of models pretrained on the imagenet dataset. Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks.
+- **Generic Classification**:
+  The most commmon example of this is the use of models pretrained on the imagenet dataset (1 millions images, 100 classes) and more recently the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)[[13]](https://arxiv.org/pdf/1912.11370.pdf). Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks. The approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice.
 
 ![](/images/hugo/embed.gif)
 
-##### Figure 2: Shows a UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, volkswagen beetle, eiffel tower, empire state building, ferrari, pickup truck, sedan, stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
+##### Figure 2: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, volkswagen beetle, eiffel tower, empire state building, ferrari, pickup truck, sedan, stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
 
-- Metric Learning
+- **Metric Learning**:
+  Metric learning approaches aim to learn a good embedding space such that the similarity between samples are preserved as distance between embedding vectors of the sample [[9]](https://arxiv.org/pdf/1811.12649.pdf).
+  To this end, we can train DNN models with loss functions that yield this embedding space. Traditional metric loss functions include contrastive loss [[8]](http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf) and triplet loss [[7]](https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7), which are formulated to minimize intra-class distances and maximize inter-class distances". One limitation here is that we frequently need to build training data pairs consisting of positive and negative pairs which can be challenging in practice. Furthermore, the performance of the model is _sensitive_ to the strategies used for sampling these pairs [[10]](https://arxiv.org/pdf/1801.05599.pdf). To address this issue, variants of the softmax loss function (e.g. large margin softmax [[11]](https://arxiv.org/abs/1612.02295), angular softmax [[12]](https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_SphereFace_Deep_Hypersphere_CVPR_2017_paper.pdf)), optimized for reducting the intra-class variation (i.e., making features of the same class compact) have been proposed, yield state of the art results which minimal complexity.
+  Existing research also shows it is valuable to add L2 normalization prior to the softmax loss as this more explicitly optimizes for cosine similarity [[4]](https://arxiv.org/pdf/1703.09507.pdf)[[10]](https://arxiv.org/pdf/1801.05599.pdf). Finally, researchers have also explored ensembling (training and combining results from multiple learners) [[3]](https://arxiv.org/pdf/1801.04815.pdf) for even better perfromance but with drawbacks in system complexity and additional hyperparameters that need to be optimized.
 
-<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-"Metric learning approaches aim to learn a good embedding space
-such that the similarity between samples are preserved as distance between embedding vectors of the samples" <a target="_blank" href="https://arxiv.org/pdf/1811.12649.pdf">[9] (Zhai et al 2108 "Classification is a strong baseline for deep metric learning)</a>.
-</div>
+  Note: while much of the academic literature on metric learning focuses on applications in face recognition/verification, they can be adapted to other media modalities.
 
-. The metric learning losses, such as contrastive loss [8](http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf) and triplet loss [[7]](https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7), are formulated to minimize intra-class distances and maximize inter-class distances". For this we need special datasets of positive and negative example pairs.
+As an applied example of representation learning, researchers at Pinterest [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) train a multitask model where they use engagement data (clicks and repins) as a measure of similarity between text queries.
 
-Classification losses are widely adopted in
-face verification applications [13, 22, 23] and achieve state-of-the-art performance.
-
-Research shows it is valuable to use an L2 normalized softmax loss (as opposed to softmax) as this more explicitly optimize the features to have higher similarity score for positive pairs and lower similarity score for negative pairs [[4]](https://arxiv.org/pdf/1703.09507.pdf).
-
-Some researches have also explored ensembling (training and combining results from multiple learnings) [[3]](https://arxiv.org/pdf/1801.04815.pdf) for even better perfromance but with drawbacks in system complexity and additional hyperparameters that need to be optimized.
-
-The main drawback is that training a model from scratch requires a large amount of labelled data which is
-[TODO .. notes from bengio talk, book]
+<!-- [TODO .. notes from bengio talk, book]  -->
 
 ### Self Supervised Learning (Pretext Tasks)
 
-In this paradigm, the goal is to still train a supervised learning model, but find creative ways of automatically generating meaningful labels. Historically, this is done by designing pretext tasks - that's that if solved, yield semantically meaningful representations as a side effect. We can observe this across multiple areas:
+In this paradigm, the goal remains to train a supervised learning model, but find creative ways of automatically generating meaningful labels. Historically, this is done by designing pretext tasks - tasks that if solved, yield semantically meaningful representations as a side effect. Some example pretext tasks used in the image domain include:
 
-- Next sentence prediction
-  - Data: corpus of text in a given language
-  - Objective: given a pair of sentences, does one follow the other?
-- Image -
+- Predict the angle of rotation (geometric tranformations)
+- Predict if two image patches come from the same image (image jigsaw puzzles)
+- Temporal order of image frames from a video sequence
+- For an extensive treatment on methods for self-supervised visual feature learning, see the survey paper[[15]](https://arxiv.org/abs/1902.06162).
 
-It is important to note that a good pretext task should be one which requires some bit of semantic understanding (or knowledge of important patterns) to solve.
+Note that the self supervised approach (commonly known as pretraining) is also well known in the NLP field
 
-If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning. E.g learning to predict rotation, fill in missing sections of an image, remove noise.
+- Predict the next word from a sequence of words
+- Predict the masked word in a sentence
+- Given two sentences, predict if one follows the other.
 
-Advances in these area is particularly exciting. Recent research shows that if we design the pretext task we, we can learn representations that achieve results close to supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model.
+It is important to note that a good pretext task should be one which requires semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning.
+
+Advances in these area is particularly exciting. Recent research shows suggest we can learn representations that achieve results close to supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model.
 
 ### Unsupervised Learning
 
-In some situations, it may be challenging to design good pretext tasks. For these situations, fully unsupervisedd methods are useful. For example an autoencoder used to reconstruct data, denoising autoencoder, VAE, GAN. While there is not pretext task, the training objective still requiress some level of semantic meaning. E.g. The intuition here
+In some situations, it may be challenging to design good pretext tasks. For these situations, fully unsupervisedd methods are useful. For example an autoencoder used to reconstruct data, denoising autoencoder, VAE, GAN. While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
 
-- Strictly unsupervised learning is uncertain. Intuition suggests that a generative model or an autencoder that generates cars etc typically need some level of knowledge to perform the task.
+<!-- ## Evaluating Representation Learning
 
-Requires a bit of data, might require the use of pretrained models to bootstrap the precess [6](https://arxiv.org/pdf/2009.04091.pdf). Some recent work include
+How do we know if we have good representations? It turns out that this is hard to mathematically quantify and historically has been evaluated based on task performance. For example, representations learned using any of the methods listed above can be evaluated by using them as input for a linear logistic regression classifier on a downstream task. -->
 
-<!-- ![](/images/hugo/replearning.jpg) -->
+## Semantic Image Search with Pretrained Neural Network Models in Tensorflow
 
----
+To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search. We define semantic search as follows
 
-While unsupervised methods in theory presents a litany of benefits - learning from limited labelled data, comparable performance to supervised methods, there are still challenges. You should use it when
+<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
+ Given a dataset of existing images, and a new arbitrary image (query image), find a subset of images from the dataset that are most similar to the query image.
+</div>
 
-- You have a good supervised baseline
-- You have a tonne of unlabelled data (most poeople dont have it except you are a huge firm)
-- You have sufficient expertise to design a careful evaluation framework to benchmark quality improvements.
+A simplified implementation of semantic search outlined as a three-step process.
 
-## Evaluating Representation Learning
+- Feature Extraction: First, a pretrained CNN model is used to extract features (represented as vectors) from each image in the dataset.
 
-How do we know if we have good representations? It turns out that this is hard to mathematically quantify and historically has been evaluated based on task performance. For example, representations learning from unsupervised or self supervisedd methosd are evaluated by using them as input for a linear logistic regression classifier.
+{{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
+
+from tensorflow.keras.applications import EfficientNetB0
+from tensorflow.keras.models import Model
+
+# ...
+
+model = EfficientNetB0(weights='imagenet', include_top=False)
+img_array = image_array_from_dir(dir_path)
+features = model.predict(img)
+
+{{< / highlight >}}
+
+- Indexing: Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive.
+
+{{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
+
+import faiss
+
+# ...
+
+feature_dim = features.shape[1]
+faiss_index = faiss.IndexFlatL2(feature_dim)
+faiss_index.add(features)
+
+{{< / highlight >}}
+
+- Search : Finally, to return results for a search query, we retrieve the precomputed distance values between the searched image and all other images, sorted in the order of closest to farthest.
+
+{{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
+
+k = 6  # number of similar items to return  
+distances, indices = faiss_index.search(query, k) 
+
+{{< / highlight >}}
+
+<br/>  
+
+Full source code the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml).
+Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings.
 
 <!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
 
@@ -148,6 +197,18 @@ https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-vi
 [8] Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05). Vol. 1. IEEE, 2005.
 
 [9] Zhai, Andrew, and Hao-Yu Wu. "Classification is a strong baseline for deep metric learning." arXiv preprint arXiv:1811.12649 (2018).
+
+[10] Wang, Feng, et al. "Additive margin softmax for face verification." IEEE Signal Processing Letters 25.7 (2018): 926-930.
+
+[11] Liu, Weiyang, et al. "Large-margin softmax loss for convolutional neural networks." ICML. Vol. 2. No. 3. 2016.
+
+[12] Liu, Weiyang, et al. "Sphereface: Deep hypersphere embedding for face recognition." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+
+[13] Kolesnikov, Alexander, et al. "Big transfer (BiT): General visual representation learning." arXiv preprint arXiv:1912.11370 6 (2019).
+
+[14] Zhuang, Jinfeng, and Yu Liu. "PinText: A Multitask Text Embedding System in Pinterest." Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. 2019.
+
+[15] Jing, Longlong, and Yingli Tian. "Self-supervised visual feature learning with deep neural networks: A survey." IEEE Transactions on Pattern Analysis and Machine Intelligence (2020).
 
 <!--
 Semantic search is useful across many business application domains and data types.
