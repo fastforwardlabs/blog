@@ -11,13 +11,17 @@ published: true
 
 ![](/images/hugo/representation_screen.jpg)
 
-##### Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search.
+##### Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
-<a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>.</div>
+TLDR; Good representations of data (e.g. text, images) are critical for solving many tasks (e.g. search or recommendations). Deep representation learning yield state of the art results when used to  create these representations.  In this article, we review methods for representation learning and walk through an example using pretrained models.  
 
----
+<!-- To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
+<a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>. -->
+
+</div>
+
+<!-- --- -->
 
 ## Introduction
 
@@ -55,7 +59,7 @@ Similarly, a neural network that succeeds at this same task should allocate its 
 
 ##### Figure 1:Shows layers in a pretrained DenseNet121 model(a) Layer 2 contains neurons that mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
 
-Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objectively carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
+Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
 
 <!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
 
@@ -74,7 +78,7 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 
 - **Metric Learning**:
   Metric learning approaches aim to learn a good embedding space such that the similarity between samples are preserved as distance between embedding vectors of the sample [[9]](https://arxiv.org/pdf/1811.12649.pdf).
-  To this end, we can train DNN models with loss functions that yield this embedding space. Traditional metric loss functions include contrastive loss [[8]](http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf) and triplet loss [[7]](https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7), which are formulated to minimize intra-class distances and maximize inter-class distances". One limitation here is that we frequently need to build training data pairs consisting of positive and negative pairs which can be challenging in practice. Furthermore, the performance of the model is _sensitive_ to the strategies used for sampling these pairs [[10]](https://arxiv.org/pdf/1801.05599.pdf). To address this issue, variants of the softmax loss function (e.g. large margin softmax [[11]](https://arxiv.org/abs/1612.02295), angular softmax [[12]](https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_SphereFace_Deep_Hypersphere_CVPR_2017_paper.pdf)), optimized for reducting the intra-class variation (i.e., making features of the same class compact) have been proposed, yield state of the art results which minimal complexity.
+  To this end, we can train DNN models with loss functions that yield this embedding space. Traditional metric loss functions include contrastive loss [[8]](http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf) and triplet loss [[7]](https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7), which are formulated to minimize intra-class distances and maximize inter-class distances". One limitation here is that we frequently need to build training data pairs consisting of positive and negative pairs which can be challenging in practice. Furthermore, the performance of the model is _sensitive_ to the strategies used for sampling these pairs [[10]](https://arxiv.org/pdf/1801.05599.pdf). To address this issue, variants of the softmax loss function (e.g. large margin softmax [[11]](https://arxiv.org/abs/1612.02295), angular softmax [[12]](https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_SphereFace_Deep_Hypersphere_CVPR_2017_paper.pdf)), optimized for reducing the intra-class variation (i.e., making features of the same class compact) have been proposed, yield state of the art results which minimal complexity.
   Existing research also shows it is valuable to add L2 normalization prior to the softmax loss as this more explicitly optimizes for cosine similarity [[4]](https://arxiv.org/pdf/1703.09507.pdf)[[10]](https://arxiv.org/pdf/1801.05599.pdf). Finally, researchers have also explored ensembling (training and combining results from multiple learners) [[3]](https://arxiv.org/pdf/1801.04815.pdf) for even better perfromance but with drawbacks in system complexity and additional hyperparameters that need to be optimized.
 
   Note: while much of the academic literature on metric learning focuses on applications in face recognition/verification, they can be adapted to other media modalities.
@@ -92,7 +96,7 @@ In this paradigm, the goal remains to train a supervised learning model, but fin
 - Temporal order of image frames from a video sequence
 - For an extensive treatment on methods for self-supervised visual feature learning, see the survey paper[[15]](https://arxiv.org/abs/1902.06162).
 
-Note that the self supervised approach (commonly known as pretraining) is also well known in the NLP field
+Note that the self supervised approach (commonly known as pretraining) is also well known in the NLP field:
 
 - Predict the next word from a sequence of words
 - Predict the masked word in a sentence
@@ -100,11 +104,12 @@ Note that the self supervised approach (commonly known as pretraining) is also w
 
 It is important to note that a good pretext task should be one which requires semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning.
 
-Advances in these area is particularly exciting. Recent research shows suggest we can learn representations that achieve results close to supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model.
+Advances in these area are particularly exciting. Recent research shows suggest we can learn representations that achieve results close to supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model.
 
 ### Unsupervised Learning
 
-In some situations, it may be challenging to design good pretext tasks. For these situations, fully unsupervisedd methods are useful. For example an autoencoder used to reconstruct data, denoising autoencoder, VAE, GAN. While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
+In some situations, it may be challenging to design good pretext tasks. For these situations, fully unsupervised methods are useful. Many of these methods fall under the class of generative models where the objective is to model a data distribution that can be subsequently sampled. 
+Some examples include example an autoencoder used to reconstruct data, denoising autoencoder, VAE, and GANs. While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
 
 <!-- ## Evaluating Representation Learning
 
@@ -160,7 +165,7 @@ distances, indices = faiss_index.search(query, k)
 
 <br/>  
 
-Full source code the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml).
+Full source code the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml/blob/master/notebooks/Tutorial.ipynb).
 Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings.
 
 <!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
