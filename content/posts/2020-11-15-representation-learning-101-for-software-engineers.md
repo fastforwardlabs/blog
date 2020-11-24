@@ -62,7 +62,7 @@ Similarly, a neural network that succeeds at this same task should allocate its 
 
 ![](/images/hugo/representation_densenet.png)
 
-##### Figure 1:Shows layers in a pretrained DenseNet121 model(a) Layer 2 contains neurons that mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
+##### Figure 2: Shows layers in a pretrained DenseNet121 model(a) Layer 2 contains neurons that mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
 
 Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
 
@@ -79,7 +79,7 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 
 ![](/images/hugo/embed.gif)
 
-##### Figure 2: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel tower, empire state building, ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
+##### Figure 3: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel tower, empire state building, ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
 
 - **Metric Learning**:
   Metric learning approaches aim to learn a good embedding space such that the similarity between samples are preserved as distance between embedding vectors of the sample [[9]](https://arxiv.org/pdf/1811.12649.pdf).
@@ -142,6 +142,10 @@ The following high level notes are perhaps useful.
 
 
 ## Semantic Image Search with Pretrained Neural Network Models in Tensorflow
+
+![](/images/hugo/representation_screen.jpg)
+
+##### Figure 4: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).
 
 To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search. We define semantic search as follows
 
