@@ -18,7 +18,7 @@ published: true
 ##### Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml). -->
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-TLDR; Good representations of data (e.g. text, images) are critical for solving many tasks (e.g. search or recommendations). Deep representation learning yield state of the art results when used to  create these representations.  In this article, we review methods for representation learning and walk through an example using pretrained models.  
+TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to  create these representations.  In this article, we review methods for representation learning and walk through an example using pretrained models.  
 
 <!-- To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
 <a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>. -->
@@ -29,20 +29,21 @@ TLDR; Good representations of data (e.g. text, images) are critical for solving 
 
 ## Introduction
 
-Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive _tasks_ for users. Examples include neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user's profile or few shot face verification systems.
+Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive _tasks_ for users. Examples include: neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user's profile, and few-shot face verification systems.
 
-For many of these systems, their performance is gated on the ability to create representations (also referred to as features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of _relevance_ that compare the user's picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of _relevance_ e.g. a measure of similarity between a user and all products.
+The performance of many of these systems is gated on their ability to create representations (or features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, suppose a customer has a picture of an outfit they like. To enable the customer to find relevant clothes like it in our database, we need good measures of _relevance_ that compare the user's picture and all items in the database. Similarly, to recommend the right products to users based on their profiles, we also need high quality measures of _relevance_ e.g., a measure of similarity between a user and all products.
 
-DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data.
+DNN models are the tool of choice in realizing such systems, because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit both the task and data.
 
 <!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
 
-In this article, we will focus on discussing aspects of representation learning:
+In this article, we will discuss:
 
-- What is representation learning and why?
-- What are methods for representation learning?
-- Learned Representations: How to evaluate good representations and when to use what methods?
-- Example implementation using supervised representation learning for the task of semantic image search.
+- What representation learning is, and why it's valuable
+- Methods for representation learning
+- Learned Representations: how to evaluate good representations and when to use which methods
+
+and share an example of implementation, using supervised representation learning for the task of semantic image search.
 
 ---
 
@@ -50,7 +51,7 @@ In this article, we will focus on discussing aspects of representation learning:
 
 ![](/images/hugo/semanticrepresentation.png)
 
-##### Figure 2: a.) Default representation of data (e.g. raw pixel values) do not encode semantic meaning b.) Features or representations provided by a good DNN model should encode meaning related to the current task (classification in this case). Similar data items are _closer_ to each other; the original non-linear problem is now linearly separable, hence easier to solve.
+##### Figure 2: a.) Default representation of data (e.g., raw pixel values) do not encode semantic meaning b.) Features or representations provided by a good DNN model should encode meaning related to the current task (in this case, classification). Similar data items are _closer_ to each other; the original non-linear problem is now linearly separable, and therefore easier to solve.
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
 Generally speaking, a good representation is one that makes a subsequent learning task easier. The choice of representation will usually depend on the choice of the subsequent learning task.
@@ -58,17 +59,17 @@ Generally speaking, a good representation is one that makes a subsequent learnin
 
 Based on the above, we can define deep representation learning as _training DNN models that yield numerical representations of data, suitable for solving a set of tasks_.
 
-To build intuition on why representation learning is valuable, we can review the question of _how humans solve cognitive tasks_? In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks - does it have 4 legs, two pointy ears, fur, whiskers etc. Based on the presence/absence of these salient features, we might determine with some level of confidence that it indeed, is a cat.
+To build intuition on why representation learning is valuable, we can review the question of _how humans solve cognitive tasks_. In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks: does it have four legs, two pointy ears, fur, whiskers, etc.? Based on the presence/absence of these salient features, we might determine with some level of confidence that it is, indeed, a cat.
 
 <!-- For machines, this task is particularly complicated as there is usually no clear linear relationship between real world data (e.g. pixels within an image) and  -->
 
-Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g. image pixels) into a set of representations (e.g. eyes, ears, legs, whiskers etc) that are useful for the task.
+Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g., image pixels) into a set of representations (e.g., eyes, ears, legs, whiskers) that are useful for the task.
 
 ![](/images/hugo/representationdensenet.png)
 
-##### Figure 3: Shows layers in a pretrained DenseNet121 model. a.) Layer 2 contains neurons that mostly respond to colors and simple textures. b.) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
+##### Figure 3: Layers in a pretrained DenseNet121 model. a.) Layer 2 contains neurons that mostly respond to colors and simple textures. b.) Layer 424 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. You can visually explore more representations learned by pretrained models [here](https://victordibia.github.io/neuraldreams/#/).
 
-Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
+Keep in mind that layers within a DNN are stacked units of computation comprised of weights and bias terms, whose values are learned during training. Thus, if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity, and distribution of data, there are several useful strategies for learning representations.
 
 <!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
 
