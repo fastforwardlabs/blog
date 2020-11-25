@@ -33,7 +33,7 @@ Deep Neural Networks (DNNs) have become a particularly useful tool in building i
 
 For many of these systems, their performance is gated on the ability to create representations (also referred to as features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of _relevance_ that compare the user's picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of _relevance_ e.g. a measure of similarity between a user and all products.
 
-DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data - a field known as _representation learning_.
+DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data.
 
 <!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
 
@@ -41,6 +41,7 @@ In this article, we will focus on discussing aspects of representation learning:
 
 - What is representation learning and why?
 - What are methods for representation learning?
+- Learned Representations: How to evaluate good representations and when to use what methods?
 - Example implementation using supervised representation learning for the task of semantic image search.
 
 ---
@@ -70,6 +71,8 @@ Similarly, a neural network that succeeds at this same task should allocate its 
 Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
 
 <!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
+
+---
 
 ## Methods for Representation Learning
 
@@ -129,6 +132,8 @@ Advances in self supervised representation learning are particularly exciting. R
 In some situations, it may be challenging to design good pretext tasks (e.g. data augmentation strategies or transforms are not meaningful,  sampling negative or positive pairs is hard etc.). For these situations, fully unsupervised methods can be explored. Many of these methods fall under the class of generative models where the objective is to model a data distribution that can be subsequently sampled. 
 Some examples include an autoencoder, denoising autoencoder, VAE, and GANs (generation, inpainting, superresolution, colorization)[[15]](https://arxiv.org/abs/1902.06162). While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
 
+---
+
 ## Learned Representations: Evaluation and Use
 
 ### Evaluation
@@ -146,10 +151,10 @@ Selecting an approach for representation learning is largely a tricky excercise 
 The following high level notes are perhaps useful.
 
 - Pretrained Model baselines: Where possible, begin explorations using pretrained models. This may involve directly using features from a pretrained  model (as seen in the next section) or finetuning the pretrained model using a small amount of labeled data (transfer learning). Ofcourse, this approach only works if the target task data distribution is similar to the data used to create the pretrained models.
-- Self supervised baselines: Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using clustering methods [[16]](https://arxiv.org/pdf/1805.00385.pdf) or a small amount of labeled data. 
+- Self supervised baselines: Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using pseudo labels  [[16]](https://arxiv.org/pdf/1805.00385.pdf) and/or a small amount of labeled data. 
 
 
-
+---
 
 ## Semantic Image Search with Pretrained Neural Network Models in Tensorflow
 
