@@ -50,7 +50,7 @@ In this article, we will focus on discussing aspects of representation learning:
 
 ![](/images/hugo/semanticrepresentation.png)
 
-##### Figure 2: a.) Default representation of data (e.g. raw pixel values) do not encode semantic meaning b.) Features or representations provided by a good DNN model should encode meaning related to the current task (classification in this case). Similar data items are _closer_ to each other; the original non-linear problem is now linearly separable, hence easier to solve.
+##### Figure 2: a.) Default representation of data (e.g. raw pixel values) do not encode semantic meaning b.) Features or representations provided by a good DNN model should encode meaning related to the current task (classification in this case). With this representation, similar data items are _closer_ to each other; the original non-linear problem is now linearly separable, hence easier to solve.
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
 Generally speaking, a good representation is one that makes a subsequent learning task easier. The choice of representation will usually depend on the choice of the subsequent learning task.
@@ -102,7 +102,7 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 
 In general, a supervised approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice. It also yields representations that may not generalize out-of-the-box and may be susceptible to adversarial attacks.
 
-Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  millions of Pinterest images with labels are used to learn a similarity metric for content based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf)).
+Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  millions of Pinterest images with labels are used to learn a similarity metric for content based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf), [[18]](https://arxiv.org/pdf/1908.01707.pdf).
 
 <!-- [TODO .. notes from bengio talk, book]  -->
 
@@ -186,7 +186,7 @@ features = model.predict(img)
 {{< / highlight >}}
 
 - Indexing: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us efficiently store these representation such that we can subsequently run search queries. 
-As the data size becomes large, two challenges emerge. First, a significant amount of space is needed to store vectors of size `62720` each, for millions of images. Second it becomes computationally slow to exhaustively search over all images in our dataset (i.e.. computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g. dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while being practical, result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).
+As the data size becomes large, two challenges emerge. First, a significant amount of space is needed to store vectors of size `62720` each, for millions of images. Second it becomes computationally slow to exhaustively search over all images in our dataset (i.e.. computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g. dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while being practical, result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. See [this guide](Deep representation learning can be compute and storage intensive) on how to select from the set of index types offered FAISS> For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).
  <!-- The  Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive. -->
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
@@ -212,8 +212,9 @@ distances, indices = faiss_index.search(query, k)
 
 <br/>  
 
-Full source code the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml/blob/master/notebooks/Semantic%20Image%20Search%20Tutorial.ipynb).
-Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings.
+Full source code for the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml/blob/master/notebooks/Semantic%20Image%20Search%20Tutorial.ipynb).
+
+<!-- Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings. -->
 
 <!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
 
@@ -265,6 +266,8 @@ https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-vi
 [16] Noroozi, Mehdi, et al. "Boosting self-supervised learning via knowledge transfer." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018. 
  
 [17] Johnson, Jeff, Matthijs Douze, and Hervé Jégou. "Billion-scale similarity search with GPUs." IEEE Transactions on Big Data (2019).
+
+[18] Zhai, A., Wu, H. Y., Tzeng, E., Park, D. H., & Rosenberg, C. (2019, July). Learning a Unified Embedding for Visual Search at Pinterest. In Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (pp. 2412-2420).
 <!--
 Resources
 
