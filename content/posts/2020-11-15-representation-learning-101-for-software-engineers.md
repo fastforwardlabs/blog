@@ -3,7 +3,7 @@ title: "Representation Learning 101 for Software Engineers"
 date: 2020-11-15T21:09:50
 author: Victor Dibia
 author_link: https://twitter.com/vykthur
-preview_image: /images/hugo/embed.gif
+preview_image: /images/hugo/representationlearning.png
 post_type: post
 published: true
 # external_url:
@@ -31,7 +31,7 @@ TLDR; Good representations of data (e.g. text, images) are critical for solving 
 
 Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive _tasks_ for users. Examples include neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user's profile or few shot face verification systems.
 
-For many of these systems, their performance is gated on the ability to create representations of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of _relevance_ that compare the user's picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of _relevance_ e.g. a measure of similarity between a user and all products.
+For many of these systems, their performance is gated on the ability to create representations (also referred to as features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of _relevance_ that compare the user's picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of _relevance_ e.g. a measure of similarity between a user and all products.
 
 DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data - a field known as _representation learning_.
 
@@ -47,6 +47,9 @@ In this article, we will focus on discussing aspects of representation learning:
 
 ## Deep Representation Learning: What and Why!
 
+![](/images/hugo/semanticrepresentation.png)
+
+##### Figure 2: a.) Default representation of data (e.g. raw pixel values) do not encode semantic meaning b.) Features or representations provided by a good DNN model should encode meaning related to the current task (classification in this case). Similar data items are _closer_ to each other; the original non-linear problem is now linearly separable, hence easier to solve.
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
 Generally speaking, a good representation is one that makes a subsequent learning task easier. The choice of representation will usually depend on the choice of the subsequent learning task.
@@ -60,9 +63,9 @@ To build intuition on why representation learning is valuable, we can review the
 
 Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g. image pixels) into a set of representations (e.g. eyes, ears, legs, whiskers etc) that are useful for the task.
 
-![](/images/hugo/representation_densenet.png)
+![](/images/hugo/representationdensenet.png)
 
-##### Figure 2: Shows layers in a pretrained DenseNet121 model(a) Layer 2 contains neurons that mostly respond to colors and simple textures. (b) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
+##### Figure 3: Shows layers in a pretrained DenseNet121 model. a.) Layer 2 contains neurons that mostly respond to colors and simple textures. b.) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see [here](https://victordibia.github.io/neuraldreams/#/).
 
 Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.
 
@@ -79,7 +82,7 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 
 ![](/images/hugo/embed.gif)
 
-##### Figure 3: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel tower, empire state building, ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
+##### Figure 4: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel tower, empire state building, ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
 
 - **Metric Learning**:
   Metric learning approaches aim to learn a good embedding space such that the similarity between samples are preserved as distance between embedding vectors of the sample [[9]](https://arxiv.org/pdf/1811.12649.pdf).
@@ -90,7 +93,7 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 
 In general, a supervised approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice. It also yields representations that may not generalize out-of-the-box and may be susceptible to adversarial attacks.
 
-Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) train a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning a Pinterest:  millions of Pinterest images with labels are used to learn a similarity metric for content based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf)).
+Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  millions of Pinterest images with labels are used to learn a similarity metric for content based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf)).
 
 <!-- [TODO .. notes from bengio talk, book]  -->
 
@@ -102,7 +105,8 @@ In this paradigm, the goal remains to train a supervised learning model, but fin
 - Predict if two images with transformations (e.g. color transformations, or random crops) are the same (constrastive) [[2]](https://arxiv.org/pdf/2006.09882.pdf)
 - Predict if two image patches come from the same image (image jigsaw puzzles) [[16]](https://arxiv.org/pdf/1805.00385.pdf)
 - Predict the order of image frames from a video sequence (temporal)
-For an extensive treatment on methods for self-supervised visual feature learning, see the survey paper[[15]](https://arxiv.org/abs/1902.06162).
+
+For an extensive treatment on methods for self-supervised visual feature learning, see the survey paper [[15]](https://arxiv.org/abs/1902.06162).
 
 Note that the self supervised approach (commonly known as pretraining) is also well-known in the NLP field:
 
@@ -110,14 +114,14 @@ Note that the self supervised approach (commonly known as pretraining) is also w
 - Predict the masked word in a sentence
 - Given two sentences, predict if one follows the other.
 
-It is important to note that a good pretext task should be one which requires semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). The pretext task also takes advantange of known properties of the data in generating a training dataset e.g. for the task of predicting the angle of rotation for an image, we can apply rotation transforms to images and the labels are the rotation angles. If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning. The _harder_ the task, the more relevant the representations learned [[16]](https://arxiv.org/pdf/1805.00385.pdf). In general, a model is trained to solve the pretext task on a large dataset of unlabeled imaged, and the representation it learns is transfered to other downstream tasks.
+It is important to note that a good pretext task should be one which requires semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). The pretext task also takes advantange of known properties of the data in generating a training dataset e.g. for the task of predicting the angle of rotation for an image, we can apply rotation transforms to images and the labels are the rotation angles. If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning. The _harder_ the task, the more relevant the representations learned [[16]](https://arxiv.org/pdf/1805.00385.pdf). In general, a model is trained to solve the pretext task on a large dataset of unlabeled images, and the representation it learns is transfered to other downstream tasks.
 
-Advances in these areas are particularly exciting. Recent research which explore a contrastive formulation for pretext tasks show self supervised methods can achieve results at par with supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model.
+Advances in self supervised representation learning are particularly exciting. Recent research which explore a contrastive formulation for pretext tasks show self supervised methods can achieve results at par with supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model. 
 
 ### Unsupervised Learning
 
-In some situations, it may be challenging to design good pretext tasks (e.g. data augmentation strategies or transforms are not meaningful,  sampling negative or positive pairs is hard etc.). For these situations, fully unsupervised methods are useful. Many of these methods fall under the class of generative models where the objective is to model a data distribution that can be subsequently sampled. 
-Some examples include an autoencoder, denoising autoencoder, VAE, and GANs. While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
+In some situations, it may be challenging to design good pretext tasks (e.g. data augmentation strategies or transforms are not meaningful,  sampling negative or positive pairs is hard etc.). For these situations, fully unsupervised methods can be explored. Many of these methods fall under the class of generative models where the objective is to model a data distribution that can be subsequently sampled. 
+Some examples include an autoencoder, denoising autoencoder, VAE, and GANs (generation, inpainting, superresolution, colorization)[[15]](https://arxiv.org/abs/1902.06162). While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
 
 ## Learned Representations: Evaluation and Use
 
@@ -127,16 +131,16 @@ Some examples include an autoencoder, denoising autoencoder, VAE, and GANs. Whil
 .. What makes one representation better than another? One hypothesis is that an ideal representation is one in which the features within the representation correspond to the underlying causes of the observed data, with separate features or directions in featurespace corresponding to different causes, so that the representation disentangles the causes from one another. <a target="_blank" href="https://www.deeplearningbook.org/contents/representation.html">[1](Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning, 2017)</a>
 </div>
 
-How do we know if we have good representations? It turns out that this is hard to mathematically quantify and historically has been evaluated based on downstream task performance. For example, representations learned using any of the methods listed above can be evaluated by using them as input for a linear logistic regression classifier on a downstream task. There have also been some interesting ideas on ways to improve learned representations using clustering and pseudo labels. See [[16]](https://arxiv.org/pdf/1805.00385.pdf), [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf).
+How do we know if we have good representations? How can we verify that a model has learned the underlying causal structures with respect to a task. It turns out that this is hard to mathematically quantify and historically has been evaluated based on downstream task performance e.g. image classification, semantic segmentation, object detection, and action recognition [[15]](https://arxiv.org/abs/1902.06162). For example, representations learned using any of the methods listed above can be evaluated by using them as input for a linear logistic regression classifier on a downstream task. There have also been some interesting ideas on ways to improve learned representations using clustering and pseudo labels. See [[16]](https://arxiv.org/pdf/1805.00385.pdf), [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf).
 
 ### When to Use What? Practical Considerations
 
-Selecting an approach for representation learning is largely a tricky excercise in balancing effort (compute, time) and expected quality of representations. On one hand, **fully supervised** methods yield the best performance for a specific task but require the (rare) existence of very large labeled datasets (e.g. see results from Pinterest [[9]](https://arxiv.org/pdf/1811.12649.pdf)). On the other hand, **fully unsupervised** methods do not provide strong guarantees for learning robust representations resulting in varied performance.  
+Selecting an approach for representation learning is largely a tricky excercise in balancing effort (compute, time) and expected quality of representations. On one hand, **fully supervised** methods yield the best performance for a specific task (e.g. see results from Pinterest [[9]](https://arxiv.org/pdf/1811.12649.pdf)) but require the effortful curation of very large labeled datasets. On the other hand, **fully unsupervised** methods  require no labeling effort, but do not provide strong guarantees for learning robust representations resulting in varied performance.  
 
 The following high level notes are perhaps useful.
 
-- Pretrained Model baselines. Where possible, begin explorations using standard transfer learning via pretrained models. Ofcourse, this approach only works if the data in question has a similar distribution to the data used to create pretrained models.
-- Self supervised baselines. Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using clustering methods [[16]](https://arxiv.org/pdf/1805.00385.pdf) or a small amount of labeled data.
+- Pretrained Model baselines: Where possible, begin explorations using pretrained models. This may involve directly using features from a pretrained  model (as seen in the next section) or finetuning the pretrained model using a small amount of labeled data (transfer learning). Ofcourse, this approach only works if the target task data distribution is similar to the data used to create the pretrained models.
+- Self supervised baselines: Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using clustering methods [[16]](https://arxiv.org/pdf/1805.00385.pdf) or a small amount of labeled data. 
 
 
 
@@ -145,17 +149,17 @@ The following high level notes are perhaps useful.
 
 ![](/images/hugo/representation_screen.jpg)
 
-##### Figure 4: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).
+##### Figure 5: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).
 
 To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search. We define semantic search as follows
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
- Given a dataset of existing images, and a new arbitrary image (query image), find a subset of images from the dataset that are most similar to the query image.
+ Given a dataset of existing images, and a new arbitrary image (query image), find a subset of images from the dataset that are most similar to the query image. 
 </div>
 
 A simplified implementation of semantic search outlined as a three-step process.
 
-- Feature Extraction: First, a pretrained CNN model is used to extract features (represented as vectors) from each image in the dataset.
+- Feature Extraction: First, a pretrained CNN model is used to extract features (vector representation) for each image in the dataset. Note that depending on the layer within the model, we may have vectors of varied sizes. In the example snippet below, we load an EfficientNetB0 model from the keras model zoom and use its last layer before (`include_top=False`) its linear classifier as a feature extractor. This yields a vector of size `(1, 7, 7, 1280)` or `62720` when flattened, per image. 
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
 
@@ -170,7 +174,9 @@ features = model.predict(img)
 
 {{< / highlight >}}
 
-- Indexing: Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive.
+- Indexing: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us efficiently store these representation such that we can subsequently run search queries. 
+As the data size becomes large, two challenges emerge. First a significant amount of space is needed to store vectors of size `62720` for millions of images. Second it becomes computationally slow exhaustively search over all images in our dataset (e.g. computing a similarity distance metric between query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g. dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while being practical result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).
+ <!-- The  Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive. -->
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
 
@@ -247,6 +253,7 @@ https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-vi
 
 [16] Noroozi, Mehdi, et al. "Boosting self-supervised learning via knowledge transfer." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018. 
  
+[17] Johnson, Jeff, Matthijs Douze, and Hervé Jégou. "Billion-scale similarity search with GPUs." IEEE Transactions on Big Data (2019).
 <!--
 Resources
 
