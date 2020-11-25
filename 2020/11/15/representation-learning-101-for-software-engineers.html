@@ -68,12 +68,13 @@ TLDR; Good representations of data (e.g. text, images) are critical for solving 
 <h2 id="introduction">Introduction</h2>
 <p>Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive <em>tasks</em> for users. Examples include neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user&rsquo;s profile or few shot face verification systems.</p>
 <p>For many of these systems, their performance is gated on the ability to create representations (also referred to as features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current <em>task</em>. For example, to enable customers find relevant clothes in our database that are similar to a picture they have, we need good measures of <em>relevance</em> that compare the user&rsquo;s picture and all items in the database. To recommend relevant products to users based on their profile, we also need high quality measures of <em>relevance</em> e.g. a measure of similarity between a user and all products.</p>
-<p>DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data - a field known as <em>representation learning</em>.</p>
+<p>DNN models are the tool of choice in realizing such systems because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit the both the task and data.</p>
 <!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
 <p>In this article, we will focus on discussing aspects of representation learning:</p>
 <ul>
 <li>What is representation learning and why?</li>
 <li>What are methods for representation learning?</li>
+<li>Learned Representations: How to evaluate good representations and when to use what methods?</li>
 <li>Example implementation using supervised representation learning for the task of semantic image search.</li>
 </ul>
 <hr>
@@ -91,6 +92,7 @@ Generally speaking, a good representation is one that makes a subsequent learnin
 <h5 id="figure-3-shows-layers-in-a-pretrained-densenet121-model-a-layer-2-contains-neurons-that-mostly-respond-to-colors-and-simple-textures-b-layer-202-contains-neurons-that-respond-to-more-complex-level-concepts-such-as-tree-patterns-and-an-eye-to-visually-explore-more-representations-learned-by-pretrained-models-see-herehttpsvictordibiagithubioneuraldreams">Figure 3: Shows layers in a pretrained DenseNet121 model. a.) Layer 2 contains neurons that mostly respond to colors and simple textures. b.) Layer 202 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. To visually explore more representations learned by pretrained models, see <a href="https://victordibia.github.io/neuraldreams/#/">here</a>.</h5>
 <p>Keep in mind that layers within a DNNs are stacked units of computation comprised of weights, and bias terms whose values are learned during training. Thus, an interesting realization here is that if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity and distribution of data, there are several strategies that are useful for learning representations.</p>
 <!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
+<hr>
 <h2 id="methods-for-representation-learning">Methods for Representation Learning</h2>
 <h3 id="supervised-learning">Supervised Learning</h3>
 <p>When we train a DNN on a supervised learning task (e.g. classification), the training objective naturally yields representations that are useful for solving the task. In practice, this approach takes two main forms:</p>
@@ -135,6 +137,7 @@ Existing research also shows it is valuable to add L2 normalization prior to the
 <h3 id="unsupervised-learning">Unsupervised Learning</h3>
 <p>In some situations, it may be challenging to design good pretext tasks (e.g. data augmentation strategies or transforms are not meaningful,  sampling negative or positive pairs is hard etc.). For these situations, fully unsupervised methods can be explored. Many of these methods fall under the class of generative models where the objective is to model a data distribution that can be subsequently sampled.
 Some examples include an autoencoder, denoising autoencoder, VAE, and GANs (generation, inpainting, superresolution, colorization)<a href="https://arxiv.org/abs/1902.06162">[15]</a>. While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may <em>sometimes</em> have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.</p>
+<hr>
 <h2 id="learned-representations-evaluation-and-use">Learned Representations: Evaluation and Use</h2>
 <h3 id="evaluation">Evaluation</h3>
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
@@ -146,8 +149,9 @@ Some examples include an autoencoder, denoising autoencoder, VAE, and GANs (gene
 <p>The following high level notes are perhaps useful.</p>
 <ul>
 <li>Pretrained Model baselines: Where possible, begin explorations using pretrained models. This may involve directly using features from a pretrained  model (as seen in the next section) or finetuning the pretrained model using a small amount of labeled data (transfer learning). Ofcourse, this approach only works if the target task data distribution is similar to the data used to create the pretrained models.</li>
-<li>Self supervised baselines: Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using clustering methods <a href="https://arxiv.org/pdf/1805.00385.pdf">[16]</a> or a small amount of labeled data.</li>
+<li>Self supervised baselines: Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using pseudo labels  <a href="https://arxiv.org/pdf/1805.00385.pdf">[16]</a> and/or a small amount of labeled data.</li>
 </ul>
+<hr>
 <h2 id="semantic-image-search-with-pretrained-neural-network-models-in-tensorflow">Semantic Image Search with Pretrained Neural Network Models in Tensorflow</h2>
 <p><img src="/images/hugo/representation_screen.jpg" alt=""></p>
 <h5 id="figure-5-screenshots-from-a-web-application-we-built-that-allows-you-to-explore-semantic-search-query-results-explore-a-visualization-of-embeddings-and-perform-live-search-full-source-code-herehttpsgithubcomfastforwardlabsimageanalysis_cml">Figure 5: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code <a href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>.</h5>
