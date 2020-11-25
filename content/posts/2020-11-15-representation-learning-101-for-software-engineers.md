@@ -80,7 +80,13 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
 - **Generic Classification**:
   The most common example of this is the use of models pretrained on the imagenet dataset (1 millions images, 100 classes) and more recently the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)[[13]](https://arxiv.org/pdf/1912.11370.pdf). Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks (transfer learning). 
 
-![](/images/hugo/embed.gif)
+<!-- ![](/images/hugo/embed.gif) -->
+
+
+
+<video width="100%" controls autoplay loop>
+  <source src="/images/hugo/embeddings.mov" type="video/mp4">
+</video>
 
 ##### Figure 4: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel tower, empire state building, ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
 
@@ -151,7 +157,7 @@ The following high level notes are perhaps useful.
 
 ##### Figure 5: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).
 
-To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search. We define semantic search as follows
+To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search (also known as content based retrieval, image retrieval, reverse image search). We define semantic search as follows:
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
  Given a dataset of existing images, and a new arbitrary image (query image), find a subset of images from the dataset that are most similar to the query image. 
@@ -175,7 +181,7 @@ features = model.predict(img)
 {{< / highlight >}}
 
 - Indexing: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us efficiently store these representation such that we can subsequently run search queries. 
-As the data size becomes large, two challenges emerge. First a significant amount of space is needed to store vectors of size `62720` for millions of images. Second it becomes computationally slow exhaustively search over all images in our dataset (e.g. computing a similarity distance metric between query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g. dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while being practical result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).
+As the data size becomes large, two challenges emerge. First, a significant amount of space is needed to store vectors of size `62720` each, for millions of images. Second it becomes computationally slow to exhaustively search over all images in our dataset (i.e.. computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g. dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while being practical, result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).
  <!-- The  Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive. -->
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
