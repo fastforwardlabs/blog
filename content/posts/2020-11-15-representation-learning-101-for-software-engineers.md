@@ -142,19 +142,19 @@ Some examples include an autoencoder, denoising autoencoder, VAE, and GANs (gene
 ### Evaluation
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-.. What makes one representation better than another? One hypothesis is that an ideal representation is one in which the features within the representation correspond to the underlying causes of the observed data, with separate features or directions in featurespace corresponding to different causes, so that the representation disentangles the causes from one another. <a target="_blank" href="https://www.deeplearningbook.org/contents/representation.html">[1](Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning, 2017)</a>
+What makes one representation better than another? One hypothesis is that an ideal representation is one in which the features within the representation correspond to the underlying causes of the observed data (with separate features or directions in featurespace corresponding to different causes), so that the representation disentangles the causes from one another. <a target="_blank" href="https://www.deeplearningbook.org/contents/representation.html">[1](Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning, 2017)</a>
 </div>
 
-How do we know if we have good representations? How can we verify that a model has learned the underlying causal structures with respect to a task. It turns out that this is hard to mathematically quantify and historically has been evaluated based on downstream task performance e.g. image classification, semantic segmentation, object detection, and action recognition [[15]](https://arxiv.org/abs/1902.06162). For example, representations learned using any of the methods listed above can be evaluated by using them as input for a linear logistic regression classifier on a downstream task. There have also been some interesting ideas on ways to improve learned representations using clustering and pseudo labels. See [[16]](https://arxiv.org/pdf/1805.00385.pdf), [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf).
+How do we know if we have good representations? How can we verify that a model has learned the underlying causal structures with respect to a task? This is hard to mathematically quantify, and historically has been evaluated based on downstream task performance (e.g., image classification, semantic segmentation, object detection, and action recognition) [[15]](https://arxiv.org/abs/1902.06162). For example, representations learned using any of the methods listed above can be evaluated by using them as input for a linear logistic regression classifier on a downstream task. There have also been some interesting ideas put forth on ways to improve learned representations using clustering and pseudo labels; see [[16]](https://arxiv.org/pdf/1805.00385.pdf), [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf).
 
 ### When to Use What? Practical Considerations
 
-Selecting an approach for representation learning is largely a tricky excercise in balancing effort (compute, time) and expected quality of representations. On one hand, **fully supervised** methods yield the best performance for a specific task (e.g. see results from Pinterest [[9]](https://arxiv.org/pdf/1811.12649.pdf)) but require the effortful curation of very large labeled datasets. On the other hand, **fully unsupervised** methods  require no labeling effort, but do not provide strong guarantees for learning robust representations resulting in varied performance.  
+Selecting an approach for representation learning is largely a tricky excercise in balancing effort (compute, time) and expected quality of representations. On the one hand, **fully supervised** methods yield the best performance for a specific task (e.g., see results from Pinterest [[9]](https://arxiv.org/pdf/1811.12649.pdf)), but require the effortful curation of very large labeled datasets. On the other hand, **fully unsupervised** methods  require no labeling effort, but do not provide strong guarantees for learning robust representations, resulting in varied performance.  
 
-The following high level notes are perhaps useful.
+The following high level notes are perhaps useful:
 
-- Pretrained Model baselines: Where possible, begin explorations using pretrained models. This may involve directly using features from a pretrained  model (as seen in the next section) or finetuning the pretrained model using a small amount of labeled data (transfer learning). Ofcourse, this approach only works if the target task data distribution is similar to the data used to create the pretrained models.
-- Self supervised baselines: Where large unlabeled data exists, self supervised methods are particularly useful. Explore pretext task strategies pertinent to your data in learning an initial set of representations that can then be finetuned using pseudo labels  [[16]](https://arxiv.org/pdf/1805.00385.pdf) and/or a small amount of labeled data. 
+- *Pretrained model baselines*: Where possible, begin explorations using pretrained models. This may involve directly using features from a pretrained  model (as seen in the next section) or finetuning the pretrained model, using a small amount of labeled data (transfer learning). Of course, this approach only works if the target task data distribution is similar to the data used to create the pretrained models.
+- *Self-supervised baselines*: Where a large amount of unlabeled data exists, self-supervised methods are particularly useful. Explore pretext task strategies pertinent to the data in learning an initial set of representations, that can then be finetuned using pseudo labels [[16]](https://arxiv.org/pdf/1805.00385.pdf) and/or a small amount of labeled data. 
 
 
 ---
@@ -163,17 +163,17 @@ The following high level notes are perhaps useful.
 
 ![](/images/hugo/representation_screen.jpg)
 
-##### Figure 5: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).
+##### Figure 5: Screenshots from a web application we built which allows you to delve into semantic search query results, explore a visualization of embeddings, and perform live search. (Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml).)
 
-To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search (also known as content based retrieval, image retrieval, reverse image search). We define semantic search as follows:
+To demonstrate how representations can be used for a concrete task, let us consider the task of semantic image search (also known as content-based retrieval, image retrieval, or reverse image search). We define semantic search as follows:
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
  Given a dataset of existing images, and a new arbitrary image (query image), find a subset of images from the dataset that are most similar to the query image. 
 </div>
 
-A simplified implementation of semantic search outlined as a three-step process.
+Here is a simplified implementation of semantic search outlined as a three-step process:
 
-- Feature Extraction: First, a pretrained CNN model is used to extract features (vector representation) for each image in the dataset. Note that depending on the layer within the model, we may have vectors of varied sizes. In the example snippet below, we load an EfficientNetB0 model from the keras model zoom and use its last layer before (`include_top=False`) its linear classifier as a feature extractor. This yields a vector of size `(1, 7, 7, 1280)` or `62720` when flattened, per image. 
+- **Feature Extraction**: First, a pretrained CNN model is used to extract features (vector representation) for each image in the dataset. Note that, depending on the layer within the model, we may have vectors of varied sizes. In the example snippet below, we load an EfficientNetB0 model from the keras model zoom, and use its last layer before (`include_top=False`) its linear classifier as a feature extractor. This yields a vector of size `(1, 7, 7, 1280)` or `62720` when flattened, per image. 
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
 
@@ -188,8 +188,10 @@ features = model.predict(img)
 
 {{< / highlight >}}
 
-- Indexing: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us efficiently store these representation such that we can subsequently run search queries. 
-As the data size becomes large, two challenges emerge. First, a significant amount of space is needed to store vectors of size `62720` each, for millions of images. Second it becomes computationally slow to exhaustively search over all images in our dataset (i.e.. computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g. dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while being practical, result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. See [this guide](Deep representation learning can be compute and storage intensive) on how to select from the set of index types offered FAISS> For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).
+ 
+- **Indexing**: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us to efficiently store these representations, such that we can subsequently run search queries. 
+As the size of the dataset becomes larger, two challenges emerge. First, a significant amount of space is needed to store vectors of size `62720` each, for millions of images. Second, it becomes computationally slow to exhaustively search over all images in our dataset (i.e., computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g., dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while practical, result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both exhaustive search and ANN search, as well as supports dimensionality reduction and quantization. (For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).)
+ 
  <!-- The  Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive. -->
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
@@ -204,7 +206,7 @@ faiss_index.add(features)
 
 {{< / highlight >}}
 
-- Search : Finally, to return results for a search query, we retrieve the precomputed distance values between the searched image and all other images, sorted in the order of closest to farthest.
+- **Search**: Finally, to return results for a search query, we retrieve the precomputed distance values between the searched image and all other images, sorted in the order of closest to farthest.
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
 
@@ -218,6 +220,7 @@ distances, indices = faiss_index.search(query, k)
 Full source code for the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml/blob/master/notebooks/Semantic%20Image%20Search%20Tutorial.ipynb).
 
 <!-- Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings. -->
+ 
 
 <!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
 
@@ -238,35 +241,35 @@ https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-vi
 
 [1] Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning. Vol. 1. Massachusetts, USA, MIT press, 2017. https://www.deeplearningbook.org/contents/representation.html
 
-[2] Caron, Mathilde, et al. "Unsupervised learning of visual features by contrasting cluster assignments." Advances in Neural Information Processing Systems 33 (2020).
+[2] Caron, Mathilde, et al. "Unsupervised Learning of Visual Features by Contrasting Cluster Assignments." Advances in Neural Information Processing Systems 33 (2020).
 
-[3] Opitz, Michael, et al. "Deep metric learning with bier: Boosting independent embeddings robustly." IEEE transactions on pattern analysis and machine intelligence (2018).
+[3] Opitz, Michael, et al. "Deep Metric Learning with BIER: Boosting Independent Embeddings Robustly." IEEE transactions on pattern analysis and machine intelligence (2018).
 
-[4] Ranjan, Rajeev, Carlos D. Castillo, and Rama Chellappa. "L2-constrained softmax loss for discriminative face verification." arXiv preprint arXiv:1703.09507 (2017).
+[4] Ranjan, Rajeev, Carlos D. Castillo, and Rama Chellappa. "L2-constrained Softmax Loss for Discriminative Face Verification." arXiv preprint arXiv:1703.09507 (2017).
 
-[5] Fefferman, Charles, Sanjoy Mitter, and Hariharan Narayanan. "Testing the manifold hypothesis." Journal of the American Mathematical Society 29.4 (2016): 983-1049.
+[5] Fefferman, Charles, Sanjoy Mitter, and Hariharan Narayanan. "Testing the Manifold Hypothesis." Journal of the American Mathematical Society 29.4 (2016): 983-1049.
 
 [6] Nguyen, Binh X., et al. "Deep Metric Learning Meets Deep Clustering: An Novel Unsupervised Approach for Feature Embedding." arXiv preprint arXiv:2009.04091 (2020).
 
-[7] Hoffer, Elad, and Nir Ailon. "Deep metric learning using triplet network." International Workshop on Similarity-Based Pattern Recognition. Springer, Cham, 2015.
+[7] Hoffer, Elad, and Nir Ailon. "Deep metric learning using Triplet network." International Workshop on Similarity-Based Pattern Recognition. Springer, Cham, 2015.
 
-[8] Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a similarity metric discriminatively, with application to face verification." 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05). Vol. 1. IEEE, 2005.
+[8] Chopra, Sumit, Raia Hadsell, and Yann LeCun. "Learning a Similarity Metric Discriminatively, with Application to Face Verification." 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05). Vol. 1. IEEE, 2005.
 
-[9] Zhai, Andrew, and Hao-Yu Wu. "Classification is a strong baseline for deep metric learning." arXiv preprint arXiv:1811.12649 (2018).
+[9] Zhai, Andrew, and Hao-Yu Wu. "Classification is a Strong Baseline for Deep Metric Learning." arXiv preprint arXiv:1811.12649 (2018).
 
-[10] Wang, Feng, et al. "Additive margin softmax for face verification." IEEE Signal Processing Letters 25.7 (2018): 926-930.
+[10] Wang, Feng, et al. "Additive Margin Softmax for Face Verification." IEEE Signal Processing Letters 25.7 (2018): 926-930.
 
-[11] Liu, Weiyang, et al. "Large-margin softmax loss for convolutional neural networks." ICML. Vol. 2. No. 3. 2016.
+[11] Liu, Weiyang, et al. "Large-Margin Softmax Loss for Convolutional Neural Networks." ICML. Vol. 2. No. 3. 2016.
 
-[12] Liu, Weiyang, et al. "Sphereface: Deep hypersphere embedding for face recognition." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
+[12] Liu, Weiyang, et al. "Sphereface: Deep Hypersphere Embedding for Face Recognition." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.
 
-[13] Kolesnikov, Alexander, et al. "Big transfer (BiT): General visual representation learning." arXiv preprint arXiv:1912.11370 6 (2019).
+[13] Kolesnikov, Alexander, et al. "Big Transfer (BiT): General Visual Representation Learning." arXiv preprint arXiv:1912.11370 6 (2019).
 
 [14] Zhuang, Jinfeng, and Yu Liu. "PinText: A Multitask Text Embedding System in Pinterest." Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. 2019.
 
-[15] Jing, Longlong, and Yingli Tian. "Self-supervised visual feature learning with deep neural networks: A survey." IEEE Transactions on Pattern Analysis and Machine Intelligence (2020).
+[15] Jing, Longlong, and Yingli Tian. "Self-supervised Visual Feature Learning with Deep Neural Networks: A Survey." IEEE Transactions on Pattern Analysis and Machine Intelligence (2020).
 
-[16] Noroozi, Mehdi, et al. "Boosting self-supervised learning via knowledge transfer." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018. 
+[16] Noroozi, Mehdi, et al. "Boosting Self-supervised Learning via Knowledge Transfer." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018. 
  
 [17] Johnson, Jeff, Matthijs Douze, and Hervé Jégou. "Billion-scale similarity search with GPUs." IEEE Transactions on Big Data (2019).
 
