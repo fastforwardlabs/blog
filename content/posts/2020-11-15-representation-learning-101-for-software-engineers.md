@@ -78,10 +78,10 @@ Keep in mind that layers within a DNNs are stacked units of computation comprise
 
 ### Supervised Learning
 
-When we train a DNN on a supervised learning task (e.g. classification), the training objective naturally yields representations that are useful for solving the task. In practice, this approach takes two main forms:
+When we train a DNN on a supervised learning task (e.g., classification), the training objective naturally yields representations that are useful for solving the task. In practice, this approach takes two main forms:
 
 - **Generic Classification**:
-  The most common example of this is the use of models pretrained on the imagenet dataset (1 millions images, 100 classes) and more recently the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)[[13]](https://arxiv.org/pdf/1912.11370.pdf). Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks (transfer learning). 
+The most common examples of this are the use of models pretrained on the ImageNet dataset (1 million images, 100 classes) and, more recently, the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)[[13]](https://arxiv.org/pdf/1912.11370.pdf). Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks (transfer learning). 
 
 <!-- ![](/images/hugo/embed.gif) -->
 
@@ -91,46 +91,49 @@ When we train a DNN on a supervised learning task (e.g. classification), the tra
   <source src="/images/hugo/embeddings.mov" type="video/mp4">
 </video>
 
-##### Figure 4: Shows a 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel tower, empire state building, ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g. wheels, doors etc), we see that layers closest to the final classifier show the best performance i.e. clean separation between classes.
+##### Figure 4: A 2D UMAP plot of features extracted using intermediate models constructed from a pretrained EfficientNetB0 model for a set of 200 natural images across 10 classes (arch, banana, Volkswagen beetle, Eiffel Tower, Empire State Building, Ferrari, pickup truck, sedan, Stonehenge, tractor). Given that the salient attributes for this specific set of natural images are high level features (e.g., wheels, doors), we see that the layers closest to the final classifier show the best performance, i.e., clean separation between classes.
 
 - **Metric Learning**:
-  Metric learning approaches aim to learn a good embedding space such that the similarity between samples are preserved as distance between embedding vectors of the sample [[9]](https://arxiv.org/pdf/1811.12649.pdf).
-  To this end, we can train DNN models with loss functions that yield this embedding space. Traditional metric loss functions include contrastive loss [[8]](http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf) and triplet loss [[7]](https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7), which are formulated to minimize intra-class distances and maximize inter-class distances". One limitation here is that we frequently need to build training data pairs consisting of positive and negative pairs which can be challenging in practice. Furthermore, the performance of the model is _sensitive_ to the strategies used for sampling these pairs [[10]](https://arxiv.org/pdf/1801.05599.pdf). To address this issue, variants of the softmax loss function (e.g. large margin softmax [[11]](https://arxiv.org/abs/1612.02295), angular softmax [[12]](https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_SphereFace_Deep_Hypersphere_CVPR_2017_paper.pdf)), optimized for reducing the intra-class variation (i.e., making features of the same class compact) have been proposed, yield state of the art results which minimal complexity.
-  Existing research also shows it is valuable to add L2 normalization prior to the softmax loss as this more explicitly optimizes for cosine similarity [[4]](https://arxiv.org/pdf/1703.09507.pdf)[[10]](https://arxiv.org/pdf/1801.05599.pdf). Finally, researchers have also explored ensembling (training and combining results from multiple learners) [[3]](https://arxiv.org/pdf/1801.04815.pdf) for even better performance but with drawbacks in system complexity and additional hyperparameters that need to be optimized.
+  Metric learning approaches aim to learn a good embedding space, such that the similarity between samples are preserved as distance between embedding vectors of the sample [[9]](https://arxiv.org/pdf/1811.12649.pdf).
+  To this end, we can train DNN models with loss functions that yield this embedding space. Traditional metric loss functions include contrastive loss [[8]](http://www.cs.utoronto.ca/~hinton/csc2535_06/readings/chopra-05.pdf) and triplet loss [[7]](https://link.springer.com/chapter/10.1007/978-3-319-24261-3_7), which are formulated to minimize intra-class distances and maximize inter-class distances." 
+  One limitation here is that we frequently need to build training data pairs (consisting of positive and negative pairs), which can be challenging in practice. Furthermore, the performance of the model is _sensitive_ to the strategies used for sampling these pairs [[10]](https://arxiv.org/pdf/1801.05599.pdf).
+  To address this issue, variants of the softmax loss function (e.g., large margin softmax [[11]](https://arxiv.org/abs/1612.02295), angular softmax [[12]](https://openaccess.thecvf.com/content_cvpr_2017/papers/Liu_SphereFace_Deep_Hypersphere_CVPR_2017_paper.pdf)), optimized for reducing the intra-class variation (i.e., making features of the same class compact) have been proposed, and yield state of the art results, with minimal complexity.
+  Existing research also shows it is valuable to add L2 normalization prior to the softmax loss, as this more explicitly optimizes for cosine similarity [[4]](https://arxiv.org/pdf/1703.09507.pdf)[[10]](https://arxiv.org/pdf/1801.05599.pdf).
+  Finally, researchers have also explored ensembling (training and combining results from multiple learners) [[3]](https://arxiv.org/pdf/1801.04815.pdf) for even better performance, but with drawbacks in system complexity, and additional hyperparameters that need to be optimized.
 
   Note: while much of the academic literature on metric learning focuses on applications in face recognition/verification, they can be adapted to other media modalities.
 
-In general, a supervised approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice. It also yields representations that may not generalize out-of-the-box and may be susceptible to adversarial attacks.
+In general, a supervised approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice. It also yields representations that may not generalize out-of-the-box, and may be susceptible to adversarial attacks.
 
-Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  millions of Pinterest images with labels are used to learn a similarity metric for content based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf)).
+Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  in which millions of Pinterest images with labels are used to learn a similarity metric for content-based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf)).
 
 <!-- [TODO .. notes from bengio talk, book]  -->
 
-### Self Supervised Learning (Pretext Tasks)
+### Self-Supervised Learning (Pretext Tasks)
 
-In this paradigm, the goal remains to train a supervised learning model, but find creative ways of automatically generating meaningful labels. Historically, this is done by designing pretext tasks - tasks that if solved, yield semantically meaningful representations as a side effect. Some example pretext tasks used in the image domain include:
+In this paradigm, the goal remains to train a supervised learning model, but find creative ways of automatically generating meaningful labels. Historically, this is done by designing pretext tasks - tasks that, if solved, yield semantically meaningful representations as a side effect. Some example pretext tasks used in the image domain include:
 
-- Predict the angle of rotation (geometric transformations)
-- Predict if two images with transformations (e.g. color transformations, or random crops) are the same (constrastive) [[2]](https://arxiv.org/pdf/2006.09882.pdf)
-- Predict if two image patches come from the same image (image jigsaw puzzles) [[16]](https://arxiv.org/pdf/1805.00385.pdf)
-- Predict the order of image frames from a video sequence (temporal)
+- Predicting the angle of rotation (geometric transformations)
+- Predicting if two images with transformations (e.g., color transformations, or random crops) are the same (constrastive) [[2]](https://arxiv.org/pdf/2006.09882.pdf)
+- Predicting if two image patches come from the same image (image jigsaw puzzles) [[16]](https://arxiv.org/pdf/1805.00385.pdf)
+- Predicting the order of image frames from a video sequence (temporal)
 
 For an extensive treatment on methods for self-supervised visual feature learning, see the survey paper [[15]](https://arxiv.org/abs/1902.06162).
 
-Note that the self supervised approach (commonly known as pretraining) is also well-known in the NLP field:
+Note that the self-supervised approach (commonly known as pretraining) is also well-known in the NLP field:
 
-- Predict the next word from a sequence of words
-- Predict the masked word in a sentence
-- Given two sentences, predict if one follows the other.
+- Predicting the next word from a sequence of words
+- Predicting the masked word in a sentence
+- Given two sentences, predicting if one follows the other
 
-It is important to note that a good pretext task should be one which requires semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). The pretext task also takes advantange of known properties of the data in generating a training dataset e.g. for the task of predicting the angle of rotation for an image, we can apply rotation transforms to images and the labels are the rotation angles. If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning. The _harder_ the task, the more relevant the representations learned [[16]](https://arxiv.org/pdf/1805.00385.pdf). In general, a model is trained to solve the pretext task on a large dataset of unlabeled images, and the representation it learns is transfered to other downstream tasks.
+A good pretext task is one which _requires_ semantic understanding (or knowledge of important patterns) to solve (as seen in the examples above). The pretext task also takes advantange of known properties of the data in generating a training dataset; e.g., for the task of predicting the angle of rotation for an image, we can apply rotation transforms to images, and the labels are the rotation angles. If we construct pretext tasks that are inherently meaningful, then we can provide some signal (impose constraints) for the network to build notions of meaning. The _harder_ the task, the more relevant the representations learned [[16]](https://arxiv.org/pdf/1805.00385.pdf). In general, a model is trained to solve the pretext task on a large dataset of unlabeled images, and the representation it learns is transferred to other downstream tasks.
 
-Advances in self supervised representation learning are particularly exciting. Recent research which explore a contrastive formulation for pretext tasks show self supervised methods can achieve results at par with supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model. 
+Advances in self-supervised representation learning are particularly exciting. Recent research, which explores a contrastive formulation for pretext tasks, shows that self-supervised methods can achieve results at par with supervised learning! For example, [SwAV[2]](https://arxiv.org/pdf/2006.09882.pdf) is only 1.2% below the performance of a fully supervised model. 
 
 ### Unsupervised Learning
 
-In some situations, it may be challenging to design good pretext tasks (e.g. data augmentation strategies or transforms are not meaningful,  sampling negative or positive pairs is hard etc.). For these situations, fully unsupervised methods can be explored. Many of these methods fall under the class of generative models where the objective is to model a data distribution that can be subsequently sampled. 
-Some examples include an autoencoder, denoising autoencoder, VAE, and GANs (generation, inpainting, superresolution, colorization)[[15]](https://arxiv.org/abs/1902.06162). While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, unsupervised learning is uncertain and does not provide guarantees that the representations learned are particularly good.
+In some situations, it may be challenging to design good pretext tasks (e.g., data augmentation strategies or transforms are not meaningful, sampling negative or positive pairs is hard, etc.). For these situations, fully unsupervised methods can be explored. Many of these methods fall under the class of generative models, where the objective is to model a data distribution that can be subsequently sampled. 
+Some examples of these models include an autoencoder, denoising autoencoder, VAE, and GANs (generation, inpainting, superresolution, colorization)[[15]](https://arxiv.org/abs/1902.06162). While there is no explicit pretext task, the training objective still requires the model to disentangle input into salient features which may _sometimes_ have semantic meaning. Strictly speaking, however, unsupervised learning is uncertain, and does not provide guarantees that the representations learned are particularly good.
 
 ---
 
