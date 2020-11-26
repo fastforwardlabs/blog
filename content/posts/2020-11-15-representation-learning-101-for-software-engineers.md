@@ -242,6 +242,10 @@ Standard embedddings dont work well.
 
 https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-visual-discovery-experience-at-pinterest-8527ba9728a9 -->
 
+## Conclusions
+
+This article provides a high level overview of methods for representation learning and a simplified example of how good representations extracted using pretrained models can be used for a downstream task such as semantic image search. The reader is encouraged to explore the references provided for additional details on the theory/implementation for the methods discussed.
+
 ## References
 
 [1] Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning. Vol. 1. Massachusetts, USA, MIT press, 2017. https://www.deeplearningbook.org/contents/representation.html
