@@ -9,8 +9,8 @@
     
 <title>Representation Learning 101 for Software Engineers</title>
 <meta property="og:title" content="Representation Learning 101 for Software Engineers">
-<meta property="description" content="Figure 1: Overview of representation learning methods. TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to create these representations. In this article, we review methods for representation learning and walk through an example using pretrained models. FAISS index to enable search queries. See full source code here. --  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.">
-<meta property="og:description" content="Figure 1: Overview of representation learning methods. TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to create these representations. In this article, we review methods for representation learning and walk through an example using pretrained models. FAISS index to enable search queries. See full source code here. --  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.">
+<meta property="description" content="Figure 1: Overview of representation learning methods. TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to create these representations. In this article, we review methods for representation learning and walk through an example using pretrained models.  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.">
+<meta property="og:description" content="Figure 1: Overview of representation learning methods. TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to create these representations. In this article, we review methods for representation learning and walk through an example using pretrained models.  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.">
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/representationlearning.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2020/11/15/representation-learning-101-for-software-engineers.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -56,20 +56,13 @@ if (!doNotTrack) {
     <h1>Representation Learning 101 for Software Engineers</h1>
     <p><img src="/images/hugo/representationlearning.png" alt=""></p>
 <h5 id="figure-1-overview-of-representation-learning-methods">Figure 1: Overview of representation learning methods.</h5>
-<!-- ![](/images/hugo/representation_screen.jpg)
-
-##### Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml). -->
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
 TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to  create these representations.  In this article, we review methods for representation learning and walk through an example using pretrained models.  
-<!-- To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
-<a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>. -->
 </div>
-<!-- --- -->
 <h2 id="introduction">Introduction</h2>
 <p>Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive <em>tasks</em> for users. Examples include: neural search systems that identify the most relevant results given a natural language or image query, recommendation systems that provide personalized recommendations based on the user&rsquo;s profile, and few-shot face verification systems.</p>
 <p>The performance of many of these systems is gated on their ability to create representations (or features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current <em>task</em>. For example, suppose a customer has a picture of an outfit they like. To enable the customer to find relevant clothes like it in our database, we need good measures of <em>relevance</em> that compare the user&rsquo;s picture and all items in the database. Similarly, to recommend the right products to users based on their profiles, we also need high quality measures of <em>relevance</em> e.g., a measure of similarity between a user and all products.</p>
 <p>DNN models are the tool of choice in realizing such systems, because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit both the task and data.</p>
-<!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
 <p>In this article, we will discuss:</p>
 <ul>
 <li>What representation learning is, and why it&rsquo;s valuable</li>
@@ -86,12 +79,10 @@ Generally speaking, a good representation is one that makes a subsequent learnin
 <a target="_blank" href="https://www.deeplearningbook.org/contents/representation.html">[1](Bengio, Yoshua, Ian Goodfellow, and Aaron Courville. Deep learning, 2017)</a>.</div>
 <p>Based on the above, we can define deep representation learning as <em>training DNN models that yield numerical representations of data, suitable for solving a set of tasks</em>.</p>
 <p>To build intuition on why representation learning is valuable, we can review the question of <em>how humans solve cognitive tasks</em>. In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks: does it have four legs, two pointy ears, fur, whiskers, etc.? Based on the presence/absence of these salient features, we might determine with some level of confidence that it is, indeed, a cat.</p>
-<!-- For machines, this task is particularly complicated as there is usually no clear linear relationship between real world data (e.g. pixels within an image) and  -->
 <p>Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g., image pixels) into a set of representations (e.g., eyes, ears, legs, whiskers) that are useful for the task.</p>
 <p><img src="/images/hugo/representationdensenet.png" alt=""></p>
 <h5 id="figure-3-layers-in-a-pretrained-densenet121-model-a-layer-2-contains-neurons-that-mostly-respond-to-colors-and-simple-textures-b-layer-424-contains-neurons-that-respond-to-more-complex-level-concepts-such-as-tree-patterns-and-an-eye-you-can-visually-explore-more-representations-learned-by-pretrained-models-herehttpsvictordibiagithubioneuraldreams">Figure 3: Layers in a pretrained DenseNet121 model. a.) Layer 2 contains neurons that mostly respond to colors and simple textures. b.) Layer 424 contains neurons that respond to more complex, level concepts such as tree patterns and an eye. You can visually explore more representations learned by pretrained models <a href="https://victordibia.github.io/neuraldreams/#/">here</a>.</h5>
 <p>Keep in mind that layers within a DNN are stacked units of computation comprised of weights and bias terms, whose values are learned during training. Thus, if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity, and distribution of data, there are several useful strategies for learning representations.</p>
-<!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
 <hr>
 <h2 id="methods-for-representation-learning">Methods for Representation Learning</h2>
 <h3 id="supervised-learning">Supervised Learning</h3>
@@ -100,7 +91,6 @@ Generally speaking, a good representation is one that makes a subsequent learnin
 <li><strong>Generic Classification</strong>:
 The most common examples of this are the use of models pretrained on the ImageNet dataset (1 million images, 100 classes) and, more recently, the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)<a href="https://arxiv.org/pdf/1912.11370.pdf">[13]</a>. Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks (transfer learning).</li>
 </ul>
-<!-- ![](/images/hugo/embed.gif) -->
 <video width="100%" controls autoplay loop>
   <source src="/images/hugo/embeddings.mov" type="video/mp4">
 </video>
@@ -119,7 +109,6 @@ Finally, researchers have also explored ensembling (training and combining resul
 </ul>
 <p>In general, a supervised approach assumes the availability of large labeled datasets - a requirement that is rarely achievable in practice. It also yields representations that may not generalize out-of-the-box, and may be susceptible to adversarial attacks.</p>
 <p>Some applied examples include: Pinterest Pintext <a href="https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf">[14]</a> - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  in which millions of Pinterest images with labels are used to learn a similarity metric for content-based image retrieval <a href="https://arxiv.org/pdf/1811.12649.pdf">[9]</a>, <a href="https://arxiv.org/pdf/1908.01707.pdf">[18]</a>).</p>
-<!-- [TODO .. notes from bengio talk, book]  -->
 <h3 id="self-supervised-learning-pretext-tasks">Self-Supervised Learning (Pretext Tasks)</h3>
 <p>In this paradigm, the goal remains to train a supervised learning model, but find creative ways of automatically generating meaningful labels. Historically, this is done by designing pretext tasks - tasks that, if solved, yield semantically meaningful representations as a side effect. Some example pretext tasks used in the image domain include:</p>
 <ul>
@@ -192,7 +181,6 @@ img_array <span style="color:#f92672">=</span> image_array_from_dir(dir_path)
 <li><strong>Indexing</strong>: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us to efficiently store these representations, such that we can subsequently run search queries.
 As the size of the dataset becomes larger, two challenges emerge. First, a significant amount of space is needed to store vectors of size <code>62720</code> each, for millions of images. Second, it becomes computationally slow to exhaustively search over all images in our dataset (i.e., computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g., dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods <a href="https://arxiv.org/pdf/1702.08734.pdf">[17]</a>. Both of these solutions, while practical, result in some accuracy trade off. In the example below, we use the <a href="https://github.com/facebookresearch/faiss">FAISS</a> library which implements both <a href="https://github.com/facebookresearch/faiss/wiki/Guidelines-to-choose-an-index">exhaustive search and ANN search</a>, as well as supports dimensionality reduction and quantization. (For a comparison of methods and libraries for ANN, see <a href="https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/">this blog post</a>.)</li>
 </ul>
- <!-- The  Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive. -->
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">0
@@ -228,19 +216,6 @@ distances, indices <span style="color:#f92672">=</span> faiss_index<span style="
 </div>
 <br/>  
 <p>Full source code for the steps above is provided <a href="https://github.com/fastforwardlabs/imageanalysis_cml/blob/master/notebooks/Semantic%20Image%20Search%20Tutorial.ipynb">here</a>.</p>
-<!-- Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings. -->
-<!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
-<!-- ## Semantic Image Search with Supervised Pretrained Models -->
-<!-- ## Case Studies
-
-Pinterest - PinText
-https://medium.com/pinterest-engineering/pintext-a-multitask-text-embedding-system-in-pinterest-b80ece364555
-
-They use user interaction as a signal in learning relevant embeddings.
-Custom embedding on their data
-Standard embedddings dont work well.
-
-https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-visual-discovery-experience-at-pinterest-8527ba9728a9 -->
 <h2 id="conclusions">Conclusions</h2>
 <p>This article provides a high level overview of methods for representation learning and a simplified example of how good representations extracted using pretrained models can be used for a downstream task such as semantic image search. The reader is encouraged to explore the references provided for additional details on the theory/implementation for the methods discussed.</p>
 <h2 id="references">References</h2>
@@ -372,7 +347,7 @@ Review of Metric Learning - https://arxiv.org/pdf/2003.08505.pdf -->
         &middot; </span
       >
     </span>
-    Figure 1: Overview of representation learning methods. TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to create these representations. In this article, we review methods for representation learning and walk through an example using pretrained models. FAISS index to enable search queries. See full source code here. --  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.
+    Figure 1: Overview of representation learning methods. TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to create these representations. In this article, we review methods for representation learning and walk through an example using pretrained models.  Introduction Deep Neural Networks (DNNs) have become a particularly useful tool in building intelligent systems that simplify cognitive tasks for users.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
