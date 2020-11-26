@@ -13,19 +13,12 @@ published: true
 
 ##### Figure 1: Overview of representation learning methods.
 
-<!-- ![](/images/hugo/representation_screen.jpg)
-
-##### Figure 1: Screenshots from a web application we built that allows you to explore semantic search query results, explore a visualization of embeddings and perform live search. Full source code [here](https://github.com/fastforwardlabs/imageanalysis_cml). -->
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
 TLDR; Good representations of data (e.g., text, images) are critical for solving many tasks (e.g., search or recommendations). Deep representation learning yields state of the art results when used to  create these representations.  In this article, we review methods for representation learning and walk through an example using pretrained models.  
 
-<!-- To enable semantic image search, we used pretrained models to extract semantic representations for all images in the dataset, which are stored in an  <a href="https://github.com/facebookresearch/faiss/" target="_blank">FAISS</a> index to enable search queries. See full source code
-<a target="_blank" href="https://github.com/fastforwardlabs/imageanalysis_cml">here</a>. -->
-
 </div>
 
-<!-- --- -->
 
 ## Introduction
 
@@ -34,8 +27,6 @@ Deep Neural Networks (DNNs) have become a particularly useful tool in building i
 The performance of many of these systems is gated on their ability to create representations (or features) of data with semantic meaning - numbers that truly encode the meaning of each data point with respect to the current _task_. For example, suppose a customer has a picture of an outfit they like. To enable the customer to find relevant clothes like it in our database, we need good measures of _relevance_ that compare the user's picture and all items in the database. Similarly, to recommend the right products to users based on their profiles, we also need high quality measures of _relevance_ e.g., a measure of similarity between a user and all products.
 
 DNN models are the tool of choice in realizing such systems, because they excel at learning semantically meaningful representations. However, across many real-world use cases, these models need to be carefully designed to fit both the task and data.
-
-<!-- This area of study is related to (and overlaps with) adjacent fields such as manifold learning (learn about the manifold hypothesis here [[5]](https://arxiv.org/abs/1310.0425)) and deep metric learning (see list of recent papers [here](https://github.com/kdhht2334/Survey_of_Deep_Metric_Learning).). -->
 
 In this article, we will discuss:
 
@@ -63,8 +54,6 @@ Based on the above, we can define deep representation learning as _training DNN 
 
 To build intuition on why representation learning is valuable, we can review the question of _how humans solve cognitive tasks_. In many cases, we rely on heuristics - a set of fairly simple rules relevant to the task. For example, to identify if an image is a cat, we might perform the following checks: does it have four legs, two pointy ears, fur, whiskers, etc.? Based on the presence/absence of these salient features, we might determine with some level of confidence that it is, indeed, a cat.
 
-<!-- For machines, this task is particularly complicated as there is usually no clear linear relationship between real world data (e.g. pixels within an image) and  -->
-
 Similarly, a neural network that succeeds at this same task should allocate its capacity (layers) such that it successfully translates (or disentangles) raw input data (e.g., image pixels) into a set of representations (e.g., eyes, ears, legs, whiskers) that are useful for the task.
 
 ![](/images/hugo/representationdensenet.png)
@@ -73,7 +62,6 @@ Similarly, a neural network that succeeds at this same task should allocate its 
 
 Keep in mind that layers within a DNN are stacked units of computation comprised of weights and bias terms, whose values are learned during training. Thus, if we formulate our training objective carefully, a DNN can yield representations that are then useful for a family of related tasks. Depending on the availability of labeled data, compute capacity, and distribution of data, there are several useful strategies for learning representations.
 
-<!-- Again, to build intuition on how DNNs achieve this goal of disentangling important aspects of data, let use briefly review the architecture of a DNN. DNNs for classification tasks typically consist of layers - stacked units of computation - which feed into a final linear classifier (e.g. a softmax classifier) to discriminate across task categories. To excel at these tasks, a network trained with some supervised learning objective results in a situatuion where the majority of the network's capacity (layers before the final linear classifier) is devoted to computing representations that improve the classifier. -->
 
 ---
 
@@ -85,9 +73,6 @@ When we train a DNN on a supervised learning task (e.g., classification), the tr
 
 - **Generic Classification**:
 The most common examples of this are the use of models pretrained on the ImageNet dataset (1 million images, 100 classes) and, more recently, the Google BiT model trained on the JFT-300M dataset (300 million images, 18,291 classes)[[13]](https://arxiv.org/pdf/1912.11370.pdf). Extensive experiments have shown that the representations learned by these pretrained models (layers before the final softmax classifier layer) yield representations that are suitable for many other image processing tasks (transfer learning). 
-
-<!-- ![](/images/hugo/embed.gif) -->
-
 
 
 <video width="100%" controls autoplay loop>
@@ -111,8 +96,6 @@ In general, a supervised approach assumes the availability of large labeled data
 
 Some applied examples include: Pinterest Pintext [[14]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/pintext-kdd2019.pdf) - a multitask model trained using engagement data (clicks and repins) as labels (a measure of similarity between text queries);  Visual metric learning at Pinterest -  in which millions of Pinterest images with labels are used to learn a similarity metric for content-based image retrieval [[9]](https://arxiv.org/pdf/1811.12649.pdf), [[18]](https://arxiv.org/pdf/1908.01707.pdf)).
  
-
-<!-- [TODO .. notes from bengio talk, book]  -->
 
 ### Self-Supervised Learning (Pretext Tasks)
 
@@ -197,8 +180,7 @@ features = model.predict(img)
 - **Indexing**: Once we have our feature vectors for each image, we need infrastructure ( an index) that enables us to efficiently store these representations, such that we can subsequently run search queries. 
 As the size of the dataset becomes larger, two challenges emerge. First, a significant amount of space is needed to store vectors of size `62720` each, for millions of images. Second, it becomes computationally slow to exhaustively search over all images in our dataset (i.e., computing a similarity distance metric between the query and all dataset images and sorting results by distance). The first challenge can be addressed by applying transforms (e.g., dimensionality reduction, quantization) to our feature vectors. The second challenge can be addressed by using approximate nearest neighbour (ANN) methods [[17]](https://arxiv.org/pdf/1702.08734.pdf). Both of these solutions, while practical, result in some accuracy trade off. In the example below, we use the [FAISS](https://github.com/facebookresearch/faiss) library which implements both [exhaustive search and ANN search](https://github.com/facebookresearch/faiss/wiki/Guidelines-to-choose-an-index), as well as supports dimensionality reduction and quantization. (For a comparison of methods and libraries for ANN, see [this blog post](https://www.benfrederickson.com/approximate-nearest-neighbours-for-recommender-systems/).)
  
- <!-- The  Next, a distance metric is used to compute the distance between each image vector and all other image vectors in the dataset. Depending on the use case and data size, this may be precomputed or computed in real time as queries arrive. -->
-
+ 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=0" >}}
 
 import faiss
@@ -224,23 +206,6 @@ distances, indices = faiss_index.search(query, k)
 
 Full source code for the steps above is provided [here](https://github.com/fastforwardlabs/imageanalysis_cml/blob/master/notebooks/Semantic%20Image%20Search%20Tutorial.ipynb).
 
-<!-- Deep representation learning can be compute and storage intensive, especially as your data scales to millions or billions of items. Some strategies for addressing this range from binarization of high dimension features [[4]](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/classification-strong-baseline-bmvc-2019.pdf), and the use of multi-task embeddings. -->
- 
-
-<!-- Yoshua bengio - it is really hard to implement .. so we default tos -->
-
-<!-- ## Semantic Image Search with Supervised Pretrained Models -->
-
-<!-- ## Case Studies
-
-Pinterest - PinText
-https://medium.com/pinterest-engineering/pintext-a-multitask-text-embedding-system-in-pinterest-b80ece364555
-
-They use user interaction as a signal in learning relevant embeddings.
-Custom embedding on their data
-Standard embedddings dont work well.
-
-https://medium.com/pinterest-engineering/hybrid-search-building-a-textual-and-visual-discovery-experience-at-pinterest-8527ba9728a9 -->
 
 ## Conclusions
 
