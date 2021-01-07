@@ -62,3 +62,9 @@ The prototype section contains links to notebooks and prototypes. It is visible 
 # Adding a newsletter
 
 We use the blog to generate the newsetter (which is sent through Cloudera marketing ops). Newsletters go here: https://github.com/fastforwardlabs/blog/tree/master/content/newsletters and the html version can be found at URLs like https://blog.fastforwardlabs.com/newsletters/2020-06.html. You also need to inline the CSS (usually we use a Mailchimp tool, maybe someday we'll clean up this process more).
+
+# General info (for debugging)
+
+The main part of the blog is run using Hugo, so the Hugo docs should have most relevant info. Node runs the image upload server (which I (Grant) added to try and make it easier to make posts). The node server files are in the `s` directory, it's a relatively bare-bones node/express app. `npm` is set to run both hugo and the node server through the `package.json` `dev` setting. If you ever want to run hugo only (like if the node part breaks for some reason) you can just use `hugo server`.
+
+The blog is hosted through Github Pages and built using Hugo through Github Actions. Check the "Actions" tab on this repo and read up on Github actions for more info. It's a pretty default 'build Hugo on push' script.
