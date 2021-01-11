@@ -1,4 +1,11 @@
 [[entries]]
+number = "FF18"
+name = "Few-Shot Text Classification"
+blurb = "Text classification can be used for sentiment analysis, topic assignment, document identification, article recommendation, and more. While dozens of techniques now exist for this fundamental task, many of them require massive amounts of labeled data in order to be useful. Collecting annotations for your use case is typically one of the most costly parts of any machine learning application. In this report, we explore how latent text embeddings can be used with few (or even zero) training examples and provide insights into best practices for implementing this method."
+img = "ff18-combo.png"
+link = "https://few-shot-text-classification.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF16"
 name = "Structural Time Series"
 blurb = "Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem."
