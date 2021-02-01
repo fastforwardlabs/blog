@@ -53,3 +53,17 @@ name = "Federated Learning"
 blurb = "Federated Learning makes it possible to build machine learning systems without direct access to training data. The data remains in its original location, which helps to ensure privacy and reduces communication costs. Federated learning is a great fit for smartphones and edge hardware, healthcare and other privacy-sensitive use cases, and industrial applications such as predictive maintenance."
 img = "ff09-combo.png"
 link = "https://federated.fastforwardlabs.com/"
+
+[[entries]]
+number = "FF03-2019"
+name = "Deep Learning for Image Analysis: 2019 Edition"
+blurb = "Convolutional Neural Networks (CNN) excel at learning meaningful representations of features and concepts within images. These capabilities make CNNs extremely valuable for solving problems in domains such as medical imaging, autonomous driving, manufacturing, robotics, and urban planning. In this report, we show how to select the right deep learning models for image analysis tasks and techniques for debugging deep learning models."
+img = "ff03-2019-combo.png"
+link = "https://deep-learning-image-analysis.fastforwardlabs.com/"
+
+[[entries]]
+number = "FF03"
+name = "Deep Learning: Image Analysis"
+blurb = "Deep learning, or highly-connected neural networks, offers fascinating new capabilities for image analysis. Using deep learning, computers can now learn to identify objects in images. This report explores the history and current state of the field, predicts future developments, and explains how to apply deep learning today."
+img = "ff03-classic-combo.png"
+link = "https://deep-learning-image-classic.fastforwardlabs.com/"
