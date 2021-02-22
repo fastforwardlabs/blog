@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-02.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to February&rsquo;s Cloudera Fast Forward newsletter. Three exciting things this month.</p>
+<ul>
+<li>We&rsquo;re open sourcing a whole raft of applied ML applications.</li>
+<li>We&rsquo;re hiring.</li>
+<li>Recommended reading.</li>
+</ul>
+<h2 id="applied-machine-learning-prototypes">Applied Machine Learning Prototypes</h2>
+<p>Deep in the underground (virtual) Fast Forward lab, we&rsquo;ve been very busy working away in secrecy for <em>months</em>. We&rsquo;re super excited to announce ten open source Applied ML Prototypes.</p>
+<p>These prototypes (we call &lsquo;em AMPs) are inspired by both our own research and our front row seats to the challenges enterprises face when developing ML applications. We hope they serve as useful inspiration, learning materials, and as a templates to kick start your own applications. They can be deployed automatically inside Cloudera Machine Learning platform with just a few clicks. Even if you are not a Cloudera customer, the code is open source and ready for your use, be that as inspiration, for learning or as a template for your own applications.</p>
+<p>Check out the <a href="https://github.com/cloudera?q=CML_AMP">code</a> and read more here: <a href="https://blog.cloudera.com/kickstart-ai-use-cases-with-new-applied-machine-learning-prototypes/">Kickstart AI Use Cases With New Applied Machine Learning Prototypes</a>.</p>
+<p><img src="/images/hugo/amps-1613997389.png" alt="Guitar Amps"></p>
+<p><em>Photo: Amps, not AMPs. Credit: <a href="https://unsplash.com/@litangen">Thomas Litangen</a> (crop).</em></p>
+<h2 id="were-hiring">We&rsquo;re Hiring</h2>
+<p>We&rsquo;re hiring for a research engineer to join our team! At Cloudera Fast Forward Labs, we take the incredible research developments we find in academia and industry, and work to bridge the gap to products and processes that are useful for practitioners. If you&rsquo;re thoughtful about applications of machine learning in industry, and enjoy building things and writing about them, we&rsquo;d love to hear from you!</p>
+<p>A description of the role, and details about how to apply can be found here: <a href="https://cloudera.wd5.myworkdayjobs.com/External_Career/job/UK-Remote/Research-Engineer---Fast-Forward-Team_210336-1">Research Engineer</a>.</p>
+<h2 id="recommended-reading">Recommended Reading</h2>
+<ul>
+<li>
+<p><strong>Connecting Text and Images</strong></p>
+<p>Can we learn robust image representations of images using natural language supervision? The answer is yes! In their January 2021 paper, OpenAI introduce CLIP -  a model trained on 400M image and text pairs scraped from the internet with very interesting results. To illustrate its value, representations learned by CLIP are at par with a fully supervised ResNET50 trained on ImageNet and significantly outperforms all other models on challenging datasets (e.g. adversarial datasets, sketches etc). CLIP which is based on transformers (transformer based text encoder, and transformer based image encoder) demonstrate how transformers are helping unify the ML problem space. - <a href="https://twitter.com/vykthur">Victor</a>.</p>
+<p><strong>Related Posts</strong></p>
+<ul>
+<li><a href="https://openai.com/blog/clip/">CLIP: Connecting Text and Images</a></li>
+<li><a href="https://blog.fastforwardlabs.com/2020/11/15/representation-learning-101-for-software-engineers.html">Representation Learning 101 for Software Engineers</a></li>
+<li><a href="https://victordibia.com/blog/ai-breakthroughs-feb21/">Recent Breakthroughs in AI (Karpathy, Johnson et al, Feb 2021)</a></li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.shreya-shankar.com/8d5c6ec070babe7c23d3d5b68384a8bd/retrospective.pdf">Predictive Modeling: A Retrospective</a></strong></p>
+<p>An essay by Shreya Shankar about her experiences with predictive modeling in the industry. Quite an engaging read for an ML practitioner that discusses various aspects of what applied ML is like in practice - managing ML pipelines, dealing with algorithmic bias, the gaps between ML research and production, debugging models in production and others. It gives a glimpse of what it is like to be in a company where the infrastructure is nicely abstracted from the practitioner, and re-iterates why ML in production is hard. Building an ML model on a toy dataset, even if the data is derived from the real world, doesn’t mean it will perform and scale well during production! The essay discusses how building end-to-end ML pipelines is complex and so is managing people who have to effectively collaborate on these pipelines. Explaining model predictions could be a nightmare, for example, how do you rationalize a model’s prediction when it deviates from the true label? All in all, a thought provoking piece that could help people interested in pursuing ML or data science careers. <strong>-</strong> <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+<li>
+<p><strong><a href="https://arxiv.org/pdf/2005.12872v2.pdf">End-to-End Object Detection with Transformers</a></strong></p>
+<p>In 2020, Facebook AI released a novel approach to the task of object detection that combines a standard CNN backbone with a modern Transformer architecture called DEtection TRansformer (DETR). DETR simplifies the detection pipeline by dropping several hand-designed components of traditional detection architectures that demand prior knowledge of the problem space like spatial anchors and non-maximal suppression (NMS). Despite heavier training requirements, the authors demonstrate comparable performance to a competitive baseline encouraging continued research on this simplistic design from the object detection community. <em><a href="https://www.linkedin.com/in/andrew-r-reed/">-Andrew</a></em></p>
+</li>
+<li>
+<p><strong><a href="https://generallyintelligent.ai/">Generally Intelligent</a></strong></p>
+<p>I&rsquo;m not a big podcast listener but I stumbled across this new series last week and was pleasantly surprised! Dubbing themselves a &ldquo;podcast for deep learning researchers,&rdquo; the series is 0-indexed (love it!) and focuses on interviews with machine learning and deep learning scientists from leading think tanks such as DeepMind, OpenAI, Google AI, and more. The interviews are more like conversations that explore the hunches and processes of the deep learning research cycle while simultaneously imparting practical advice for other researchers without being overly technical. <em>-<a href="www.linkedin.com/in/melanierbeck">Melanie</a></em></p>
+</li>
+<li>
+<p><strong><a href="https://www.nature.com/articles/s42256-019-0138-9">From local explanations to global understanding with explainable AI for trees</a></strong></p>
+<p>This paper introduces the TreeExplainer method to SHAP. SHAP can be used in a model agnostic fashion, being capable of explaining arbitrary, black box predictors with a Kernel estimation. However, this is extremely computationally costly. By restricting to only tree-based algorithms, TreeExplainer can work <em>much</em> faster. The paper also presents visual methods for aggregating the local, non-linear explanations into global feature importances. I love that the authors are thoughtful not only about the algorithmic properties of explanations, but how those explanations are ultimately presented. - <a href="https://twitter.com/_cjwallace"><em>Chris</em></a></p>
+</li>
+</ul>
+
+  </div>
+
+
