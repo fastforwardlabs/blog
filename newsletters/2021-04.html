@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-04.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the April Cloudera Fast Forward Labs newsletter, covering our latest research, livestream, and recommended reading.</p>
+<h2 id="new-research-session-based-recommendations">New research: Session-Based Recommendations</h2>
+<p>Having taken a short break to work on <a href="https://blog.cloudera.com/kickstart-ai-use-cases-with-new-applied-machine-learning-prototypes/">Applied ML Prototypes</a>, our first research cycle of 2021 is just now wrapping up, and we&rsquo;re excited to share it soon. Here&rsquo;s a preview:</p>
+<blockquote>
+<p>Recommendation systems have become a cornerstone of modern life, from online retail to music and video streaming. In this report, we dig into session-based recommendations, a subset of recommendation systems that considers a user&rsquo;s historical browsing information to generate recommendations. Specifically, we explore how to treat to this as a natural language problem and demonstrate how the now-classic Word2Vec algorithm can be retooled for the task.</p>
+</blockquote>
+<p>Keep your eyes on our social channels (twitter <a href="https://twitter.com/fastforwardlabs">here</a>) for the report&rsquo;s release in mid May.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Yesterday Melanie, Chris and Andrew hosted our second livestream. <a href="https://youtu.be/oLFqTj5FcEA"><strong>Fast Forward Live: Few-Shot Text Classification</strong></a>. For those who missed out, the replay is at that link, no sign up necessary.</p>
+<p>Text classification can be used for sentiment analysis, topic assignment, document identification, article recommendation, and more. While dozens of techniques now exist for this fundamental task, many of them require massive amounts of labeled data in order to be useful. Collecting annotations for your use case is typically one of the most costly parts of any machine learning application. In the livestream, we saw how latent text embeddings can be used with few (or even zero) training examples and saw a live demo of it in action.</p>
+<p>For more, check out our report: <a href="https://few-shot-text-classification.fastforwardlabs.com/">Few-Shot Text Classification</a>.</p>
+<p><img src="/images/hugo/few-shot-1619435042.png" alt="Few-Shot Text Classification report cover"></p>
+<p>You can also still catch a replay of our first livestream: <strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong>, where Victor and Andrew discussed the benefits of good representations, and how to learn them.</p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>A few of our research engineers recommend some reading for this month:</p>
+<ul>
+<li>
+<p><a href="https://neptune.ai/blog/bert-and-the-transformer-architecture-reshaping-the-ai-landscape">10 Things You Need to Know About BERT and the Transformer Architecture that are Reshaping the AI Landscape</a>
+Diving into a new area of research can be daunting as it requires significant time to understand not only state of the art approaches, but also the contextual history that has shaped the current methods. This is especially true of modern NLP concepts like BERT and the Transformer architecture. Luckily, this comprehensive blog post by <a href="http://neptune.ai/">neptune.ai</a> does a fantastic job of summarizing the most important ideas in NLP today, including where this technology came from, how it was developed, and why it’s become ubiquitous. A great starting point for anyone curious about NLP. - <a href="https://www.linkedin.com/in/andrew-r-reed/"><em>Andrew</em></a></p>
+</li>
+<li>
+<p><a href="https://digital-strategy.ec.europa.eu/en/library/proposal-regulation-european-approach-artificial-intelligence">Proposal for a Regulation on a European approach for Artificial Intelligence</a>
+The European Union has launched proposed regulations for AI systems (AI being broadly defined along use case, rather than technological, lines). This is a big deal, being the strongest regulation yet proposed. While it will be years before it becomes law, the proposal is strong: high risk AI applications will be heavily regulated (guidance on what constitutes &ldquo;high risk&rdquo; is contained within). There is much to digest and discuss, with arguments appearing in both directions: on the one hand, there are major loopholes, and on the other, where the regulation is strong, it may temper innovation. However, the clear thrust of the proposal is that AI systems must respect fundamental rights, a direction I strongly endorse. - <a href="https://twitter.com/_cjwallace"><em>Chris</em></a></p>
+</li>
+<li>
+<p><a href="https://papers.nips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf">Hidden Technical Debt in ML Systems</a></p>
+<p>As researchers we are often focussed on improving performance based on new algorithmic approaches. In the process we may entirely ignore the cost that comes with increase in complexity of the system. And this is when the <a href="https://papers.nips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf">Hidden Technical Debt in ML Systems</a> paper (although not recent) can serve as a good reminder of the questions one should ask to justify an investment of time and resources in such pursuits.</p>
+<p>The paper seeks to uncover the trade-offs that must be considered in practice and focusses on system-level interactions and interfaces as an area where ML technical debt may rapidly accrue. These include:</p>
+<ol>
+<li>Complex models making it difficult to enforce strict abstraction boundaries for ML systems. For instance, one may build a model - M’ that uses another model M as input. This cascading causes a new system dependency on the original model M and makes it significantly expensive to analyze improvements in model M’ in future. The cost increases when there are multiple cascading models that can lead to an improvement deadlock as improving the accuracy of any individual component actually leads to system-level detriments.</li>
+<li>Data dependencies have similar capacity of building technical debt which are even more difficult to detect compared to code dependencies. For instance, one may use input features from unstable systems. This may include using the input feature that’s actually an output of a model that causes it to change its behavior qualitatively or quantitatively over time.</li>
+<li>Feedback loops, a phenomenon when the output of a ML model is indirectly fed into its input causing it difficult to detect and address.</li>
+<li>ML system anti-patterns like glue-code where ML researchers tend to develop general purpose solutions as self-contained packages. Employing a glue-code system design pattern results in a massive amount of supporting code which is written to get data into and out of general-purpose packages. This could be expensive long term making it difficult to test alternatives in future</li>
+<li>External changes that occur real time and impact the system. Creating systems that can monitor and automatically respond to these are well worth the time</li>
+</ol>
+<p>While technical debt has been always talked about from an engineering perspective, it is equally relevant for researchers and that’s because they all have maintenance problems of traditional code plus an additional set of data and ML specific issues. A few useful questions that the paper suggests to consider:</p>
+<ul>
+<li>How easily can an entirely new algorithmic approach be tested at full scale?</li>
+<li>What is the transitive closure of all data dependencies?</li>
+<li>How precisely can the impact of a new change to the system be measured?</li>
+<li>Does improving one model or signal degrade others?</li>
+<li>How quickly can new members of the team be brought up to speed?</li>
+</ul>
+<p><strong>-</strong> <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+</ul>
+
+  </div>
+
+
