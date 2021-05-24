@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-05.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the May Cloudera Fast Forward Labs newsletter. This month, we have some new research, a livestream you&rsquo;re invited to, and some recommended reading.</p>
+<h2 id="new-research-session-based-recommendations">New research: Session-Based Recommendations</h2>
+<p><img src="/images/hugo/session-based-recommender-systems-splash-1621853737.png" alt="Session-based Recommender Systems cover image"></p>
+<p>Recommendation systems have become a cornerstone of modern life, spanning sectors that include online retail, music and video streaming, and even content publishing. These systems help us navigate the sheer volume of content on the internet, allowing us to discover what’s interesting or important to us. A key trend over the past few years has been session-based recommendation algorithms that provide recommendations solely based on a user’s interactions in an ongoing session, and which do not require the existence of user profiles or their entire historical preferences. Our <a href="https://session-based-recommenders.fastforwardlabs.com/">Session-based recommender systems report</a> covers:</p>
+<ul>
+<li>the problem space and applications</li>
+<li>a simple, yet, powerful, NLP-based approach (word2vec) to recommend a next item to a user</li>
+<li>experimental findings when employing this approach</li>
+<li>and many of the considerations necessary to building thoughtful, information-driven recommender systems</li>
+</ul>
+<p>Follow the links in the report to find code snippets so you can try it for yourself!</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p><img src="/images/hugo/Fast-Forward-Live-June-2021-1621853783.jpg" alt="Fast Forward Live promo image"></p>
+<p>Join us live on June 2 at 9am PST for our third ever live stream. We&rsquo;ll chat about our latest research output and take live questions. You can tune in <a href="https://www.youtube.com/watch?v=JoRx6udpnbI">here</a>.</p>
+<p>You can also still catch a replay of our previous livestreams: <a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a> and <strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a>.</strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Some of our team share their favourite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://arxiv.org/abs/2103.08493">How Many Data Points is a Prompt Worth?</a>
+Pretrained language models are becoming a staple of the modern NLP stack. Typically, these models are &ldquo;fine-tuned&rdquo; for a downstream task (e.g., classification, question answering) through the use of a &ldquo;head&rdquo; model: a classification layer that takes in pretrained representations and predicts an output. However, an alternative paradigm is gaining traction: <em>prompting</em>. This method adapts the pretrained language model directly by training it to recognize structured prompts designed to coax the model to produce a textual response corresponding to an output class (T5 and GPT3 use this). These prompts can provide additional information to the language model, which could make them especially advantageous in low-data regimes.</p>
+<p>This paper examines the claim that prompting requires fewer supervised data points to learn a given downstream task. They perform a slew of experiments on many standardized NLP tasks and quantify the <em>average data advantage</em>, or how many data points a prompt is worth. They find that, in nearly all cases, prompting requires fewer data points to learn a downstream task, and sometimes substantially so! This is exciting because it indicates that large, pretrained language models can be better adapted to NLP tasks in low-data regimes. However, this comes with a caveat because designing custom prompts can inject human bias into language models, which already suffer biases of their own! Proceed with care. - <a href="http://www.linkedin.com/in/melanierbeck">Melanie</a></p>
+</li>
+<li>
+<p><a href="https://www.nature.com/articles/s41467-020-19478-2">Collider bias undermines our understanding of COVID-19 disease risk and severity</a>
+Causal graphs give us a unified means of understanding many common (and dangerous when ignored) statistical effects, like Simpson&rsquo;s paradox and selection bias. This paper analyses risk factors for COVID-19 infection through the lens of causal graphs, especially focussing on collider bias. If not properly handled, collider bias distorts associations between variables (selection bias is itself a form of collider bias). Armchair statistics has understandably grown in precedence during the pandemic, and this paper also serves to introduce the causal effects it discusses using the now-accessible COVID statistics. - <a href="https://twitter.com/_cjwallace">Chris</a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2103.13136">Representing Numbers in NLP: a Survey and a Vision</a>
+Reasoning with quantities, counts, and numerical representations is critical to understanding natural language. In both the original paper and <a href="https://arxiv.org/abs/2103.03874">a 2021 study</a>, researchers demonstrated that despite the effectiveness of language modeling at scale, the 175B parameter behemoth that is GPT-3 struggles with mathematical concepts in language. This paper contextualizes recent work and challenges on numeracy in NLP by proposing a taxonomy of tasks in the space and offering a vision for future research. - <a href="https://www.linkedin.com/in/andrew-r-reed/">Andrew</a></p>
+</li>
+</ul>
+
+  </div>
+
+
