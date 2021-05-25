@@ -1,4 +1,11 @@
 [[entries]]
+number = "FF19"
+name = "Session-based Recommender Systems"
+blurb = "Being able to recommend an item of interest to a user (based on their past preferences) is a highly relevant problem in practice. A key trend over the past few years has been session-based recommendation algorithms that provide recommendations solely based on a user’s interactions in an ongoing session, and which do not require the existence of user profiles or their entire historical preferences. This report explores a simple, yet powerful, NLP-based approach (word2vec) to recommend a next item to a user. While NLP-based approaches are generally employed for linguistic tasks, here we exploit them to learn the structure induced by a user’s behavior or an item’s nature."
+img = "ff19-cover.png"
+link = "https://session-based-recommenders.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF18"
 name = "Few-Shot Text Classification"
 blurb = "Text classification can be used for sentiment analysis, topic assignment, document identification, article recommendation, and more. While dozens of techniques now exist for this fundamental task, many of them require massive amounts of labeled data in order to be useful. Collecting annotations for your use case is typically one of the most costly parts of any machine learning application. In this report, we explore how latent text embeddings can be used with few (or even zero) training examples and provide insights into best practices for implementing this method."
