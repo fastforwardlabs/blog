@@ -4,8 +4,8 @@ date: 2021-05-26T17:04:38
 author: Victor and Andrew
 author_link: 
 preview_image: /images/hugo/ff20_blog1_preview_img-1622070375.png
-post_type: 
-external_url: 
+post_type: Post
+# external_url: 
 ---
 
 ![](/images/hugo/ff20_blog1_preview_img-1622070375.png)
