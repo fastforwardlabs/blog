@@ -6,10 +6,22 @@
     <description>Recent content in Posts on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Nov 2020 21:09:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 May 2021 17:04:38 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Deep Learning for Automatic Offline Signature Verification</title>
+      
+      <link></link>
+      
+      <pubDate>Wed, 26 May 2021 17:04:38 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html</guid>
+      <description>Figure 1. Handwritten signatures continue to be a widely used user trait for identification and authentication. Image Source  TLDR; We are working on a project - applying deep learning models to verify signatures - and will be writing about this process. This post is the first in the series and provides an overview of the signature verification task, use cases and challenges.
+ Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries).</description>
+    </item>
     
     <item>
       <title>Representation Learning 101 for Software Engineers</title>

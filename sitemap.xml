@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2021-05.html</loc>
-    <lastmod>2021-05-24T10:53:41+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2021-05-26T17:04:38+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/</loc>
+    <loc>https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html</loc>
+    <lastmod>2021-05-26T17:04:38+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2021-05-26T17:04:38+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2021-05.html</loc>
     <lastmod>2021-05-24T10:53:41+00:00</lastmod>
   </url>
   
@@ -45,11 +55,6 @@
   <url>
     <loc>https://blog.fastforwardlabs.com/newsletters/2020-11.html</loc>
     <lastmod>2020-11-20T16:22:30+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
-    <lastmod>2020-11-15T21:09:50+00:00</lastmod>
   </url>
   
   <url>

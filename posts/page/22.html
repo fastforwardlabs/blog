@@ -394,6 +394,49 @@ if (!doNotTrack) {
     
       <div class="post-link" style="position: relative">
   <h5 style="margin-bottom: 4px;">
+    <span>Dec 12, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      guest post
+    </span>
+  </h5>
+  
+  <a href="/2016/12/12/machines-in-conversation.html" class="preview-image-holder">
+    <img class="preview-image" src="http://68.media.tumblr.com/692d44e33b12223b1e7fb77bb122ec99/tumblr_inline_oi327sddi71ta78fg_540.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2016/12/12/machines-in-conversation.html"
+       ><h2 style="margin-bottom: 4px;">Machines in Conversation</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.gridspace.com/">Gridspace</a>
+        &middot; </span
+      >
+    </span>
+    We at Fast Forward Labs have long been interested in speech recognition technologies. This year’s chatbot craze has seen growing interest in machines that interface with users in friendly, accessible language. Bots, however, only rarely understand the complexity of colloquial conversation: many practical customer service bots are trained on a very constrained set of queries (”I lost my password”). That’s why we’re excited to highlight Gridspace, a San Francisco-based startup that provides products, services, and an easy-to-use API focused on making human-to-human conversation analyzable by machines.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2016/12/12/machines-in-conversation.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+    
+      <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
     <span>Dec 8, 2016</span> &middot;
     <span style="text-transform: capitalize;">
       post
@@ -586,60 +629,6 @@ if (!doNotTrack) {
     >
     
       <a href="/2016/08/24/next-economics-interview-with-jimi-crawford.html">...read more</a>
-    
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-    
-      <div class="post-link" style="position: relative">
-  <h5 style="margin-bottom: 4px;">
-    <span>Aug 22, 2016</span> &middot;
-    <span style="text-transform: capitalize;">
-      whitepaper
-    </span>
-  </h5>
-  
-  <a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html" class="preview-image-holder">
-    <img class="preview-image" src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif" />
-  </a>
-  
-  <div>
-    
-    <a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"
-       ><h2 style="margin-bottom: 4px;">Under the Hood of the Variational Autoencoder (in Prose and Code)</h2></a
-     >
-     
-  </div>
-  <div class="small" style="height: 4.5em; overflow: hidden;">
-    
-    <span>
-      by 
-      <span
-        ><a href="https://twitter.com/meereve">Miriam</a>
-        &middot; </span
-      >
-    </span>
-    <h5 id="the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona">The <a href="https://arxiv.org/abs/1312.6114">Variational</a> <a href="https://arxiv.org/abs/1401.4082">Autoencoder</a> (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In <a href="http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a> of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—<a href="http://shakirm.com/slides/DLSummerSchool_Aug2016_compress.pdf">“machines that imagine and reason.”</a></h5>
-<p>To recap: VAEs put a probabilistic spin on the basic autoencoder paradigm—treating their inputs, hidden representations, and reconstructed outputs as probabilistic random variables within a directed graphical model. With this <a href="https://xkcd.com/1236/">Bayesian</a> perspective, the encoder becomes a variational <em>inference network</em>, mapping observed inputs to (approximate) posterior distributions over latent space, and the decoder becomes a <em>generative network</em>, capable of mapping arbitrary latent coordinates back to distributions over the original data space.</p>
-<div class="figure">
-<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/vae.4.png" title="A variational autoencoder" style="width:80.0%"/></div>
-<p>The beauty of this setup is that we can take a principled Bayesian approach toward building systems with a rich internal “mental model” of the observed world, all by training a single, cleverly-designed deep neural network.</p>
-<p>These benefits derive from an enriched understanding of data as merely the tip of the iceberg—the observed result of an underlying causative probabilistic process.</p>
-<p>The power of the resulting model is captured by Feynman’s famous <a href="http://archives-dc.library.caltech.edu/islandora/object/ct1:483">chalkboard quote</a>: “What I cannot create, I do not understand.” When trained on MNIST handwritten digits, our VAE model can parse the information spread thinly over the high-dimensional observed world of pixels, and condense the most meaningful features into a structured distribution over reduced latent dimensions.</p>
-<p>Having recovered the latent manifold and assigned it a coordinate system, it becomes trivial to walk from one point to another along the manifold, creatively generating realistic digits all the while:</p>
-<div class="figure">
-<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif" title="Generatively morphing digits"/></div>
-<p>In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in <a href="http://fastforwardlabs.github.io/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a>.</p>
-<p>Along the way, we’ll show how to implement a VAE in <a href="http://tensorflow.org/">TensorFlow</a>—a library for efficient numerical computation using data flow graphs, with key features like <a href="http://alexey.radul.name/ideas/2013/introduction-to-automatic-differentiation/">automatic differentiation</a> and parallelizability (across clusters, CPUs, GPUs…and <a href="https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html">TPUs</a> if you’re lucky). You can find (and tinker with!) the full implementation <a href="https://github.com/fastforwardlabs/vae-tf/tree/master">here</a>, along with a couple <a href="https://github.com/fastforwardlabs/vae-tf/tree/master/out">pre-trained models</a>.</p>
-  </div>
-  <div
-    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-    
-      <a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html">...read more</a>
     
   </div>
   <div class="spacer"></div>
