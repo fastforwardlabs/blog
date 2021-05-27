@@ -10,7 +10,7 @@ post_type: Post
 
 ![](/images/hugo/ff20_blog1_preview_img-1622070375.png)
 
-##### Figure 1. Handwritten signatures continue to be a widely used user trait for identification and authentication. [Image Source](https://www.google.com/imgres?imgurl=https%3A%2F%2Fblog.vivi.lu%2Fwp-content%2Fuploads%2F2018%2F09%2Folu-eletu-15018-unsplash.jpg&imgrefurl=https%3A%2F%2Fblog.vivi.lu%2Fles-points-a-verifier-avant-de-signer-votre-bail-de-location-2%2F&tbnid=dMsYwzSuqv7zWM&vet=12ahUKEwjfnc2CvOjwAhVsT98KHYhxAksQMygAegUIARCFAQ..i&docid=NgVllxpiT-YHFM&w=4679&h=3099&q=tarjouksen%20tekeminen%20tarjouspohja%20siivouksesta&ved=2ahUKEwjfnc2CvOjwAhVsT98KHYhxAksQMygAegUIARCFAQ)
+##### Figure 1. Handwritten signatures continue to be a widely used user trait for identification and authentication. [Image Source](https://unsplash.com/photos/DqWEAOHsAvc)
 
 > TLDR; We are working on a project - applying deep learning models to verify signatures - and will be writing about this process. This post is the first in the series and provides an overview of the signature verification task, use cases and challenges.
 
