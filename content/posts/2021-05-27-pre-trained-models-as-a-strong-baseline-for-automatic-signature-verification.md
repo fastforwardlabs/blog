@@ -10,7 +10,7 @@ post_type: Post
 
 ![](/images/hugo/ff20_blog2_preview_img-1622115845.png)
 
-##### Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. [Image Source](https://unsplash.com/photos/doplSDELX7E)
+##### Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. [Image Source](https://unsplash.com/photos/DqWEAOHsAvc)
 
 As discussed in our [introductory blog post](https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html), offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents. And due to the significance and scale of this task, signature verification has become a critical line of research in the field of machine learning and pattern recognition as a way to reduce the uncertainty and inefficiency involved in the manual authentication process [1]. 
 
