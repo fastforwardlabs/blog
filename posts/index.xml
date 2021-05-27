@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 May 2021 17:04:38 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 May 2021 07:35:06 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pre-trained Models as a Strong Baseline for Automatic Signature Verification</title>
+       
+      <link>https://blog.fastforwardlabs.com/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html</link>
+      
+      <pubDate>Thu, 27 May 2021 07:35:06 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html</guid>
+      <description>Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. Image Source As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.</description>
+    </item>
     
     <item>
       <title>Deep Learning for Automatic Offline Signature Verification</title>
