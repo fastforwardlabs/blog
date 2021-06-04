@@ -127,13 +127,13 @@ Up until this point, we’ve only considered the final layer of a ResNet50 model
 
 By plotting model and layer combinations against EER and number of parameters, we immediately notice an inverse relationship between number of parameters and error. This makes sense as the number of parameters implies capacity for learning. However, despite having only the second most parameters, the final layer of VGG16 (blue circle) outperforms the larger, final layer ResNet50 model (blue X) with an EER of 22.8% at a distance threshold of 0.32.
 
-By taking the strongest performing VGG16 model, applying the 0.32 threshold, and classifying the remaining examples from the held out test dataset, we achieve an overall accuracy of 74.0%, a false acceptance rate of 17.4%, and a false rejection rate of 31.5%. Not bad!
+By taking the strongest performing VGG16 model, applying the 0.32 threshold, and classifying the remaining examples from the held out test dataset, we achieve an overall accuracy of 67.0%, a false acceptance rate of 8.2%, and a false rejection rate of 39.1%. Not bad!
 
 ## Conclusion
 
 In this post, we developed a baseline classification approach to the task of offline signature verification using extracted representations from several pre-trained CNN architectures. In doing so, we gained insight around our motivating questions:
 
-- *Are pretrained models a plausible baseline for the task of signature verification?* Yes! By applying this technique to the CEDAR dataset, we obtained a model that can correctly discriminate between genuine and forged signature pairs with an accuracy of 74% without any training.
+- *Are pretrained models a plausible baseline for the task of signature verification?* Yes! By applying this technique to the CEDAR dataset, we obtained a model that can correctly discriminate between genuine and forged signature pairs with an accuracy of 67% without any training.
 - *Do early network layers extract more meaningful features in the context of signatures?* Surprisingly, no. Despite the fact that early layers do learn more simplistic, lower level features, we found that later layers consistently provide more meaningful feature sets for our task.
 - *Does model size equate to higher performance?* Generally, yes. While we have found an inverse relationship between model size and error rate, there is a diminishing return in performance as model size increases. For example, ResNet50’s error improves by just ~4% despite having a 16x increase in capacity between the middle and final layer blocks.
 
