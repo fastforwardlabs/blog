@@ -6,6 +6,7 @@
 <meta property="og:image" content="{{ .Site.BaseURL }}{{ .Params.preview_image }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="twitter:card" content="summary_large_image">
+{{ partial "mathjax_support.html" . }}
 {{ end }}
 
 {{ define "main" }}
