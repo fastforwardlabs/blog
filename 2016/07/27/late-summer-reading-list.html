@@ -16,6 +16,28 @@ Homage to a great physicist, in a textbook: David MacKay, a Cambridge physicist
 <meta property="og:image" content="https://blog.fastforwardlabs.com/tumblr_files/pexels-photo-57808.jpeg">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2016/07/27/late-summer-reading-list.html">
 <meta property="twitter:card" content="summary_large_image">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/style.css" />
     

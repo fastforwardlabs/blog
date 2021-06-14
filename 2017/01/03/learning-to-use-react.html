@@ -16,6 +16,28 @@ In our latest report on probabilistic programming, I used the React javascript l
 <meta property="og:image" content="https://blog.fastforwardlabs.comhttps://68.media.tumblr.com/3eefb9d8c2e3d798ca6dcead23017de9/tumblr_inline_oj7sj2BjWG1ta78fg_540.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2017/01/03/learning-to-use-react.html">
 <meta property="twitter:card" content="summary_large_image">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/style.css" />
     

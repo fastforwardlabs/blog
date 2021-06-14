@@ -16,6 +16,28 @@ Data The first ingredient for building a recommendation system is user interacti
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/2018/01/ROC_NMF_tag_loop_1115_nodot.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2018/01/22/exploring-recommendation-systems.html">
 <meta property="twitter:card" content="summary_large_image">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/style.css" />
     

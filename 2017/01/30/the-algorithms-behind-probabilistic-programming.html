@@ -16,6 +16,28 @@ This post gives a feel for the content in our report by introducing the algorith
 <meta property="og:image" content="https://blog.fastforwardlabs.comhttp://fastforwardlabs.github.io/report_images/ff05/3-08.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2017/01/30/the-algorithms-behind-probabilistic-programming.html">
 <meta property="twitter:card" content="summary_large_image">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/style.css" />
     
