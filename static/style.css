@@ -281,3 +281,21 @@ button:hover {
     display: block;
   }
 }
+
+code.has-jax {
+  -webkit-font-smoothing: antialiased;
+  background: inherit !important;
+  border: none !important;
+  font-size: 100%;
+}
+
+.metrictable > table, .metrictable   tbody {
+  text-align: left !important; 
+}
+
+.metrictable > table > tbody > tr > td ,
+.metrictable > table > thead > tr > th{ 
+  text-align: left;
+  border-top: 1px solid rgb(189, 189, 189);
+  /* border-right: 1px solid rgb(189, 189, 189); */
+}
