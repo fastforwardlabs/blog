@@ -228,7 +228,7 @@ We constructed several model architectures (see Table 1 below) and trained them 
 ##### Table 1. Performance for multiple models evaluated on a test set with hard negative pairs. All models are trained with the triplet loss objective (except the pretrained VGG16 and ResNet50 baseline).
 
 
-![](/images/hugo/metricblog/tripletmodel_summary.png)
+![](/images/hugo/metricblog/tripletmodel_summary.jpg)
 ##### Figure 12. Maximum accuracy vs model size for multiple model architectures, evaluated on the signature verification task. 
  
 
@@ -291,7 +291,7 @@ In this sanity check, we construct image pairs (positive and negative) pairs and
 
 ###  Gradient Visualization of Class Activation Maps
 We can also utilize gradient based approaches [^10] to inspect “what aspects of the input are most influential/relevant to the output”. These approaches have been used in debugging classification models to identify what pixels in the input image drive a specific class prediction. For example we want to see that pixels around the head and ears of a husky dog are the relevant regions as opposed to a snow background when predicting the husky class.  A well known approach in this area is GradCam [^11] which visualizes the gradient of the class score (logit) with respect to the feature map of the last convolutional unit of a DNN model. 
-We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature and possible focus on parts of written letters that might have high variance (e.g. attention to how users might round their g’s in a unique way).
+We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature and possible focus on parts of written letters that might have high variance (e.g. attention to how users might round their g’s in a unique way). Our implementation of GradCam is based on the Keras GradCam example here[^12].
 
 Note, that methods like GradCam are not exactly principled, but subject to interpretation based on domain knowledge.  The reader is encouraged to explore GradCam visualizations to confirm that the pixels which the model finds influential make sense based on their knowledge of the problem space.
 
@@ -351,3 +351,4 @@ With respect to implementation, we found the Tensorflow addons implementation of
 [^9]: Boudiaf, Malik, et al. "A unifying mutual information view of metric learning: cross-entropy vs. pairwise losses." European Conference on Computer Vision. Springer, Cham, 2020.
 [^10]: Adebayo, J., Gilmer, J., Muelly, M., Goodfellow, I., Hardt, M., & Kim, B. (2018). Sanity checks for saliency maps. arXiv preprint arXiv:1810.03292. 
 [^11]: Selvaraju, Ramprasaath R., et al. "Grad-cam: Visual explanations from deep networks via gradient-based localization." Proceedings of the IEEE international conference on computer vision. 2017.
+[^12]: Grad-CAM class activation visualization https://keras.io/examples/vision/grad_cam/
