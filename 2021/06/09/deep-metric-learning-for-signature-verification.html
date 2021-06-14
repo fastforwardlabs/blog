@@ -314,7 +314,7 @@ Note that a siamese network is not required to implement metric learning with co
 </table>
 </div>
 <h5 id="table-1-performance-for-multiple-models-evaluated-on-a-test-set-with-hard-negative-pairs-all-models-are-trained-with-the-triplet-loss-objective-except-the-pretrained-vgg16-and-resnet50-baseline">Table 1. Performance for multiple models evaluated on a test set with hard negative pairs. All models are trained with the triplet loss objective (except the pretrained VGG16 and ResNet50 baseline).</h5>
-<p><img src="/images/hugo/metricblog/tripletmodel_summary.png" alt=""></p>
+<p><img src="/images/hugo/metricblog/tripletmodel_summary.jpg" alt=""></p>
 <h5 id="figure-12-maximum-accuracy-vs-model-size-for-multiple-model-architectures-evaluated-on-the-signature-verification-task">Figure 12. Maximum accuracy vs model size for multiple model architectures, evaluated on the signature verification task.</h5>
 <h4 id="effect-of-triplet-model-choices">Effect of Triplet Model Choices</h4>
 <p>Training multiple models allowed us to explore the impact of design choices which a datasciencist must navigate when applying metric learning in practice.</p>
@@ -362,7 +362,7 @@ When applying transfer learning, the data scientist must decide how much of the 
 <h5 id="figure-15-density-plot-of-the-cosine-distances-between-embeddings-produced-by-multiple-models-for-positive-and-easy-negative-pairs-in-our-test-set">Figure 15 Density plot of the cosine distances between embeddings (produced by multiple models) for positive and easy negative pairs in our test set.</h5>
 <h3 id="gradient-visualization-of-class-activation-maps">Gradient Visualization of Class Activation Maps</h3>
 <p>We can also utilize gradient based approaches <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> to inspect “what aspects of the input are most influential/relevant to the output”. These approaches have been used in debugging classification models to identify what pixels in the input image drive a specific class prediction. For example we want to see that pixels around the head and ears of a husky dog are the relevant regions as opposed to a snow background when predicting the husky class.  A well known approach in this area is GradCam <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup> which visualizes the gradient of the class score (logit) with respect to the feature map of the last convolutional unit of a DNN model.
-We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature and possible focus on parts of written letters that might have high variance (e.g. attention to how users might round their g’s in a unique way).</p>
+We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature and possible focus on parts of written letters that might have high variance (e.g. attention to how users might round their g’s in a unique way). Our implementation of GradCam is based on the Keras GradCam example here<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>.</p>
 <p>Note, that methods like GradCam are not exactly principled, but subject to interpretation based on domain knowledge.  The reader is encouraged to explore GradCam visualizations to confirm that the pixels which the model finds influential make sense based on their knowledge of the problem space.</p>
 <p><img src="/images/hugo/metricblog/signaturegradcam.png" alt=""></p>
 <h5 id="figure-16-gradcam-visualization-for-the-last-4-convolutional-layers-for-signatures-from-our-test-set">Figure 16: GradCam visualization for the last 4 convolutional layers for signatures from our test set.</h5>
@@ -373,7 +373,7 @@ We can adapt it to our use case by visualizing the gradient of the entire output
 <p><strong>Dataset Limitations</strong>: While our training setup is designed such that we evaluate the models on signatures from individuals not represented in the training set, we recognize that the CEDAR dataset is small and does not cover properties of signatures (e.g. different writing styles, languages etc) that may occur in real world documents but are not covered in the CEDAR dataset. Training and evaluation on additional datasets is strongly recommended prior to production use.</p>
 </li>
 <li>
-<p><strong>Limitations of Triplet Loss</strong> - While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research <sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup> shows that k-means assignments can be used as pseudo-labels to learn visual representations.</p>
+<p><strong>Limitations of Triplet Loss</strong> - While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research <sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> shows that k-means assignments can be used as pseudo-labels to learn visual representations.</p>
 </li>
 <li>
 <p><strong>Data Augmentation</strong>: We used the CEDAR dataset as is, without exploring augmentations or transformations. For example, it may be useful to experiment with scale or rotation transforms to ensure the model is invariant to these changes.</p>
@@ -385,7 +385,7 @@ We can adapt it to our use case by visualizing the gradient of the entire output
 <p><strong>Model Tuning</strong>: In our experiments, while we explored the impact of metric loss finetuning,  pretrained features, skip connections over a small set of presets, there are still many parameters that can be tuned. These include margin parameter, learning rate, model architecture (e.g. use of models designed to learn multiscale features) etc.</p>
 </li>
 <li>
-<p><strong>Other Loss Function</strong>s: While we have focused on contrastive and triplet loss, there are other valid and perhaps less complicated ways of fine tuning a pretrained model that yields good distance metrics. For example, we can explore a cross entropy loss that learns to predict a class (genuine, skilled forgery, unskilled forgery) given a pair of images.  The reader is encouraged to review this paper for further insight on how cross entropy loss compares with other metric learning losses <sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup>.</p>
+<p><strong>Other Loss Function</strong>s: While we have focused on contrastive and triplet loss, there are other valid and perhaps less complicated ways of fine tuning a pretrained model that yields good distance metrics. For example, we can explore a cross entropy loss that learns to predict a class (genuine, skilled forgery, unskilled forgery) given a pair of images.  The reader is encouraged to review this paper for further insight on how cross entropy loss compares with other metric learning losses <sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup>.</p>
 </li>
 </ul>
 <p>Naturally, these limitations are opportunities for future work and experiments.</p>
@@ -400,7 +400,7 @@ We can adapt it to our use case by visualizing the gradient of the entire output
 </li>
 <li>
 <p>Triplet loss (with online triplet mining) is more efficient to train compared to contrastive loss i.e. training time to reach maximum accuracy. It does not require the manual construction of training triplets (as required in contrastive loss) and uses intelligent sampling to select informative triplets. This is very useful when running experiments to explore a large hyperparameter space. As an example, we found that fine tuning a ResNet50 model with triplet loss was completed in 3 minutes while a contrastive loss model needed 8 hours to reach max accuracy.
-With respect to implementation, we found the Tensorflow addons implementation of triplet loss <sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup> to be useful.</p>
+With respect to implementation, we found the Tensorflow addons implementation of triplet loss <sup id="fnref:11"><a href="#fn:11" class="footnote-ref" role="doc-noteref">11</a></sup> to be useful.</p>
 </li>
 <li>
 <p>Fine tuning an intermediate model can not only result in a reduced model size but also improved accuracy. Our experiments suggest that for the task of signature verification, fine tuning a subset of the ResNet50 model resulted in a smaller model size compared to fine tuning the entire ResNet50 model.</p>
@@ -435,13 +435,16 @@ With respect to implementation, we found the Tensorflow addons implementation of
 <p>Selvaraju, Ramprasaath R., et al. &ldquo;Grad-cam: Visual explanations from deep networks via gradient-based localization.&rdquo; Proceedings of the IEEE international conference on computer vision. 2017. <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:8" role="doc-endnote">
-<p>Caron, Mathilde, et al. &ldquo;Deep clustering for unsupervised learning of visual features.&rdquo; Proceedings of the European Conference on Computer Vision (ECCV). 2018. <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Grad-CAM class activation visualization <a href="https://keras.io/examples/vision/grad_cam/">https://keras.io/examples/vision/grad_cam/</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:9" role="doc-endnote">
-<p>Boudiaf, Malik, et al. &ldquo;A unifying mutual information view of metric learning: cross-entropy vs. pairwise losses.&rdquo; European Conference on Computer Vision. Springer, Cham, 2020. <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Caron, Mathilde, et al. &ldquo;Deep clustering for unsupervised learning of visual features.&rdquo; Proceedings of the European Conference on Computer Vision (ECCV). 2018. <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:10" role="doc-endnote">
-<p>TensorFlow Addons Losses: TripletSemiHardLoss <a href="https://www.tensorflow.org/addons/tutorials/losses_triplet">https://www.tensorflow.org/addons/tutorials/losses_triplet</a> <a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Boudiaf, Malik, et al. &ldquo;A unifying mutual information view of metric learning: cross-entropy vs. pairwise losses.&rdquo; European Conference on Computer Vision. Springer, Cham, 2020. <a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:11" role="doc-endnote">
+<p>TensorFlow Addons Losses: TripletSemiHardLoss <a href="https://www.tensorflow.org/addons/tutorials/losses_triplet">https://www.tensorflow.org/addons/tutorials/losses_triplet</a> <a href="#fnref:11" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
