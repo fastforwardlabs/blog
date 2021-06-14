@@ -9,9 +9,11 @@
     
 <title>Pre-trained Models as a Strong Baseline for Automatic Signature Verification</title>
 <meta property="og:title" content="Pre-trained Models as a Strong Baseline for Automatic Signature Verification">
-<meta property="description" content="Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. Image Source As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.">
-<meta property="og:description" content="Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. Image Source As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.">
-<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/ff20_blog2_preview_img-1622115845.png">
+<meta property="description" content="By Victor and Andrew.
+Figure 1. Baseline approach for automatic signature verification using pre-trained models As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.">
+<meta property="og:description" content="By Victor and Andrew.
+Figure 1. Baseline approach for automatic signature verification using pre-trained models As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/ff20_blog2_workflow-1622116594.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html">
 <meta property="twitter:card" content="summary_large_image">
 
@@ -54,12 +56,11 @@ if (!doNotTrack) {
       </span>
     </h5>
     <h1>Pre-trained Models as a Strong Baseline for Automatic Signature Verification</h1>
-    <p><img src="/images/hugo/ff20_blog2_preview_img-1622115845.png" alt=""></p>
-<h5 id="figure-1-handwritten-signatures-are-ubiquitous-pre-trained-cnns-can-serve-as-strong-baselines-for-building-automatic-signature-verification-systems-image-sourcehttpsunsplashcomphotosdqweaohsavc">Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. <a href="https://unsplash.com/photos/DqWEAOHsAvc">Image Source</a></h5>
-<p>As discussed in our <a href="https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html">introductory blog post</a>, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents. And due to the significance and scale of this task, signature verification has become a critical line of research in the field of machine learning and pattern recognition as a way to reduce the uncertainty and inefficiency involved in the manual authentication process [1].</p>
-<p>In this series of work, we frame signature verification as a <strong>representation learning problem</strong> where we ultimately learn a model that yields semantically meaningful representations of signatures such that vectors for similar signatures are close and dissimilar signatures (likely forgeries) are far apart using some distance metric. However, before structuring the task as a learning problem, it’s useful to first develop a simplistic baseline upon which we can compare future system performance.</p>
+    <p>By <em><a href="https://twitter.com/vykthur">Victor</a></em> and <em><a href="https://www.linkedin.com/in/andrew-r-reed/">Andrew.</a></em></p>
 <p><img src="/images/hugo/ff20_blog2_workflow-1622116594.png" alt=""></p>
-<h5 id="figure-2-baseline-approach-for-automatic-signature-verification-using-pre-trained-models">Figure 2. Baseline approach for automatic signature verification using pre-trained models</h5>
+<h5 id="figure-1-baseline-approach-for-automatic-signature-verification-using-pre-trained-models">Figure 1. Baseline approach for automatic signature verification using pre-trained models</h5>
+<p>As discussed in our <a href="https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html">introductory blog post</a>, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents. And due to the significance and scale of this task, signature verification has become a critical line of research in the field of machine learning and pattern recognition as a way to reduce the uncertainty and inefficiency involved in the manual authentication process <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>In this series of work, we frame signature verification as a <strong>representation learning problem</strong> where we ultimately learn a model that yields semantically meaningful representations of signatures such that vectors for similar signatures are close and dissimilar signatures (likely forgeries) are far apart using some distance metric. However, before structuring the task as a learning problem, it’s useful to first develop a simplistic baseline upon which we can compare future system performance.</p>
 <p>In this post, we’ll explore how pre-trained convolutional neural networks (CNNs) can be applied directly to the signature verification task and use them to establish performance baselines. Specifically, we will:</p>
 <ul>
 <li>Introduce a public dataset for the signature verification task (CEDAR dataset) and discuss a few preprocessing steps required to remove biases in the data</li>
@@ -70,29 +71,29 @@ if (!doNotTrack) {
 </ul>
 <p>By the end of this post, we’ll develop general intuition about the data and problem space that will help inform future machine learning based methods. Let’s get started!</p>
 <h2 id="the-cedar-dataset">The CEDAR Dataset</h2>
-<p>While a large amount of research in the domain of automated signature verification is conducted with private datasets (making it difficult to characterize performance and compare related work), there are several publicly available datasets that we can experiment with [2]. For our use case, we will make use of the <a href="https://cedar.buffalo.edu/signature/"><em>Center of Excellence for Document Analysis and Recognition (CEDAR) Signature Verification Database</em></a><em>.</em></p>
-<p>The CEDAR database is composed of 55 signers belonging to various cultural and professional backgrounds. Each of the signers authored 24 genuine signatures, 20 minutes apart. A group of forgers then attempted to emulate the signatures of 3 authors, 8 times each, to produce 24 forged samples for each of the genuine signers. Therefore, the database consists of 1320 genuine <em>and</em> 1320 forged signatures available as grayscale images [1].</p>
+<p>While a large amount of research in the domain of automated signature verification is conducted with private datasets (making it difficult to characterize performance and compare related work), there are several publicly available datasets that we can experiment with <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. For our use case, we will make use of the <a href="https://cedar.buffalo.edu/signature/"><em>Center of Excellence for Document Analysis and Recognition (CEDAR) Signature Verification Database</em></a><em>.</em></p>
+<p>The CEDAR database is composed of 55 signers belonging to various cultural and professional backgrounds. Each of the signers authored 24 genuine signatures, 20 minutes apart. A group of forgers then attempted to emulate the signatures of 3 authors, 8 times each, to produce 24 forged samples for each of the genuine signers. Therefore, the database consists of 1320 genuine <em>and</em> 1320 forged signatures available as grayscale images <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
 <p><img src="/images/hugo/ff20_blog2_samples-1622116661.png" alt=""></p>
-<h5 id="figure-3-sample-of-7-genuine-and-7-forged-signatures-for-two-separate-authors-from-cedar-signature-database">Figure 3. Sample of 7 genuine and 7 forged signatures for two separate authors from CEDAR signature database</h5>
+<h5 id="figure-2-sample-of-7-genuine-and-7-forged-signatures-for-two-separate-authors-from-cedar-signature-database">Figure 2. Sample of 7 genuine and 7 forged signatures for two separate authors from CEDAR signature database</h5>
 <p>Upon visual inspection of a sample from the CEDAR dataset, we can elicit a few useful insights. First, we see that there is indeed relatively low *intra-*class variance, but high *inter-*class variance - meaning signatures from a given author appear similar regardless of if they are forged or genuine. On the other hand, signatures from different authors are substantially different in style, shape, size, and composition. This makes sense.</p>
 <p>Second, we notice that signatures from the genuine class appear to have a distinctly darker background shading than those of the forged class. This distinguishing factor would likely enable any CNN based feature extractor to naively discriminate between classes based on this unintended data quality issue rather than the salient features of the signature itself.</p>
 <p><img src="/images/hugo/ff20_blog2_pixelintensitybefore-1622116728.png" alt=""></p>
-<h5 id="figure-4-mean-pixel-intensity-of-raw-grayscale-cedar-signatures-separated-by-genuine-and-forged-classes">Figure 4. Mean pixel intensity of raw, grayscale CEDAR signatures separated by genuine and forged classes</h5>
+<h5 id="figure-3-mean-pixel-intensity-of-raw-grayscale-cedar-signatures-separated-by-genuine-and-forged-classes">Figure 3. Mean pixel intensity of raw, grayscale CEDAR signatures separated by genuine and forged classes</h5>
 <p>By plotting the mean pixel intensity of each image in the dataset and coloring by class, we confirm our understanding. Using the CEDAR signatures samples in their current form, we could obtain a genuine/forged classifier with &gt;90% accuracy simply by thresholding the mean pixel intensity at 243. Clearly, this is not a valid nor generalizable practice, so we need to first de-bias the dataset before it can be used to accurately characterize performance with our baseline approach.</p>
 <p><strong>Signature Extraction with Image Thresholding</strong></p>
 <p>There are several possible methods for extracting a signature from its background context ranging from simple image thresholding to more advanced image segmentation approaches. Luckily, the CEDAR images contain relatively clean backgrounds, so an image thresholding technique should work well.</p>
-<p>Image thresholding, also known as <em>binarization</em>, is the process of separating an image into two classes of pixels (e.g. foreground and background) to eliminate noise by applying a threshold on each pixel in the image [3]. The resulting image is composed of pixels with values of 0 or 1. There are many techniques for determining what the optimal cutoff threshold should be, but here we have chosen Otsu’s Method - a histogram-based technique that identifies a global intensity threshold for a given image (independent of other images in the collection).</p>
+<p>Image thresholding, also known as <em>binarization</em>, is the process of separating an image into two classes of pixels (e.g. foreground and background) to eliminate noise by applying a threshold on each pixel in the image <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. The resulting image is composed of pixels with values of 0 or 1. There are many techniques for determining what the optimal cutoff threshold should be, but here we have chosen Otsu’s Method - a histogram-based technique that identifies a global intensity threshold for a given image (independent of other images in the collection).</p>
 <p><img src="/images/hugo/ff20_blog2_thresholding-1622116791.png" alt=""></p>
-<h5 id="figure-5-sample-signature-image-before-left-and-after-right-applying-otsus-method-to-threshold-pixel-values-the-histogram-middle-depicts-the-distribution-of-grayscale-intensity-values-where-the-red-vertical-depicts-the-optimal-threshold-for-separating-classes">Figure 5. Sample signature image before (left) and after (right) applying Otsu’s method to threshold pixel values. The histogram (middle) depicts the distribution of grayscale intensity values where the red vertical depicts the optimal threshold for separating classes</h5>
+<h5 id="figure-4-sample-signature-image-before-left-and-after-right-applying-otsus-method-to-threshold-pixel-values-the-histogram-middle-depicts-the-distribution-of-grayscale-intensity-values-where-the-red-vertical-depicts-the-optimal-threshold-for-separating-classes">Figure 4. Sample signature image before (left) and after (right) applying Otsu’s method to threshold pixel values. The histogram (middle) depicts the distribution of grayscale intensity values where the red vertical depicts the optimal threshold for separating classes</h5>
 <p>Otsu’s Method assumes a bimodal distribution of pixel intensities, and determines the optimal threshold by maximizing the variance between two classes on the histogram. In the figure above, we see an unbalanced, bimodal distribution for the original signature with peaks at intensity values of ~140 and ~245. When applying the optimal threshold of 188 to separate the two peaks, we are left with a cleanly extracted signature.</p>
 <p>We can then apply this signature extraction technique to all examples in the CEDAR dataset yielding a clean set of signatures where both classes come from <em>roughly</em> the same pixel intensity distribution.</p>
 <p><img src="/images/hugo/ff20_blog2_pixelintensityafter-1622116853.png" alt=""></p>
-<h5 id="figure-6-mean-pixel-intensity-of-thresholded-grayscale-cedar-signatures-separated-by-genuine-and-forged-classes-after-thresholding">Figure 6. Mean pixel intensity of thresholded, grayscale CEDAR signatures separated by genuine and forged classes after thresholding</h5>
+<h5 id="figure-5-mean-pixel-intensity-of-thresholded-grayscale-cedar-signatures-separated-by-genuine-and-forged-classes-after-thresholding">Figure 5. Mean pixel intensity of thresholded, grayscale CEDAR signatures separated by genuine and forged classes after thresholding</h5>
 <h2 id="representation-extraction-with-pre-trained-cnns">Representation Extraction with Pre-trained CNNs</h2>
 <p>With the cleaned up dataset, we are now ready to implement our classification baseline. If you recall from Figure 1, the baseline approach relies on a pre-trained network to extract features from the grayscale signatures. For our initial experimentation, we will make use of a ResNet50 architecture that has been pre-trained on ImageNet. Specifically, we will pass each image through ResNet and extract features from the final layer of the backbone network (fully connected layers omitted), producing feature vectors of size 32,768 for each image.</p>
 <p>This approach relies on the assumption that the convolutional filters learned by layers in ResNet (trained on ImageNet) will produce activation maps that capture enough variance to effectively discriminate between genuine and forged examples. As such, we can make a cursory attempt to validate our assumption by reducing embeddings to 2 dimensions via UMAP and plotting the resulting vectors for visual inspection.</p>
 <p><img src="/images/hugo/ff20_blog2_umap-1622116916.png" alt=""></p>
-<h5 id="figure-7-a-2d-umap-projection-of-the-embedding-space-for-each-signature-in-the-cedar-dataset-colored-by-author">Figure 7. A 2D UMAP projection of the embedding space for each signature in the CEDAR dataset colored by author</h5>
+<h5 id="figure-6-a-2d-umap-projection-of-the-embedding-space-for-each-signature-in-the-cedar-dataset-colored-by-author">Figure 6. A 2D UMAP projection of the embedding space for each signature in the CEDAR dataset colored by author</h5>
 <p>Despite the overlap of differing author groups (which is expected when reducing dimensionality while trying to maintain variance), we do observe coherent clusters for many of the authors’ signatures. Additionally, we also see that within a given author cluster, the pre-trained model is able to maintain separation between genuine and forged classes as seen in the bottom left zoomed area (circles vs. diamonds). The <em>qualitative</em> results shown here provide preliminary confidence in the validity of our baseline approach - now let’s extend this approach to <em>quantify</em> system performance.</p>
 <h2 id="developing-a-classification-baseline-with-a-distance-metric">Developing a Classification Baseline with a Distance Metric</h2>
 <p>We now have a meaningful vector representation for each image which can be used to compare two signatures by calculating a distance metric between them. This distance metric can then be used to classify the image pair as genuine or forged. But before doing so, we need an experimental setup consisting of image pairs split between classes. For each author, we collect the following classes of image pairs:</p>
@@ -104,7 +105,7 @@ if (!doNotTrack) {
 <p>To maintain a balanced number of image pairs for each class, we will utilize all 276 genuine/genuine pairs for each author (C(24,2) = 276), and randomly downsample the other classes to have the same number of examples. Next, we set aside 20% (or 11) authors as a validation set and utilize the other 44 authors’ samples as a train set to determine a classification distance threshold (more on this in a bit).</p>
 <p>Until now, we’ve discussed the idea of calculating a distance metric between vector representations of images, but what distance metric do we use?</p>
 <p><img src="/images/hugo/ff20_blog2_pairdistro-1622116985.png" alt=""></p>
-<h5 id="figure-8-distribution-of-distance-metric-cosine-and-euclidean-for-each-image-pair-in-the-experimental-setup-colored-by-class">Figure 8. Distribution of distance metric (cosine and euclidean) for each image pair in the experimental setup, colored by class</h5>
+<h5 id="figure-7-distribution-of-distance-metric-cosine-and-euclidean-for-each-image-pair-in-the-experimental-setup-colored-by-class">Figure 7. Distribution of distance metric (cosine and euclidean) for each image pair in the experimental setup, colored by class</h5>
 <p>The figure above plots a histogram of image pairs colored by class for two distance metrics - cosine and euclidean. Both plots confirm our intuition that on average, genuine-genuine pairs should have the lowest semantic distance between them; followed by genuine-forged, and finally genuine-unskilled forged. In addition, we see that the cosine distance metric does a better job at separating the classes than euclidean distance. For this reason, we will utilize cosine distance as our metric for the remainder of the analysis. We will also drop the unskilled forged class from consideration and focus on binary classification between genuine and forged signatures.</p>
 <p><strong>Determining an Optimal Distance Threshold</strong></p>
 <p>Now that we’ve developed the basis of our approach, we are left with an important question, <em>“What distance threshold should be selected to classify signature pairs as genuine or forged?”.</em> As with any classification task, tuning this hyperparameter is problem dependent and will ultimately depend on the relative cost tradeoff between false positives and false negatives. For biometric systems, this tradeoff attempts to balance:</p>
@@ -112,16 +113,16 @@ if (!doNotTrack) {
 <li><em>False Acceptance Rate (FAR) -</em> accepting signers who should have actually been rejected, with</li>
 <li><em>False Rejection Rate (FRR) -</em> rejecting legitimate signers when they should have been accepted</li>
 </ul>
-<p>In the domain of security and verification, FAR (unauthorized access) is typically worse than FRR (authorized user denied) as the former could be a security disaster, while the latter an inconvenience [4].</p>
+<p>In the domain of security and verification, FAR (unauthorized access) is typically worse than FRR (authorized user denied) as the former could be a security disaster, while the latter an inconvenience <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
 <p><strong>Defining Evaluation Metrics for Signature Verification - Equal Error Rate</strong></p>
 <p>In an effort to sidestep the subjective, application-dependent balancing act between convenience and security, we will turn to an objective measure of system performance that is commonly used when comparing security system capacity called <em>Equal Error Rate (EER)</em>.</p>
 <p><img src="/images/hugo/ff20_blog2_eer-1622117047.png" alt=""></p>
-<h5 id="figure-9-eer-shown-as-intersection-of-fpr-and-fnr-curves-left-eer-as-intersection-of-roc-curve-with-inverse-diagonal-slope-right">Figure 9. EER shown as intersection of FPR and FNR curves (left). EER as intersection of ROC curve with inverse diagonal slope (right)</h5>
+<h5 id="figure-8-eer-shown-as-intersection-of-fpr-and-fnr-curves-left-eer-as-intersection-of-roc-curve-with-inverse-diagonal-slope-right">Figure 8. EER shown as intersection of FPR and FNR curves (left). EER as intersection of ROC curve with inverse diagonal slope (right)</h5>
 <p>EER, also known as Crossover Error Rate (CER), corresponds to the threshold at which the FAR is equal to FRR. This point also occurs at the intersection of the receiver operating characteristic (ROC) curve and the negative diagonal unit slope. Practically speaking, this isn’t a metric you would likely calibrate a system for, but as mentioned above, it provides a comparable, objective measure of performance. On our train set with features extracted from the final layer of ResNet50, we observe an EER of 26.5% at a distance threshold of 0.23. Considering there has been no model training, this result isn’t too bad, but is there room for improvement?</p>
 <p><strong>Selecting the Best Model</strong></p>
 <p>Up until this point, we’ve only considered the final layer of a ResNet50 model as our feature extractor. But how might other pre-trained models perform? And could earlier layers of a CNN that learn simple, low-level features outperform the more generalized, semantic features of the final layers? To find out, we repeat the above experiment across early, middle, and final layer blocks from ResNet50, VGG16, MobileNet_v2, and EfficientNetB0.</p>
 <p><img src="/images/hugo/ff20_blog2_gridsearch-1622117107.png" alt=""></p>
-<h5 id="figure-10--comparison-of-model-and-layer-combinations-by-number-of-parameters-and-eer">Figure 10.  Comparison of model and layer combinations by number of parameters and EER</h5>
+<h5 id="figure-9--comparison-of-model-and-layer-combinations-by-number-of-parameters-and-eer">Figure 9.  Comparison of model and layer combinations by number of parameters and EER</h5>
 <p>By plotting model and layer combinations against EER and number of parameters, we immediately notice an inverse relationship between number of parameters and error. This makes sense as the number of parameters implies capacity for learning. However, despite having only the second most parameters, the final layer of VGG16 (blue circle) outperforms the larger, final layer ResNet50 model (blue X) with an EER of 22.8% at a distance threshold of 0.32.</p>
 <p>By taking the strongest performing VGG16 model, applying the 0.32 threshold, and classifying the remaining examples from the held out test dataset, we achieve an overall accuracy of 67.0%, a false acceptance rate of 8.2%, and a false rejection rate of 39.1%. Not bad!</p>
 <h2 id="conclusion">Conclusion</h2>
@@ -132,12 +133,24 @@ if (!doNotTrack) {
 <li><em>Does model size equate to higher performance?</em> Generally, yes. While we have found an inverse relationship between model size and error rate, there is a diminishing return in performance as model size increases. For example, ResNet50’s error improves by just ~4% despite having a 16x increase in capacity between the middle and final layer blocks.</li>
 </ul>
 <p>In the next post, we’ll look to improve upon this established baseline through the use of metric learning. Stay tuned!</p>
-<p>By <em><a href="https://twitter.com/vykthur">Victor</a></em> and <em><a href="https://www.linkedin.com/in/andrew-r-reed/">Andrew</a></em></p>
 <h2 id="references">References</h2>
-<p>[1] Dey, Sounak, et al. &ldquo;Signet: Convolutional siamese network for writer independent offline signature verification.&rdquo; <em>arXiv preprint arXiv:1707.02131</em> (2017).  <a href="https://arxiv.org/pdf/1707.02131.pdf">https://arxiv.org/pdf/1707.02131.pdf</a></p>
-<p>[2] Hafemann, Luiz G., Robert Sabourin, and Luiz S. Oliveira. &ldquo;Offline handwritten signature verification—literature review.&rdquo; <em>2017 Seventh International Conference on Image Processing Theory, Tools and Applications (IPTA)</em>. IEEE, 2017. <a href="https://arxiv.org/pdf/1507.07909.pdf">https://arxiv.org/pdf/1507.07909.pdf</a></p>
-<p>[3] Thresholding <a href="https://scikit-image.org/docs/0.13.x/auto_examples/xx_applications/plot_thresholding.html">https://scikit-image.org/docs/0.13.x/auto_examples/xx_applications/plot_thresholding.html</a></p>
-<p>[4] Biometric security and hypothesis testing <a href="https://www.johndcook.com/blog/2018/10/31/biometric-security-error/">https://www.johndcook.com/blog/2018/10/31/biometric-security-error/</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Dey, Sounak, et al. &ldquo;Signet: Convolutional siamese network for writer independent offline signature verification.&rdquo; <em>arXiv preprint arXiv:1707.02131</em> (2017).  <a href="https://arxiv.org/pdf/1707.02131.pdf">https://arxiv.org/pdf/1707.02131.pdf</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Hafemann, Luiz G., Robert Sabourin, and Luiz S. Oliveira. &ldquo;Offline handwritten signature verification—literature review.&rdquo; <em>2017 Seventh International Conference on Image Processing Theory, Tools and Applications (IPTA)</em>. IEEE, 2017. <a href="https://arxiv.org/pdf/1507.07909.pdf">https://arxiv.org/pdf/1507.07909.pdf</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>Thresholding <a href="https://scikit-image.org/docs/0.13.x/auto_examples/xx_applications/plot_thresholding.html">https://scikit-image.org/docs/0.13.x/auto_examples/xx_applications/plot_thresholding.html</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>Biometric security and hypothesis testing <a href="https://www.johndcook.com/blog/2018/10/31/biometric-security-error/">https://www.johndcook.com/blog/2018/10/31/biometric-security-error/</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 
     <div class="spacer"></div>
     <div>
@@ -204,7 +217,7 @@ if (!doNotTrack) {
   </h5>
   
   <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="preview-image-holder">
-    <img class="preview-image" src="/images/hugo/ff20_blog2_preview_img-1622115845.png" />
+    <img class="preview-image" src="/images/hugo/ff20_blog2_workflow-1622116594.png" />
   </a>
   
   <div>
@@ -215,15 +228,8 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    
-    <span>
-      by 
-      <span
-        ><a href="">Victor and Andrew</a>
-        &middot; </span
-      >
-    </span>
-    Figure 1. Handwritten signatures are ubiquitous. Pre-trained CNNs can serve as strong baselines for building automatic signature verification systems. Image Source As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.
+    By Victor and Andrew.
+Figure 1. Baseline approach for automatic signature verification using pre-trained models As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -247,7 +253,7 @@ if (!doNotTrack) {
   </h5>
   
   <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html" class="preview-image-holder">
-    <img class="preview-image" src="/images/hugo/ff20_blog1_preview_img-1622070375.png" />
+    <img class="preview-image" src="/images/hugo/metricblog/signature_pipeline.png" />
   </a>
   
   <div>
@@ -258,16 +264,8 @@ if (!doNotTrack) {
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
-    
-    <span>
-      by 
-      <span
-        ><a href="">Victor and Andrew</a>
-        &middot; </span
-      >
-    </span>
-    Figure 1. Handwritten signatures continue to be a widely used user trait for identification and authentication. Image Source  TLDR; We are working on a project - applying deep learning models to verify signatures - and will be writing about this process. This post is the first in the series and provides an overview of the signature verification task, use cases and challenges.
- Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries).
+    By Victor and Andrew.
+Figure 1. A summary of tasks that comprise the automatic signature verification pipeline TLDR; We are working on a project - applying deep learning models to verify signatures - and will be writing about this process. This post is the first in the series and provides an overview of the signature verification task, use cases and challenges.  Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries).
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
