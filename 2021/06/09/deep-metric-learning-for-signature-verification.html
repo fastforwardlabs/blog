@@ -10,9 +10,9 @@
 <title>Deep Metric Learning for Signature Verification</title>
 <meta property="og:title" content="Deep Metric Learning for Signature Verification">
 <meta property="description" content="By Victor and Andrew.
-TLDR; We provide an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification.  In our previous blog post, , we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (74.">
+TLDR; This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification. Other posts in the series are listed below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      In our previous blog post, , we discussed how pretrained models can serve as strong baselines for the task of signature verification.">
 <meta property="og:description" content="By Victor and Andrew.
-TLDR; We provide an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification.  In our previous blog post, , we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (74.">
+TLDR; This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification. Other posts in the series are listed below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      In our previous blog post, , we discussed how pretrained models can serve as strong baselines for the task of signature verification.">
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/metricblog/onlinetraining.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2021/06/09/deep-metric-learning-for-signature-verification.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -79,8 +79,17 @@ if (!doNotTrack) {
     </h5>
     <h1>Deep Metric Learning for Signature Verification</h1>
     <p>By <em><a href="https://twitter.com/vykthur">Victor</a></em> and <em><a href="https://www.linkedin.com/in/andrew-r-reed/">Andrew.</a></em></p>
-<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-TLDR;  We provide an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification.
+<div  class="tldr"> 
+  <span class="textbold">TLDR;</span> This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification. Other posts in the series are listed below:
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
+    </a> -->
+    <ul>
+    <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+    </ul>
+  </div>
 </div>
 <p>In our <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html">previous blog post</a>,
 , we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (74.3% accuracy on skilled forgeries, 89.5% on unskilled forgeries).</p>
@@ -329,12 +338,14 @@ In our previous experiments, we saw that a pretrained model could be a strong ba
 <li>Smaller ResNet50 Skip initialized at skip connection layer conv3_block4_add - 76.1%, 2.18 million parameters.</li>
 <li>Full ResNet50  - Full ResNet50 fine tuned on the triplet metric learning objective -  76.4%  24.79 million.</li>
 </ul>
-<p>Overall, we find that the following useful insights
-Fine tuning with pre-trained features (e.g Smaller ResNet50 vs Baseline CNN and Baseline UNet) yields better results compared to training a model from scratch.
-A UNet like architecture for models of comparable size yields better performance for our task (Base UNet vs Base CNN).</p>
+<p>Overall, we find that the following useful insights</p>
+<ul>
+<li>Fine tuning with pre-trained features (e.g Smaller ResNet50 vs Baseline CNN and Baseline UNet) yields better results compared to training a model from scratch.</li>
+<li>A UNet like architecture for models of comparable size yields better performance for our task (Base UNet vs Base CNN).</li>
+</ul>
 <p><strong>Impact of Skip Connections:</strong>
 Skip connections in CNNs have been shown to improve the loss surface <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> for deep networks making them easier to train and yielding performance.
-We find that fine tuning a full ResNet50 model (which has skip connections) achieves better performance (76.4%) compared to fine tuning a VGG16 model (67.4%)</p>
+We find that fine tuning a full ResNet50 model (which has skip connections) achieves better performance (76.4%) compared to fine tuning a VGG16 model (67.4%).</p>
 <p><strong>Intermediate model vs Full Model:</strong>
 When applying transfer learning, the data scientist must decide how much of the pretrained model is useful to their task - i.e what features to include, what features to freeze and what features to finetune.</p>
 <ul>
@@ -353,7 +364,7 @@ When applying transfer learning, the data scientist must decide how much of the 
 <h3 id="dimensionality-reduction--visualization">Dimensionality Reduction + Visualization</h3>
 <p>First, we have used dimensionality reduction techniques (UMAP) to visualize embeddings for each signature in our test set. We expect that signatures from the same author are clustered together; we also expect that skilled forgeries are close to originals but separated from the cluster of the associated genuine signature.</p>
 <p><img src="/images/hugo/metricblog/smallresnetembedding.jpg" alt=""></p>
-<h5 id="figure-13-visualization-of-umap-embeddings-2-dimensions-produced-by-our-best-model-for-signatures-in-our-test-set-in-general-we-see-that-embeddings-for-forgeries-are-in-the-same-region-as-their-corresponding-genuine-signatures-but-still-separated-">Figure 13. Visualization of UMAP embeddings (2 dimensions) produced by our best model for signatures in our test set. In general, we see that embeddings for forgeries are in the same region as their corresponding genuine signatures but still separated. ✅</h5>
+<h5 id="figure-13-visualization-of-umap-embeddings-2-dimensions-for-signatures-in-our-test-set-in-general-we-see-that-embeddings-for-forgeries-are-in-the-same-region-as-their-corresponding-genuine-signatures-but-still-separated">Figure 13. Visualization of UMAP embeddings (2 dimensions) for signatures in our test set. In general, we see that embeddings for forgeries are in the same region as their corresponding genuine signatures but still separated.</h5>
 <h3 id="visualization-of-distance-metrics">Visualization of distance metrics</h3>
 <p>In this sanity check, we construct image pairs (positive and negative) pairs and compute the distance between embeddings produced by our model, for each pair. We expect that the density of distances between positive pairs is close to zero (with some variation to account for user error), but more spread out toward 1 for negative pairs.</p>
 <p><img src="/images/hugo/metricblog/hard_density.png" alt=""></p>
@@ -364,7 +375,7 @@ When applying transfer learning, the data scientist must decide how much of the 
 <p>We can also utilize gradient based approaches <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> to inspect “what aspects of the input are most influential/relevant to the output”. These approaches have been used in debugging classification models to identify what pixels in the input image drive a specific class prediction. For example we want to see that pixels around the head and ears of a husky dog are the relevant regions as opposed to a snow background when predicting the husky class.  A well known approach in this area is GradCam <sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup> which visualizes the gradient of the class score (logit) with respect to the feature map of the last convolutional unit of a DNN model.
 We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature and possible focus on parts of written letters that might have high variance (e.g. attention to how users might round their g’s in a unique way). Our implementation of GradCam is based on the Keras GradCam example here<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>.</p>
 <p>Note, that methods like GradCam are not exactly principled, but subject to interpretation based on domain knowledge.  The reader is encouraged to explore GradCam visualizations to confirm that the pixels which the model finds influential make sense based on their knowledge of the problem space.</p>
-<p><img src="/images/hugo/metricblog/signaturegradcam.png" alt=""></p>
+<p><img src="/images/hugo/metricblog/signaturegradcam.jpg" alt=""></p>
 <h5 id="figure-16-gradcam-visualization-for-the-last-4-convolutional-layers-for-signatures-from-our-test-set">Figure 16: GradCam visualization for the last 4 convolutional layers for signatures from our test set.</h5>
 <h2 id="limitations">Limitations</h2>
 <p>In this work, we show that fine tuning a pretrained model on a metric learning loss (contrastive and triplet loss) can improve performance. However there are a few limitations with our experiment set up that are worth noting:</p>
@@ -373,7 +384,7 @@ We can adapt it to our use case by visualizing the gradient of the entire output
 <p><strong>Dataset Limitations</strong>: While our training setup is designed such that we evaluate the models on signatures from individuals not represented in the training set, we recognize that the CEDAR dataset is small and does not cover properties of signatures (e.g. different writing styles, languages etc) that may occur in real world documents but are not covered in the CEDAR dataset. Training and evaluation on additional datasets is strongly recommended prior to production use.</p>
 </li>
 <li>
-<p><strong>Limitations of Triplet Loss</strong> - While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research <sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> shows that k-means assignments can be used as pseudo-labels to learn visual representations.</p>
+<p><strong>Limitations of Triplet Loss</strong>:While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research <sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> shows that k-means assignments can be used as pseudo-labels to learn visual representations.</p>
 </li>
 <li>
 <p><strong>Data Augmentation</strong>: We used the CEDAR dataset as is, without exploring augmentations or transformations. For example, it may be useful to experiment with scale or rotation transforms to ensure the model is invariant to these changes.</p>
@@ -526,7 +537,7 @@ With respect to implementation, we found the Tensorflow addons implementation of
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
     By Victor and Andrew.
-TLDR; We provide an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification.  In our previous blog post, , we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (74.
+TLDR; This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification. Other posts in the series are listed below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      In our previous blog post, , we discussed how pretrained models can serve as strong baselines for the task of signature verification.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -550,7 +561,7 @@ TLDR; We provide an overview of metric learning loss functions (constrastive, tr
   </h5>
   
   <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="preview-image-holder">
-    <img class="preview-image" src="/images/hugo/ff20_blog2_workflow-1622116594.png" />
+    <img class="preview-image" src="/images/hugo/metricblog/feature_extraction_pretrained.png" />
   </a>
   
   <div>
@@ -562,7 +573,7 @@ TLDR; We provide an overview of metric learning loss functions (constrastive, tr
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
     By Victor and Andrew.
-Figure 1. Baseline approach for automatic signature verification using pre-trained models As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents.
+Figure 1. Baseline approach for automatic signature verification using pre-trained models TLDR; This post describes how pretrained image classification models can be used as strong baselines for the task of signature verification. Other posts in the series are listed below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -585,26 +596,26 @@ Figure 1. Baseline approach for automatic signature verification using pre-train
     </span>
   </h5>
   
-  <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html" class="preview-image-holder">
+  <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class="preview-image-holder">
     <img class="preview-image" src="/images/hugo/metricblog/signature_pipeline.png" />
   </a>
   
   <div>
     
-    <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html"
-       ><h2 style="margin-bottom: 4px;">Deep Learning for Automatic Offline Signature Verification</h2></a
+    <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html"
+       ><h2 style="margin-bottom: 4px;">Deep Learning for Automatic Offline Signature Verification: An Introduction</h2></a
      >
      
   </div>
   <div class="small" style="height: 4.5em; overflow: hidden;">
     By Victor and Andrew.
-Figure 1. A summary of tasks that comprise the automatic signature verification pipeline TLDR; We are working on a project - applying deep learning models to verify signatures - and will be writing about this process. This post is the first in the series and provides an overview of the signature verification task, use cases and challenges.  Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries).
+Figure 1. A summary of tasks that comprise the automatic signature verification pipeline (and related machine learning problems). TLDR; This post provides an overview of the signature verification task, use cases and challenges. Other posts in the series are listed below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries).
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
     >
     
-      <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html">...read more</a>
+      <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html">...read more</a>
     
   </div>
   <div class="spacer"></div>
