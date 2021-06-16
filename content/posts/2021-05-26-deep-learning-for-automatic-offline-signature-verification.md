@@ -1,5 +1,5 @@
 ---
-title: "Deep Learning for Automatic Offline Signature Verification"
+title: "Deep Learning for Automatic Offline Signature Verification: An Introduction"
 date: 2021-05-26T17:04:38  
 preview_image: /images/hugo/metricblog/signature_pipeline.png
 post_type: Post
@@ -12,18 +12,30 @@ By *[Victor](https://twitter.com/vykthur)* and *[Andrew.](https://www.linkedin.c
 ![](/images/hugo/metricblog/signature_pipeline.png)
 
  
-##### Figure 1. A summary of tasks that comprise the automatic signature verification pipeline
+##### Figure 1. A summary of tasks that comprise the automatic signature verification pipeline (and related machine learning problems).
 
-<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-TLDR;  We are working on a project - applying deep learning models to verify signatures - and will be writing about this process. This post is the first in the series and provides an overview of the signature verification task, use cases and challenges.
+<div  class="tldr"> 
+<span class="textbold">TLDR;</span> This post provides an overview of the signature verification task, use cases and challenges. Other posts in the series are listed below:
+
+<div style="margin-top:10px; border-top: 1px dashed grey"> 
+  <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
+  </a> -->
+  <ul>
+   <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+    <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+    <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+  </ul>
+</div>
 
 </div>
+
  
-Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries). This process, which has been traditionally performed by humans, can be tedious and almost impossible to scale without the use of automatic verification tools.
 
-To adequately solve this task, we need a system that, at a high level, can produce measures of similarity between a pair of signatures. We can then exploit this measure of similarity in verifying or matching signatures - i.e. similar signatures are likely genuine, dissimilar signatures are likely forgeries. Given the complex requirements of this problem (understanding the content of images), deep learning models which have excelled in similar perception tasks are a good candidate tool of choice.
 
-In practice, solving this problem requires solving a set of underlying challenges. First, images of signatures may come in various colors, shape, rotation and scale transformations which we need to account for (normalization). They may be located in arbitrary parts of a document and might be occluded with text, stamps or background noise (detection and cleaning). Once we have localized and cleaned our images, we  then have to extract representations using appropriate methods and then efficiently match this against an existing database of known signatures. 
+ 
+Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries). This process, which has been traditionally performed by humans, can be tedious and almost impossible to scale without the use of automatic verification tools. To solve this task, we need a system that, at a high level, can produce measures of similarity between a pair of signatures. We can then exploit this measure of similarity in verifying or matching signatures - i.e. similar signatures are likely genuine, dissimilar signatures are likely forgeries. Given the complex requirements of this problem (understanding the content of images), deep learning models which have excelled in similar perception tasks are a good candidate tool of choice.
+
+In practice, solving the signature verification tasks requires solving a set of adjacent _sub tasks_ (see Figure 1 above). First, images of signatures may come in various colors, shape, rotation and scale transformations which we need to account for (normalization). They may be located in arbitrary parts of a document and might be occluded with text, stamps or background noise (detection and cleaning). Once we have localized and cleaned our images, we  then have to extract representations using appropriate methods and then efficiently match this against an existing database of known signatures. 
 
 In this post, we will cover the following areas:
 
@@ -37,7 +49,8 @@ This post is the first in a series of posts that will discuss the broader agenda
 
 Signature verification falls within the broader field of user biometrics - capturing unique user data such as behavioural traits (e.g. voice, handwritten signature, typing patterns) or physiological traits (e.g. fingerprint, face, iris, etc). These traits can then be used for security applications such as identification (match a user sample to a dataset of samples) and verification (match a user to a claimed or known identity sample).
 
-> The problem of automatic signature verification is commonly modeled as a verification task: given a learning set L, that contains genuine signatures from a set of users, a model is trained. This model is then used for verification: a user claims an identity and provides a query signature x_new. The model is used to classify the signature as genuine (belonging to the claimed individual) or forgery (created by someone else) [^2]
+
+> The problem of automatic signature verification is commonly modeled as a verification task: given a learning set `$D$`, that contains genuine signatures from a set of users, a model is trained. This model is then used for verification: a user claims an identity and provides a query signature `$x_{new}$` . The model is used to classify the signature as genuine (belonging to the claimed individual) or forgery (created by someone else) [^2]
 
 While the overall use of physical documents that contain signatures will likely be reduced as many platforms become digitized, handwritten signatures remain ubiquitous, as they are easy to collect, non-invasive and useful across multiple daily activities. According to a 2019 study by the US Federal Reserve Payments [^1] on checks, an estimated 14 billion checks were issued, with an estimated value of $26.8 trillion. While this represents an 8.2% decline in overall number of checks compared to the previous year, it still indicates a fairly large amount of check transactions. In addition, the rate of digitization varies across locales with many companies maintaining support for both digital and physical signatures as a physical failsafe, resistant to digital attacks.
 
@@ -51,13 +64,11 @@ Before we proceed, let us define a few related concepts in the area of signature
 
 **Online vs Offline Signatures**
 
-Signatures may be termed as online or offline depending on how signature data is captured [^2]. Online signatures refers to the capture of signatures using digital devices (e.g. pressure sensitive tablets, cameras, etc) and may encompass a wide set of features such as stroke sequence, pressure, timing, pen inclination, etc, recorded *during* the creation of the signature.
-
-On the other hand, offline signatures are recorded signatures (e.g. scans of signatures on paper) that are subsequently processed. 
+Signatures may be termed as online or offline depending on how signature data is captured [^2]. Online signatures refers to the capture of signatures using digital devices (e.g. pressure sensitive tablets, cameras, etc) and may encompass a wide set of features such as stroke sequence, pressure, timing, pen inclination, etc, recorded *during* the creation of the signature. On the other hand, offline signatures are recorded signatures (e.g. scans of signatures on paper) that are subsequently processed. 
 
 While online signatures have richer features and are therefore easier/more accurate to verify, they are also expensive to capture. In addition, many use cases or regions do not have access to specialized digital data collection platforms; those with *some* digital capabilities may fall to passwords. Offline signatures are easier to capture and more ubiquitous, but retain significantly fewer distinguishable features, and hence are harder to verify.
 
-In this work, we will be focusing on offline signature verification due to its broad applicability in society today. 
+In this work, we will be focusing on *offline signature verification* due to its broad applicability in society today. 
 
 **Skilled vs Unskilled Forgeries**
 
@@ -107,7 +118,7 @@ In the previous sections, we have introduced the signature verification task, di
 
 At its core, we can cast signature verification as a **representation learning problem** where we train a model that yields semantically meaningful representations of signatures such that vectors for similar signatures are close and dissimilar signatures (likely forgeries) are far apart using some distance metric.
 
-![](/images/hugo/ff20_blog1_representationextraction-1622070867.png)
+![](/images/hugo/metricblog/feature_extraction.png)
 
 ##### Figure 3. We can treat signature verification as a representation learning task where we train a model that outputs semantically meaningful representation vectors for signature images.
 
@@ -115,17 +126,17 @@ However, in practice, signature verification typically entails multiple subtasks
 
 ![](/images/hugo/metricblog/signature_pipeline.png)
 
-##### Figure 4 . A summary of tasks that comprise the automatic signature verification pipeline.
+##### Figure 4 . A summary of tasks that comprise the automatic signature verification pipeline (and related machine learning problems).
 
 **Input Normalization**
 
-Offline signature images can be noisy. More importantly, they can contain spurious information that might cause a machine learning algorithm to utilize features that do not generalize to new test distributions (e.g. background color of images, stroke color, marks or ticks that might appear in a subset of training data etc). To address this, input images should be normalized. In our experiments, we will explore a three step process following existing ASV research [^2] - grayscale conversion to reduce color channels, image binarization using a thresholding method and cleaning (removal of background artifacts such as text, rubber stamps, etc).
+Offline signature images can be noisy. More importantly, they can contain spurious information that might cause a machine learning algorithm to utilize features that do not generalize to new test distributions (e.g. background color of images, stroke color, marks or ticks that might appear in a subset of training data etc). To address this, input images should be normalized. In our experiments, we will explore a three step process following existing ASV research [^2] - grayscale conversion to reduce color channels, image **_binarization_** using a thresholding method and cleaning (removal of background artifacts such as text, rubber stamps, etc). Note that cleaning can be framed as an _**image translation**_ problem where we translate from a _dirty image_ to a _clean image_ using models such as Autoencoders and GANs (e.g. cycleGANs[^7]).
 
 Note that in other domains (e.g. natural images), color, and some types of noise may be beneficial to accurate classification, but are more likely to contribute biases in this use case.
 
 **Signature Detection**
 
-Documents containing signatures may be of arbitrary sizes and structure, and the location of signatures in these documents may vary. This task (also referred to as signature extraction [^2]), focuses on identifying the location of each signature given a document. In this work, we will frame this task as an object detection ML problem where an ML model outputs a list of bounding boxes for signatures, given an image.
+Documents containing signatures may be of arbitrary sizes and structure, and the location of signatures in these documents may vary. This task (also referred to as signature extraction [^2]), focuses on identifying the location of each signature given a document. In this work, we will frame this task as an __**object detection**__ ML problem where an ML model outputs a list of bounding boxes for signatures, given an image.
 
 **Representation Extraction**
 
@@ -163,9 +174,18 @@ In this post, we have provided an overview of automatic signature verification, 
 
 However, there are still several open questions regarding the implementation of an ASV pipeline. How might we design a compelling, strong baseline? Are pre trained CNN models good baselines? How do we evaluate an ASV method? How do we implement each of the sub tasks in Python?
 
-In the next series of posts, we will address these questions, and results from our experiments implementing each of these tasks.
+In the next series of posts (below), we will address these questions, and results from our experiments implementing each of these tasks.
 
-By *[Victor](https://twitter.com/vykthur)* and *[Andrew](https://www.linkedin.com/in/andrew-r-reed/)*
+<div  class="tldr"> 
+  <span class="textbold">Read more:</span> 
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+  <ul>
+    <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+    </ul>
+  </div>
+</div>
 
 ## References
 
@@ -181,3 +201,4 @@ By *[Victor](https://twitter.com/vykthur)* and *[Andrew](https://www.linkedin.co
 
 [^6]: ScaNN - a method for efficient vector similarity search at scale. https://github.com/google-research/google-research/tree/master/scann
 
+[^7]: Zhu, Jun-Yan, et al. "Unpaired image-to-image translation using cycle-consistent adversarial networks." Proceedings of the IEEE international conference on computer vision. 2017.

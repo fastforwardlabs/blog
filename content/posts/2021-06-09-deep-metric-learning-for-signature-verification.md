@@ -9,10 +9,21 @@ published: true
 
 By *[Victor](https://twitter.com/vykthur)* and *[Andrew.](https://www.linkedin.com/in/andrew-r-reed/)*
 
-<div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-TLDR;  We provide an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification.
 
+<div  class="tldr"> 
+  <span class="textbold">TLDR;</span> This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification. Other posts in the series are listed below:
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
+    </a> -->
+    <ul>
+    <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+    </ul>
+  </div>
 </div>
+
+ 
 
 In our [previous blog post](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html), 
 , we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (74.3% accuracy on skilled forgeries, 89.5% on unskilled forgeries). 
@@ -249,13 +260,13 @@ In our previous experiments, we saw that a pretrained model could be a strong ba
 - Full ResNet50  - Full ResNet50 fine tuned on the triplet metric learning objective -  76.4%  24.79 million.
 
 Overall, we find that the following useful insights
-Fine tuning with pre-trained features (e.g Smaller ResNet50 vs Baseline CNN and Baseline UNet) yields better results compared to training a model from scratch. 
-A UNet like architecture for models of comparable size yields better performance for our task (Base UNet vs Base CNN).
+- Fine tuning with pre-trained features (e.g Smaller ResNet50 vs Baseline CNN and Baseline UNet) yields better results compared to training a model from scratch. 
+- A UNet like architecture for models of comparable size yields better performance for our task (Base UNet vs Base CNN).
 
 
 **Impact of Skip Connections:**
 Skip connections in CNNs have been shown to improve the loss surface [^7] for deep networks making them easier to train and yielding performance.
-We find that fine tuning a full ResNet50 model (which has skip connections) achieves better performance (76.4%) compared to fine tuning a VGG16 model (67.4%) 
+We find that fine tuning a full ResNet50 model (which has skip connections) achieves better performance (76.4%) compared to fine tuning a VGG16 model (67.4%). 
 
 **Intermediate model vs Full Model:** 
 When applying transfer learning, the data scientist must decide how much of the pretrained model is useful to their task - i.e what features to include, what features to freeze and what features to finetune. 
@@ -278,7 +289,7 @@ To this end, we explored several sanity check approaches to help us build trust 
 First, we have used dimensionality reduction techniques (UMAP) to visualize embeddings for each signature in our test set. We expect that signatures from the same author are clustered together; we also expect that skilled forgeries are close to originals but separated from the cluster of the associated genuine signature.
 
 ![](/images/hugo/metricblog/smallresnetembedding.jpg)
-##### Figure 13. Visualization of UMAP embeddings (2 dimensions) produced by our best model for signatures in our test set. In general, we see that embeddings for forgeries are in the same region as their corresponding genuine signatures but still separated. ✅
+##### Figure 13. Visualization of UMAP embeddings (2 dimensions) for signatures in our test set. In general, we see that embeddings for forgeries are in the same region as their corresponding genuine signatures but still separated. 
 
 ###  Visualization of distance metrics
 In this sanity check, we construct image pairs (positive and negative) pairs and compute the distance between embeddings produced by our model, for each pair. We expect that the density of distances between positive pairs is close to zero (with some variation to account for user error), but more spread out toward 1 for negative pairs.  
@@ -296,7 +307,7 @@ We can adapt it to our use case by visualizing the gradient of the entire output
 Note, that methods like GradCam are not exactly principled, but subject to interpretation based on domain knowledge.  The reader is encouraged to explore GradCam visualizations to confirm that the pixels which the model finds influential make sense based on their knowledge of the problem space.
 
  
-![](/images/hugo/metricblog/signaturegradcam.png)
+![](/images/hugo/metricblog/signaturegradcam.jpg)
 ##### Figure 16: GradCam visualization for the last 4 convolutional layers for signatures from our test set. 
 
 ## Limitations
@@ -306,7 +317,7 @@ In this work, we show that fine tuning a pretrained model on a metric learning l
 
 - **Dataset Limitations**: While our training setup is designed such that we evaluate the models on signatures from individuals not represented in the training set, we recognize that the CEDAR dataset is small and does not cover properties of signatures (e.g. different writing styles, languages etc) that may occur in real world documents but are not covered in the CEDAR dataset. Training and evaluation on additional datasets is strongly recommended prior to production use. 
 
-- **Limitations of Triplet Loss** - While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research [^8] shows that k-means assignments can be used as pseudo-labels to learn visual representations.
+- **Limitations of Triplet Loss**:While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research [^8] shows that k-means assignments can be used as pseudo-labels to learn visual representations.
 
 - **Data Augmentation**: We used the CEDAR dataset as is, without exploring augmentations or transformations. For example, it may be useful to experiment with scale or rotation transforms to ensure the model is invariant to these changes.
 

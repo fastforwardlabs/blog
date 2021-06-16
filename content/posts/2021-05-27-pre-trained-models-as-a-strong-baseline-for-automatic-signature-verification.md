@@ -1,16 +1,29 @@
 ---
 title: "Pre-trained Models as a Strong Baseline for Automatic Signature Verification"
 date: 2021-05-27T07:35:06 
-preview_image: /images/hugo/ff20_blog2_workflow-1622116594.png
+preview_image: /images/hugo/metricblog/feature_extraction_pretrained.png
 post_type: Post
 # external_url: 
 ---
 
 By *[Victor](https://twitter.com/vykthur)* and *[Andrew.](https://www.linkedin.com/in/andrew-r-reed/)* 
 
-![](/images/hugo/ff20_blog2_workflow-1622116594.png)
+![](/images/hugo/metricblog/feature_extraction_pretrained.png)
 
 ##### Figure 1. Baseline approach for automatic signature verification using pre-trained models
+
+<div  class="tldr"> 
+  <span class="textbold">TLDR;</span> This post describes how pretrained image classification models can be used as strong baselines for the task of signature verification. Other posts in the series are listed below:
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
+    </a> -->
+    <ul>
+    <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+    </ul>
+  </div>
+</div>
 
 As discussed in our [introductory blog post](https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification.html), offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures. This is a particularly important form of verification due to the ubiquitous use of handwritten signatures as a means of personal identification in legal contracts, administrative forms, and financial documents. And due to the significance and scale of this task, signature verification has become a critical line of research in the field of machine learning and pattern recognition as a way to reduce the uncertainty and inefficiency involved in the manual authentication process [^1]. 
 

@@ -299,3 +299,26 @@ code.has-jax {
   border-top: 1px solid rgb(189, 189, 189);
   /* border-right: 1px solid rgb(189, 189, 189); */
 }
+
+div.tldr{
+  border-bottom: 1px dashed grey; 
+  background-color:#E5E5E5; 
+  padding: 10px; 
+  margin-bottom:10px
+}
+
+a.postlink{
+  border: 1px solid rgb(133, 133, 133);
+  margin-top: 10px;
+  display: inline-block;
+  padding: 2px 10px 2px 10px;
+  text-decoration: none;
+}
+
+a.postlink:hover{
+  background-color: rgb(198, 198, 198);
+}
+
+span.textbold{
+  font-weight: bold;
+}
