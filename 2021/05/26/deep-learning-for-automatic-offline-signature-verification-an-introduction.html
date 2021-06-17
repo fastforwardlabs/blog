@@ -83,16 +83,16 @@ if (!doNotTrack) {
 <p><img src="/images/hugo/metricblog/signature_pipeline.png" alt=""></p>
 <h5 id="figure-1-a-summary-of-tasks-that-comprise-the-automatic-signature-verification-pipeline-and-related-machine-learning-problems">Figure 1. A summary of tasks that comprise the automatic signature verification pipeline (and related machine learning problems).</h5>
 <div  class="tldr"> 
-<span class="textbold">TLDR;</span> This post provides an overview of the signature verification task, use cases and challenges. Other posts in the series are listed below:
-<div style="margin-top:10px; border-top: 1px dashed grey"> 
-  <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
-  </a> -->
-  <ul>
-   <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
-    <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
-    <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
-  </ul>
-</div>
+  <span class="textbold">TLDR;</span> This post provides an overview of the signature verification task, use cases and challenges. Other posts in the series are listed below:
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
+    </a> -->
+    <ul>
+    <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+    </ul>
+  </div>
 </div>
 <p>Given two signatures, automatic signature verification (ASV) seeks to determine if they are produced by the same user (genuine signatures) or different users (potential forgeries). This process, which has been traditionally performed by humans, can be tedious and almost impossible to scale without the use of automatic verification tools. To solve this task, we need a system that, at a high level, can produce measures of similarity between a pair of signatures. We can then exploit this measure of similarity in verifying or matching signatures - i.e. similar signatures are likely genuine, dissimilar signatures are likely forgeries. Given the complex requirements of this problem (understanding the content of images), deep learning models which have excelled in similar perception tasks are a good candidate tool of choice.</p>
 <p>In practice, solving the signature verification tasks requires solving a set of adjacent <em>sub tasks</em> (see Figure 1 above). First, images of signatures may come in various colors, shape, rotation and scale transformations which we need to account for (normalization). They may be located in arbitrary parts of a document and might be occluded with text, stamps or background noise (detection and cleaning). Once we have localized and cleaned our images, we  then have to extract representations using appropriate methods and then efficiently match this against an existing database of known signatures.</p>
