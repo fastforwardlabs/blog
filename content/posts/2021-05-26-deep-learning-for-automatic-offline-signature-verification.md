@@ -15,18 +15,16 @@ By *[Victor](https://twitter.com/vykthur)* and *[Andrew.](https://www.linkedin.c
 ##### Figure 1. A summary of tasks that comprise the automatic signature verification pipeline (and related machine learning problems).
 
 <div  class="tldr"> 
-<span class="textbold">TLDR;</span> This post provides an overview of the signature verification task, use cases and challenges. Other posts in the series are listed below:
-
-<div style="margin-top:10px; border-top: 1px dashed grey"> 
-  <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
-  </a> -->
-  <ul>
-   <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
-    <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
-    <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
-  </ul>
-</div>
-
+  <span class="textbold">TLDR;</span> This post provides an overview of the signature verification task, use cases and challenges. Other posts in the series are listed below:
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
+    </a> -->
+    <ul>
+    <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+    </ul>
+  </div>
 </div>
 
  
