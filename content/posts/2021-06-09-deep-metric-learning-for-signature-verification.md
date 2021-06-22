@@ -26,7 +26,7 @@ By *[Victor](https://twitter.com/vykthur)* and *[Andrew.](https://www.linkedin.c
  
 
 In our [previous blog post](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html), 
-, we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (74.3% accuracy on skilled forgeries, 89.5% on unskilled forgeries). 
+, we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (with ResNet50: 69.3% accuracy on skilled forgeries, 86.7% on unskilled forgeries). 
 
 ![](/images/hugo/metricblog/classificationmetric.png)
 ##### Figure 1. Metric learning allows us to learn a discriminative embedding space that both maximizes inter class distances and minimized intra class distance. 
@@ -202,7 +202,7 @@ To evaluate each model, we construct a set of pairs of positives and negatives (
 ### Contrastive Loss Training and Evaluation
 For contrastive loss, a siamese network was assembled using an embedding model composed of a frozen ResNet50 backbone with a series of 3 trainable layers appended to the network head (1 GlobalAveragePooling 2D layer and 2 Dense layers with 128 activations each). This approach allowed us to fine tune the already effective pre-trained ResNet50 feature extractor on our signature verification dataset using contrastive loss.
 
-Through several training iterations, we found that introducing intermediate dropout and L2 regularization to our custom network head allowed us to achieve 78.2% max accuracy on the test set - an improvement over the pretrained ResNet50 baseline (74%)!
+Through several training iterations, we found that introducing intermediate dropout and L2 regularization to our custom network head allowed us to achieve 72.8% max accuracy on the test set - an improvement over the pretrained ResNet50 baseline (69.3%)!
 
 While these results are promising, there are several considerations to take into account when using contrastive loss. First, contrastive loss requires us to construct and train on an exhaustive list of genuine/forged examples. For our dataset, this means training on 36,432 sample pairs each epoch despite the fact that many of those pairs may not actually contribute any loss (and therefore learning) to the network because they are “easy” positives or negatives.
 
