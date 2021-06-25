@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-06.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the June edition of the Cloudera Fast Forward Labs newsletter. This month, we have some new research, livestream recordings, and our recommended reading.</p>
+<h2 id="new-research-deep-metric-learning-applications-in-automatic-offline-signature-verification">New research! Deep Metric Learning: Applications in Automatic Offline Signature Verification</h2>
+<p><img src="/images/hugo/sig-ver-1624632667.png" alt="Pictorial representation of triplet loss"></p>
+<p>The past couple of months, we&rsquo;ve been tackling the forensic task of offline signature verification using modern deep learning techniques. Handwritten signature verification aims to automatically discriminate between genuine and forged signatures, and is a particularly important challenge due to the ubiquity of handwritten signatures as a form of identification in legal, financial, and administrative domains. This research cycle explored the use of deep metric learning approaches - specifically siamese networks - combined with novel feature extraction methods to improve upon traditional techniques. We wrote about our experience in three blog posts:</p>
+<p><a href="https://blog.fastforwardlabs.com/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html">Deep Learning for Automatic Offline Signature Verification</a></p>
+<p><a href="https://blog.fastforwardlabs.com/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html">Pre-trained Models as a Strong Baseline for Automatic Signature Verification</a></p>
+<p><a href="https://blog.fastforwardlabs.com/2021/06/09/deep-metric-learning-for-signature-verification.html">Deep Metric Learning for Signature Verification</a></p>
+<p>And wrapped up an experimental library to help with the task. Check it out at <a href="https://github.com/fastforwardlabs/signver">fastforwardlabs/signver</a>.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>In our latest livestream <a href="https://youtu.be/7_MlFxyPYSg">Deep Learning for Automatic Offline Signature Verification</a>, Victor and Andrew gave a half hour walk through of our signature verification research, and answered some audience questions.</p>
+<p>You can also still catch a replay of our previous livestreams:</p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favourite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://huggingface.co/blog/how-to-generate">How to generate text: using different decoding methods for language generation with Transformers</a></p>
+<p>Ever wonder how transformer-based language models are able to generate such authentic sounding text snippets? I did. Aside from improvements in architecture design and massive training corpora, it turns out that <em>thoughtful decoding methods</em> play a crucial role in sounding more “human”. This informative post by HuggingFace demonstrates the impact of various decoding methods on a generative model&rsquo;s ability to produce unique, interesting, and non-repetitive language. - <em><a href="https://www.linkedin.com/in/andrew-r-reed/">Andrew</a></em></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/1712.09913">Visualizing the Loss Landscape of Neural Nets</a></p>
+<p>Deep models with skip connections (e.g. ResNet-like architectures) work well in practice i.e. converge faster, and generalize better. Why? This paper (<a href="https://arxiv.org/abs/1712.09913">https://arxiv.org/abs/1712.09913</a>) visualizes the loss landscape and provides some insights. Hint: Skip connections result in more &ldquo;convex&rdquo; loss landscapes.  According to the authors, &ldquo;chaotic landscapes (deep networks without skip connections) result in worse training and test error, while more convex landscapes have lower error values&rdquo;.</p>
+<p>We recently ran a <a href="https://blog.fastforwardlabs.com/2021/06/09/deep-metric-learning-for-signature-verification.html">few experiments</a> (fine tuning pretrained model features with a metric learning objective, for the task of signature verification) and found that skip connection models (ResNet family) provided better results. This paper was useful in understanding how and why. - <a href="https://twitter.com/vykthur"><em>Victor</em></a></p>
+<p><img src="/images/hugo/loss-landscapes-1624632654.png" alt="Loss landscapes without and with skip connections"></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2009.14794">Rethinking Attention with Performers</a></p>
+<p>Move over, Transformers! There&rsquo;s a new language model in town and it is <em>lean</em>. While we don&rsquo;t actually recommend trying to slog through this unarguably <em>dense</em> paper, we highlight it this month because of it&rsquo;s promise for the direction of language models going forward. In it, the authors demonstrate a new way of computing the attention mechanism, the backbone of Transformer models that allows them to learn complex dependencies between input tokens. Standard attention scales quadratically in both space (memory) and time (computation) with the number of input tokens, making them expensive to train and manage. The authors demonstrate their attention mechanism scales <em>linearly</em>,  paving the way for large language models that are more efficient (and cheaper) to train, while maintaining the same levels of accuracy as traditional Transformers. This technique is sure to become increasingly popular, making language models ever more attainable. - <a href="http://www.linkedin.com/in/melanierbeck"><em>Melanie</em></a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=5xcd0V9m6Xs">Designing AI systems for deep learning recommendation and beyond</a></p>
+<p>At a recent MLSys seminar, the speaker, Carole-Jean Wu shared her work at Facebook that focusses at the intersection of systems and machine learning, in particular recommendation systems. In her talk she covers why recommendation systems are important, how they are an under-invested area of research, some of the unique system challenges they present, ideas on building systems for deep learning recommendations and new benchmarks and models that Facebook has made available in this space.</p>
+<p>One of the key points of the presentation being deep learning for recommendations is an under-invested area when it comes to research from a systems perspective.  Less than 2% of research publications are devoted to optimizing systems for recommendation engines compared to other areas like computer vision that account for 82%  and  neural speech translation for 16%. One of the primary reasons for this disconnect is the availability of a representative workload benchmark to evaluate the latest research ideas. She further covers an overview of the underlying approaches for recommendation models at Facebook that mainly employ Dense DNN and embeddings to learn representations and ranking. And shares how different portions of a recommendation model have different system requirements. For instance, the Dense DNN stack that is implemented as a multilayer perceptron (MLP ) is compute intensive whereas the operations on the embeddings are memory capacity/storage and bandwidth intensive. The system requirements also differ when it comes to training versus inference. All this along with the need to maximize a system&rsquo;s throughput while minimizing latency poses a unique set of system challenges. For instance, large embedding tables require orders of magnitude larger storage capacity as compared to CNNs and RNNs. Overall a great talk that shares Facebook&rsquo;s take on designing and optimizing systems for deep learning-based recommendations. - <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+<li>
+<p><a href="https://leanpub.com/elementsofclojure/read_sample">Elements of Clojure, Chapter 1: Names</a></p>
+<p>Nominally, Elements of Clojure is a book about the Clojure programming language. Even for those who are not familiar with the language, the first chapter of this book (which is the free preview) is an <em>excellent</em> discussion of naming in software. Thoughtful names have a whole host of benefits, making software more understandable, reducing cognitive overhead, and result in a more easily maintained code base. Whether you read this particular piece or not, I <em>highly</em> recommend dedicating time to reading and thinking about what we call things in our code. - <em><a href="https://twitter.com/_cjwallace">Chris</a></em></p>
+</li>
+</ul>
+
+  </div>
+
+
