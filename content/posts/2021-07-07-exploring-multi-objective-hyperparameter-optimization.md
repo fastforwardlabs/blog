@@ -1,7 +1,7 @@
 ---
 title: "Exploring Multi-Objective Hyperparameter Optimization"
 date: 2021-07-07
-preview_image:
+preview_image: /images/hugo/Single-objective-surrogate-function-1625741671.png
 post_type: Post
 ---
 
