@@ -160,37 +160,34 @@ As we will see later on, the ability to sample intelligently and introduce relat
 
 
 
-## Other Losses - Quadruplet Loss, Group Loss
+## Other Losses: Quadruplet Loss, Group Loss
 
 
 ![](/images/hugo/metricblog/quadruplet_train.png)
 ##### Figure 7: Quadruplet loss 
 
-At this point, it is clear that a good loss function should attempt to learn similarity using information from each training sample. Contrastive loss learns from pairs of images (positive, negative).  Triplet loss achieves even better performance by simultaneously learning  from carefully selected image triplets (anchor, positive, negative) within a batch. But what if we could simultaneously learn from even more samples within a batch? It turns out that existing research has explored this. 
+At this point, it is clear that a good loss function should attempt to learn similarity using information from each training sample. Contrastive loss learns from pairs of images (positive, negative). Triplet loss achieves even better performance by simultaneously learning from carefully selected image triplets (anchor, positive, negative) within a batch. But what if we could simultaneously learn from even more samples within a batch? Existing research has explored this. 
 
-In their work, Chen et 2017 [^2] [^3] introduce the **quadruplet loss**, where each training sample consists of 4 data points (anchor, positive, negative1, negative2) where negative2 is dissimilar to all other data points.  They minimize the distance between anchor and positive while simultaneously maximizing distance between anchor and negative1 as well as negative1 and negative2.
+In their work, Chen et al. [^2] [^3] introduce **quadruplet loss**, where each training sample consists of 4 data points (anchor, positive, negative1, negative2), where negative2 is dissimilar to all other data points. They minimize the distance between anchor and positive, while simultaneously maximizing distance between anchor and negative1 *as well as* negative1 and negative2.
 
-Elezi et al [^5] take this even one step further and propose the **group loss** which aims to simultaneously learn from all samples within a minibatch as opposed to a pair, triplet or quadruplet. To create the mini-batch, they sample from a fixed number of classes, with samples coming from a class forming a group. Thus, each mini-batch consists of several randomly chosen groups, and each group has a fixed number of samples. An iterative, fully-differentiable label propagation algorithm is then used to build feature embeddings which are similar for samples belonging to the same group, and dissimilar otherwise. The overall effect of this group loss formulation is to enforce embedding similarity across all samples of a group while promoting, at the same time, low-density regions amongst data points belonging to different groups.
+Elezi et al [^5] take this one step further and propose **group loss**, which aims to simultaneously learn from all samples within a minibatch (as opposed to a pair, triplet or quadruplet). To create the mini-batch, they sample from a fixed number of classes, with samples coming from a class forming a group. Thus, each mini-batch consists of several randomly chosen groups, and each group has a fixed number of samples. An iterative, fully-differentiable label propagation algorithm is then used to build feature embeddings, which are similar for samples belonging to the same group, and dissimilar otherwise. The overall effect of this group loss formulation is to enforce embedding similarity across all samples of a group, while simultaneously promoting low-density regions amongst data points belonging to different groups.
 
-One trend we can observe from these loss functions is that the more data points from multiple classes we use to update our gradients, the better our model is able to capture the global structure of the embedding space. In theory, quadruplet loss and group loss represent the state of the art in metric learning loss functions, but they introduce multiple parameters that can be challenging to implement and tune. Even when this is done correctly, the expected increase in performance (~1 - 4%) may be hard to reproduce, especially due to the stochastic nature of DNN training. In practice (as we will see in the experiment section), triplet loss (with online learning) is efficient, high performing and hence the recommended approach.
-
-
-
+One trend we can observe from these loss functions is that the more data points from multiple classes we use to update our gradients, the better our model is able to capture the global structure of the embedding space. In theory, quadruplet loss and group loss represent the state of the art in metric learning loss functions, but they do introduce multiple parameters that can be challenging to implement and tune. Even when this is done correctly, the expected increase in performance (~1 - 4%) may be hard to reproduce, especially due to the stochastic nature of DNN training. In practice (as we will see in the experiment section below), triplet loss (with online learning) is efficient and high-performing; hence, it is the recommended approach.
  
 
 ## Our Experimentation
 
 ### Dataset 
 
-To evaluate a metric learning approach on our signature verification task, we experimented with contrastive and triplet loss. We first constructed an experimental setup consistent with the design from our [pre-trained baseline experiment](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html) . Using the CEDAR dataset, we withheld signatures for 11 of the 55 authors as a test set and used the other 44 as a training set.   
+To evaluate a metric learning approach on our signature verification task, we experimented with contrastive and triplet loss. We first constructed an experimental setup consistent with the design from our [pretrained baseline experiment](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html). Using the CEDAR dataset, we withheld signatures for 11 of the 55 authors as a test set, and used the other 44 as a training set.   
 
 
 ![](/images/hugo/metricblog/cedardataset.png)
 ##### Figure 8. The CEDAR dataset used for our signature verification experiments.
 
-Note that depending on the loss function, the strategy for constructing the eventual training dataset which the network learns from might differ. In our contrastive loss experiments, we generated a total of 36,432 pairs.  For our triplet loss experiments, given that we use the online triplet mining approach, we structure the dataset as a classification problem; each signer and each forgery is treated as a class, making for a total of 88 classes with 24 samples (2112 total)  each in the training set. Amongst other limitations, the CEDAR dataset is small; as we see later on, this makes it challenging to train a performant neural network from scratch.
+Note that depending on the loss function, the strategy for constructing the eventual training dataset from which the network learns might differ. In our contrastive loss experiments, we generated a total of 36,432 pairs. For our triplet loss experiments - given that we used the online triplet mining approach - we structured the dataset as a classification problem; each signer and each forgery was treated as a class, making for a total of 88 classes with 24 samples (2112 total), each in the training set. Amongst other limitations, the CEDAR dataset is small; as we'll see later on, this makes it challenging to train a performant neural network from scratch.
 
-To evaluate each model, we construct a set of pairs of positives and negatives (see Figure 9 and 10 for examples of skilled and unskilled forgeries in our test set) and report maximum accuracy and equal error rate. Except where mentioned, the performance scores we report are based on a test set of positives and skilled forgeries (hard negatives). Additional discussion on evaluation metrics is provided in our [previous post](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html).
+To evaluate each model, we constructed a set of pairs of positives and negatives (see Figures 9 and 10 for examples of skilled and unskilled forgeries in our test set) and report maximum accuracy and equal error rate. Except where mentioned, the performance scores we report are based on a test set of positives and skilled forgeries (hard negatives). (Additional discussion on evaluation metrics is provided in a [previous post](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html) in this series.)
 
 ![](/images/hugo/metricblog/hardnegatives.jpg)
 ##### Figure 9. Examples of skilled forgeries where the forger has access to the genuine signature and attempts to replicate it. We refer to such pairs as hard negatives. All performance scores reported are based on a test set containing this type of negatives.
@@ -200,20 +197,20 @@ To evaluate each model, we construct a set of pairs of positives and negatives (
 
 
 ### Contrastive Loss Training and Evaluation
-For contrastive loss, a siamese network was assembled using an embedding model composed of a frozen ResNet50 backbone with a series of 3 trainable layers appended to the network head (1 GlobalAveragePooling 2D layer and 2 Dense layers with 128 activations each). This approach allowed us to fine tune the already effective pre-trained ResNet50 feature extractor on our signature verification dataset using contrastive loss.
+For contrastive loss, a Siamese network was assembled, using an embedding model composed of a frozen ResNet50 backbone with a series of 3 trainable layers appended to the network head (1 GlobalAveragePooling 2D layer and 2 Dense layers with 128 activations each). This approach allowed us to fine-tune the already effective pre-trained ResNet50 feature extractor on our signature verification dataset, using contrastive loss.
 
 Through several training iterations, we found that introducing intermediate dropout and L2 regularization to our custom network head allowed us to achieve 72.8% max accuracy on the test set - an improvement over the pretrained ResNet50 baseline (69.3%)!
 
-While these results are promising, there are several considerations to take into account when using contrastive loss. First, contrastive loss requires us to construct and train on an exhaustive list of genuine/forged examples. For our dataset, this means training on 36,432 sample pairs each epoch despite the fact that many of those pairs may not actually contribute any loss (and therefore learning) to the network because they are “easy” positives or negatives.
+While these results are promising, there are several considerations to take into account when using contrastive loss. First, contrastive loss requires us to construct and train on an exhaustive list of genuine/forged examples. For our dataset, that meant training on 36,432 sample pairs each epoch, despite the fact that many of those pairs may not actually contribute any loss (and therefore learning) to the network because they are “easy” positives or negatives.
 
 ![](/images/hugo/metricblog/umap_contrastive.jpg)
-##### Figure 11. A 3D plot of embeddings produced by a network trained with contrastive loss, for three authors signatures. Genuine vs. forged examples are appropriately placed into separable regions as seen by groupings of circles vs. diamonds.
+##### Figure 11. A 3D plot of embeddings produced by a network trained with contrastive loss, for three authors' signatures. Genuine vs. forged examples are appropriately placed into separable regions, as seen by groupings of circles vs. diamonds.
 
-Second, contrastive loss is limited in its ability to learn global, contextual feature representations. Figure 11 above depicts embeddings generated from the trained siamese network for genuine and forged signature examples from three authors. We observe that the network has correctly separated genuine vs. forged examples into separate regions which is precisely what contrastive loss aims to accomplish. However, the model has not captured the relative similarity of signatures from the same author (which can hurt generalization to new signature datasets). Ideally, we desire a model that produces embeddings that are separable across authors and discriminative between genuine/forged classes. For example, we would like to see that all signatures from Author 3 appear in the same general region, and within that region, signatures maintain separation between genuine and forged. Because contrastive loss is formulated by looking only at pairs of images, it cannot preserve a contextual understanding of author classes and simply just learns discriminative features between genuine and forged. This shortcoming is solved by triplet loss (as we will see), and therefore the remainder of our exploration focused on this superior loss function.
+Second, contrastive loss is limited in its ability to learn global, contextual feature representations. Figure 11 above depicts embeddings generated from the trained Siamese network for genuine and forged signature examples from three authors. We observe that the network has correctly separated genuine vs. forged examples into separate regions, which is precisely what contrastive loss aims to accomplish. However, the model has not captured the relative similarity of signatures from the same author (which can hurt generalization to new signature datasets). Ideally, we desire a model that produces embeddings that are separable across authors and discriminative between genuine/forged classes. For example, we would like to see that all signatures from Author 3 appear in the same general region, and within that region, signatures maintain separation between genuine and forged. Because contrastive loss is formulated by looking only at pairs of images, it cannot preserve a contextual understanding of author classes, and simply just learns discriminative features between genuine and forged. This shortcoming is solved by triplet loss (as we will see), and therefore the remainder of our exploration focused on this superior loss function.
 
 
 ### Triplet Loss Training and Evaluation
-We constructed several model architectures (see Table 1 below) and trained them using the Triplet Semi Hard loss implemented in the Tensorflow addons library [5].  Each model has a similar set of final layers (two conv2D layers followed by a Dense layer and an L2 Normalization layer with size 256). We found that adding an L2 Normalization layer after our output embeddings (as suggested in [2]) was useful in constraining the embeddings to a hypersphere conducive for cosine similarity. Each model was trained with the Adam optimizer (lr=0.001), with a learning rate decay of 0.7 ever 10 steps, and trained for 25 epochs.  
+We constructed several model architectures (see Table 1 below) and trained them using the Triplet Semi-Hard loss implemented in the Tensorflow addons library. [5]  Each model had a similar set of final layers (two conv2D layers, followed by a Dense layer and an L2 Normalization layer with size 256). We found that adding an L2 Normalization layer after our output embeddings (as suggested in [2]) was useful in constraining the embeddings to a hypersphere conducive for cosine similarity. Each model was trained with the Adam optimizer (lr=0.001), with a learning rate decay of 0.7 ever 10 steps, and trained for 25 epochs.  
 
 <div class="metrictable">
 
@@ -240,71 +237,71 @@ We constructed several model architectures (see Table 1 below) and trained them 
 
 
 ![](/images/hugo/metricblog/tripletmodel_summary.jpg)
-##### Figure 12. Maximum accuracy vs model size for multiple model architectures, evaluated on the signature verification task. 
+##### Figure 12. Maximum accuracy vs. model size for multiple model architectures, evaluated on the signature verification task. 
  
 
 
 
 #### Effect of Triplet Model Choices
-Training multiple models allowed us to explore the impact of design choices which a datasciencist must navigate when applying metric learning in practice.  
+Training multiple models allowed us to explore the impact of the design choices a data sciencist must navigate when applying metric learning in practice.  
 
 **Impact of a Metric Loss Formulation:** 
-We see that fine tuning a pretrained model using the triplet loss leads to a 81.8% maximum accuracy for our best model. This is a significant improvement from a pretrained ResNet50 baseline performance of 74.3%.
+We see that fine-tuning a pretrained model using the triplet loss leads to a 81.8% maximum accuracy for our best model. This is a significant improvement from a pretrained ResNet50 baseline performance of 74.3%.
 
 **Impact of Pretrained Features:** 
-In our previous experiments, we saw that a pretrained model could be a strong baseline without any finetuning. To evaluate how much of the performance increase we see in our metric learning experiments is attributable to the use of pre trained features (vs the triplet loss function), we trained a vanilla baseline CNN,  as well as models constructed from intermediate layers of a pretrained ResNet and VGG16 model.
+In our previous experiments, we saw that a pretrained model could be a strong baseline without any finetuning. To evaluate how much of the performance increase we see in our metric learning experiments is attributable to the use of pretrained features (vs. the triplet loss function), we trained a vanilla baseline CNN, as well as models constructed from intermediate layers of a pretrained ResNet and VGG16 model.
 - Base CNN - 68%, 1.68 million parameters 
 - Base UNet - 71.5%, 1.29 million parameters
-- Small ResNet50 Skip initialized at skip connection layer conv4_block6_add - 81.8%, 9.2 million parameters. (Best performance) 
-- Smaller ResNet50 Skip initialized at skip connection layer conv3_block4_add - 76.1%, 2.18 million parameters. 
-- Full ResNet50  - Full ResNet50 fine tuned on the triplet metric learning objective -  76.4%  24.79 million.
+- Small ResNet50 Skip initialized at skip connection layer conv4_block6_add - 81.8%, 9.2 million parameters. (best performance) 
+- Smaller ResNet50 Skip initialized at skip connection layer conv3_block4_add - 76.1%, 2.18 million parameters
+- Full ResNet50 fine-tuned on the triplet metric learning objective - 76.4%  24.79 million
 
-Overall, we find that the following useful insights
-- Fine tuning with pre-trained features (e.g Smaller ResNet50 vs Baseline CNN and Baseline UNet) yields better results compared to training a model from scratch. 
-- A UNet like architecture for models of comparable size yields better performance for our task (Base UNet vs Base CNN).
+Overall, we found the following to be useful insights:
 
+- Fine-tuning with pretrained features (e.g., Smaller ResNet50 vs Baseline CNN and Baseline UNet) yields better results compared to training a model from scratch. 
+- A UNet-like architecture for models of comparable size yields better performance for our task (Base UNet vs Base CNN).
 
-**Impact of Skip Connections:**
-Skip connections in CNNs have been shown to improve the loss surface [^7] for deep networks making them easier to train and yielding performance.
-We find that fine tuning a full ResNet50 model (which has skip connections) achieves better performance (76.4%) compared to fine tuning a VGG16 model (67.4%). 
+**Impact of Skip Connections:** 
+Skip connections in CNNs have been shown to improve the loss surface [^7]  for deep networks, making them easier to train and yielding performance.
+- Fine-tuning a full ResNet50 model (which has skip connections) achieves better performance (76.4%) compared to fine tuning a VGG16 model (67.4%). 
 
 **Intermediate model vs Full Model:** 
-When applying transfer learning, the data scientist must decide how much of the pretrained model is useful to their task - i.e what features to include, what features to freeze and what features to finetune. 
-- We found that we got the best performance when we constructed an intermediate model from ResNet50 (Small ResNet50 skip, 35MB) and fine tuned it vs fine tuning the entire ResNet50. 
-- Furthermore we found that when we constructed this intermediate model using the output of a skip connection vs a conv2D layer, the results were better. Our intuition is that the later layers  in a pretrained ResNet50 model contain high level features (e.g eyes, wheels, doors) that are not relevant to our task and dataset (which are mostly lines and texture in a signature) and can introduce noise. More importantly, an intermediate model is **_faster to train, significantly smaller, and hence easier to deploy_** (e.g. as a microservice with limits on file sizes). Note that Smaller ResNet50 is competitive (76.1% on hard negatives, 95% on easy negatives) but only **_8.5mb_** in file size.
+When applying transfer learning, the data scientist must decide how much of the pretrained model is useful to their task - i.e., what features to include, what features to freeze, and what features to finetune. 
+- We found that we got the best performance when we constructed an intermediate model from ResNet50 (Small ResNet50 skip, 35MB) and fine-tuned it, vs. fine-tuning the entire ResNet50. 
+- Furthermore, we found that when we constructed this intermediate model using the output of a skip connection vs. a conv2D layer, the results were better. Our intuition is that the later layers in a pretrained ResNet50 model contain high level features (e.g., eyes, wheels, doors) that are not relevant to our task and dataset (which are mostly lines and texture in a signature) and can introduce noise. More importantly, an intermediate model is **_faster to train, significantly smaller, and hence easier to deploy_** (e.g., as a microservice with limits on file sizes). Note that Smaller ResNet50 is competitive (76.1% on hard negatives, 95% on easy negatives), but only **_8.5mb_** in file size.
 
 Notes on training with triplet loss:
-- Ensure a large enough batch size is selected when training with the online triplet loss (on the minimum, batch size should be greater than the number of classes). This ensures each batch contains enough samples such that a valid semi hard triplet can be sampled. A NaN loss value during training might indicate that your current  batch size is too small.
-- Ensure the distance metric used in the loss function is the same distance metric that will be used during evaluation/test time. E.g. If cosine distance is used in the loss function during training, it should also be used when comparing the similarity of two signatures at test time. For example, a model trained with an L2 distance function will show reduced accuracy when evaluated with cosine distance. 
-- Modifying the margin parameter can be used to improve the performance of each model. .e.g. If loss does not decrease during training, it might indicate that it is challenging to find good triplets (e.g. negatives are too hard and yield similar embeddings) ; in this case decreasing the margin parameter can be useful.
+- Ensure a large enough batch size is selected when training with the online triplet loss (on the minimum, batch size should be greater than the number of classes). This ensures each batch contains enough samples such that a valid semi-hard triplet can be sampled. A NaN loss value during training might indicate that your current batch size is too small.
+- Ensure the distance metric used in the loss function is the same distance metric that will be used during evaluation/test time. (E.g., if cosine distance is used in the loss function during training, it should also be used when comparing the similarity of two signatures at test time. For example, a model trained with an L2 distance function will show reduced accuracy when evaluated with cosine distance.)
+- Modifying the margin parameter can be used to improve the performance of each model. (For example, if loss does not decrease during training, it might indicate that it is challenging to find good triplets (e.g., negatives are too hard and yield similar embeddings); in this case, decreasing the margin parameter can be useful.)
 
 
-## Debugging a Metric Learning Model - Does it Do What We Think it Does?
+## Debugging a Metric Learning Model - Does It Do What We Think It Does?
 
-So far, we have built several models with competitive results. However, it is important to verify that the model is in fact achieving its goals (similar signatures close together, dissimilar signatures far apart) and that it is doing this for the right reasons. 
+So far, we have built several models with competitive results. However, it is important to verify that the model is in fact achieving its goals (similar signatures close together, dissimilar signatures far apart), and that it is doing this for the right reasons. 
 
 To this end, we explored several sanity check approaches to help us build trust and confidence in the model’s behaviour. Sanity checks help us confirm expected behaviours and question any unexpected or unusual observations.
 
 ###  Dimensionality Reduction + Visualization 
-First, we have used dimensionality reduction techniques (UMAP) to visualize embeddings for each signature in our test set. We expect that signatures from the same author are clustered together; we also expect that skilled forgeries are close to originals but separated from the cluster of the associated genuine signature.
+First, we have used dimensionality reduction techniques (UMAP) to visualize embeddings for each signature in our test set. We expect that signatures from the same author are clustered together; we also expect that skilled forgeries are close to originals, but separated from the cluster of the associated genuine signature.
 
 ![](/images/hugo/metricblog/smallresnetembedding.jpg)
-##### Figure 13. Visualization of UMAP embeddings (2 dimensions) for signatures in our test set. In general, we see that embeddings for forgeries are in the same region as their corresponding genuine signatures but still separated. 
+##### Figure 13. Visualization of UMAP embeddings (2 dimensions) for signatures in our test set. In general, we see that embeddings for forgeries are in the same region as their corresponding genuine signatures, but still separated. 
 
 ###  Visualization of distance metrics
-In this sanity check, we construct image pairs (positive and negative) pairs and compute the distance between embeddings produced by our model, for each pair. We expect that the density of distances between positive pairs is close to zero (with some variation to account for user error), but more spread out toward 1 for negative pairs.  
+In this sanity check, we construct image pairs (positive and negative pairs) and compute the distance between embeddings produced by our model for each pair. We expect that the density of distances between positive pairs is close to zero (with some variation to account for user error), but more spread out toward 1 for negative pairs.  
 
 ![](/images/hugo/metricblog/hard_density.png)
-##### Figure 14 Density plot of the cosine distances between embeddings (produced by multiple models) for positive and hard negative pairs in our test set.  
+##### Figure 14. Density plot of the cosine distances between embeddings (produced by multiple models) for positive and hard negative pairs in our test set.  
 
 ![](/images/hugo/metricblog/easy_density.png)
-##### Figure 15 Density plot of the cosine distances between embeddings (produced by multiple models) for positive and easy negative pairs in our test set.  
+##### Figure 15. Density plot of the cosine distances between embeddings (produced by multiple models) for positive and easy negative pairs in our test set.  
 
 ###  Gradient Visualization of Class Activation Maps
-We can also utilize gradient based approaches [^10] to inspect “what aspects of the input are most influential/relevant to the output”. These approaches have been used in debugging classification models to identify what pixels in the input image drive a specific class prediction. For example we want to see that pixels around the head and ears of a husky dog are the relevant regions as opposed to a snow background when predicting the husky class.  A well known approach in this area is GradCam [^11] which visualizes the gradient of the class score (logit) with respect to the feature map of the last convolutional unit of a DNN model. 
-We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature and possible focus on parts of written letters that might have high variance (e.g. attention to how users might round their g’s in a unique way). Our implementation of GradCam is based on the Keras GradCam example here[^12].
+We can also utilize gradient based approaches [^10]  to inspect “what aspects of the input are most influential/relevant to the output.” These approaches have been used in debugging classification models to identify what pixels in the input image drive a specific class prediction. For example, we want to see that pixels around the head and ears of a husky dog are the relevant regions, as opposed to a snow background, when predicting the husky class. A well-known approach in this area is GradCam, [^11]  which visualizes the gradient of the class score (logit) with respect to the feature map of the last convolutional unit of a DNN model. 
+We can adapt it to our use case by visualizing the gradient of the entire output embedding with respect to the feature map of a preselected convolutional layer in our metric learning model. What this visualization gives us is some intuition on the region within the input signature that our layer finds influential while producing embeddings. Ideally, we want to see a concentration around the actual lines and strokes of the signature, and possible focus on parts of written letters that might have high variance (e.g., attention to how users might round their g’s in a unique way). Our implementation of GradCam is based on the Keras GradCam example [here](https://keras.io/examples/vision/grad_cam/).[^12]
 
-Note, that methods like GradCam are not exactly principled, but subject to interpretation based on domain knowledge.  The reader is encouraged to explore GradCam visualizations to confirm that the pixels which the model finds influential make sense based on their knowledge of the problem space.
+Note, that methods like GradCam are not exactly principled, but subject to interpretation based on domain knowledge. The reader is encouraged to explore GradCam visualizations to confirm that the pixels which the model finds influential make sense, based on their knowledge of the problem space.
 
  
 ![](/images/hugo/metricblog/signaturegradcam.jpg)
@@ -312,23 +309,20 @@ Note, that methods like GradCam are not exactly principled, but subject to inter
 
 ## Limitations
 
-In this work, we show that fine tuning a pretrained model on a metric learning loss (contrastive and triplet loss) can improve performance. However there are a few limitations with our experiment set up that are worth noting:
+In this work, we've shown that fine-tuning a pretrained model on a metric learning loss (contrastive and triplet loss) can improve performance. However, there are a few limitations with our experiment's setup that are worth noting:
 
 
-- **Dataset Limitations**: While our training setup is designed such that we evaluate the models on signatures from individuals not represented in the training set, we recognize that the CEDAR dataset is small and does not cover properties of signatures (e.g. different writing styles, languages etc) that may occur in real world documents but are not covered in the CEDAR dataset. Training and evaluation on additional datasets is strongly recommended prior to production use. 
+- **Dataset Limitations**: While our training setup is designed such that we evaluated the models on signatures from individuals not represented in the training set, we recognize that the CEDAR dataset is small, and does not cover properties of signatures (e.g., different writing styles, languages, etc.) that may occur in real world documents, but are not covered in the CEDAR dataset. Training and evaluation on additional datasets is strongly recommended prior to production use. 
 
-- **Limitations of Triplet Loss**:While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi hard negatives), we need labels for each class.  On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo labels  - e.g. Existing research [^8] shows that k-means assignments can be used as pseudo-labels to learn visual representations.
+- **Limitations of Triplet Loss**: While triplet loss is great, its application is limited to scenarios where labels exist. To implement intelligent construction of triplets (especially semi-hard negatives), we need labels for each class. On the other hand, we can still apply contrastive loss to unlabelled datasets by leveraging pseudo-labels (e.g., existing research [^8]  shows that k-means assignments can be used as pseudo-labels to learn visual representations).
 
-- **Data Augmentation**: We used the CEDAR dataset as is, without exploring augmentations or transformations. For example, it may be useful to experiment with scale or rotation transforms to ensure the model is invariant to these changes.
+- **Data Augmentation**: We used the CEDAR dataset as is, without exploring augmentations or transformations. For example, it may be useful to experiment with scale or rotation transforms, to ensure the model is invariant to these changes.
 
+- **Reproducibility**: Deep Neural Networks can have multiple sources of randomness, which can make it challenging to reproduce the exact results we report. These may include hardware properties, weight initialization, etc. In our experiments, we attempted to minimize this by fixing the seeds for numpy and tensorflow. We still observed slight variations across each run (~3 percentage points) - however, the relative order of results stayed consistent.  
 
-- **Reproducibility**: Deep Neural networks can have multiple sources of randomness that can make it challenging to reproduce the exact results we report. These may include hardware properties, weight initialization, etc. In our experiments, we attempt to minimize this by fixing the seeds for numpy and tensorflow; we still observe slight variations across each run (~3 percentage points), however, the relative order of results stays consistent.  
+- **Model Tuning**: In our experiments, while we explored the impact of metric loss finetuning, pretrained features, and skip connections over a small set of presets, there are still many parameters that can be tuned. These include margin parameter, learning rate, model architecture (e.g., use of models designed to learn multiscale features), etc.  
 
-
-- **Model Tuning**: In our experiments, while we explored the impact of metric loss finetuning,  pretrained features, skip connections over a small set of presets, there are still many parameters that can be tuned. These include margin parameter, learning rate, model architecture (e.g. use of models designed to learn multiscale features) etc.  
-
-
-- **Other Loss Function**s: While we have focused on contrastive and triplet loss, there are other valid and perhaps less complicated ways of fine tuning a pretrained model that yields good distance metrics. For example, we can explore a cross entropy loss that learns to predict a class (genuine, skilled forgery, unskilled forgery) given a pair of images.  The reader is encouraged to review this paper for further insight on how cross entropy loss compares with other metric learning losses [^9]. 
+- **Other Loss Function**s: While we have focused on contrastive and triplet loss, there are other valid (and perhaps less complicated) ways of fine-tuning a pretrained model that yield good distance metrics. For example, we could explore a cross-entropy loss that learns to predict a class (genuine, skilled forgery, unskilled forgery), given a pair of images. (The reader is encouraged to review the work of Boudiaf, Malik, et al. for further insight on how cross-entropy loss compares with other metric learning losses.) [^9] 
 
 
 Naturally, these limitations are opportunities for future work and experiments.
@@ -336,15 +330,15 @@ Naturally, these limitations are opportunities for future work and experiments.
 
 ## Summary and Conclusion
 
-Metric learning helps us train a model that yields representations of similarity adapted to our task and dataset.  In this post we have covered several loss functions for metric learning (contrastive loss, triplet loss, quadruplet loss and group loss). We also report on a set of experiments training a model for signature verification on the CEDAR dataset. We learned that:
+Metric learning helps us train a model that yields representations of similarity adapted to our task and dataset. In this post, we have covered several loss functions for metric learning (contrastive loss, triplet loss, quadruplet loss, and group loss). We also reported on a set of experiments training a model for signature verification on the CEDAR dataset. 
 
-- Pre-trained models can be strong baselines for the signature verification. When the problem is easy (i.e unskilled forgery), we see that a pretrained VGG16 model yields 89.5% accuracy and 74.3% when the problem is hard (skilled forgeries).
-- Triplet loss achieves better performance compared to contrastive loss and learns a better overall structure of the embedding space. 
-- Triplet loss (with online triplet mining) is more efficient to train compared to contrastive loss i.e. training time to reach maximum accuracy. It does not require the manual construction of training triplets (as required in contrastive loss) and uses intelligent sampling to select informative triplets. This is very useful when running experiments to explore a large hyperparameter space. As an example, we found that fine tuning a ResNet50 model with triplet loss was completed in 3 minutes while a contrastive loss model needed 8 hours to reach max accuracy.
-With respect to implementation, we found the Tensorflow addons implementation of triplet loss [^6] to be useful.  
-
-- Fine tuning an intermediate model can not only result in a reduced model size but also improved accuracy. Our experiments suggest that for the task of signature verification, fine tuning a subset of the ResNet50 model resulted in a smaller model size compared to fine tuning the entire ResNet50 model. 
-- A good practice is to use the same distance metric across training and test. L2 distance is more computationally efficient compared to cosine distance, making it the better choice in production. L2 similarity measures are also well supported by libraries designed for fast approximate nearest neighbor search e..g Annoy, FAISS, ScaNN.  Also note that computing L2 distance on  normalized embeddings (recall our L2 normalization layer earlier), yields the equivalent of cosine distance. 
+We learned that:
+- Pretrained models can be strong baselines for the signature verification task. When the problem is easy (i.e., unskilled forgery), we see that a pretrained VGG16 model yields 89.5% accuracy and 74.3% when the problem is hard (skilled forgeries).
+- Triplet loss achieves better performance compared to contrastive loss, and learns a better overall structure of the embedding space. 
+- Triplet loss (with online triplet mining) is more efficient to train, compared to contrastive loss (i.e., training time to reach maximum accuracy). It does not require the manual construction of training triplets (as required in contrastive loss) and uses intelligent sampling to select informative triplets. This is very useful when running experiments to explore a large hyperparameter space. As an example, we found that finetuning a ResNet50 model with triplet loss was completed in three minutes, while a contrastive loss model needed eight hours to reach max accuracy.
+- With respect to implementation, we found the Tensorflow addons implementation of triplet loss [^6] to be useful.  
+- Fine-tuning an intermediate model can not only result in a reduced model size, but also improved accuracy. Our experiments suggest that for the task of signature verification, fine-tuning a subset of the ResNet50 model resulted in a smaller model size, compared to fine-tuning the entire ResNet50 model. 
+- A good practice is to use the same distance metric across training and test. L2 distance is more computationally efficient compared to cosine distance, making it the better choice in production. L2 similarity measures are also well-supported by libraries designed for fast approximate nearest neighbor search (e.g., Annoy, FAISS, ScaNN). Also note that computing L2 distance on normalized embeddings (recall our L2 normalization layer earlier) yields the equivalent of cosine distance. 
 
 
 
