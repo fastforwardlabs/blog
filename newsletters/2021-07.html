@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-07.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the June Cloudera Fast Forward Labs newsletter! This month, we have some new research, livestream recordings, and some recommended reading.</p>
+<hr>
+<h2 id="new-research-multi-objective-hyperparameter-optimization">New research! Multi-objective Hyperparameter Optimization</h2>
+<p>The machine learning life cycle is more than data + model = API. We know there is a wealth of subtlety and finesse involved in data cleaning and feature engineering. Similarly, there is more to model-building than feeding data in and reading off a prediction. ML model building requires thoughtfulness both in terms of which metric to optimize for a given problem, and how best to optimize your model for that metric!</p>
+<p>While we are all familiar with the “usual suspect” metrics of predictive accuracy, recall, or precision, production models must sometimes also satisfy <em>physical</em> requirements such as latency or memory footprint. Hyperparameter optimization becomes even more challenging when we have multiple metrics to optimize. Our latest post examines this “multi-objective” hyperparameter optimization scenario in detail. Check it out at <a href="https://blog.fastforwardlabs.com/2021/07/07/exploring-multi-objective-hyperparameter-optimization.html">Exploring Multi-Objective Hyperparameter Optimization</a>.</p>
+<p><img src="/images/hugo/pareto-frontier-1625741629.png" alt="A Pareto frontier on the accuracy-speed plane">
+<em>While it&rsquo;s standard practice to evaluate a machine-learning model on a predictive metric (such as accuracy), ML models must often satisfy physical requirements such as inference speed.</em></p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>No new livestream for you this past month, but check out the back catalogue below.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favourite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://slideslive.com/38931758/monitoring-and-explainability-of-models-in-production?ref=speaker-37384-latest">Monitoring and Explainability of Models in Production</a></p>
+<p>This short, but insightful talk (<a href="https://arxiv.org/pdf/2007.06299.pdf">and corresponding paper</a>) by the <a href="http://seldon.io">Seldon.io</a> team from an ICML 2020 workshop clarifies how the machine learning lifecycle extends well beyond model deployment. The team identifies several areas that are critical to the success of ML applications including monitoring performance and data metrics, detecting outliers and drift, and explaining model predictions. Each of these post-deployment tasks demand careful algorithmic and infrastructure level consideration to ensure proper operation of production systems. - <a href="https://www.linkedin.com/in/andrew-r-reed/"><em>Andrew</em></a></p>
+</li>
+<li>
+<p><a href="https://dl.acm.org/doi/10.1145/3448250">Deep Learning for AI</a></p>
+<p>The winners of the 2018 Turing Award and so-called &ldquo;Grandfathers of AI&rdquo;, Yoshua Bengio, Yan Lecun, and Geoffrey Hinton, published a joint paper offering their perspective on the most impactful recent advancements in deep learning, as well as the most promising future research directions. On their MVP list are ReLU activation functions and the Attention Mechanism. Model generalization and massive data requirements were two areas graded Needs Improvement if deep learning models are to ever come close to mimicking the human ability to learn and perform complex, intelligent tasks. While the paper is a bit of a slog, the link also includes a five-minute TLDR video by the AI research giants, if that&rsquo;s more your speed. - <a href="https://www.linkedin.com/in/melanierbeck"><em>Melanie</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2107.03374">Evaluating Large Language Models Trained on Code</a></p>
+<p>This paper from OpenAI is exciting for a many reasons. First, it showcases the capabilities of Codex, a GPT-type language model trained explicitly on code. While the authors evaluate models developed for research, a production-ready descendent is deployed as <a href="https://copilot.github.com/">GitHub&rsquo;s Copilot</a> (I&rsquo;m still on the wait list for access), dubbed &ldquo;Your AI pair programmer.&rdquo; Cute. In addition to Codex, they also introduce a new dataset and an evaluation metric more appropriate for code assessment. But I&rsquo;m also excited about the depth to which the authors explored the limitations and societal implications of Codex. They devote about 28% of the paper to these discussions in order &ldquo;to encourage a norm of performing detailed impact analysis as part of major machine learning research.&rdquo; Hell yeah. These impact analyses include discussions on over-reliance, bias, economic, environmental, legal, and security implications. Whew! I always have to point out a paper that takes seriously the ethical use of machine learning models. Enjoy! - <em><a href="https://www.linkedin.com/in/melanierbeck">Melanie</a></em></p>
+</li>
+<li>
+<p><a href="https://cognitivemedium.com/bitter-lesson">Reflections on &lsquo;The Bitter Lesson&rsquo;</a></p>
+<p>Rich Sutton&rsquo;s <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">The Bitter Lesson</a> can be a, well, bitter read. It contends that most machine learning problems will eventually be better solved by enormous compute and search than baking in domain knowledge or heuristics. This quick take from Michael Nielsen (who is modest to call himself a non-expert) digests and somewhat muddies the argument. While I acknowledge that new capabilities are being found with large compute and search, I&rsquo;d caution against interpreting the lesson as argument for abandoning knowledge-based models altogether. Knowledge-free approaches provide little hope of being interpretable, or enhancing our understanding. The goal is not always the most accurate classifier. - <a href="https://twitter.com/_cjwallace"><em>Chris</em></a></p>
+</li>
+<li>
+<p><a href="https://www.notion.so/Meerkat-DataPanels-for-Machine-Learning-64891aca2c584f1889eb0129bb747863">Meerkat: DataPanels for ML</a></p>
+<p>Machine learning is data hungry and practitioners are increasingly employing data of all kinds, in terms of structure and across multiple modalities to train and evaluate the models. The Meerkat project from Stanford University, although, in its infancy, is an exciting step in this direction. It’s DataPanel abstraction draws inspiration from Pandas DataFrame to facilitate interactive dataset manipulation, housing diverse dataset modalities and works seemlessly across multiple development contexts including Jupiter Notebook, HuggingFace datasets, StreamLit, Python scripts and more. It is designed to make data inspection, evaluation and training of multi-modal and other models more efficient and robust. Just like a DataFrame, DataPanel makes it easy to store predictions or manipulate data with operations like map and filter. Future directions of the project include - making embeddings a first class citizen for ML workflows, giving users more control over all parts of the ML development pipeline and making training and repairing models easier. - <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+</ul>
+
+  </div>
+
+
