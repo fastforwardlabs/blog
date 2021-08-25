@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-08.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the August Cloudera Fast Forward Labs newsletter. This month, new research, a new webinar, and we welcomed Daniel, a new research engineer 🎉</p>
+<hr>
+<h2 id="new-research-inferring-concept-drift-without-labeled-data">New research! Inferring Concept Drift Without Labeled Data</h2>
+<p>After iterations of development and testing, deploying a well-fit machine learning model often feels like the final hurdle for an eager data science team. In practice however, a trained model is never final because the complex relationships that it abstracts are likely to evolve over time causing the model&rsquo;s performance to deteriorate if not accounted for.</p>
+<p>To combat this divergence between static models and dynamic environments, teams often adopt an adaptive learning strategy that is triggered by the detection of a drifting concept. This involves monitoring a performance metric of interest (such as accuracy) and alerting a retraining pipeline when the metric falls below some designated threshold. While this strategy proves to be effective, it requires immediate access to an abundance of labels at inference time in order to quantify a change in system performance - a requirement that may be cost prohibitive or outright impossible in many real-world machine learning applications.</p>
+<p>Our latest research report focuses on approaches for dealing with concept drift when labeled data is <em>not</em> readily accessible. Check it out here: <a href="https://concept-drift.fastforwardlabs.com/">Inferring Concept Drift Without Labeled Data</a></p>
+<p><img src="/images/hugo/concept-drift-1629886345.png" alt="Concept drift"></p>
+<p><em>Changes in the statistical properties of a target domain are referred to as concept drift and will cause the predictive performance of a trained model to degrade over time, making it obsolete for the task it was initially intended to solve.</em></p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>This month our research lead Chris recently joined the Head of Developer Relations at Streamlit, Randy Zwitch, to demonstrate building and hosting interactive web apps in Cloudera Machine Learning. Read more about <a href="https://blog.cloudera.com/enterprise-data-science-workflows-with-amps-and-streamlit/">Enterprise Data Science Workflows with AMPs and Streamlit</a> and check out the <a href="https://www.cloudera.com/about/events/webinars/automating-shareable-ai-web-apps-with-streamlit.html">Automating Sharable AI Web Apps with Streamlit and Cloudera</a> webinar replay!</p>
+<p>Our previous livestreams:</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><a href="https://youtu.be/o4gQLVzIm5U"><strong>Representation Learning for Software Engineers</strong></a></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favourite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=j0z4FweCy4M&amp;t=2924s">Autopilot Network Design from Tesla AI Day</a></p>
+<p>Tesla&rsquo;s recent AI Day shaped up as more of a ML conference presentation rather than shareholder pitch. In the opening segment linked above, Tesla&rsquo;s director of Autopilot Vision, Andrej Karpathy, shares the evolution of the company&rsquo;s neural network design over the past four years. Andrej highlights the limitations of single-image inference networks for the task of full self-driving, and visually demonstrates the design journey the team has been on to arrive at the current architecture today - where predictions are made in a projected, multi-camera vector space and combined with temporal video features in near real-time. An inspiring glimpse into the innovative engineering feats that have shaped this developing ML capability. - <a href="https://www.linkedin.com/in/andrew-r-reed/"><em>Andrew</em></a></p>
+</li>
+<li>
+<p><a href="https://www.calnewport.com/books/deep-work/">Deep Work, book by Cal Newport</a></p>
+<p>It is refreshing to read a critique of technological trends by nothing less than a professor of computer science. In his book Deep Work, Cal Newport argues for the benefits of performing professional activities &ldquo;in a state of distraction-free concentration that push your cognitive capabilities to their limit&rdquo;. He defines &ldquo;deep work&rdquo; in this way, and argues that some of the technologies used in the work place can act as hindrances towards it. The first part of the book presents economic, psychological, neurological and philosophical reasons to do deep work. The second half discusses strategies that facilitate this modus operandi. The book is easy to read, enjoyable, and can be useful both in terms of motivation and strategies for deep work. Minor criticisms include weakness in some reasonings (e.g. the &lsquo;winner-takes-all&rsquo; in the first chapter), shallowness, no pun intended, of philosophical explanations, and misnomers for the rules — which don&rsquo;t seem to match their descriptions. Overall I&rsquo;d recommend this book to everyone working in a knowledge-based economy. - <a href="https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b"><em>Daniel</em></a></p>
+</li>
+<li>
+<p><a href="https://fairmlbook.org/">Fairness and Machine Learning: Limitations and Opportunities</a></p>
+<p>This book-in-progress entered my radar early last year while I was working on <a href="https://ff13.fastforwardlabs.com/">Causality for Machine Learning</a>. It will take me some time yet to read, but it does provide a pretty comprehensive introduction to fairness in machine learning. From atop my soapbox, I was pleased to find an entire chapter dedicated to Causality. I believe many disagreements about fairness in AI, especially among those who are not researching the subject, are rooted in participants having different causal models in their minds. The book provides enough causal background to express causal assumptions. However, fairness is a deep subject, and as Moritz Hardt (one of the authors) highlights in his MLSS2020 <a href="https://youtu.be/9oNVFQ9llPc?t=2909">tutorial on Fairness</a>, even causality does not resolve the question of &ldquo;what is fair&rdquo;. - <a href="https://twitter.com/_cjwallace"><em>Chris</em></a></p>
+</li>
+<li>
+<p><a href="https://huyenchip.com/2020/12/27/real-time-machine-learning.html">Machine learning is going real-time</a>
+I only recently came across this blog series by Chip Huyen (Snorkel AI, NVIDIA, Netflix, and Stanford Lecturer) but this post from late last year is my favorite. In it, she drops a massive knowledge bomb on all things Real-Time ML. From online inference to online learning, she breaks down the concepts, challenges, and solutions, including pointers on software tools that get the job done. As a researcher, I&rsquo;m comfortable digging into academic papers, pouring over mathematical equations, and scouring code — but none of these things translates to the practical challenges inherent to real-time machine learning systems. If it&rsquo;s new to you too, then this is a great place to start! - <a href="http://www.linkedin.com/in/melanierbeck"><em>Melanie</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/pdf/2108.05053.pdf">Feature Stores and the Coming Wave of Embedding Ecosystems</a></p>
+<p>Industrializing ML requires managing a ML pipeline which in turn involves iterating on model features, training, deployment and monitoring these models at scale. Feature Stores (FS) arose out of the need to address some of the challenges in each of these phases of the ML cycle. For instance, the need to have consistent feature definitions that are up-to-date as the data changes over time or aiding model reproducibility or some guidance on what features need to be corrected when faced with distributional shifts post model deployment. Primarily they serve as a centralized repository of reusable features across the ML pipeline and automate the management of this pipeline. In addition, some of the FSs support model provenance and reproducibility, online feature serving, model quality metrics and much more. That said, when it comes to embeddings FSs face some unique challenges and are unable to support end-to-end embedding management. While these self-supervised pre-trained embeddings are part of many products at large technology companies, the standard metrics and tools for managing tabular data are no longer adequate for them. For instance, just like tabular features embeddings get retrained and updated and thus affect downstream models. Any inherent embedding quality issue is hard isolate with the current FSs. The authors of this paper propose making embeddings a first class citizen of the FSs and suggest how they should evolve to provide a native support for them. However, as noted by the authors this could be tricky especially given the growing sizes of embeddings and their associated models. - <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+</ul>
+<hr>
+<p>That&rsquo;s all from us this month! Be excellent to each other ✌️</p>
+
+  </div>
+
+
