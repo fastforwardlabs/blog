@@ -30,14 +30,14 @@ In our [previous blog post](/2021/05/27/pre-trained-models-as-a-strong-baseline-
 ![](/images/hugo/metricblog/classificationmetric.png)
 ##### Figure 1. Metric learning allows us to learn a discriminative embedding space that both maximizes inter-class distance and minimizes intra-class distance. 
 
-However, several intuitions suggest that we might be able to improve on this. First, given that the pretrained model was trained on data (natural images), which does differ from our task of signature images, it makes sense that some sort of fine-tuning would be useful in _**adapting**_ the pretrained model weights to our data distribution. Second, the pretrained model is based on a classification objective (cross-entropy loss) - i.e., correctly classify one million images into 1000 different classes. It learns to maximize inter-class distances such that features before the sofmax fully connected layer are linearly separable.
+However, several intuitions suggest that we might be able to improve on this. First, given that the pretrained model was trained on data (natural images), which does differ from our task data(signature images), it makes sense that some sort of fine-tuning would be useful in _**adapting**_ the pretrained model weights to our data distribution. Second, the pretrained model is based on a classification objective (cross-entropy loss) - i.e., correctly classify one million images into 1000 different classes. It learns to maximize inter-class distances such that features before the softmax fully connected layer are linearly separable.
 
 While this objective yields semantic representations that have proven to be useful, our primary task of verification does require something more precise. Essentially, we want an objective focused on capturing the similarities/dissimilarities between two data points; we want to learn discriminative features that not only **maximize inter-class distance** but also **minimize intra-class distance**. To achieve this goal, we can turn to metric learning: learning a distance metric designed to satisfy the objective of making representations for similar objects close and representations for dissimilar objects far apart, in some metric space. 
 
 
 ## What is Metric Learning?
 
-A simple description of metric learning is any machine learning model structured to learn a distance measure over samples. The intuition here is that if the model is designed to learn a distance function for similar/dissimilar objects, we can use it for applications such as signature verification that rely on this property. 
+A simple description of metric learning is "any machine learning model structured to learn a distance measure over samples". The intuition here is that if the model is designed to learn a distance function for similar/dissimilar objects, we can use it for applications such as signature verification that rely on this property. 
 
 The metric learning objective can be formulated in several ways, depending on how the training dataset is structured. 
 
@@ -114,7 +114,7 @@ Triplet loss addresses this issue by using triplets in each training sample: an 
 ##### Figure 4. A triplet model is trained with triplets such that the distance between the anchor and positive is minimized while the distance between the anchor and negative is maximized.
 
 ![](/images/hugo/metricblog/triplet_train.png)
-##### Figure 5. At each train step, we expect that triplet loss updates will simultaneously minimize the distance between anchor and positive while maximizing distance between anchor and negative.
+##### Figure 5. At each train step, we expect that triplet loss updates will simultaneously minimize the distance between  anchor and positive while maximizing distance between anchor and negative samples.
 
 The triplet loss function aims to learn a distance between representations such that the anchor-to-positive distance is less than the anchor-to-negative distance. Similar to contrastive loss, a margin value is imposed on the anchor-to-negative distance so that once negative representations have enough distance between them, no further effort is taken to increase distance between them. With this understanding, triplet loss is formally defined as:
 
