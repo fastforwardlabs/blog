@@ -36,15 +36,15 @@ TLDR; This post provides an overview of metric learning loss functions (constras
     </item>
     
     <item>
-      <title>Pre-trained Models as a Strong Baseline for Automatic Signature Verification</title>
+      <title>Pretrained Models as a Strong Baseline for Automatic Signature Verification</title>
        
-      <link>https://blog.fastforwardlabs.com/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html</link>
+      <link>https://blog.fastforwardlabs.com/2021/05/27/pretrained-models-as-a-strong-baseline-for-automatic-signature-verification.html</link>
       
       <pubDate>Thu, 27 May 2021 07:35:06 +0000</pubDate>
       
-      <guid>https://blog.fastforwardlabs.com/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html</guid>
+      <guid>https://blog.fastforwardlabs.com/2021/05/27/pretrained-models-as-a-strong-baseline-for-automatic-signature-verification.html</guid>
       <description>By Victor and Andrew.
-Figure 1. Baseline approach for automatic signature verification using pre-trained models TLDR; This post describes how pretrained image classification models can be used as strong baselines for the task of signature verification. Other posts in the series are listed below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures.</description>
+Figure 1. Baseline approach for automatic signature verification using pretrained models TLDR; This post describes how pretrained image classification models can be used as strong baselines for the task of signature verification. The full list of posts in the series is outlined below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures.</description>
     </item>
     
     <item>
