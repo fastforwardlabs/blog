@@ -11,57 +11,57 @@ By *[Victor](https://twitter.com/vykthur)* and *[Andrew.](https://www.linkedin.c
 
 
 <div  class="tldr"> 
-  <span class="textbold">TLDR;</span> This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet and group loss), and results from applying contrastive and triplet loss to the task of signature verification. Other posts in the series are listed below:
+  <span class="textbold">TLDR;</span> This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet, and group loss), and results from applying contrastive and triplet loss to the task of signature verification. A complete list of the posts in this series is outlined below:
   <div style="margin-top:10px; border-top: 1px dashed grey"> 
     <!-- <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="postlink"> Pretrained Models as Baselines for Signature Verification 
     </a> -->
     <ul>
     <li> <a href="/2021/05/26/deep-learning-for-automatic-offline-signature-verification-an-introduction.html" class=""> Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction </a> </li>
-      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="">  Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
-      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="">  Part 3: Deep Metric Learning for Signature Verification </a> </li>
+      <li> <a href="/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class=""> Part 2: Pretrained Models as Baselines for Signature Verification </a> </li>
+      <li> <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class=""> Part 3: Deep Metric Learning for Signature Verification </a> </li>
     </ul>
   </div>
 </div>
 
  
 
-In our [previous blog post](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html), 
-, we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (with ResNet50: 69.3% accuracy on skilled forgeries, 86.7% on unskilled forgeries). 
+In our [previous blog post](/2021/05/27/pre-trained-models-as-a-strong-baseline-for-automatic-signature-verification.html), we discussed how pretrained models can serve as strong baselines for the task of signature verification. Essentially, using representations learned by models trained on the ImageNet task allowed us to obtain competitive performance when attempting to correctly classify signature pairs as genuine or forgeries (with ResNet50: 69.3% accuracy on skilled forgeries, 86.7% on unskilled forgeries). 
 
 ![](/images/hugo/metricblog/classificationmetric.png)
-##### Figure 1. Metric learning allows us to learn a discriminative embedding space that both maximizes inter class distances and minimized intra class distance. 
+##### Figure 1. Metric learning allows us to learn a discriminative embedding space that both maximizes inter-class distance and minimizes intra-class distance. 
 
-However, several intuitions suggest that we might be able to improve on this. First, given that the pretrained model was trained on data (natural images), which does differ from our task of signature images, it makes sense that some sort of fine tuning would be useful in _**adapting**_ the pretrained model weights to our data distribution. Second, the pretrained model is based on a classification objective (cross entropy loss) - i.e. correctly classify 1 million images into 1000 different classes. It learns to maximize inter class distances such that features before the sofmax fully connected layer are linearly separable. While this objective yields semantic representations that have proven to be useful, our primary task of verification does require something more precise . Essentially, we want an objective focused on capturing the similarities/dissimilarities between two data points; we want to learn discriminative features that not only **maximize inter class distance** but also **minimize intra class distance**. To achieve this goal, we can turn to metric learning - learning a distance metric designed to satisfy the objective of making representations for similar objects close and representations for dissimilar objects far apart in some metric space. 
+However, several intuitions suggest that we might be able to improve on this. First, given that the pretrained model was trained on data (natural images), which does differ from our task of signature images, it makes sense that some sort of fine-tuning would be useful in _**adapting**_ the pretrained model weights to our data distribution. Second, the pretrained model is based on a classification objective (cross-entropy loss) - i.e., correctly classify one million images into 1000 different classes. It learns to maximize inter-class distances such that features before the sofmax fully connected layer are linearly separable.
 
- 
+While this objective yields semantic representations that have proven to be useful, our primary task of verification does require something more precise. Essentially, we want an objective focused on capturing the similarities/dissimilarities between two data points; we want to learn discriminative features that not only **maximize inter-class distance** but also **minimize intra-class distance**. To achieve this goal, we can turn to metric learning: learning a distance metric designed to satisfy the objective of making representations for similar objects close and representations for dissimilar objects far apart, in some metric space. 
 
-## What is Metric Learning
+
+## What is Metric Learning?
 
 A simple description of metric learning is any machine learning model structured to learn a distance measure over samples. The intuition here is that if the model is designed to learn a distance function for similar/dissimilar objects, we can use it for applications such as signature verification that rely on this property. 
 
-The metric learning objective can be formulated in several ways depending on how the training dataset is structured. 
+The metric learning objective can be formulated in several ways, depending on how the training dataset is structured. 
 
 ![](/images/hugo/metricblog/datapoints.png)
-##### Figure 1.1. Data used to train a metric learning model may be structured as pairs, triplets or quadruplets. This in turn influences how the loss function is designed.  
+##### Figure 1.1. Data used to train a metric learning model may be structured as pairs, triplets, or quadruplets. This, in turn, influences how the loss function is designed.  
 
-Commonly, sets of training examples are structured as either pairs or triplets or quadruplets, from which a distance function is learned. Despite the differences in problem formulation, the high level metric learning workflow remains consistent:
+Commonly, sets of training examples are structured as either pairs, triplets, or quadruplets, from which a distance function is learned. Despite the differences in problem formulation, the high-level metric learning workflow remains consistent:
 
-- Define a dataset of train samples (2, 3, 4 data points in each sample, depending on loss function)
-- Extract representations for each datapoint in a given sample using a trainable embedding model. Note that the exact architecture of this embedding model might vary depending on the data e.g. a CNN architecture might be used for metric learning on images while an RNN architecture might be useful for sequences.
-- Measure the similarity between data points in each sample using a distance function (like Euclidean)
-- Calculate a loss based on the observed vs expected distances between data points. E.g. for data points we know to be similar i.e. expected small distance, we have a very little or no loss if their observed distance is *indeed* small.
-- Backpropagate the loss through the embedding network so the model learns to produce similar representations for similar examples and distant representations for dissimilar examples.
+- Define a dataset of train samples (2, 3, 4 data points in each sample, depending on loss function).
+- Extract representations for each datapoint in a given sample, using a trainable embedding model. (Note that the exact architecture of this embedding model might vary depending on the data - e.g., a CNN architecture might be used for metric learning on images, while an RNN architecture might be useful for sequences.)
+- Measure the similarity between data points in each sample using a distance function (e.g., Euclidean).
+- Calculate a loss based on the observed vs. expected distances between data points. (For example, for data points we know to be similar - i.e., expected small distance - we have very little or no loss if their observed distance is *indeed* small.)
+- Backpropagate the loss through the embedding network, so the model learns to produce similar representations for similar examples and distant representations for dissimilar examples.
 
 In the following sections, we will consider a few loss functions for implementing metric learning.
 
 
 ## Contrastive Loss
-Contrastive loss (also known as pairwise ranking loss) is a metric learning objective function where we learnn from training data examples structured as pairs - positive pairs (examples that belong to the same class) and negative pairs (examples that belong to different classes). 
+Contrastive loss (also known as pairwise ranking loss) is a metric learning objective function where we learn from training data examples structured as pairs: positive pairs (examples that belong to the same class) and negative pairs (examples that belong to different classes). 
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-In our signature verification task, we construct positive pairs consisting of an anchor signature and an alternative, genuine signature from the same author. We then construct negative pairs composed of an anchor signature and a forged signature authored by a different individual. 
+In our signature verification task, we construct positive pairs consisting of an anchor signature and an alternative (genuine) signature from the same author. We then construct negative pairs composed of an anchor signature and a forged signature authored by a different individual. 
 
-Note that the forged signature may be unskilled (i.e the forger knows nothing about the original) or skilled (i.e. the forger has access to what the origin signature looks like and actively attempts to mimic it). Clearly, it is easier to detect unskilled forgeries compared to skilled forgeries ,which are hard to detect even for humans. As we construct training pairs for a model to learn from, we want it to be particularly good at solving the hard version of the problem - distinguishing skilled forgeries.  
+Note that the forged signature may be unskilled (i.e., the forger knows nothing about the original) or skilled (i.e., the forger has access to what the original signature looks like and actively attempts to mimic it). Clearly, it is easier to detect unskilled forgeries compared to skilled forgeries, which are hard to detect (even for humans). As we construct training pairs for a model to learn from, we want it to be particularly good at solving the hard version of the problem: distinguishing skilled forgeries.  
 
 In the contrastive loss setting, negative pairs consisting of unskilled forgeries are termed easy negatives, while those consisting of skilled forgeries are termed hard negatives. 
 </div>
@@ -71,13 +71,8 @@ The contrastive loss function is set up such that **_we minimize the distance be
 
 
 <div style="border-bottom: 1px dashed grey; background-color:#E5E5E5; padding: 10px; margin-bottom:10px"> 
-Note that a siamese network is not required to implement metric learning with contrastive loss. In theory, you could design a custom training loop where a forward pass through the embedding model is used to get embeddings for each data point in the sample pair, loss is computed and the model weights updated. The Siamese architecture which avoids manually implementing multiple forward passes, simplifies implementation and is widely used.
+Note that a Siamese network is not required to implement metric learning with contrastive loss. In theory, you could design a custom training loop where a forward pass through the embedding model is used to get embeddings for each data point in the sample pair, loss is computed, and the model weights updated. The Siamese architecture (which avoids manually implementing multiple forward passes) simplifies implementation and is widely used.
 </div>
-
-
-
-
-
 
 
 ![](/images/hugo/metricblog/contrastive_loss.png)
@@ -103,11 +98,13 @@ $`
 
 </div>
 
-where `$D$` is the calculated distance between embeddings for each datapoint in the pair, and `$m$` is a constant value of margin. In the case of positive pairs, the loss becomes positive only when we have a positive distance between vector representations. In the case of negative pairs, the loss is positive only when the distance between vectors is less than the margin. The margin value is a hyperparameter that serves as an upper threshold to constrain the amount of loss attributed to “easy to classify” pairs. A simple way to think about the function of the margin is that if the network produces representations that are distant “enough” for a given pair, there is no need to continue focusing training efforts on that example [^1]. 
+where `$D$` is the calculated distance between embeddings for each datapoint in the pair, and `$m$` is a constant value of margin. 
 
-While contrastive loss is useful, it has a limitation. For points in a negative pair, contrastive loss will push them far apart without any knowledge of the broader embedding space. For example, imagine we have 10 classes; each time we see class 1 and 2, we want to push them far apart; a result of this is that 1 might now become farther from 2 on the average but might overlap with other classes such as class 3, 4, 5 etc. 
+In the case of positive pairs, the loss becomes positive only when we have a positive distance between vector representations. In the case of negative pairs, the loss is positive only when the distance between vectors is less than the margin. The margin value is a hyperparameter that serves as an upper threshold to constrain the amount of loss attributed to “easy to classify” pairs. A simple way to think about the function of the margin is that if the network produces representations that are distant “enough” for a given pair, there is no need to continue focusing training efforts on that example. [^1] 
 
-Triplet loss addresses this issue by using triplets in each training sample - an anchor, a positive (same class) and a negative (different class) data point. This way, with each gradient update we learn to minimize anchor + positive distance whilst also ensuring that the anchor is far from the negative point.
+While contrastive loss is useful, it has a limitation. For points in a negative pair, contrastive loss will push them far apart without any knowledge of the broader embedding space. For example: imagine we have 10 classes, and each time we see class 1 and 2, we want to push them far apart; a result of this is that 1 might now become farther from 2 on the average, but might overlap with other classes (such as class 3, 4, 5, etc.). 
+
+Triplet loss addresses this issue by using triplets in each training sample: an anchor, a positive (same class), and a negative (different class) data point. This way, with each gradient update, we learn to minimize anchor + positive distance while also ensuring that the anchor is far from the negative point.
 
 
 ## Triplet Loss 
@@ -117,9 +114,9 @@ Triplet loss addresses this issue by using triplets in each training sample - an
 ##### Figure 4. A triplet model is trained with triplets such that the distance between the anchor and positive is minimized while the distance between the anchor and negative is maximized.
 
 ![](/images/hugo/metricblog/triplet_train.png)
-##### Figure 5 - At each train step, we expect that triplet loss updates will simultaneously minimize the distance between anchor and positive while maximizing distance between and negative.
+##### Figure 5. At each train step, we expect that triplet loss updates will simultaneously minimize the distance between anchor and positive while maximizing distance between anchor and negative.
 
-The triplet loss function aims to learn a distance between representations such that the anchor-to-positive distance is less than the anchor-to-negative distance. Similar to contrastive loss, a margin value is imposed on the anchor-to-negative distance so that once negative representations have enough distance between them no further effort is taken to increase distance between them. With this understanding, triplet loss is formally defined as:
+The triplet loss function aims to learn a distance between representations such that the anchor-to-positive distance is less than the anchor-to-negative distance. Similar to contrastive loss, a margin value is imposed on the anchor-to-negative distance so that once negative representations have enough distance between them, no further effort is taken to increase distance between them. With this understanding, triplet loss is formally defined as:
 
 <div style="text-align:center">
 
@@ -128,40 +125,38 @@ The triplet loss function aims to learn a distance between representations such 
 </div>
 
 where `$D_p$` is the anchor-to-positive distance and `$D_n$` is the anchor-to-negative distance and `$m$` is the margin. With this loss formulation, we can create three different types of triplet combinations based on how we sample:
-- Easy triplets: result when `$D_n$` > `$D_p$` + `$m$`. Here, the sampled anchor-to-negative distance is already large enough so loss is 0 and the network has nothing to learn from.
+- Easy triplets: result when `$D_n$` > `$D_p$` + `$m$`. Here, the sampled anchor-to-negative distance is already large enough so loss is 0, and the network has nothing to learn from.
 - Hard triplets: result when `$D_n$` < `$D_p$`. In this case, the anchor-to-negative distance is less than the anchor-to-positive distance, meaning high loss to backpropagation through the network.
-- Semi-hard triplets: result when `$D_p$` < `$D_n$` < `$D_p$` + `$m$`. Semi-hard triplets occur when the negative example is more distant to the anchor than the positive example, but the distance is not greater than the margin, therefore resulting in a positive loss. i.e the negative is far .. but not far enough. [^1]
+- Semi-hard triplets: result when `$D_p$` < `$D_n$` < `$D_p$` + `$m$`. Semi-hard triplets occur when the negative example is more distant to the anchor than the positive example, but the distance is not greater than the margin. This, therefore, results in a positive loss (i.e., the negative is far ... but not far enough.) [^1]
 
 Based on the above, we can see that different approaches for selecting triplets (also called **triplet mining** approaches) are not equally informative. More importantly, if we prescriptively mine the right types of triplets that are informative, we can increase the overall efficiency of learning. Ideally, we want to focus on hard and semi-hard triplets - a luxury we were not afforded in the contrastive, pairwise learning setup. 
 
 ### From Offline to Online Triplet Mining
 
+To implement any of the triplet strategies, we need to obtain embeddings for our samples, so as to determine their distances and how best to construct our triplet. An initial offline approach will be to obtain embeddings for our entire training set, and then select only hard or semi-hard triplets. 
 
-To implement any of the triplet strategies, we need to obtain embeddings for our samples so as to determine their distances and how best to construct our triplet. An initial offline approach will be to obtain embeddings for our entire training set and then select only hard or semi hard triplets. 
-- Assuming we have a training set of size `$T$` : 
+Assuming we have a training set of size `$T$`: 
 - Get all embeddings for all points in `$T$`
-- Get a list of all possible `$T^3$` triplets in `$T$`, and identify valid triplets (hard or semi hard) based on embeddings and class labels
+- Get a list of all possible `$T^3$` triplets in `$T$`, and identify valid triplets (hard or semi-hard), based on embeddings and class labels
 - Compute loss and update model weights using valid triplets  
  
-This approach is inefficient as it requires that we extract embeddings for the entire training set to generate valid triplets. It also assumes we have a good embedding model that yields good embeddings on the train dataset prior to training.
+This approach is inefficient, as it requires that we extract embeddings for the entire training set to generate valid triplets. It also assumes we have an embedding model that yields good embeddings on the train dataset prior to training.
 
 ![](/images/hugo/metricblog/onlinetraining.png)
 ##### Figure 6. In online triplet mining, triplets are constructed during training.  
 
 
-We can be more efficient about this by adopting online triplet mining [^2]. Here, we select our triplets during training (within each  training batch) as opposed to precomputing triplets prior to training. 
+We can be more efficient about this by adopting online triplet mining. [^2] Here, we select our triplets during training (within each training batch), as opposed to precomputing triplets prior to training. 
 
-- a. Assuming we have a batch of size `$B$` :
-- b. Get embeddings for all `$B$` data points in our batch
-- c. Get all possible triplets `$B^3$` in `$B$` and identify valid triplets (hard or semi hard) based on embeddings and class labels 
-- d. Compute loss and update model weights using valid triplets  
+Assuming we have a batch of size `$B$`:
+- Get embeddings for all `$B$` data points in our batch
+- Get all possible triplets `$B^3$` in `$B$` and identify valid triplets (hard or semi hard) based on embeddings and class labels 
+- Compute loss and update model weights using valid triplets  
 
-As we will see later on, the ability to sample intelligently and introduce relative knowledge between three examples helps improve training efficiency and results in more contextually robust feature embeddings.
-
+As we will see later on, the ability to sample intelligently and introduce relative knowledge between three examples helps improve training efficiency, and results in more contextually robust feature embeddings.
 
 
 ## Other Losses - Quadruplet Loss, Group Loss
-
 
 ![](/images/hugo/metricblog/quadruplet_train.png)
 ##### Figure 7: Quadruplet loss 
