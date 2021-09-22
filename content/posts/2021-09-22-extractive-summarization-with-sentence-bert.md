@@ -4,10 +4,8 @@ date: 2021-09-21T14:15:56
 author: Victor Dibia
 author_link: https://twitter.com/vykthur
 preview_image: /images/hugo/extractabert_blog/extractivesummodel.png
-post_type: 
-external_url: 
+post_type: Post
 ---
-By _[Victor](https://twitter.com/vykthur)_.
 
 In extractive summarization, the task is to identify a subset of text (e.g., sentences) from a document that can then be assembled into a summary.  Overall, we can treat extractive summarization as a recommendation problem. That is,  given a **query**, recommend a set of sentences that are **relevant**.  The query here is the **document**, **relevance** is a measure of whether a given sentence belongs in the document summary.
 

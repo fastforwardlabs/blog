@@ -1,14 +1,11 @@
 ---
 title: "Automatic Summarization from TextRank to Transformers"
-date: 2021-09-22T10:23:38
+date: 2021-09-22
 author: Melanie Beck
 author_link: https://www.linkedin.com/in/melanierbeck/
 preview_image: /images/hugo/summarize_blog/summarize_crop.png
-post_type: 
-external_url: 
+post_type: Post
 ---
-
-By _[Melanie](https://www.linkedin.com/in/melanierbeck/)_.
 
 Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a *good* summary, and introduce **Summarize.** -- a summarization prototype we built that showcases several automatic summarization techniques. 
 

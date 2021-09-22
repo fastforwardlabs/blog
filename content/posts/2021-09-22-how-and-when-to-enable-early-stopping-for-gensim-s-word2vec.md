@@ -1,13 +1,11 @@
 ---
 title: "How (and when) to enable early stopping for Gensim's Word2Vec"
-date: 2021-09-20T15:17:30
+date: 2021-09-20
 author: Melanie Beck
 author_link: https://www.linkedin.com/in/melanierbeck/
 preview_image: /images/hugo/gensim_blog/earlystopping_schematic.png
-post_type: 
-external_url: 
+post_type: Post
 ---
-By _[Melanie](https://www.linkedin.com/in/melanierbeck/)_.
 
 The [Gensim](https://radimrehurek.com/gensim/) library is a staple of the NLP stack. While it primarily focuses on topic modeling and similarity for documents, it also supports several word embedding algorithms, including what is likely the best-known implementation of Word2Vec. 
 
