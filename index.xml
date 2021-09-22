@@ -6,45 +6,43 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Sep 2021 10:23:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Sep 2021 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Automatic Summarization from TextRank to Transformers</title>
+       
+      <link>https://blog.fastforwardlabs.com/2021/09/22/automatic-summarization-from-textrank-to-transformers.html</link>
       
-      <link></link>
-      
-      <pubDate>Wed, 22 Sep 2021 10:23:38 +0000</pubDate>
+      <pubDate>Wed, 22 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2021/09/22/automatic-summarization-from-textrank-to-transformers.html</guid>
-      <description>By Melanie.
-Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a good summary, and introduce Summarize.</description>
+      <description>Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a good summary, and introduce Summarize. &amp;ndash; a summarization prototype we built that showcases several automatic summarization techniques.</description>
     </item>
     
     <item>
       <title>Extractive Summarization with Sentence-BERT</title>
-      
-      <link></link>
+       
+      <link>https://blog.fastforwardlabs.com/2021/09/21/extractive-summarization-with-sentence-bert.html</link>
       
       <pubDate>Tue, 21 Sep 2021 14:15:56 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2021/09/21/extractive-summarization-with-sentence-bert.html</guid>
-      <description>By Victor.
-In extractive summarization, the task is to identify a subset of text (e.g., sentences) from a document that can then be assembled into a summary. Overall, we can treat extractive summarization as a recommendation problem. That is, given a query, recommend a set of sentences that are relevant. The query here is the document, relevance is a measure of whether a given sentence belongs in the document summary.</description>
+      <description>In extractive summarization, the task is to identify a subset of text (e.g., sentences) from a document that can then be assembled into a summary. Overall, we can treat extractive summarization as a recommendation problem. That is, given a query, recommend a set of sentences that are relevant. The query here is the document, relevance is a measure of whether a given sentence belongs in the document summary.
+How we go about obtaining this measure of relevance varies (a common dilemma for any recommendation system).</description>
     </item>
     
     <item>
       <title>How (and when) to enable early stopping for Gensim&#39;s Word2Vec</title>
+       
+      <link>https://blog.fastforwardlabs.com/2021/09/20/how-and-when-to-enable-early-stopping-for-gensims-word2vec.html</link>
       
-      <link></link>
-      
-      <pubDate>Mon, 20 Sep 2021 15:17:30 +0000</pubDate>
+      <pubDate>Mon, 20 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2021/09/20/how-and-when-to-enable-early-stopping-for-gensims-word2vec.html</guid>
-      <description>By Melanie.
-The Gensim library is a staple of the NLP stack. While it primarily focuses on topic modeling and similarity for documents, it also supports several word embedding algorithms, including what is likely the best-known implementation of Word2Vec.
+      <description>The Gensim library is a staple of the NLP stack. While it primarily focuses on topic modeling and similarity for documents, it also supports several word embedding algorithms, including what is likely the best-known implementation of Word2Vec.
 Word embedding models like Word2Vec use unlabeled data to learn vector representations for each token in a corpus. These embeddings can then be used as features in myriad downstream tasks such as classification, clustering, or recommendation systems.</description>
     </item>
     
