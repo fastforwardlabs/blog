@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Automatic Summarization from TextRank to Transformers</title>
+<meta property="og:title" content="Automatic Summarization from TextRank to Transformers">
+<meta property="description" content="By Melanie.
+Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a good summary, and introduce Summarize.">
+<meta property="og:description" content="By Melanie.
+Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a good summary, and introduce Summarize.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/summarize_blog/summarize_crop.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2021/09/22/automatic-summarization-from-textrank-to-transformers.html">
+<meta property="twitter:card" content="summary_large_image">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 2.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 2rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Sep 22, 2021</span> &middot;
+      <span style="text-transform: capitalize;">
+        
+      </span>
+    </h5>
+    <h1>Automatic Summarization from TextRank to Transformers</h1>
+    <p>By <em><a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></em>.</p>
+<p>Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a <em>good</em> summary, and introduce <strong>Summarize.</strong> &ndash; a summarization prototype we built that showcases several automatic summarization techniques.</p>
+<p>Automatic text summarization allows users to glean the most relevant information in large volumes of text, a task that has become increasingly relevant as more and more text data is mined for insights. This application thus has broad appeal for many business use cases like distilling financial statements into manageable summaries, paraphrasing legal documents, or collating major themes from a collection of corporate documents. While some of these use cases are more advanced, in this post we’ll talk about the foundations: techniques for summarizing individual documents into short summaries.</p>
+<h2 id="approaches">Approaches</h2>
+<p>There are two main approaches to automatic summarization: abstractive and extractive.</p>
+<h3 id="extractive">Extractive</h3>
+<p>In extractive summarization, the goal is to identify and extract subsets of the original text that best represent the most relevant information. These extracted subsets could be keywords or phrases, but are often whole sentences.  Models that perform extractive summarization have been around for decades, including supervised and unsupervised approaches (more on this below). These models have one thing in common: they each seek to essentially rank every subpassage (e.g., each sentence) in the document according to some metric of importance. Summaries are then constructed by selecting the most important subpassages.</p>
+<p>Extractive summaries are attractive because they pull text verbatim from the document, allowing the summary to faithfully reproduce the wording of the original content.  On the other hand, summaries constructed this way can suffer from a lack of context: sentences can be extracted from all over the document and, when strung together, they often lack important contextual references.  For example, a sentence in the summary might refer to “she” or “they” but may fail to include the sentence that clarifies the reference. Thus extractive summaries can sometimes be difficult to read or follow.</p>
+<h3 id="abstractive">Abstractive</h3>
+<p>The goal of this approach is to paraphrase the original text, rather than extracting representative segments. This is more akin to how a human would summarize a document or article. Models that perform this type of summarization well have only recently emerged. These are, of course, deep learning models, specifically the Transformer architecture (we’ll cover more below). In this approach, the model ingests the document and then generates a summary word by word. Often this summary contains specific phrases from the document verbatim, but other times the verbiage is paraphrased.</p>
+<p>While this style of summarization suffers less from contextual inconsistencies, automatic text generation is far more susceptible to misrepresentation errors. This happens when the model’s paraphrase twists the context of the original text.  We’ll touch on this more in a later section.</p>
+<h2 id="models-for-automatic-summarization">Models for automatic summarization</h2>
+<p>Let’s learn more about some of the models that can perform automatic text summarization. In this section we cover the models that we deployed in our prototype <strong>Summarize.</strong> These models range from classic unsupervised approaches, to deep learning-based Transformer models, and even a hybrid approach.</p>
+<h3 id="textrank">TextRank</h3>
+<p>TextRank is a classic graph-based ranking algorithm that assigns text to each node of a graph. The edges are assigned a value that represents a notion of similarity between two vertices. For example, in the classic version of this model, each vertex is assigned a <em>word</em> from the document, and the edges are the <em>co-occurrence</em> of those words within a given context window size passed over the document. We can visualize this graph by considering the following passage (from the <em>Hitchhiker’s Guide to the Galaxy</em>):</p>
+<blockquote>
+<p><em>There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable. There is another theory which states that this has already happened.</em></p>
+</blockquote>
+<p>After discarding stop and other filler words, and lemmatizing (reducing words to their root), a TextRank graph with a context window size of 2 would look like this:</p>
+<p><img src="/images/hugo/summarize_blog/textrank_graph_example4.png" alt="">
+<em>Fig. Example of a TextRank graph. Each node is a word and has a connection to another word if that word is within a context window of 2 in the original text.</em></p>
+<p>Once the graph is constructed, the next step is to compute the “importance” of each vertex given global information about the entire graph. The basic idea is that of voting: when two vertices are linked, they &ldquo;vote&rdquo; for each other, and votes from important vertices (those with many votes) count for even more. These importance scores are computed by running the <a href="https://en.wikipedia.org/wiki/PageRank">PageRank</a> algorithm (of search engine fame) on the text graph. Vertices with the highest scores are used to determine the most important words and phrases, and a summary is constructed by extracting sentences containing these top words and phrases.</p>
+<p>This model is attractive due to its simplicity, and because it’s an unsupervised approach &ndash; it doesn’t require labeled training data. It can also be used on documents of any length, something that our next family of models struggles with.</p>
+<h3 id="transformers">Transformers</h3>
+<p>The Transformer architecture has revolutionized natural language processing, producing dramatic results in myriad tasks from text classification, to question answering, and, of course, summarization. Transformer architecture is composed of one or two stacks: all Transformers have an <em>encoder</em> stack, which processes input text into numerical representations. Some Transformers also have a <em>decoder</em> stack, which generates text word by word. All Transformers are first trained on a massive amount of text in an unsupervised fashion to become Language Models (LMs), models that have learned the syntactic and semantic relationships of a language.</p>
+<p>From here, applications diverge. Used as-is, LMs are adept at computing numerical contextual text representations (“embeddings”) that can be used as features in a host of downstream tasks.  LMs can also be fitted with classification or regression components and fine-tuned (supervised training on a labeled dataset) to perform a specific task, like question answering or sentiment analysis.  LMs that have the decoder stack can perform language generation tasks such as translation or summarization.</p>
+<p>In the <strong>Summarize.</strong> prototype, we used Transformers in all three ways! Here, we provide a bit more context on each method.</p>
+<h4 id="transformers-for-abstractive-summarization">Transformers for abstractive summarization</h4>
+<p>Transformers with both the encoder and decoder architectures can ingest a document through the encoder and generate a summary word by word via the decoder. While these models currently represent the state-of-the-art in text summarization, they have some drawbacks. Of primary concern is the factual inconsistency problem that we mentioned earlier. These Transformer models occasionally generate a summary that no longer faithfully reproduces the intent of the original document.</p>
+<p>Consider the example below. In the top half we present an <a href="https://en.wikipedia.org/wiki/Machine_learning#Applications">excerpt</a> from the Wikipedia article on Machine learning.  (The original excerpt included a bulleted list that was excluded by our text processing pipeline.)  We’ve highlighted in yellow segments of the document that were included in the model’s summary.  In the bottom half is the model’s summary, where we’ve highlighted the first sentence in orange.</p>
+<p>The first sentence of the model’s summary is rather surprising: An application of machine learning is the prediction of medical doctors’ jobs?  Not only is this confusing, it is not a faithful representation of the original document. While those phrases are found in the original (highlighted in yellow), the model has made an incorrect paraphrase that twisted the meaning of the original text. If we read the original document, we see that machine learning models are not predicting medical doctors’ jobs &ndash; instead, the co-founder of Sun Microsystems predicted that many medical doctors’ jobs will be replaced with machine learning models!</p>
+<p><img src="/images/hugo/summarize_blog/misrepresentation_example.png" alt=""></p>
+<p>While state-of-the-art Transformer models have minimized the frequency of these errors, they remain an unsolved problem and are difficult to detect. These models are also saddled with additional drawbacks including increased computational complexity, and limitations on the amount of text that can be processed at a given time. However, the utility of readable, human-sounding summaries could outweigh these drawbacks for some use cases.</p>
+<h4 id="transformers-for-extractive-summarization">Transformers for extractive summarization.</h4>
+<p>But we can also train Transformers to perform extractive summarization by framing the task as a classification problem. To do this we outfit a Transformer with a classification module and fine-tune it on a labeled dataset. In this case, the dataset should consist of documents in which each sentence of every document is labeled with a 1 (include in the summary) or 0 (do not include in summary). We trained a model in just this way and wrote a much more detailed blog post on how we did it in Extractive Summarization with SentenceBERT. At inference time, the model computes a score for each sentence in the document. Those with the highest scores are extracted as the document summary.</p>
+<h2 id="hybrid">Hybrid</h2>
+<p>The hybrid approach we explored combines elements from both TextRank and Transformers. In this approach we still use TextRank to build a graph, but each vertex represents a sentence from the document, rather than a single word. A Transformer model (SentenceBERT, specifically) is used to compute embeddings for each sentence. Rather than co-occurrence (which doesn’t have much meaning for sentences), the edges of the graph are the cosine similarity between each pair of sentence representations. As before, the PageRank algorithm computes the final importance scores for each sentence in the document, and sentences with the highest scores are selected as the document summary.</p>
+<h2 id="what-makes-for-a-good-summary">What makes for a good summary?</h2>
+<p>Let’s take stock. We have a general sense for the various types of summarization techniques and we’ve covered a few models that can perform the task. But how good are the summaries?</p>
+<p>That’s a tricky question for many reasons. Summarization is hard in large part because “good” summaries are subjective. Furthermore, there is no single “correct” answer &ndash; any document will have several equally suitable summaries. Another challenge is that summarization is an inherently lossy endeavor.  There is no way to encapsulate every pertinent piece of information, except to not summarize at all! This means that any summary &ndash; abstractive or extractive, classically obtained or state-of-the-art generated &ndash; will yield a summary that fails to include some piece of information that may have been relevant to some users.</p>
+<p>Below is an excerpt of a Wikipedia article about machine learning. We applied four different summarization models to the text and highlighted the resulting summary from each model. As you can see, each summary identifies starkly different information from the others. None of them would be inherently wrong and, ultimately, it’s up to the user to determine the utility of each model.</p>
+<p><img src="/images/hugo/summarize_blog/many_summaries.png" alt="">
+<em>Fig. Four models yield four very different summaries (highlighted). Ultimately, humans must determine which yields the most utility.</em></p>
+<p>Of course, when building a summarization model for a specific use case we need a way to systematically compare models in order to identify which has the greatest utility for our situation. And that means gold standard summarization datasets.</p>
+<h3 id="evaluating-summarization-models">Evaluating summarization models</h3>
+<p>Most summarization datasets facilitate abstractive summarization, rather than extractive. For example, the canonical CNN/Daily Mail dataset includes nearly three hundred thousand news articles, each paired with a summary written by a human journalist. While providing a powerful training resource, this dataset is nevertheless imperfect because each news article has only a single summary, and was written by a journalist with a specific writing style and preconceived notion of what constitutes the most important aspects of the full-length article.</p>
+<p>An extractive summarization dataset, on the other hand, would have documents labeled with which text segments should be included in the summary and which should not. These are harder to come by, and often abstractive datasets are repurposed for extractive summarization, which adds another caveat to the evaluation process. (You can read more about how we performed this repurposing ourselves in our technical <a href="LINK">blog post</a>.)</p>
+<p>Keeping these caveats in mind, we can assess a summarization model against one of these datasets by comparing the model’s summary to the gold standard summary of a test set via a ROUGE score. Recall-Oriented Understudy for Gisting Evaluation may not sound like an intuitive name but the important part is the first word: recall.  While there are half a dozen flavors of ROUGE score, at their core each is a measure of recall between the model’s summary and the gold standard summary. The most common versions compute recall on unigrams (splitting the summaries into individual words), or bigrams (splitting the summaries into pairs of words). These versions don’t consider the sentence structure or the order of words in the summary. To that end, the ROUGE-L score considers the longest common subsequence between the summaries.</p>
+<p>While the ROUGE scoring framework provides a standardized way to compare models, ROUGE scores alone cannot evaluate a summary for readability, writing style, consistency, or factual correctness. As always, additional human evaluation of the summaries in these categories is recommended.</p>
+<h2 id="new-applied-machine-learning-prototype">New Applied Machine Learning Prototype</h2>
+<p>We crammed everything we talked about in this article into a new applied machine learning prototype called <strong>Summarize.</strong> <strong>Summarize.</strong> allows the user to interact with the four different summarization models discussed above. We include several example articles from Wikipedia and the CNN/Daily Mail dataset to highlight the strengths and weaknesses of each model. We’ve also computed the ROUGE-L scores for each model against the gold standard summary provided by the CNN/Daily Mail dataset. Additionally, you can enter your own text for summarization!</p>
+<p><img src="/images/hugo/summarize_blog/summarize_full_screengrab.png" alt=""></p>
+<p><strong>Summarize.</strong> is a simple Streamlit application and you can try it out for yourself by heading to <a href="https://github.com/fastforwardlabs/summarize.">this repo</a>. It can be run locally or spun up as a CML Application via the CML AMP Catalog. Installation and other details can be found in the repo.</p>
+<p>Happy summarizing!</p>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Sep 21, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <div><a href="" target="_blank">
+      <strong>Extractive Summarization with Sentence-BERT →</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 22, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <a href="/2021/09/22/automatic-summarization-from-textrank-to-transformers.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/summarize_blog/summarize_crop.png" />
+  </a>
+  
+  <div>
+    
+    <a href="" target="_blank">
+      <h2 style="margin-bottom: 4px;">Automatic Summarization from TextRank to Transformers →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck/">Melanie Beck</a>
+        &middot; </span
+      >
+    </span>
+    By Melanie.
+Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this article we’ll cover the main approaches to automatic text summarization, talk about what makes for a good summary, and introduce Summarize.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="" target="_blank">
+        	
+        
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 21, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/extractabert_blog/extractivesummodel.png" />
+  </a>
+  
+  <div>
+    
+    <a href="" target="_blank">
+      <h2 style="margin-bottom: 4px;">Extractive Summarization with Sentence-BERT →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/vykthur">Victor Dibia</a>
+        &middot; </span
+      >
+    </span>
+    By Victor.
+In extractive summarization, the task is to identify a subset of text (e.g., sentences) from a document that can then be assembled into a summary. Overall, we can treat extractive summarization as a recommendation problem. That is, given a query, recommend a set of sentences that are relevant. The query here is the document, relevance is a measure of whether a given sentence belongs in the document summary.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="" target="_blank">
+        	
+        
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 20, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <a href="/2021/09/20/how-and-when-to-enable-early-stopping-for-gensims-word2vec.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/gensim_blog/earlystopping_schematic.png" />
+  </a>
+  
+  <div>
+    
+    <a href="" target="_blank">
+      <h2 style="margin-bottom: 4px;">How (and when) to enable early stopping for Gensim&#39;s Word2Vec →</h2></a
+    >
+    
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://www.linkedin.com/in/melanierbeck/">Melanie Beck</a>
+        &middot; </span
+      >
+    </span>
+    By Melanie.
+The Gensim library is a staple of the NLP stack. While it primarily focuses on topic modeling and similarity for documents, it also supports several word embedding algorithms, including what is likely the best-known implementation of Word2Vec.
+Word embedding models like Word2Vec use unlabeled data to learn vector representations for each token in a corpus. These embeddings can then be used as features in myriad downstream tasks such as classification, clustering, or recommendation systems.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="" target="_blank">
+        	
+        
+      </a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jul 7, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2021/07/07/exploring-multi-objective-hyperparameter-optimization.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/Single-objective-surrogate-function-1625741671.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2021/07/07/exploring-multi-objective-hyperparameter-optimization.html"
+       ><h2 style="margin-bottom: 4px;">Exploring Multi-Objective Hyperparameter Optimization</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    By Chris and Melanie.
+The machine learning life cycle is more than data + model = API. We know there is a wealth of subtlety and finesse involved in data cleaning and feature engineering. In the same vein, there is more to model-building than feeding data in and reading off a prediction. ML model building requires thoughtfulness both in terms of which metric to optimize for a given problem, and how best to optimize your model for that metric!
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2021/07/07/exploring-multi-objective-hyperparameter-optimization.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jun 9, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/metricblog/onlinetraining.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html"
+       ><h2 style="margin-bottom: 4px;">Deep Metric Learning for Signature Verification</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    By Victor and Andrew.
+TLDR; This post provides an overview of metric learning loss functions (constrastive, triplet, quadruplet, and group loss), and results from applying contrastive and triplet loss to the task of signature verification. A complete list of the posts in this series is outlined below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      In our previous blog post, we discussed how pretrained models can serve as strong baselines for the task of signature verification.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2021/06/09/deep-metric-learning-for-signature-verification.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>May 27, 2021</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2021/05/27/pretrained-models-as-a-strong-baseline-for-automatic-signature-verification.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/metricblog/feature_extraction_pretrained.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2021/05/27/pretrained-models-as-a-strong-baseline-for-automatic-signature-verification.html"
+       ><h2 style="margin-bottom: 4px;">Pretrained Models as a Strong Baseline for Automatic Signature Verification</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    By Victor and Andrew.
+Figure 1. Baseline approach for automatic signature verification using pretrained models TLDR; This post describes how pretrained image classification models can be used as strong baselines for the task of signature verification. The full list of posts in the series is outlined below: Pretrained Models as Baselines for Signature Verification  --   Part 1: Deep Learning for Automatic Offline Signature Verification: An Introduction    Part 2: Pretrained Models as Baselines for Signature Verification    Part 3: Deep Metric Learning for Signature Verification      As discussed in our introductory blog post, offline signature verification is a biometric verification task that aims to discriminate between genuine and forged samples of handwritten signatures.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2021/05/27/pretrained-models-as-a-strong-baseline-for-automatic-signature-verification.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF22</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://concept-drift.fastforwardlabs.com/" target="_blank">Inferring Concept Drift Without Labeled Data</a></h2>
+  <a class="report-image" href="https://concept-drift.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff22-combo.png" />
+  </a>
+  <div class="small">Concept drift occurs when the statistical properties of a target domain change overtime causing model performance to degrade. Drift detection is generally achieved by monitoring a performance metric of interest and triggering a retraining pipeline when that metric falls below some designated threshold. However, this approach assumes ample labeled data is available at prediction time - an unrealistic constraint for many production systems. In this report, we explore various approaches for dealing with concept drift when labeled data is not readily accessible.</div>
+  <div><a href="https://concept-drift.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF19</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://session-based-recommenders.fastforwardlabs.com/" target="_blank">Session-based Recommender Systems</a></h2>
+  <a class="report-image" href="https://session-based-recommenders.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff19-combo.png" />
+  </a>
+  <div class="small">Being able to recommend an item of interest to a user (based on their past preferences) is a highly relevant problem in practice. A key trend over the past few years has been session-based recommendation algorithms that provide recommendations solely based on a user’s interactions in an ongoing session, and which do not require the existence of user profiles or their entire historical preferences. This report explores a simple, yet powerful, NLP-based approach (word2vec) to recommend a next item to a user. While NLP-based approaches are generally employed for linguistic tasks, here we exploit them to learn the structure induced by a user’s behavior or an item’s nature.</div>
+  <div><a href="https://session-based-recommenders.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF18</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://few-shot-text-classification.fastforwardlabs.com/" target="_blank">Few-Shot Text Classification</a></h2>
+  <a class="report-image" href="https://few-shot-text-classification.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff18-combo.png" />
+  </a>
+  <div class="small">Text classification can be used for sentiment analysis, topic assignment, document identification, article recommendation, and more. While dozens of techniques now exist for this fundamental task, many of them require massive amounts of labeled data in order to be useful. Collecting annotations for your use case is typically one of the most costly parts of any machine learning application. In this report, we explore how latent text embeddings can be used with few (or even zero) training examples and provide insights into best practices for implementing this method.</div>
+  <div><a href="https://few-shot-text-classification.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF16</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Structural Time Series</a></h2>
+  <a class="report-image" href="https://structural-time-series.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff16-combo.png" />
+  </a>
+  <div class="small">Time series data is ubiquitous. This report examines generalized additive models, which give us a simple, flexible, and interpretable means for modeling time series by decomposing them into structural components. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook’s Prophet library on a demand forecasting problem.</div>
+  <div><a href="https://structural-time-series.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF15</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Meta-Learning</a></h2>
+  <a class="report-image" href="https://meta-learning.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff15-combo.png" />
+  </a>
+  <div class="small">In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize. Humans are successful in adapting quickly because they leverage their knowledge acquired from prior experience when faced with new problems. In this report, we explain how meta-learning can leverage previous knowledge acquired from data to solve novel tasks quickly and more efficiently during test time</div>
+  <div><a href="https://meta-learning.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF14</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://qa.fastforwardlabs.com" target="_blank">Automated Question Answering</a></h2>
+  <a class="report-image" href="https://qa.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff14-combo.png" />
+  </a>
+  <div class="small">Automated question answering is a user-friendly way to extract information from data using natural language. Thanks to recent advances in natural language processing, question answering capabilities from unstructured text data have grown rapidly. This blog series offers a walk-through detailing the technical and practical aspects of building an end-to-end question answering system.</div>
+  <div><a href="https://qa.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF13</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff13.fastforwardlabs.com" target="_blank">Causality for Maching Learning</a></h2>
+  <a class="report-image" href="https://ff13.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff13-combo.png" />
+  </a>
+  <div class="small">The intersection of causal inference and machine learning is a rapidly expanding area of research that&#39;s already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases.</div>
+  <div><a href="https://ff13.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF06-2020</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Interpretability</a></h2>
+  <a class="report-image" href="https://ff06-2020.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff06-2020-combo.png" />
+  </a>
+  <div class="small">Interpretability, or the ability to explain why and how a system makes a decision, can help us improve models, satisfy regulations, and build better products. Black-box techniques like deep learning have delivered breakthrough capabilities at the cost of interpretability. In this report, recently updated to include techniques like SHAP, we show how to make models interpretable without sacrificing their capabilities or accuracy.</div>
+  <div><a href="https://ff06-2020.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF12</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://ff12.fastforwardlabs.com" target="_blank">Deep Learning for Anomaly Detection</a></h2>
+  <a class="report-image" href="https://ff12.fastforwardlabs.com" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff12-combo.png" />
+  </a>
+  <div class="small">From fraud detection to flagging abnormalities in imaging data, there are countless applications for automatic identification of abnormal data. This process can be challenging, especially when working with large, complex data. This report explores deep learning approaches (sequence models, VAEs, GANs) for anomaly detection, when to use them, performance benchmarks, and product possibilities.</div>
+  <div><a href="https://ff12.fastforwardlabs.com" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF09</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://federated.fastforwardlabs.com/" target="_blank">Federated Learning</a></h2>
+  <a class="report-image" href="https://federated.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff09-combo.png" />
+  </a>
+  <div class="small">Federated Learning makes it possible to build machine learning systems without direct access to training data. The data remains in its original location, which helps to ensure privacy and reduces communication costs. Federated learning is a great fit for smartphones and edge hardware, healthcare and other privacy-sensitive use cases, and industrial applications such as predictive maintenance.</div>
+  <div><a href="https://federated.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF03-2019</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://deep-learning-image-analysis.fastforwardlabs.com/" target="_blank">Deep Learning for Image Analysis: 2019 Edition</a></h2>
+  <a class="report-image" href="https://deep-learning-image-analysis.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff03-2019-combo.png" />
+  </a>
+  <div class="small">Convolutional Neural Networks (CNN) excel at learning meaningful representations of features and concepts within images. These capabilities make CNNs extremely valuable for solving problems in domains such as medical imaging, autonomous driving, manufacturing, robotics, and urban planning. In this report, we show how to select the right deep learning models for image analysis tasks and techniques for debugging deep learning models.</div>
+  <div><a href="https://deep-learning-image-analysis.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF03</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://deep-learning-image-classic.fastforwardlabs.com/" target="_blank">Deep Learning: Image Analysis</a></h2>
+  <a class="report-image" href="https://deep-learning-image-classic.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff03-classic-combo.png" />
+  </a>
+  <div class="small">Deep learning, or highly-connected neural networks, offers fascinating new capabilities for image analysis. Using deep learning, computers can now learn to identify objects in images. This report explores the history and current state of the field, predicts future developments, and explains how to apply deep learning today.</div>
+  <div><a href="https://deep-learning-image-classic.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">Interpretability Revisited: SHAP and LIME</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/shap-and-lime.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore how to use LIME and SHAP for interpretability.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N" target="_blank">https://colab.research.google.com/drive/1pjPzsw_uZew-Zcz646JTkRDhF2GkPk0N</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">About</h1>
+    <div>
+      Cloudera Fast Forward is an applied machine learning reseach group.<br />
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>

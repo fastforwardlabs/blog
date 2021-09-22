@@ -372,7 +372,16 @@ if (!doNotTrack) {
         
     
     
-    <li class="page-item"><a class="page-link" href="/posts/page/33.html">33</a></li>
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/posts/page/34.html">34</a></li>
     
     
     <li class="page-item">
@@ -380,7 +389,7 @@ if (!doNotTrack) {
     </li>
     
     <li class="page-item">
-        <a href="/posts/page/33.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/posts/page/34.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
@@ -391,6 +400,148 @@ if (!doNotTrack) {
   
 
   <div id="posts-holder"> 
+    
+      <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+  <a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html" class="preview-image-holder">
+    <img class="preview-image" src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif" />
+  </a>
+  
+  <div>
+    
+    <a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"
+       ><h2 style="margin-bottom: 4px;">Under the Hood of the Variational Autoencoder (in Prose and Code)</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/meereve">Miriam</a>
+        &middot; </span
+      >
+    </span>
+    <h5 id="the-a-hrefhttpsarxivorgabs13126114variationala-a-hrefhttpsarxivorgabs14014082autoencodera-vae-neatly-synthesizes-unsupervised-deep-learning-and-variational-bayesian-methods-into-one-sleek-package-in-a-hrefhttpblogfastforwardlabscom20160812introducing-variational-autoencoders-in-prose-andhtmlpart-ia-of-this-series-we-introduced-the-theory-and-intuition-behind-the-vae-an-exciting-development-in-machine-learning-for-combined-generative-modeling-and-inferencea-hrefhttpshakirmcomslidesdlsummerschool_aug2016_compresspdfmachines-that-imagine-and-reasona">The <a href="https://arxiv.org/abs/1312.6114">Variational</a> <a href="https://arxiv.org/abs/1401.4082">Autoencoder</a> (VAE) neatly synthesizes unsupervised deep learning and variational Bayesian methods into one sleek package. In <a href="http://blog.fastforwardlabs.com/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a> of this series, we introduced the theory and intuition behind the VAE, an exciting development in machine learning for combined generative modeling and inference—<a href="http://shakirm.com/slides/DLSummerSchool_Aug2016_compress.pdf">“machines that imagine and reason.”</a></h5>
+<p>To recap: VAEs put a probabilistic spin on the basic autoencoder paradigm—treating their inputs, hidden representations, and reconstructed outputs as probabilistic random variables within a directed graphical model. With this <a href="https://xkcd.com/1236/">Bayesian</a> perspective, the encoder becomes a variational <em>inference network</em>, mapping observed inputs to (approximate) posterior distributions over latent space, and the decoder becomes a <em>generative network</em>, capable of mapping arbitrary latent coordinates back to distributions over the original data space.</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/vae.4.png" title="A variational autoencoder" style="width:80.0%"/></div>
+<p>The beauty of this setup is that we can take a principled Bayesian approach toward building systems with a rich internal “mental model” of the observed world, all by training a single, cleverly-designed deep neural network.</p>
+<p>These benefits derive from an enriched understanding of data as merely the tip of the iceberg—the observed result of an underlying causative probabilistic process.</p>
+<p>The power of the resulting model is captured by Feynman’s famous <a href="http://archives-dc.library.caltech.edu/islandora/object/ct1:483">chalkboard quote</a>: “What I cannot create, I do not understand.” When trained on MNIST handwritten digits, our VAE model can parse the information spread thinly over the high-dimensional observed world of pixels, and condense the most meaningful features into a structured distribution over reduced latent dimensions.</p>
+<p>Having recovered the latent manifold and assigned it a coordinate system, it becomes trivial to walk from one point to another along the manifold, creatively generating realistic digits all the while:</p>
+<div class="figure">
+<img src="http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif" title="Generatively morphing digits"/></div>
+<p>In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in <a href="http://fastforwardlabs.github.io/2016/08/12/introducing-variational-autoencoders-in-prose-and.html">Part I</a>.</p>
+<p>Along the way, we’ll show how to implement a VAE in <a href="http://tensorflow.org/">TensorFlow</a>—a library for efficient numerical computation using data flow graphs, with key features like <a href="http://alexey.radul.name/ideas/2013/introduction-to-automatic-differentiation/">automatic differentiation</a> and parallelizability (across clusters, CPUs, GPUs…and <a href="https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html">TPUs</a> if you’re lucky). You can find (and tinker with!) the full implementation <a href="https://github.com/fastforwardlabs/vae-tf/tree/master">here</a>, along with a couple <a href="https://github.com/fastforwardlabs/vae-tf/tree/master/out">pre-trained models</a>.</p>
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+    
+      <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 18, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      guest post
+    </span>
+  </h5>
+  
+  <a href="/2016/08/18/giving-speech-a-voice-in-the-home.html" class="preview-image-holder">
+    <img class="preview-image" src="http://68.media.tumblr.com/24baab55961a73824bb7c218d3fb3d52/tumblr_inline_oc4fofyCUx1ta78fg_540.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2016/08/18/giving-speech-a-voice-in-the-home.html"
+       ><h2 style="margin-bottom: 4px;">Giving Speech a Voice in the Home</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="http://senter.io/">Sean Lorenz, SENTER</a>
+        &middot; </span
+      >
+    </span>
+    This is a guest post by Sean Lorenz, the Founder &amp; CEO of SENTER, a Boston-based startup using sensors and data science to support healthcare in the home. Sean explains how techniques from computational neuroscience can help make the smart home smarter and describes the speech recognition hurdles developers have to overcome to realize smart home potential. Consumer IoT pundits rave about the “smart home,” where our lights, shades, sprinklers and coffeemakers do what we want them to do automatically as they learn about our behaviors and habits.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2016/08/18/giving-speech-a-voice-in-the-home.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+    
+      <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 12, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+  <a href="/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html" class="preview-image-holder">
+    <img class="preview-image" src="http://fastforwardlabs.github.io/blog-images/miriam/160727_1340_explore.gray_del11_492x490.slower40.gif" />
+  </a>
+  
+  <div>
+    
+    <a href="/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html"
+       ><h2 style="margin-bottom: 4px;">Introducing Variational Autoencoders (in Prose and Code)</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/meereve">Miriam</a>
+        &middot; </span
+      >
+    </span>
+    Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
+Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
+This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2016/08/12/introducing-variational-autoencoders-in-prose-and-code.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
     
       <div class="post-link" style="position: relative">
   <h5 style="margin-bottom: 4px;">
@@ -490,114 +641,6 @@ Homage to a great physicist, in a textbook: David MacKay, a Cambridge physicist
     >
     
       <a href="/2016/07/08/what-we-liked-at-ainow.html">...read more</a>
-    
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-    
-      <div class="post-link" style="position: relative">
-  <h5 style="margin-bottom: 4px;">
-    <span>Jun 10, 2016</span> &middot;
-    <span style="text-transform: capitalize;">
-      interview
-    </span>
-  </h5>
-  
-  <a href="/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html" class="preview-image-holder">
-    <img class="preview-image" src="http://68.media.tumblr.com/5cfcc6b830aa09f63bf9e9b2333524a1/tumblr_inline_o8k7rqJDmA1ta78fg_540.png" />
-  </a>
-  
-  <div>
-    
-    <a href="/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html"
-       ><h2 style="margin-bottom: 4px;">Machine Listening: Interview with Juan Pablo Bello</h2></a
-     >
-     
-  </div>
-  <div class="small" style="height: 4.5em; overflow: hidden;">
-    <figure data-orig-width="360" data-orig-height="270" class="tmblr-full"><img src="http://68.media.tumblr.com/5cfcc6b830aa09f63bf9e9b2333524a1/tumblr_inline_o8k7rqJDmA1ta78fg_540.png" alt="image" data-orig-width="360" data-orig-height="270"/></figure>
-<h5 id="a-probabilistic-latent-component-analysis-of-a-pitch-class-sequence-for-the-beatles-good-day-sunshine-the-top-layer-shows-the-original-representation-time-vs-pitch-class-subsequent-layers-show-latent-components">A probabilistic latent component analysis of a pitch class sequence for The Beatles’ Good Day Sunshine. The top layer shows the original representation (time vs pitch class). Subsequent layers show latent components.</h5>
-<p>What is music? Or rather, what differentiates music from noise?<b><br/></b></p><p>If you ask John Cage, “everything we do is music.” Forced to <a href="https://www.youtube.com/watch?v=JTEFKFiXSx4">sit silently for 4’33”</a>, we masters of <a href="https://en.wikipedia.org/wiki/Apophenia">apophenia</a> end up hearing music in noise (or just squirm in discomfort&hellip;), perceiving order and meaning in sounds that normally escape notice. For Cage, music is in the ears of the listener. To study it is to study how we perceive.</p><p>But Cage wrote 4’33” at time when many artists were challenging inherited notions of art. Others, dating back to Pythagoras (who defined harmony in terms of <a href="https://en.wikipedia.org/wiki/Pythagorean_hammers#cite_note-8">ratios and proportions</a>), have defined music through the structural properties that make music <i>music, </i>and separate different musical styles. </p><p>The latest efforts to understand music lie in the field of machine listening, where researchers use computers to analyze audio data to identify meaning and structure in it like humans do. Some machine listening researchers analyze urban and environmental sounds, as at <a href="https://wp.nyu.edu/sonyc/">SONYC</a>. </p><p>This August in NYC, researchers in machine listening and related fields will convene at the <a href="https://wp.nyu.edu/ismir2016/">International Society for Music Information Retrieval (ISMIR) conference</a>. The conference is of interest to anyone working in data or digital media, offering practical workshops and hackathons for the NYC data community. </p><p>We interviewed NYU Steinhardt Professor <a href="http://steinhardt.nyu.edu/marl/people/bello">Juan Pablo Bello</a>, an organizer of ISMIR 2016 working in machine listening, to learn more about the conference and the latest developments in the field. Keep reading for highlights!</p>
-  </div>
-  <div
-    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-    
-      <a href="/2016/06/10/machine-listening-interview-with-juan-pablo-bello.html">...read more</a>
-    
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-    
-      <div class="post-link" style="position: relative">
-  <h5 style="margin-bottom: 4px;">
-    <span>Jun 2, 2016</span> &middot;
-    <span style="text-transform: capitalize;">
-      announcement
-    </span>
-  </h5>
-  
-  <a href="/2016/06/02/welcome-friederike.html" class="preview-image-holder">
-    <img class="preview-image" src="http://68.media.tumblr.com/48ec558f89fc83dbf3e1770639cf6404/tumblr_inline_o85byoZHrx1ta78fg_540.jpg" />
-  </a>
-  
-  <div>
-    
-    <a href="/2016/06/02/welcome-friederike.html"
-       ><h2 style="margin-bottom: 4px;">Welcome, Friederike!</h2></a
-     >
-     
-  </div>
-  <div class="small" style="height: 4.5em; overflow: hidden;">
-    Alongside our research on emerging machine learning techniques, Fast Forward Labs advises organizations on data science issues like technical architecture, new product development, models and algorithms, and even hiring the right talent. Our client base is growing fast, and we’re excited to support many large financial services, insurance, and media companies, as well as startups building cutting-edge AI products. We work closely with our clients to identify opportunities where they can apply our research and take our prototypes the next mile by implementing them on their own data.
-  </div>
-  <div
-    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-    
-      <a href="/2016/06/02/welcome-friederike.html">...read more</a>
-    
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-    
-      <div class="post-link" style="position: relative">
-  <h5 style="margin-bottom: 4px;">
-    <span>May 27, 2016</span> &middot;
-    <span style="text-transform: capitalize;">
-      announcement
-    </span>
-  </h5>
-  
-  <a href="/2016/05/27/online-talk-summarization-algorithms.html" class="preview-image-holder">
-    <img class="preview-image" src="https://images.pexels.com/photos/159621/open-book-library-education-read-159621.jpeg?w=1260&amp;h=750&amp;auto=compress&amp;cs=tinysrgb" />
-  </a>
-  
-  <div>
-    
-    <a href="/2016/05/27/online-talk-summarization-algorithms.html"
-       ><h2 style="margin-bottom: 4px;">Online Talk: Summarization Algorithms</h2></a
-     >
-     
-  </div>
-  <div class="small" style="height: 4.5em; overflow: hidden;">
-    This week, we had the pleasure of hosting an online talk with the team from Agolo, an NYC-based startup with a great product that automatically summarizes articles (and can even generate new titles for a group of summarized articles). During the event, we discussed:
-why summarization has suddenly become interestinghow different industries are applying the technologyhow algorithms work (LDA, word2vec, and recurrent neural networks)related applications (realtime translation, speech recognition)what’s next in the fieldCheck out the recording below!
-  </div>
-  <div
-    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-    
-      <a href="/2016/05/27/online-talk-summarization-algorithms.html">...read more</a>
     
   </div>
   <div class="spacer"></div>
@@ -935,7 +978,16 @@ why summarization has suddenly become interestinghow different industries are ap
         
     
     
-    <li class="page-item"><a class="page-link" href="/posts/page/33.html">33</a></li>
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/posts/page/34.html">34</a></li>
     
     
     <li class="page-item">
@@ -943,7 +995,7 @@ why summarization has suddenly become interestinghow different industries are ap
     </li>
     
     <li class="page-item">
-        <a href="/posts/page/33.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/posts/page/34.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
