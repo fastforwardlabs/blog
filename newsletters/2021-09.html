@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-09.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the September Cloudera Fast Forward Labs newsletter.</p>
+<hr>
+<h2 id="new-research">New research!</h2>
+<p>We like to build things. In the past couple of months we&rsquo;ve been hard at work on a new prototype, as well as wrapping up a few loose threads from various research directions that we&rsquo;ve touched on so far this year. Our efforts have culminated in a fun new application and blog posts.</p>
+<h3 id="summarizehttpsblogfastforwardlabscom20210922automatic-summarization-from-textrank-to-transformershtml"><a href="https://blog.fastforwardlabs.com/2021/09/22/automatic-summarization-from-textrank-to-transformers.html">Summarize.</a></h3>
+<p>Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole. While traditionally applied to text, automatic summarization can include other formats such as images or audio. In this post we cover the main approaches to automatic text summarization, talk about what makes for a <em>good</em> summary, and introduce <strong>Summarize.</strong> &ndash; a summarization <a href="https://github.com/fastforwardlabs/summarize.">prototype</a> we built that showcases both extractive and abstractive automatic summarization models.</p>
+<p><img src="/images/hugo/summarize_crop-1632401225.png" alt="summarize_crop.png"></p>
+<h3 id="extractive-summarization-with-sentenceberthttpsblogfastforwardlabscom20210921extractive-summarization-with-sentence-berthtml"><a href="https://blog.fastforwardlabs.com/2021/09/21/extractive-summarization-with-sentence-bert.html">Extractive Summarization with SentenceBERT</a></h3>
+<p>In this post, we dive deeper into how we trained a SentenceBERT model to perform extractive summarization, from model architecture to considerations for training and inference. You can interact with this model in the Summarize. prototype!</p>
+<h3 id="how-and-when-to-enable-early-stopping-for-gensims-word2vechttpsblogfastforwardlabscom20210920how-and-when-to-enable-early-stopping-for-gensims-word2vechtml"><a href="https://blog.fastforwardlabs.com/2021/09/20/how-and-when-to-enable-early-stopping-for-gensims-word2vec.html">How (and when) to enable early stopping for Gensim&rsquo;s Word2Vec</a></h3>
+<p>The <a href="https://radimrehurek.com/gensim/">Gensim</a> library is a staple of the NLP stack and supports what is likely the best-known implementation of Word2Vec. In this post, we cover how to train Word2Vec for non-language use cases (like learning item embeddings) and explain when you should and <strong><em>shouldn&rsquo;t</em></strong> use early stopping.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from this year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favourite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://huyenchip.com/2021/09/13/data-science-infrastructure.html">Why data scientists shouldn’t need to know Kubernetes</a></p>
+<p>In this post, Chip Huyen postulates that the ever-increasing job description of the “full stack” data scientist - from data to modeling to infrastructure - results from discordance between development and production environments that practitioners are expected to operate across. In today’s world, production ML requires knowledge of low-level infrastructure which is a very distinct skillset from traditional data science disciplines. Chip argues that rather than adding hats to the data scientists’ already extensive wardrobe, the solution involves proper infrastructure abstraction; a world where data scientists can own the ML lifecycle end-to-end without having to worry about infrastructure complexity. This post does a great job of summarizing the capability and direction of several tools that are helping to solve this issue. - <a href="https://www.linkedin.com/in/andrew-r-reed/"><em>Andrew</em></a></p>
+</li>
+<li>
+<p><strong>Active learning for production</strong></p>
+<p>Since our very first research on <a href="https://blog.cloudera.com/a-guide-to-learning-with-limited-labeled-data/">ML with limited labeled data</a>, active learning (AL) and the like approaches have always been on my radar. After all labeled data is one of the most basic requirements for many ML applications. That said, as widely known many of these approaches, especially the ones based on deep learning are often not scalable for large datasets or are too slow in production environments. At times these could be too slow to train and/or vast amounts of data is needed for them to be performant. A <a href="https://arxiv.org/pdf/2006.09916.pdf">recent paper</a> discusses a Bayesian approach to AL in a production-like setting. While it builds on the technique based on dropout layers being activated during test time to determine uncertainty (similar to what we had researched and experimented with), the researchers provide a nice comprehensive <a href="https://github.com/ElementAI/baal">library</a> for practitioners to experiment with and confirm our observations on class imbalance issues. - <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2101.06475">Slot Machines: Discovering Winning Combinations of Random Weights in Neural Networks</a></p>
+<p>As a former blackjack dealer (it was a <em>long</em> time ago) and avid gambler, the title of this paper caught my eye and the content didn&rsquo;t disappoint! This provocative entry to ICML earlier this year rolls the dice on a new way to train neural networks: don&rsquo;t train them at all! (At least, not in the traditional way.) They present a method wherein the weights of a neural network are randomly instantiated and are <strong>never</strong> updated during training. Instead, each weight is allowed to pick a value from a fixed set of possible values. Each of these options has a score associated with it that corresponds to how likely that value is to contribute to a better neural network overall. Essentially, it is these <em>scores</em> that are trained — not the model <em>weights</em>! They perform a slew of experiments comparing their method to randomly instantiated models, traditionally trained models, and more. It makes for both an entertaining and enlightening read. - <a href="http://www.linkedin.com/in/melanierbeck"><em>Melanie</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2103.15691">ViViT: A Video Vision Transformer</a></p>
+<p>My previous work in compute-constrained Computer Vision (CV) restricted me not only to low-energy, low-memory consumption models — but also to convolutions as the main architectural building block. A look at recent literature, however, reveals a trend in CV towards the replacement of convolutions with attention modules. This trend accelerated after the publication, in 2017, of the seminal paper <a href="https://arxiv.org/abs/1706.03762">Attention is All You Need</a>, which introduced a pure-attention model for NLP. But it is only in 2021 that pure-attention models are achieving state-of-the-art in CV. An example of this is <a href="https://arxiv.org/abs/2103.15691">ViViT</a>, a family of pure-transformer based models for video classification. ViViT uses factorization to increase efficiency, and regularization and pre-training to reduce of the need of large training datasets. Execution times are presented for ViViT variants in the paper, but not compared against competing architectures, e.g., those based on convolutions, which would be particularly interesting to see. - <a href="https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b"><em>Daniel</em></a></p>
+</li>
+<li>
+<p><a href="https://erikbern.com/2021/07/07/the-data-team-a-short-story.html">Building a data team at a mid-stage startup: a short story</a></p>
+<p>This parable of a new head of data transforming a company to be data driven is entirely fictional, but aspects of it will resonate with anyone who has worked in a data role. - <em><a href="https://twitter.com/_cjwallace">Chris</a></em></p>
+</li>
+<li>
+<p>Listening: <a href="https://oxide.computer/podcasts/jonathan-blow">On the Metal with Jonathan Blow</a></p>
+<p>The On the Metal podcast from Oxide computer company is the best kind of technical podcast: nerds being nerds about nerdy things. This nearly 3-hour episode with indie game developer Jonathan Blow is full of technical insights about game dev and programming languages, and also strong opinions on the state of the computing industry at large. - <em><a href="https://twitter.com/_cjwallace">Chris</a></em></p>
+</li>
+</ul>
+
+  </div>
+
+
