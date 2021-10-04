@@ -62,6 +62,13 @@ img = "ff12-combo.png"
 link = "https://ff12.fastforwardlabs.com"
 
 [[entries]]
+number = "FF10"
+name = "Learning with Limited Labeled Data"
+blurb = "Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. This report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly. Active learning reduces the number of labeled examples required to train a model, saving time and money while obtaining comparable performance to models trained with much more data. With active learning, enterprises can leverage their large pool of unlabeled data to open up new product possibilities."
+img = "ff10-combo.png"
+link = "https://lwlld.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF09"
 name = "Federated Learning"
 blurb = "Federated Learning makes it possible to build machine learning systems without direct access to training data. The data remains in its original location, which helps to ensure privacy and reduces communication costs. Federated learning is a great fit for smartphones and edge hardware, healthcare and other privacy-sensitive use cases, and industrial applications such as predictive maintenance."
