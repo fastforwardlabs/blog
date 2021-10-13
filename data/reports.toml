@@ -42,7 +42,7 @@ link = "https://qa.fastforwardlabs.com"
 
 [[entries]]
 number = "FF13"
-name = "Causality for Maching Learning"
+name = "Causality for Machine Learning"
 blurb = "The intersection of causal inference and machine learning is a rapidly expanding area of research that's already yielding capabilities to enable building more robust, reliable, and fair machine learning systems. This report offers an introduction to causal reasoning including causal graphs and invariant prediction and how to apply causal inference tools together with classic machine learning techniques in multiple use-cases."
 img = "ff13-combo.png"
 link = "https://ff13.fastforwardlabs.com"
