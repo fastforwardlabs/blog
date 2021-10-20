@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-10.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <p>Welcome to the October Cloudera Fast Forward Labs newsletter. This month, some <em>old</em> research, and <em>new</em> recommended reading.</p>
+<hr>
+<h2 id="new-old-research">New (old) research!</h2>
+<p>This month, we&rsquo;re opening the vault and releasing a report from back in April 2019 from behind the paywall.</p>
+<h2 id="learning-with-limited-labeled-datahttpslwlldfastforwardlabscom"><a href="https://lwlld.fastforwardlabs.com/">Learning with Limited Labeled Data</a></h2>
+<p><img src="/images/hugo/llwld-1634746808.png" alt="The active learning cycle."></p>
+<p>Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. This report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly. Active learning reduces the number of labeled examples required to train a model, saving time and money while obtaining comparable performance to models trained with much more data. With active learning, enterprises can leverage their large pool of unlabeled data to open up new product possibilities.</p>
+<p><a href="https://lwlld.fastforwardlabs.com/">Read the report →</a></p>
+<p><a href="https://activelearner.fastforwardlabs.com/">Checkout the live prototype →</a></p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from this year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favourite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://mattturck.com/data2021/">The 2021 Machine Learning, AI and Data (MAD) Landscape</a></p>
+<p>In their 8th annual release, Matt Turck and John Wu of FirstMark Capital map out the machine learning, AI, and data (MAD) landscape of 2021 from an investors point of view. While funding is only one peg by which technological progress can be measured, there is much to be learned from macro investment trends. In this post, the authors present a well researched market map of startup, private, and public sector players in the MAD ecosystem broken down by market segment - including several key trends for 2021 including data mesh, dataOps, feature stores, the rise of MLOps, and AI content generation. A great resource to help track and make sense of the emerging data and ML space over time. - <a href="https://twitter.com/andrewrreed"><em>Andrew</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2110.08207">Multitask Prompted Training Enables Zero-shot Task Generalization</a>
+This is the first modeling paper from <a href="https://bigscience.huggingface.co/">BigScience</a>, a one-year-long research workshop on NLP consisting of members of <a href="https://huggingface.co/">HuggingFace</a>, as well as 250 other research institutions from 50 countries! It&rsquo;s well known that massive language models like T5 or GPT-3 generalize surprisingly well to new tasks. The leading hypothesis for this performance is that these models <em>implicitly</em> undergo multitask learning thanks to the massive corpora they are trained on.  In this paper, researchers <em>explicitly</em> perform multitask training by first mapping a large set of supervised NLP datasets into a human-readable <em>prompted</em> format, which allows the model to learn multiple tasks with consistent inputs and outputs.</p>
+<p><img src="/images/hugo/multitask-1634746815.png" alt="T0 model learns on some NLP tasks and then generalizes to tasks it&rsquo;s never seen before."></p>
+<p>They train their model on several NLP capabilities (like summarization and question answering) and evaluate the zero-shot performance of the model on tasks it was not allowed to train on, like natural language inference. Their model outperforms GPT-3 on 8 out of 11 unseen datasets; all the more impressive since the largest GPT-3 model they compare against is 16x larger than their model! This paper demonstrates a way to gain the benefits of ultra-massive language models at a fraction of the cost: Their model has fewer parameters, is trained on a smaller dataset, and ultimately requires less computational time and energy.  (Though, let&rsquo;s be honest — it&rsquo;s still a huge model. 😉) - <a href="https://www.linkedin.com/in/melanierbeck"><em>Melanie</em></a></p>
+</li>
+<li>
+<p><a href="https://ai.facebook.com/blog/self-supervised-learning-the-dark-matter-of-intelligence/">Self-Supervised Learning: The Dark Matter of Intelligence</a></p>
+<p>The authors of this blog argue that self-supervision is one of the most promising ways to give AI systems a kind of &ldquo;common sense&rdquo;. If human common sense consists of prior knowledge that helps people solve a variety of problems with limited teaching, then AI common sense is the capacity of AI systems to learn to perform diverse tasks with limited amounts of human annotations. After explaining  the basics of self-supervision, the authors discuss why it isn&rsquo;t straightforward to apply to Computer Vision (CV) the methodologies that have proven successful in NLP: the reasons have to do with large dimensionality and the representation of uncertainty in CV. The last part of the blog argues that one of the most promising ways to advance self-supervision in CV is through the use of non-contrastive methods applied to joint embedding architectures. The blog is a good introduction to self-supervision, especially for people interested CV. - <a href="https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b"><em>Daniel.</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2107.08148">Declarative Machine Learning Systems</a></p>
+<p>When it comes to operationalizing ML, <a href="https://papers.nips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html">Sculley et al.</a> have well highlighted the idiosyncrasies that may lead to substantial increase in technical debt. The primary reason for these idiosyncrasies is the amount of uncertainty involved at every step in ML development, from feature engineering to model selection. To some extent both researchers and industry have managed to distill common patterns that abstract the most mechanical parts of the processes to help with wider ML adoption. Without tools like scikit-learn, PyTorch, TensorFlow and many others it would have been impossible to standardize and easily implement some of these processes. Despite all the successes, training models and using them in products generally belongs to a small subset of highly skilled people in an organization. This is where the authors of the paper propose that the future wave of ML Systems should leverage the extensive work done in compilers, operating systems and databases. For instance, just like a database management system hides all the complexity of data storage, indexing and retrieval behind a declarative query language, the future ML systems should steer towards hiding complexity and separation of interest to bring ML to non-coders. And although Auto-ML might seem as a promising direction, the authors suggest (and rightly so) that they are often centered around single steps of the pipeline, example, hyper-parameter tuning, feature engineering and such. The authors talk about the two declarative ML systems they have built - <a href="https://arxiv.org/abs/1909.07930">Ludwig</a> and <a href="https://arxiv.org/abs/1909.05372">Overton</a> and how they could be used to help with some of the current challenges that these ML systems are facing. Along the way they also cover the current ML processes and what factors contribute towards a successful ML project, what would lead to wider adoption and what they believe the next generation systems will look like. - <a href="https://twitter.com/NishaMuktewar"><em>Nisha</em></a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2110.09485">Learning in High Dimension Always Amounts to Extrapolation</a></p>
+<p>I need to spend some more time with this paper, so this recommendation is mostly based on curiosity. I strongly recommend anyone reading this paper to also read Keras creator François Chollet&rsquo;s <a href="https://twitter.com/fchollet/status/1450524400227287040">excellent thread</a> about interpolation in machine learning. My view of interpolation is as put forward in the thread: when we say interpolate, we mean on the latent manifold of the data, not the encoding dimension. MNIST, for instance, is a much lower dimensional dataset than natural images. However, this is not because it has fewer pixels (the encoding dimension). It is because the thing being represented (handwritten digits) is intrinsically lower dimensional than the space of all images of the world. The above paper provides empirical and theoretical evidence that for high dimensional datasets (it includes discussion of both encoding- and latent-space being high dimensional), almost any new test point will lie outside the convex hull of the training data. Since the volume of a convex hull decreases relative to the total volume as more dimensions are added, this is not surprising.</p>
+<p>The paper seems designed to counter claims that ML only works when it is interpolating, but I am unconvinced. As far as I can tell, the work does not learn a representation from a dataset (to say, approximate the latent manifold) and assess the resulting model&rsquo;s performance on images selected to be inside and outside the convex hull of that manifold, which would provide a much better test of extrapolation. In my own view, it&rsquo;s obvious that ML will <em>sometimes</em> work in extrapolated regimes, but that when it does, it says more about the generative process of the data than a fundamental ability of neural nets. - <a href="https://twitter.com/_cjwallace"><em>Chris</em></a></p>
+</li>
+</ul>
+
+  </div>
+
+
