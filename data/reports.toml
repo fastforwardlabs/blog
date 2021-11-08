@@ -76,6 +76,13 @@ img = "ff09-combo.png"
 link = "https://federated.fastforwardlabs.com/"
 
 [[entries]]
+number = "FF04"
+name = "Summarization"
+blurb = "This report explores methods for extractive summarization, a capability that allows one to automatically summarize documents.  This technique has a wealth of applications: from the ability to distill thousands of product reviews, extract the most important content from long news articles, or automatically cluster customer bios into personas."
+img = "ff04-combo.png"
+link = "https://summarization.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF03-2019"
 name = "Deep Learning for Image Analysis: 2019 Edition"
 blurb = "Convolutional Neural Networks (CNN) excel at learning meaningful representations of features and concepts within images. These capabilities make CNNs extremely valuable for solving problems in domains such as medical imaging, autonomous driving, manufacturing, robotics, and urban planning. In this report, we show how to select the right deep learning models for image analysis tasks and techniques for debugging deep learning models."
