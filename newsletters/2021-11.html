@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-11.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="november-2021">November 2021</h1>
+<p>Welcome to the November Cloudera Fast Forward Labs newsletter. Today we talk about old research blending into new, the rise of unstructured data, and what we&rsquo;ve been reading this month.</p>
+<hr>
+<h2 id="new-research">New research!</h2>
+<p>We have two great original pieces for you this month — one from the vault and another fresh off the presses.</p>
+<h3 id="old-research-meets-new">Old research meets new</h3>
+<p>Much of our earlier research endeavors are still ensconced behind a paywall but we&rsquo;ve been working hard to re-release these gems, making them publicly available to anyone. This month we&rsquo;ve re-released our report on <a href="https://summarization.fastforwardlabs.com/">Summarization</a>! Originally written in 2016, this report pre-dates some of the more recent advances in NLP while providing an in-depth look at extractive summarization that is still highly relevant today, including a discussion of how to perform this task using recurrent neural networks.</p>
+<p><img src="/images/hugo/extractive_summarization_pipeline-1637184569.png" alt="The extractive summarization pipeline: vectorize, score, and select."></p>
+<p>The extractive summarization pipeline: vectorize, score, and select</p>
+<p>This report also dives deep into the development of one of our earlier prototypes: <a href="http://fastforwardlabs.github.io/brief/">Brief</a>. Using the methods in the report, this application provides features for quickly assessing the most important content in long news articles (check out the &ldquo;skim&rdquo; feature!).</p>
+<p>It was important to us to open-source this content since we recently revisited this capability with our blog post <a href="https://blog.fastforwardlabs.com/2021/09/22/automatic-summarization-from-textrank-to-transformers.html">Automatic Summarization: from Textrank to Transformers</a>, where we begin to touch on <em>abstractive</em> (rather than <em>extractive</em>) summarization. While that post just scratches the surface of what abstractive summarization can do, there&rsquo;s so much more to dig into so stay tuned!</p>
+<h3 id="fresh-off-the-presses-the-rise-of-unstructured-datahttpsblogclouderacomthe-rise-of-unstructured-data">Fresh off the presses: <a href="https://blog.cloudera.com/the-rise-of-unstructured-data/">The Rise of Unstructured Data</a></h3>
+<p>In addition to the content on our FFL blog, we also contributed to the Cloudera blog this month with a look at the massive growth and taxonomy of data in the world. This well-sourced post by the newest member of the FFL team stresses the importance of recognizing the challenges and opportunities that unstructured data poses for machine learning and artificial intelligence.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from this year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favorite reads of the month:</p>
+<p><a href="https://www.aidancooper.co.uk/a-non-technical-guide-to-interpreting-shap-analyses/">Explaining Machine Learning Models: A Non-Technical Guide to Interpreting SHAP Analyses</a></p>
+<p>Interpretability is becoming a table-stakes requirement for any machine learning project with production intent. As such, there is a strong need to bridge the data literacy gap between technical doers and non-technical stakeholders. This means communicating complex insights from model interpretation techniques in a digestible manner, but without sacrificing validity or understating algorithmic limitations. This excellent blog post by Aidan Cooper breaks down how to interpret the outputs of SHAP - one of the most popular methods for explaining ML predictions. <em><a href="https://twitter.com/andrewrreed">-Andrew</a></em></p>
+<p><a href="https://arxiv.org/abs/2103.11511">MoViNets: Mobile Video Networks for Efficient Video Recognition</a></p>
+<p>As the capabilities of machine learning models reach a certain level of <em>performance</em>, efforts to increase their <em>efficiency</em> start to develop. MoViNets are an example of efforts to create efficient models for video understanding. Three main techniques are used in MoViNets: Neural Architecture Search (<a href="https://en.wikipedia.org/wiki/Neural_architecture_search">NAS</a>), Streaming Buffers, and Ensembling. <strong>NAS</strong> is used to find the optimal balance between spatial and temporal feature representations. This balance is needed because, in video, there is a trade-off between being able to capture <em>what objects</em> are present in a scene (spatial component), and <em>what activity</em> is being performed (both spatial and temporal components). NAS helps attain the optimal balance between those two requirements that compete for compute and memory resources. <strong>Streaming Buffers</strong> is used to limit the memory requirements. It allows processing of potentially long videos with a fixed amount of memory by splitting the full video into smaller clips, each of which is processed sequentially. Temporal dependencies are passed from one sub-clip to the next in order to capture long-term dependencies. <strong>Ensembling</strong> is used by independently training two networks and combining their logits. This is found to give higher accuracy than a single larger network with the same number of FLOPS as the combined FLOPS of the two smaller networks. Together, NAS, Streaming Buffer, and Ensembling allow MoViNets to produce state-of-the-art performance in various video understanding tasks, including video classification and activity detection, while requiring less memory and compute than competing approaches. - <a href="https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b"><em>Daniel.</em></a></p>
+<p><a href="https://www.amazon.science/blog/new-method-improves-knowledge-graph-based-question-answering">New method improves knowledge-graph-based question answering</a></p>
+<p>This post by Amazon&rsquo;s research team provides an overview of two papers accepted at the recent EMNLP conference (Empirical Methods in Natural Language Processing). These research efforts focus on question answering using knowledge graphs. While knowledge graphs can be a powerful data structure for many tasks, their utility for question answering has been limited because interfacing with knowledge graphs has typically required a pipeline of multiple models in order to work.  Not only is it difficult to train and maintain multiple models in a pipeline,  these models have also traditionally relied on intensive hand annotations for optimal performance.  This blog post introduces new methods for synthesizing this pipeline of models into a single model, thus streamlining the task and removing the need for labor-intensive hand annotations. While not all of their models perform above baselines, their methods show a lot of promise for another way to train and maintain question answering models. - <a href="https://www.linkedin.com/in/melanierbeck/"><em>Melanie</em></a></p>
+
+  </div>
+
+
