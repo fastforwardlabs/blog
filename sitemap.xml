@@ -3,12 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2021-11.html</loc>
-    <lastmod>2021-11-17T12:40:00+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/2021/12/09/an-introduction-to-video-understanding-capabilities-and-applications.html</loc>
+    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/2021/12/09/exploring-the-i3d-architecture-understanding-the-core-concepts-of-video-classification.html</loc>
+    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2021-12-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2021-11.html</loc>
     <lastmod>2021-11-17T12:40:00+00:00</lastmod>
   </url>
   
@@ -24,11 +39,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/2021/09/22/automatic-summarization-from-textrank-to-transformers.html</loc>
-    <lastmod>2021-09-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2021-09-22T00:00:00+00:00</lastmod>
   </url>
   
