@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2021-12.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="december-2021">December 2021</h1>
+<p>Welcome to the December edition of the Cloudera Fast Forward Labs newsletter. This month we dive into the world of Video Understanding and share our favorite reads.</p>
+<hr>
+<h2 id="new-research">New research!</h2>
+<p>For the past few months, we&rsquo;ve been diligently digging into a newly-emerging capability: Video Understanding! While working with video data has considerable overlap with image understanding, information extraction from video presents a new level of complexity and a new world of possibilities.</p>
+<h3 id="an-introduction-to-video-understanding-capabilities-and-applicationshttpsblogfastforwardlabscom20211209an-introduction-to-video-understanding-capabilities-and-applicationshtml"><a href="https://blog.fastforwardlabs.com/2021/12/09/an-introduction-to-video-understanding-capabilities-and-applications.html">An Introduction to Video Understanding: Capabilities and Applications</a></h3>
+<p>Video understanding is an umbrella term for a wide range of technologies that automatically extract information from video. Readers familiar with computer vision, as applied to <em>still</em> images, might wonder what the main differences between image and video processing are. Can’t we just apply still image algorithms to each frame of the video sequence, and extract meaning in that way? The short answer is “yes, but&hellip;”. While it is indeed possible to apply image methods to each frame in a video (and some approaches do), considering temporal dependencies results in tremendous gains of predictive capabilities.  This blog post provides an introduction to a slew of these capabilities as well as some nascent applications that harness these technologies in the real world.</p>
+<p><img src="/images/hugo/action_forecasting_example-1639168656.png" alt="Action forecasting is just one emerging capability in the vast world of video understanding. "></p>
+<p><em>Action forecasting is just one emerging capability in the vast world of video understanding.</em></p>
+<hr>
+<h2 id="new-applied-machine-learning-prototypes">New Applied Machine Learning Prototypes!</h2>
+<p>Those familiar with our work know that here at CFFL, we don&rsquo;t just write about the latest ML, we also love to <em>build</em> things with it! While our prototypes now live in Cloudera&rsquo;s data science products, our repos are always intended for a broad audience. To that end, we thought it was high time that we added this section to our newsletter to highlight some of these projects.  Here you&rsquo;ll find links to repos we&rsquo;re currently working on, as well as polished prototypes.  Keep in mind that projects under development are subject to change, while finalized repos provide stable releases with long-term support.</p>
+<h3 id="video-classificationhttpsgithubcomfastforwardlabsvideo-classification-under-development"><a href="https://github.com/fastforwardlabs/video-classification">Video Classification</a> (under development)</h3>
+<p>This project accompanies the video understanding blog above and provides two ways to explore the specific task of video classification. The first is an interactive Jupyter Notebook that allows the user to investigate the data and models behind video classification, as well as to highlight some of the challenges and considerations of working with video data. The second is a script that allows the user to evaluate video classification models on a handful of standardized video datasets.</p>
+<h3 id="continuous-model-monitoringhttpsgithubcomfastforwardlabscontinuous-monitoring-under-development"><a href="https://github.com/fastforwardlabs/continuous-monitoring">Continuous Model Monitoring</a> (under development)</h3>
+<p>To combat concept drift in production systems, it&rsquo;s important to have robust monitoring capabilities that alert stakeholders when relationships in the incoming data or model have changed. In this Applied Machine Learning Prototype (AMP), we demonstrate how this can be achieved on CML. Specifically, we leverage CML&rsquo;s Model Metrics feature in combination with <a href="https://evidentlyai.com/">Evidently.ai</a>&lsquo;s Data Drift, Numerical Target Drift, and Regression Performance reports to monitor a simulated production model that predicts housing prices over time.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from this year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favorite reads of the month:</p>
+<ul>
+<li>
+<p><a href="https://e2eml.school/transformers.html">Transformers from Scratch</a></p>
+<p>Distilling large, complex topics into concise, easily digestible explanations truly is an art. In this excellent blog post, Brandon Rohrer does just that. By introducing fundamental concepts with visual examples and then stacking those ideas together as building blocks, Brandon helps the reader intuit not only how modern Transformers work, but also why design choices were made to reach the ultimate architecture. This is one of the best resources I&rsquo;ve come across on the topic. <em><a href="https://twitter.com/andrewrreed">-Andrew</a></em></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/abs/2111.12993">PolyViT: Co-training Vision Transformers on Images, Videos and Audio</a></p>
+<p>The authors of this paper open with a question: <em>Can we train a single transformer model capable of processing multiple modalities and datasets, whilst sharing almost all of its learnable parameters?</em></p>
+<p>And apparently, the answer is <em><strong>yes</strong></em>.</p>
+<p>This paper, a collaboration by teams from Google Research, University of Cambridge, and the Alan Turing Institute, combines Vision Transformers (ViT) with the technique of co-training to produce the PolyViT model which can perform image, audio, and video classification!</p>
+<p><img src="/images/hugo/polyvit_architecture-1639168667.png" alt="Overview of the PolyViT model"></p>
+<p>They accomplish this by training a single ViT architecture to accept multiple input tasks and to predict on multiple output classification heads. This allows a single model&rsquo;s learned parameters to be used for multiple modalities — image, audio, and video. The success of their model hinges largely on the specific co-training methodology employed, and the paper does a good job explaining the various strategies they experimented with. While their model can only perform a single task at a time (it cannot combine audio and video, for example), this work represents a big step forward for models that can generalize not only to new datasets but also to entirely new tasks!  <em><a href="https://www.linkedin.com/in/melanierbeck/">- Melanie</a></em></p>
+</li>
+</ul>
+
+  </div>
+
+
