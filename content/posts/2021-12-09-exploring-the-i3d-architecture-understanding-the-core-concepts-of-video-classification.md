@@ -1,6 +1,6 @@
 ---
 title: "Exploring the I3D architecture: understanding the core concepts of video classification"
-date: 2021-12-09
+date: 2021-12-16
 author: Daniel Valdez Balderas
 author_link: 
 preview_image: /images/hugo/i3d_architecture-1639073974.png
