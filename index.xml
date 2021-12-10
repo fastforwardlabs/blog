@@ -6,34 +6,10 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Nov 2021 12:40:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>An Introduction to Video Understanding: Capabilities and Applications</title>
-       
-      <link>https://blog.fastforwardlabs.com/2021/12/09/an-introduction-to-video-understanding-capabilities-and-applications.html</link>
-      
-      <pubDate>Thu, 09 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.fastforwardlabs.com/2021/12/09/an-introduction-to-video-understanding-capabilities-and-applications.html</guid>
-      <description>It is estimated that 30 thousand hours of video are uploaded to YouTube per hour. 770 million surveillance cameras are believed to be spread around the world. Video cameras are likely to become the most widely used IoT sensors, and, among all manufactured sensors, cameras are reported to produce the largest amount of data.
-In addition to being plentiful, video data contains rich information that is useful for a variety of purposes.</description>
-    </item>
-    
-    <item>
-      <title>Exploring the I3D architecture: understanding the core concepts of video classification</title>
-       
-      <link>https://blog.fastforwardlabs.com/2021/12/09/exploring-the-i3d-architecture-understanding-the-core-concepts-of-video-classification.html</link>
-      
-      <pubDate>Thu, 09 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.fastforwardlabs.com/2021/12/09/exploring-the-i3d-architecture-understanding-the-core-concepts-of-video-classification.html</guid>
-      <description>Video understanding aims to extract useful information from video. There are many tasks associated with video understanding, including video classification, action detection, video captioning, and action forecasting. Perhaps the simplest and most fundamental of those tasks is video classification.
-Video classification is typically used to decide what kind of event is happening in a video. This is done by assigning a set of scores to the video, each corresponding to a different class.</description>
-    </item>
     
     <item>
       <title>Automatic Summarization from TextRank to Transformers</title>
