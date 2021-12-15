@@ -6,10 +6,21 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Dec 2021 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An Introduction to Video Understanding: Capabilities and Applications</title>
+       
+      <link>https://blog.fastforwardlabs.com/2021/12/14/an-introduction-to-video-understanding-capabilities-and-applications.html</link>
+      
+      <pubDate>Tue, 14 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2021/12/14/an-introduction-to-video-understanding-capabilities-and-applications.html</guid>
+      <description>Video makes up a significant portion of all data in the world. The 30 thousand hours of video uploaded to Youtube every hour is part of that data. Another chunk is produced by the 770 million surveillance cameras globally. But in addition to being plentiful, video data has tremendous capacity to store useful information. Its vastness, richness, and applicability makes the understanding of video a key activity within the field of computer vision.</description>
+    </item>
     
     <item>
       <title>Automatic Summarization from TextRank to Transformers</title>
