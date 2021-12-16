@@ -64,7 +64,8 @@ In addition to locating multiple agents in space, each of which have multiple ac
 
 ## Dense Captioning
 
-The two tasks described above — video classification and action detection [TODO Add link to sections] — produce scores for *predefined categories* of actions: video classification produces one set of scores for a whole video clip, and action detection produces a set of scores for each detected agent on a per frame basis. Dense captioning goes beyond categories and assigns *natural language descriptions* to subsets of frames in videos.
+
+The two tasks described above — [video classification](#video-classification) and [action detection](#action-detection) — produce scores for *predefined categories* of actions: video classification produces one set of scores for a whole video clip, and action detection produces a set of scores for each detected agent on a per frame basis. Dense captioning goes beyond categories and assigns *natural language descriptions* to subsets of frames in videos.
 
 Figure 3 illustrates the task of dense captioning. The images on the left are frames taken from a video that is fed into the algorithm. On the right are the captions for subsets of frames produced by the algorithm. Note that the captioned video segments (each of which is indicated by descriptions in varying colors) may be of different durations and may overlap with each other. For increased resolution, we recommend watching the first minute of [the video](https://cs.stanford.edu/people/ranjaykrishna/densevid/) from which the frames in the figure were taken.
 
@@ -170,7 +171,7 @@ In this example, the platform detects a car (represented by a red icon at the ri
 The platform then sends an alert to another vehicle (green icon at the top of the figure, labelled “Connected Vehicle”) about the risk of a collision. This alert is particularly useful at a time when there is no line of sight between the vehicles.
 
 ![Illustration of video understanding applied to the creation of smart cities.](/images/hugo/vidclass_smart_city-1639692871.png)
-_Figure 8. Illustration of video understanding applied to the creation of smart cities. An alert is sent to a vehicle (represented by the green icon), for which the light is green, that there is another vehicle (represented by the red icon) who is likely to run a red light. This alert is particularly useful when there is no light of sight between the two involved vehicles, as in this case._
+_Figure 8. Illustration of video understanding applied to the creation of smart cities. An alert is sent to a vehicle (represented by the green icon), for which the light is green, that there is another vehicle (represented by the red icon) who is likely to run a red light. This alert is particularly useful when there is no light of sight between the two involved vehicles, as in this case. Image taken from [this video](https://www.youtube.com/watch?v=hcc9cTo-vf4)._
 
 
 The types of video understanding tasks that power applications like this include action forecasting. In this specific application, the agents are vehicles, rather than people. However, similar applications in smart cities may involve the interaction between human agents and vehicle agents, e.g., to warn a driver about a pedestrian or cyclist.
@@ -198,13 +199,15 @@ The answers to these questions will vary with time, depending on a wide range of
 
 This section has only touched the surface of a wide and complex subject. In addition to the themes above, and as AI increasingly underlies video understanding, ethical concerns about AI (such as bias in training data sets, among many others), are inherited by video understanding. Here are some additional resources for the interested reader: [Surveillance Ethics](https://iep.utm.edu/surv-eth/), [The Ethics of Video Analytics](https://protect-network.eu/2021/02/26/the-ethics-of-video-analytics/), and [The Ethics of AI for Video Surveillance](https://oddity.ai/blog/ethics-of-ai).
 
-# Conclusions
+# Summary
 
 Video understanding is a fascinating field that aims to extract rich and useful information from video. In this blog post, we have presented several capabilities (i.e., tasks) and applications of video understanding.
 
 Tasks are the ways in which machine learning practitioners formulate and make concrete the problem of video understanding. We have described five: video classification, action detection, dense video captioning, multimodal and multiview activity recognition, and action forecasting. Tasks are often used as building blocks of video understanding systems deployed in real world applications.
 
 We have also presented four areas of application of video understanding — manufacturing, retail, smart cities, and elderly care — and have shown how those applications might use some of these video understanding tasks.
+
+Last, we mentioned some of the ethical questions that become increasingly urgent to address video understanding technolgoies become more powerful.
 
 # Next Steps
 
