@@ -34,7 +34,8 @@ Video classification is one of the most basic video understanding tasks, wherein
 
 Figure 1  illustrates this task. On the left is a stack of images representing the video that is being classified. This video is fed into the Video Classifier, which outputs a table (shown on the right) with action classes and a score for each class. In this example, the classes are “swing dancing,” with a score of 0.52, “salsa dancing,” with a score of 0.39, plus a few other classes with lower scores. Visual inspection of the image (by a human) indicates that “swing dancing” makes sense as the proper classification.
 
-![Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities..](/images/hugo/vidclass_swing_highres-1639685435.png)
+
+![Illustration of video classification. The image on the left represents the video being classified, which is taken from a . On the right are the predicted classes and their probabilities.](/images/hugo/vidclass_swing_highres-1639685435.png)
 _Figure 1. Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities._
 
 
