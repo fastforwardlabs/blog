@@ -12,7 +12,8 @@ Video footage constitutes a significant portion of all data in the world. The [3
 
 “Video understanding” is an umbrella term for a wide range of technologies that automatically extract information from video. This blog post introduces video understanding by presenting some of its prominent capabilities and applications. “Capabilities” describe ways in which video understanding is made concrete by machine learning practitioners. “Applications” are the specific ways in which these technologies are used in the real world.
 
-Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an applied prototype focused on video classification, which is one of the video understanding capabilities described herein.
+Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an 
+[**applied prototype**](https://github.com/fastforwardlabs/video-classification) focused on video classification, which is one of the video understanding capabilities described herein.
 
 # What Is Video Understanding?
 
@@ -205,7 +206,16 @@ Tasks are the ways in which machine learning practitioners formulate and make co
 
 We have also presented four areas of application of video understanding — manufacturing, retail, smart cities, and elderly care — and have shown how those applications might use some of these video understanding tasks.
 
-TODO CFFL is publishing a repository
+# Next Steps
+
+To start experimenting with video understanding, check out the 
+[**applied prototype**](https://github.com/fastforwardlabs/video-classification) (also mentioned at the beginning of this post). The repository focuses on Video Classification and demonstrates:
+
+- How to download, unpack, and explore [Kinetics](https://deepmind.com/research/open-source/kinetics), a popular dataset used for AI-based video classification. Getting familiear with a dataset is an excellent way to get a deep sense of capabilities.
+
+- How to download and experiment with a pre-trained AI model for video classification, namely [Two-Stream Inflated 3D ConvNet](https://arxiv.org/abs/1705.07750), or I3D. This is a relatively simple model that is useful for understanding the capabilities.
+
+
 
 # References
 
