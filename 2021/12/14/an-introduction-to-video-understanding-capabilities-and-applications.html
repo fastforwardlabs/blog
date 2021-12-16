@@ -78,7 +78,8 @@ if (!doNotTrack) {
     <h1>An Introduction to Video Understanding: Capabilities and Applications</h1>
     <p>Video footage constitutes a significant portion of all data in the world. The <a href="https://www.tubefilter.com/2019/05/07/number-hours-video-uploaded-to-youtube-per-minute/.">30 thousand hours</a> of video uploaded to Youtube <em>every</em> <em>hour</em> is a part of that data; another portion is produced by <a href="https://www.comparitech.com/vpn-privacy/the-worlds-most-surveilled-cities/#:~:text=Globally%2C%20there%20are%20already%20770,cameras%20and%20crime%20or%20safety">770 million surveillance cameras</a> globally.  In addition to being plentiful, video data has tremendous capacity to store useful information. Its vastness, richness, and applicability make the understanding of video a key activity within the field of computer vision.</p>
 <p>“Video understanding” is an umbrella term for a wide range of technologies that automatically extract information from video. This blog post introduces video understanding by presenting some of its prominent capabilities and applications. “Capabilities” describe ways in which video understanding is made concrete by machine learning practitioners. “Applications” are the specific ways in which these technologies are used in the real world.</p>
-<p>Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an applied prototype focused on video classification, which is one of the video understanding capabilities described herein.</p>
+<p>Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an
+<a href="https://github.com/fastforwardlabs/video-classification"><strong>applied prototype</strong></a> focused on video classification, which is one of the video understanding capabilities described herein.</p>
 <h1 id="what-is-video-understanding">What Is Video Understanding?</h1>
 <p>To better comprehend video understanding, it is useful to explore some of the capabilities (or <em>tasks</em>) associated with video understanding. Here, we describe five of them:</p>
 <ul>
@@ -197,7 +198,17 @@ provides information about a store’s number of visitors, average duration of a
 <p>Video understanding is a fascinating field that aims to extract rich and useful information from video. In this blog post, we have presented several capabilities (i.e., tasks) and applications of video understanding.</p>
 <p>Tasks are the ways in which machine learning practitioners formulate and make concrete the problem of video understanding. We have described five: video classification, action detection, dense video captioning, multimodal and multiview activity recognition, and action forecasting. Tasks are often used as building blocks of video understanding systems deployed in real world applications.</p>
 <p>We have also presented four areas of application of video understanding — manufacturing, retail, smart cities, and elderly care — and have shown how those applications might use some of these video understanding tasks.</p>
-<p>TODO CFFL is publishing a repository</p>
+<h1 id="next-steps">Next Steps</h1>
+<p>To start experimenting with video understanding, check out the
+<a href="https://github.com/fastforwardlabs/video-classification"><strong>applied prototype</strong></a> (also mentioned at the beginning of this post). The repository focuses on Video Classification and demonstrates:</p>
+<ul>
+<li>
+<p>How to download, unpack, and explore <a href="https://deepmind.com/research/open-source/kinetics">Kinetics</a>, a popular dataset used for AI-based video classification. Getting familiear with a dataset is an excellent way to get a deep sense of capabilities.</p>
+</li>
+<li>
+<p>How to download and experiment with a pre-trained AI model for video classification, namely <a href="https://arxiv.org/abs/1705.07750">Two-Stream Inflated 3D ConvNet</a>, or I3D. This is a relatively simple model that is useful for understanding the capabilities.</p>
+</li>
+</ul>
 <h1 id="references">References</h1>
 <p>[1] <em><a href="https://arxiv.org/abs/1705.00754">Dense-Captioning Events in Videos</a></em>, Krishna et al. 2007.</p>
 <p>[2] <em><a href="https://arxiv.org/abs/2105.05226">Home Action Genome: Cooperative Compositional Action Understanding</a></em>, Rai et al. 2021.</p>
