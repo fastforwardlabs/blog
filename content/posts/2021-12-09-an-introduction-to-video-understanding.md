@@ -7,7 +7,6 @@ preview_image: /images/hugo/video_classification-1639064585.png
 post_type: Post
 ---
 
-# Video Understanding: Capabilities and Applications
 
 Video footage constitutes a significant portion of all data in the world. The [30 thousand hours](https://www.oberlo.com/blog/youtube-statistics#:~:text=500%20hours%20of%20video%20are,uploaded%20every%20day%20to%20YouTube.) of video uploaded to Youtube *every* *hour* is a part of that data; another significant portion is produced by [770 million surveillance cameras](https://www.comparitech.com/vpn-privacy/the-worlds-most-surveilled-cities/#:~:text=Globally%2C%20there%20are%20already%20770,cameras%20and%20crime%20or%20safety) globally.  In addition to being plentiful, video data has tremendous capacity to store useful information. Its vastness, richness, and applicability make the understanding of video a key activity within the field of computer vision.
 
@@ -35,9 +34,9 @@ Video classification is one of the most basic video understanding tasks, wherein
 
 Figure 1  illustrates this task. On the left is a stack of images representing the video that is being classified. This video is fed into the Video Classifier, which outputs a table (shown on the right) with action classes and a score for each class. In this example, the classes are “swing dancing,” with a score of 0.52, “salsa dancing,” with a score of 0.39, plus a few other classes with lower scores. Visual inspection of the image (by a human) indicates that “swing dancing” makes sense as the proper classification.
 
-[/images/hugo/video_classification-1639064585.png](/images/hugo/video_classification-1639064585.png)
+![Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities..](/images/hugo/vidclass_swing_highres-1639685435.png)
+_Figure 1. Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities._
 
-Figure 1. Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities.
 
 Note that the set of scores is given for the video *as a whole*, rather than on the basis of individual frames (which is done for action detection, explained in the next section). In this basic form, video classification is intended to be used with video that has been trimmed, in advance, in such a way that it contains only one predominant action. This limits the direct applicability of the task. In practice, modifications need to be made for the task to be useful to solve real-world problems.
 
