@@ -71,7 +71,14 @@ Figure 3 illustrates the task of dense captioning. The images on the left are fr
 
 
 ![Illustration of dense video captioning.](/images/hugo/vidclass_dense_caption-1639690988.png)
-_Figure 3. Illustration of dense video captioning. Given a video, the task consists of producing a set of natural language annotations that describe what is happening at different times throughout the video. The image above is taken from [1]._
+_Figure 3. Illustration of dense video captioning. Given a video, the task consists of producing a set of natural language annotations that describe what is happening at different times throughout the video. The image above is taken from [[1]](#ref_dense_caption)._
+
+
+
+
+
+
+
 
 ## Multiview and Multimodal Activity Recognition
 
@@ -84,7 +91,7 @@ Figure 4 illustrates a task that is simultaneously multimodal and multiview. The
 - **Ego View**: video captured by a camera attached to the agent performing the action, intended to capture *what the agent sees*.
 
 ![Illustration of multiview, multimodal activity recognition.](/images/hugo/vidclass_multiview-1639691260.png)
-_Figure 4. Illustration of multiview, multimodal activity recognition. Three signals are fed into the predictive model, namely: audio, third-person view, and ego view. The model predicts the actions performed by the agent. The image used has been adapted from [2]._
+_Figure 4. Illustration of multiview, multimodal activity recognition. Three signals are fed into the predictive model, namely: audio, third-person view, and ego view. The model predicts the actions performed by the agent. The image used has been adapted from [[2]](#ref_multiview)._
 
 In the example illustrated in this figure, the three signals are used together to make predictions about human activity. The activity consists of the high-level action “doing laundry,” as well as two low-level atomic actions, namely “holding a basket” and “holding detergent.”
 
@@ -95,7 +102,7 @@ Action forecasting predicts actions performed in future frames of a video, given
 The following figure illustrates this second, more complex variant. The model takes as input the present and past frames (outlined in green), and outputs the location of the woman and probabilities of the action she might be performing next (outlined in blue). In this case, a possible future action by the woman is “get off horse,” and is shown *for illustration purposes* in the frame at the bottom of the figure (but that frame is not shown to the algorithm).
 
 ![Illustration of action forecasting.](/images/hugo/vidclass_action_forecast-1639691251.png)
-_Figure 5. Illustration of action forecasting. Given past and present frames in a video, the task consists of predicting what action the agent will perform next, and its location. The image is adapted from [3]._
+_Figure 5. Illustration of action forecasting. Given past and present frames in a video, the task consists of predicting what action the agent will perform next, and its location. The image is adapted from [[3]](#ref_action_forecast)._
 
 It is worth mentioning the importance of temporal dependencies for action forecasting. For example, it is more likely that the woman will dismount if she has just ridden towards the man than if she had just mounted. Only showing the frames where the woman is talking to the man does not provide all the relevant information about the past, and introduces a higher error rate in the prediction of the future.
 
@@ -180,7 +187,7 @@ This kind of application might also benefit from multiview activity recognition,
 
 ## Elderly Care
 
-Another application of video understanding is facilitating aging-in-place. The Center for Disease Control in the United States [defines](https://www.cdc.gov/healthyplaces/terminology.htm) aging-in-place as “the ability to live in one’s own home and community safely, independently, and comfortably, regardless of age, income, or ability level” —and, according to [4] [this article](https://www.mdpi.com/2071-1050/12/14/5723), nearly 90% of respondents to a survey of United Kingdom residents aged 55+ indicated a desire to “live independently as long as possible.” With an increase in an aging population that coincides with a shortage in staff to take care of the elderly, video understanding could be [one of the technologies](https://robotage.guru/video-surveillance-elderly/) that facilitates aging-in-place. It can be used to detect accidents, health conditions, or events that place an elderly person at risk, such as forgetting to switch off the stove, or to take medicine.
+Another application of video understanding is facilitating aging-in-place. The Center for Disease Control in the United States [defines](https://www.cdc.gov/healthyplaces/terminology.htm) aging-in-place as “the ability to live in one’s own home and community safely, independently, and comfortably, regardless of age, income, or ability level” —and, according to [this article](https://www.mdpi.com/2071-1050/12/14/5723), nearly 90% of respondents to a survey of United Kingdom residents aged 55+ indicated a desire to “live independently as long as possible.” With an increase in an aging population that coincides with a shortage in staff to take care of the elderly, video understanding could be [one of the technologies](https://robotage.guru/video-surveillance-elderly/) that facilitates aging-in-place. It can be used to detect accidents, health conditions, or events that place an elderly person at risk, such as forgetting to switch off the stove, or to take medicine.
 
 This is another area in which the tasks of video classification and action recognition could form part of the technologies powering the system for elderly care. Additionally, multimodal action recognition could be used: the signals from acceleration sensors worn by an elderly person could be  used in conjunction with video information from cameras to detect accidents, like falls.
 
@@ -222,10 +229,13 @@ To start experimenting with video understanding, check out the
 
 # References
 
-[1] *[Dense-Captioning Events in Videos](https://arxiv.org/abs/1705.00754)*, Krishna et al. 2007.
+<a name="ref_dense_caption"></a>
+[1] *[Dense-Captioning Events in Videos](https://arxiv.org/abs/1705.00754)*, Krishna et al. 2007. 
 
-[2] *[Home Action Genome: Cooperative Compositional Action Understanding](https://arxiv.org/abs/2105.05226)*, Rai et al. 2021.
+<a name="ref_multiview"></a>
+[2] *[Home Action Genome: Cooperative Compositional Action Understanding](https://arxiv.org/abs/2105.05226)*, Rai et al. 2021. 
 
-[3] [Relational Action Forecasting](https://arxiv.org/abs/1904.04231), Sun et al. 2019.
+<a name="ref_action_forecast"></a>
+[3] [Relational Action Forecasting](https://arxiv.org/abs/1904.04231), Sun et al. 2019. 
 
-[4] [Older People’s Preferences for Housing and Environment Characteristics](https://www.mdpi.com/2071-1050/12/14/5723), Mulliner et al. 2020.
+
