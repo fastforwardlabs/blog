@@ -2,7 +2,7 @@
 title: "An Introduction to Video Understanding: Capabilities and Applications"
 date: 2021-12-14
 author: Daniel Valdez Balderas
-author_link: 
+author_link: https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b
 preview_image: /images/hugo/video_classification-1639064585.png
 post_type: Post
 ---
