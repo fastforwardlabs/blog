@@ -2,31 +2,32 @@
 title: "An Introduction to Video Understanding: Capabilities and Applications"
 date: 2021-12-14
 author: Daniel Valdez Balderas
-author_link: 
+author_link: https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b
 preview_image: /images/hugo/video_classification-1639064585.png
 post_type: Post
 ---
 
 
-Video footage constitutes a significant portion of all data in the world. The [30 thousand hours](https://www.oberlo.com/blog/youtube-statistics#:~:text=500%20hours%20of%20video%20are,uploaded%20every%20day%20to%20YouTube.) of video uploaded to Youtube *every* *hour* is a part of that data; another significant portion is produced by [770 million surveillance cameras](https://www.comparitech.com/vpn-privacy/the-worlds-most-surveilled-cities/#:~:text=Globally%2C%20there%20are%20already%20770,cameras%20and%20crime%20or%20safety) globally.  In addition to being plentiful, video data has tremendous capacity to store useful information. Its vastness, richness, and applicability make the understanding of video a key activity within the field of computer vision.
+Video footage constitutes a significant portion of all data in the world. The [30 thousand hours](https://www.tubefilter.com/2019/05/07/number-hours-video-uploaded-to-youtube-per-minute/.) of video uploaded to Youtube *every* *hour* is a part of that data; another portion is produced by [770 million surveillance cameras](https://www.comparitech.com/vpn-privacy/the-worlds-most-surveilled-cities/#:~:text=Globally%2C%20there%20are%20already%20770,cameras%20and%20crime%20or%20safety) globally.  In addition to being plentiful, video data has tremendous capacity to store useful information. Its vastness, richness, and applicability make the understanding of video a key activity within the field of computer vision.
 
 “Video understanding” is an umbrella term for a wide range of technologies that automatically extract information from video. This blog post introduces video understanding by presenting some of its prominent capabilities and applications. “Capabilities” describe ways in which video understanding is made concrete by machine learning practitioners. “Applications” are the specific ways in which these technologies are used in the real world.
 
-Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an applied prototype focused on video classification, which is one of the video understanding capabilities described herein.
+Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an 
+[**applied prototype**](https://github.com/fastforwardlabs/video-classification) focused on video classification, which is one of the video understanding capabilities described herein.
 
 # What Is Video Understanding?
 
 To better comprehend video understanding, it is useful to explore some of the capabilities (or *tasks*) associated with video understanding. Here, we describe five of them:
 
-- Video Classification [TODO add links to each of the sections]
-- Action Detection
-- Dense Captioning
-- Multiview and Multimodal Activity Recognition
-- Action Forecasting
+- [Video Classification](#video-classification)
+- [Action Detection](#action-detection)
+- [Dense Captioning](#dense-captioning)
+- [Multiview and Multimodal Activity Recognition](#multiview-and-multimodal-activity-recognition)
+- [Action Forecasting](#action-forecasting)
 
 Readers who are familiar with computer vision as applied to *still* images might wonder about the difference between image and video processing. Can’t we just apply still image algorithms to each frame of a video sequence, and extract meaning in that way?
 
-While it is indeed possible to apply image methods to each frame in a video (and some approaches do), considering temporal dependencies results in tremendous gain in regard to capabilities. For instance, still image algorithms can predict whether or not there is a door in an image, but they’ll be poor at predicting whether the door is opening or closing. The gain in predictive capabilities provided by video understanding comes at the cost of algorithmic complexity and computational requirements. Together, those capabilities and challenges make video understanding a fascinating area within the field of computer vision.
+While it is indeed possible to apply image methods to each frame in a video (and some approaches do), considering temporal dependencies results in tremendous gain in regard to capabilities. For instance, still image algorithms can predict whether or not there is a door in an image, but they’ll be poor at predicting whether the door is opening or closing. This gain in predictive capabilities comes at the cost of algorithmic complexity and computational requirements. Together, those capabilities and challenges make video understanding a fascinating area within the field of computer vision.
 
 ## Video Classification
 
@@ -34,7 +35,8 @@ Video classification is one of the most basic video understanding tasks, wherein
 
 Figure 1  illustrates this task. On the left is a stack of images representing the video that is being classified. This video is fed into the Video Classifier, which outputs a table (shown on the right) with action classes and a score for each class. In this example, the classes are “swing dancing,” with a score of 0.52, “salsa dancing,” with a score of 0.39, plus a few other classes with lower scores. Visual inspection of the image (by a human) indicates that “swing dancing” makes sense as the proper classification.
 
-![Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities..](/images/hugo/vidclass_swing_highres-1639685435.png)
+
+![Illustration of video classification. The image on the left represents the video being classified, which is taken from a . On the right are the predicted classes and their probabilities.](/images/hugo/vidclass_swing_highres-1639685435.png)
 _Figure 1. Illustration of video classification. The image on the left represents the video being classified, which is taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) which forms part of the [Kinetics 400](https://arxiv.org/abs/1705.06950) dataset. On the right are the predicted classes and their probabilities._
 
 
@@ -51,9 +53,8 @@ Models for action detection take as input a video, and produce as output the fol
 
 Figure 2 illustrates action detection. It contains one frame from the video that is fed to the detection model. Superimposed on the frame are the bounding boxes and the labels that are produced by the model. The boxes are used to specify the location of the agents in space: red boxes represent the location of the agents as predicted by [the model](https://github.com/facebookresearch/SlowFast); green boxes represent the agents’ “ground truth” locations as determined by a human being (noted in the figure as [GT]), and are shown to demonstrate the accuracy of the model. The image is taken from [Facebook’s SlowFast](https://github.com/facebookresearch/SlowFast) repository, which implements several state-of-the-art video classification and action detection algorithms.
 
-[https://lh6.googleusercontent.com/y52XiwPbY0r0kfevctvhouhBhRk0db_PfY6Q4QGHUThJHhnxqUPVYRW4ZRtCEqvmTitIeB8J3_BGFFC6sfg2lx2CJwaypzchzu-eAVVjUsnIEdCMp2SDAgp0WzFTiBR4QHYuiano](https://lh6.googleusercontent.com/y52XiwPbY0r0kfevctvhouhBhRk0db_PfY6Q4QGHUThJHhnxqUPVYRW4ZRtCEqvmTitIeB8J3_BGFFC6sfg2lx2CJwaypzchzu-eAVVjUsnIEdCMp2SDAgp0WzFTiBR4QHYuiano)
-
-Figure 2. Illustration of video action detection. The image was extracted from [a video](https://github.com/facebookresearch/SlowFast) that is fed into an action detection model. Superposed on the image is an illustration of the output of the model, namely a set of bounding boxes (indicating the location of agents) and sets of labels (indicating the actions that the agent is executing).
+![Illustration of video action detection.](/images/hugo/vidclass_action_detection-1639690412.png)
+_Figure 2. Illustration of video action detection. The image was extracted from [a video](https://github.com/facebookresearch/SlowFast) that is fed into an action detection model. Superposed on the image is an illustration of the output of the model, namely a set of bounding boxes (indicating the location of agents) and sets of labels (indicating the actions that the agent is executing)._
 
 In addition to the location of the agents, a set of scores is produced: one for each action in a predefined set of possible actions. Each of the scores indicates the probabilities that the agent is executing the action.
 
@@ -63,13 +64,21 @@ In addition to locating multiple agents in space, each of which have multiple ac
 
 ## Dense Captioning
 
-The two tasks described above — video classification and action detection [TODO Add link to sections] — produce scores for *predefined categories* of actions: video classification produces one set of scores for a whole video clip, and action detection produces a set of scores for each detected agent on a per frame basis. Dense captioning goes beyond categories and assigns *natural language descriptions* to subsets of frames in videos.
+
+The two tasks described above — [video classification](#video-classification) and [action detection](#action-detection) — produce scores for *predefined categories* of actions: video classification produces one set of scores for a whole video clip, and action detection produces a set of scores for each detected agent on a per frame basis. Dense captioning goes beyond categories and assigns *natural language descriptions* to subsets of frames in videos.
 
 Figure 3 illustrates the task of dense captioning. The images on the left are frames taken from a video that is fed into the algorithm. On the right are the captions for subsets of frames produced by the algorithm. Note that the captioned video segments (each of which is indicated by descriptions in varying colors) may be of different durations and may overlap with each other. For increased resolution, we recommend watching the first minute of [the video](https://cs.stanford.edu/people/ranjaykrishna/densevid/) from which the frames in the figure were taken.
 
-[https://lh4.googleusercontent.com/wx_R12HnqxElHdXnq1fvSI4cgxKEN_DmnU5CP0VUJUY2knpIXrSyS1M0CFBtOcctPXO2tnQnO4b9EtCBUbCb48rYLMgDiEalmf_5OFpGfs198nkbY5zHCk3cYJyDfHUp8vQQ1B9k](https://lh4.googleusercontent.com/wx_R12HnqxElHdXnq1fvSI4cgxKEN_DmnU5CP0VUJUY2knpIXrSyS1M0CFBtOcctPXO2tnQnO4b9EtCBUbCb48rYLMgDiEalmf_5OFpGfs198nkbY5zHCk3cYJyDfHUp8vQQ1B9k)
 
-Figure 3. Illustration of dense video captioning. Given a video, the task consists of producing a set of natural language annotations that describe what is happening at different times throughout the video. The image above is taken from [1].
+![Illustration of dense video captioning.](/images/hugo/vidclass_dense_caption-1639690988.png)
+_Figure 3. Illustration of dense video captioning. Given a video, the task consists of producing a set of natural language annotations that describe what is happening at different times throughout the video. The image above is taken from [[1]](#ref_dense_caption)._
+
+
+
+
+
+
+
 
 ## Multiview and Multimodal Activity Recognition
 
@@ -81,9 +90,8 @@ Figure 4 illustrates a task that is simultaneously multimodal and multiview. The
 - **Third-person View**: video from a camera that captures the agent performing the action.
 - **Ego View**: video captured by a camera attached to the agent performing the action, intended to capture *what the agent sees*.
 
-[https://lh6.googleusercontent.com/5V4Gj5AsjGahTpdwVZsTy8Hk6m-Si9Oa882z7rWezP--OcNP1iEWaAYmz_1ApPAWvj73-xuUl4gkEamt84cuGh1_vXv4lRjT3ZEMPZZx98qOvkAXdGVQH5_BJw5umanc70Kv5Q7h](https://lh6.googleusercontent.com/5V4Gj5AsjGahTpdwVZsTy8Hk6m-Si9Oa882z7rWezP--OcNP1iEWaAYmz_1ApPAWvj73-xuUl4gkEamt84cuGh1_vXv4lRjT3ZEMPZZx98qOvkAXdGVQH5_BJw5umanc70Kv5Q7h)
-
-Figure 4. Illustration of multiview, multimodal activity recognition. Three signals are fed into the predictive model, namely: audio, third-person view, and ego view. The model predicts the actions performed by the agent. The image used has been adapted from [2].
+![Illustration of multiview, multimodal activity recognition.](/images/hugo/vidclass_multiview-1639691260.png)
+_Figure 4. Illustration of multiview, multimodal activity recognition. Three signals are fed into the predictive model, namely: audio, third-person view, and ego view. The model predicts the actions performed by the agent. The image used has been adapted from [[2]](#ref_multiview)._
 
 In the example illustrated in this figure, the three signals are used together to make predictions about human activity. The activity consists of the high-level action “doing laundry,” as well as two low-level atomic actions, namely “holding a basket” and “holding detergent.”
 
@@ -93,9 +101,8 @@ Action forecasting predicts actions performed in future frames of a video, given
 
 The following figure illustrates this second, more complex variant. The model takes as input the present and past frames (outlined in green), and outputs the location of the woman and probabilities of the action she might be performing next (outlined in blue). In this case, a possible future action by the woman is “get off horse,” and is shown *for illustration purposes* in the frame at the bottom of the figure (but that frame is not shown to the algorithm).
 
-[https://lh5.googleusercontent.com/7D1uaI3xTuTrCFdnn9wnal8ihw1q6xWZED0y3uaHxs1AQXwqQr8EE6hZ7H4Ro5M1usBhNtA1zzGLP8sPJ46OA6qjkhCyu4j0aqoklT-Gy0iVEPoXF3xH1ktEe69Yy9RsDVzw5EdY](https://lh5.googleusercontent.com/7D1uaI3xTuTrCFdnn9wnal8ihw1q6xWZED0y3uaHxs1AQXwqQr8EE6hZ7H4Ro5M1usBhNtA1zzGLP8sPJ46OA6qjkhCyu4j0aqoklT-Gy0iVEPoXF3xH1ktEe69Yy9RsDVzw5EdY)
-
-Figure 5. Illustration of action forecasting. Given past and present frames in a video, the task consists of predicting what action the agent will perform next, and its location. The image is adapted from [3].
+![Illustration of action forecasting.](/images/hugo/vidclass_action_forecast-1639691251.png)
+_Figure 5. Illustration of action forecasting. Given past and present frames in a video, the task consists of predicting what action the agent will perform next, and its location. The image is adapted from [[3]](#ref_action_forecast)._
 
 It is worth mentioning the importance of temporal dependencies for action forecasting. For example, it is more likely that the woman will dismount if she has just ridden towards the man than if she had just mounted. Only showing the frames where the woman is talking to the man does not provide all the relevant information about the past, and introduces a higher error rate in the prediction of the future.
 
@@ -133,9 +140,11 @@ Quality assurance in assembly lines is another area where video understanding co
 
 One example of how video understanding can contribute to increased product quality is an offering by [Retrocausal.ai](https://retrocausal.ai/). The solution, called Pathfinder Apollo, can be used to detect when a worker makes a mistake in the assembly process. To illustrate how it works, on the left of Figure 6, below, is a list of the steps required to assemble a desktop computer, including the installation of different parts, like the RAM, the HDD, and the Lid. The list also includes steps required after the assembly, like removing the assembled piece from the table. Some of the steps have sub-steps.
 
-[https://lh3.googleusercontent.com/r1Z7VwGKAe8D72qHO1qigFmiRUfN2HalRry6k4EQ956-wFSL36--rnLxTvD_99d9tsOW1qNiW31ySq7fytOLuCiCpbdLB5oKz6FJanMmvRq_UySEkVmDQWHBQr7tkOPeKub4cajG](https://lh3.googleusercontent.com/r1Z7VwGKAe8D72qHO1qigFmiRUfN2HalRry6k4EQ956-wFSL36--rnLxTvD_99d9tsOW1qNiW31ySq7fytOLuCiCpbdLB5oKz6FJanMmvRq_UySEkVmDQWHBQr7tkOPeKub4cajG)
 
-Figure 6. Video understanding used in manufacturing. The system alerts a worker if an error may have been made in the assembly of a desktop computer. This image has been pulled from the [Retrocausal site](https://retrocausal.ai/apollo).
+![Video understanding used in manufacturing.](/images/hugo/vidclass_manufacture-1639692117.png)
+_Figure 6. Video understanding used in manufacturing. The system alerts a worker if an error may have been made in the assembly of a desktop computer. This image has been pulled from the [Retrocausal site](https://retrocausal.ai/apollo)._
+
+
 
 The image at the centre of the figure is a frame taken from the video of the worker assembling the machine. It shows a workstation, the hands of the worker, parts of the desktop computer being assembled, tools, fasteners, and other pieces. The figure shows the moment at which the worker is being automatically alerted by the system that they might have missed one of the steps. The system detects this potential error in real time, and sends visual and sound alerts to the worker, asking them if they have missed a step, and indicating what that step might be — in this case, the installation of the HDD.
 
@@ -149,17 +158,14 @@ Video understanding could also assess the effects of in-store advertisements. An
 
 One concrete example of how video understanding can contribute to the retail sector is the customizable dashboard offered by [BriefCam](https://www.briefcam.com/) as part of their video analytics solutions. The dashboard provides stores with information — like the number of visitors, the average duration of visits, and the maximum number of visitors per hour. In the example below, visitors are divided into three classes: women (who comprise 61.5% of the visitors), men (36.9%), and children ( 1.7%). Visitor counts are displayed per hour. Near the bottom right of the figure, trajectory maps and background changes are superposed on snapshots of the store, which help identify the areas most frequently visited, as well as customer flow.
 
-[https://lh5.googleusercontent.com/umPqxS2p9-DIoPTo-yj_-70-8QWImmhpB5EBV27DNNziC76NxU3n1Wjd9vuB7esr9H1Jy1lpFL-15j3MTpNDDxuky30m8w3cXnXuicCw_zQOMVk15nzKhaAqZRTFfMHqjEtGhWe_](https://lh5.googleusercontent.com/umPqxS2p9-DIoPTo-yj_-70-8QWImmhpB5EBV27DNNziC76NxU3n1Wjd9vuB7esr9H1Jy1lpFL-15j3MTpNDDxuky30m8w3cXnXuicCw_zQOMVk15nzKhaAqZRTFfMHqjEtGhWe_)
 
-Figure 7. Application of Video Understanding in retail. The
-
-[board](https://www.youtube.com/watch?v=7aq9UP8DH2g&list=PL29CFD5EF801536E7)
-
-from
-
+![Application of Video Understanding in retail.](/images/hugo/vidclas_retail-1639692388.png)
+_Figure 7. Application of Video Understanding in retail. The
+[dashboard](https://www.youtube.com/watch?v=7aq9UP8DH2g&list=PL29CFD5EF801536E7)
+image is taken from
 [BriefCam](https://www.briefcam.com/)
+provides information about a store’s number of visitors, average duration of a visit, typical customer trajectories within the store, and more._
 
-provides information about a store’s number of visitors, average duration of a visit, typical customer trajectories within the store, and more.
 
 ## Smart Cities
 
@@ -171,11 +177,9 @@ In this example, the platform detects a car (represented by a red icon at the ri
 
 The platform then sends an alert to another vehicle (green icon at the top of the figure, labelled “Connected Vehicle”) about the risk of a collision. This alert is particularly useful at a time when there is no line of sight between the vehicles.
 
-“
+![Illustration of video understanding applied to the creation of smart cities.](/images/hugo/vidclass_smart_city-1639692871.png)
+_Figure 8. Illustration of video understanding applied to the creation of smart cities. An alert is sent to a vehicle (represented by the green icon), for which the light is green, that there is another vehicle (represented by the red icon) who is likely to run a red light. This alert is particularly useful when there is no light of sight between the two involved vehicles, as in this case. Image taken from [this video](https://www.youtube.com/watch?v=hcc9cTo-vf4)._
 
-[https://lh6.googleusercontent.com/N7kuBrXZKsJINedmymHfkMcfbfAGKxu3lPh5MkhUPjCfik97kp7ehqStr0jkWm1Kcj6jiPE6qX5EXHc6apyDOVvgR7BiRRu6GG9pYyO_1035sJO2--hFx6MBBzRANJccUZPD9lce](https://lh6.googleusercontent.com/N7kuBrXZKsJINedmymHfkMcfbfAGKxu3lPh5MkhUPjCfik97kp7ehqStr0jkWm1Kcj6jiPE6qX5EXHc6apyDOVvgR7BiRRu6GG9pYyO_1035sJO2--hFx6MBBzRANJccUZPD9lce)
-
-Figure 8. Illustration of video understanding applied to the creation of smart cities. An alert is sent to a vehicle (represented by the green icon), for which the light is green, that there is another vehicle (represented by the red icon) who is likely to run a red light. This alert is particularly useful when there is no light of sight between the two involved vehicles, as in this case.
 
 The types of video understanding tasks that power applications like this include action forecasting. In this specific application, the agents are vehicles, rather than people. However, similar applications in smart cities may involve the interaction between human agents and vehicle agents, e.g., to warn a driver about a pedestrian or cyclist.
 
@@ -183,7 +187,7 @@ This kind of application might also benefit from multiview activity recognition,
 
 ## Elderly Care
 
-Another application of video understanding is facilitating aging-in-place. The Center for Disease Control in the United States [defines](https://www.cdc.gov/healthyplaces/terminology.htm) aging-in-place as “the ability to live in one’s own home and community safely, independently, and comfortably, regardless of age, income, or ability level” —and, according to [4] [this article](https://www.mdpi.com/2071-1050/12/14/5723), nearly 90% of respondents to a survey of United Kingdom residents aged 55+ indicated a desire to “live independently as long as possible.” With an increase in an aging population that coincides with a shortage in staff to take care of the elderly, video understanding could be [one of the technologies](https://robotage.guru/video-surveillance-elderly/) that facilitates aging-in-place. It can be used to detect accidents, health conditions, or events that place an elderly person at risk, such as forgetting to switch off the stove, or to take medicine.
+Another application of video understanding is facilitating aging-in-place. The Center for Disease Control in the United States [defines](https://www.cdc.gov/healthyplaces/terminology.htm) aging-in-place as “the ability to live in one’s own home and community safely, independently, and comfortably, regardless of age, income, or ability level” —and, according to [this article](https://www.mdpi.com/2071-1050/12/14/5723), nearly 90% of respondents to a survey of United Kingdom residents aged 55+ indicated a desire to “live independently as long as possible.” With an increase in an aging population that coincides with a shortage in staff to take care of the elderly, video understanding could be [one of the technologies](https://robotage.guru/video-surveillance-elderly/) that facilitates aging-in-place. It can be used to detect accidents, health conditions, or events that place an elderly person at risk, such as forgetting to switch off the stove, or to take medicine.
 
 This is another area in which the tasks of video classification and action recognition could form part of the technologies powering the system for elderly care. Additionally, multimodal action recognition could be used: the signals from acceleration sensors worn by an elderly person could be  used in conjunction with video information from cameras to detect accidents, like falls.
 
@@ -202,7 +206,7 @@ The answers to these questions will vary with time, depending on a wide range of
 
 This section has only touched the surface of a wide and complex subject. In addition to the themes above, and as AI increasingly underlies video understanding, ethical concerns about AI (such as bias in training data sets, among many others), are inherited by video understanding. Here are some additional resources for the interested reader: [Surveillance Ethics](https://iep.utm.edu/surv-eth/), [The Ethics of Video Analytics](https://protect-network.eu/2021/02/26/the-ethics-of-video-analytics/), and [The Ethics of AI for Video Surveillance](https://oddity.ai/blog/ethics-of-ai).
 
-# Conclusions
+# Summary
 
 Video understanding is a fascinating field that aims to extract rich and useful information from video. In this blog post, we have presented several capabilities (i.e., tasks) and applications of video understanding.
 
@@ -210,16 +214,28 @@ Tasks are the ways in which machine learning practitioners formulate and make co
 
 We have also presented four areas of application of video understanding — manufacturing, retail, smart cities, and elderly care — and have shown how those applications might use some of these video understanding tasks.
 
-TODO add mention again of AMP.
+Last, we mentioned some of the ethical questions that become increasingly urgent to address video understanding technolgoies become more powerful.
 
-CFFL is publishing a repository
+# Next Steps
 
-References
+To start experimenting with video understanding, check out the 
+[**applied prototype**](https://github.com/fastforwardlabs/video-classification) (also mentioned at the beginning of this post). The repository focuses on Video Classification and demonstrates:
 
-[1] *[Dense-Captioning Events in Videos](https://arxiv.org/abs/1705.00754)*, Krishna et al. 2007.
+- How to download, unpack, and explore [Kinetics](https://deepmind.com/research/open-source/kinetics), a popular dataset used for AI-based video classification. Getting familiear with a dataset is an excellent way to get a deep sense of capabilities.
 
-[2] *[Home Action Genome: Cooperative Compositional Action Understanding](https://arxiv.org/abs/2105.05226)*, Rai et al. 2021.
+- How to download and experiment with a pre-trained AI model for video classification, namely [Two-Stream Inflated 3D ConvNet](https://arxiv.org/abs/1705.07750), or I3D. This is a relatively simple model that is useful for understanding the capabilities.
 
-[3] [Relational Action Forecasting](https://arxiv.org/abs/1904.04231), Sun et al. 2019.
 
-[4] [Older People’s Preferences for Housing and Environment Characteristics](https://www.mdpi.com/2071-1050/12/14/5723), Mulliner et al. 2020.
+
+# References
+
+<a name="ref_dense_caption"></a>
+[1] *[Dense-Captioning Events in Videos](https://arxiv.org/abs/1705.00754)*, Krishna et al. 2007. 
+
+<a name="ref_multiview"></a>
+[2] *[Home Action Genome: Cooperative Compositional Action Understanding](https://arxiv.org/abs/2105.05226)*, Rai et al. 2021. 
+
+<a name="ref_action_forecast"></a>
+[3] [Relational Action Forecasting](https://arxiv.org/abs/1904.04231), Sun et al. 2019. 
+
+
