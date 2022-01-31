@@ -21,11 +21,11 @@ To accomplish this goal, we will take the following approach
 
 For a broad and introductory view of the field of video understanding please see our [previous blog post](https://blog.fastforwardlabs.com/2021/12/14/an-introduction-to-video-understanding-capabilities-and-applications.html), in which we discuss the many tasks associated with this field, including video classification, as well as their applications in the real world.
 
-# Preliminaries
+## Preliminaries
 
 In this section, we describe the machine learning task of video classification, provide a brief taxonomy of video classification methods, explain general aspects of convolutions, and describe the notation used in the rest of the post.
 
-## The Video Classification Task
+### The Video Classification Task
 
 Video classification is similar to other classification tasks, in that one item is used as input to a predictive model, and one set of scores is produced as output. For video classification, as illustrated in Figure 1, the input is a video clip, and the output is typically a set of action class scores. In a way, video classification is analogous to image classification, but instead of detecting *what kind of object is present* in an image, video classification is used to detect *what* *kind of action is happening* in a video.
 
@@ -33,7 +33,7 @@ Video classification is similar to other classification tasks, in that one item 
 ![Video Classificationg.](/images/hugo/Fig_01_swing_video_classification-1643667789.png)
 _Figure 1. Illustration of Video Classification. On the left is the video clip being classified, and on the right are human action classes. Scores measure how likely it is that the action is performed *at any time* during the video. The images on the left were taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) (part of the [Kinetics 400](https://deepmind.com/research/open-source/kinetics) dataset)._
 
-## Approaches to Video Classification
+### Approaches to Video Classification
 
 As in many other areas of machine learning, the most exciting developments in video classification involve the use of deep neural networks (DNN). DNN-based approaches can be divided into three categories, depending on the type of operations used: convolutions, non-local operations (like attention), or hybrid.
 
@@ -41,11 +41,11 @@ The use of *convolutions* in video classification is motivated by the fact that 
 
 This blog post focuses on convolutions, for three reasons. First, convolutions still dominate the computer vision landscape, in spite of recent progress in attention-based methods. Second, even if non-local approaches become dominant in the near future, having a thorough understanding of why convolutions work for video paves the way to an understanding of why non-local approaches work, too. Third, it is plausible that convolutions and non-local approaches are complementary, as argued in [this article](https://arxiv.org/abs/1711.07971).
 
-## Convolutions: General Aspects
+### Convolutions: General Aspects
 
 Convolutions are perhaps the most widely used operation in the deep-learning era of computer vision. They are powerful feature extractors, they present useful properties like translational invariance, and they help reduce the number of parameters when compared, e.g., with fully connected layers. Convolutional neural networks (CNNs) are built by stacking layers of convolutions, each typically followed by non-linear and pooling operations. Sequences of layers are capable of hierarchically building rich features.
 
-## Notation
+### Notation
 
 Throughout the rest of this blog post, the shapes of tensors holding feature maps and convolutional kernels will be denoted by 4-tuples: (Length, Height, Width, Channels), where
 
@@ -61,11 +61,11 @@ _Figure 2. Illustration of a 4-dimensional tensor, with shape (Length=2, Height,
 
 In the following discussion, we use images and videos as the input maps, but the same ideas apply when the inputs are features produced by inner layers of a CNN, e.g, activations of convolutions from previous layers, or pooling operators.
 
-# Why and how CNNs work for video
+## Why and how CNNs work for video
 
 In this section, we will first describe 2D convolutions applied to grayscale images, and then 3D convolutions applied to grayscale video. The third and fourth subsections present the color counterparts of the first two. The color cases are presented for completeness, and also to make clear the distinction between color channels and temporal channels. (The second subsection contains the main takeaways, though, so if you have time to read only one subsection, that should be it!)
 
-## Grayscale Images
+### Grayscale Images
 
 Figure 3 illustrates a 2D convolution applied to a grayscale image. Grayscale images have one color channel only. The image, or input feature map, has shape (1, H, W, 1), the convolutional kernel has shape (1, h, w, 1), and the output feature map has shape (1, H’, W’, 1). The output spatial dimensions H’ and W’ [depend](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53) on the type of padding (same, valid, etc.) and on the stride size (the size of the ‘jumps’ that the kernel makes as it is moved across the input data). In all that follows, we will assume valid padding and stride=1 in all dimensions, although this detail is not central to the main takeaways.
 
@@ -79,7 +79,7 @@ Because the kernel maintains fixed parameters as it strides, convolutions are sa
 
 Subsequent layers in a convolutional neural network (CNN) apply convolutions on maps produced by previous layers, which (in addition to convolutions) can involve, non-linear activations and pooling operations. In this way, increasingly complex structures (such as those corresponding to objects in the case of object detection) can be detected.
 
-## Grayscale Video
+### Grayscale Video
 
 Figure 4 illustrates a 3D convolution applied to a very short grayscale video of length L=4. Individual frames are labeled t=1,2,3,4, corresponding to four different points in time in the video.
 
@@ -92,7 +92,7 @@ In order to extract information from the full video, a kernel now has to stride 
 
 Because we have chosen the temporal length of the kernel l=2 in Figure 4, there can only be three output feature maps, each of which contains information about *pairs* of consecutive input frames. This is indicated by labels t=(1,2) for the first output map, t=(2,3) for the second map, and t=(3,4) for the third map.
 
-### Takeaway 1: Spatio-Temporal Hierarchical Features
+#### Takeaway 1: Spatio-Temporal Hierarchical Features
 
 We now point to a contrast and a similarity between 2D and 3D convolutions:
 
@@ -117,7 +117,7 @@ Larger temporal sizes for the kernel could, at first, seem better than smaller s
 
 However, as mentioned above, deep CNNs are meant to build features gradually, from short scales (both temporally and spatially) in the first few layers, to long scales in later layers. Because convolutions take a (weighted) average of feature values, having kernels that are too large results in the loss of fine-grained information. On the other hand, having relatively small kernels helps to capture actions that occur on short time scales (e.g., to detect clapping, which may happen, say, on the order of 0.5 seconds). It is the many layers that allow CNNs to gradually build features describing long time scale actions (e.g., swing dancing, which may require several seconds for it to be discernible from, say, salsa dancing) from short scale, atomic motion features. Striking the optimal size of kernels is one of the challenges that CNN designers face.
 
-### Takeaway 2: Spatio-Temporal Invariance
+#### Takeaway 2: Spatio-Temporal Invariance
 
 In the same way as 2D convolutions have built-in invariance in *space*, 3D convolutions have invariance in *time.*
 
@@ -126,14 +126,14 @@ In the same way as 2D convolutions have built-in invariance in *space*, 3D convo
 
 We will expand on those insights in later sections, but first we will present the case of color images and video. Conceptually, there is no significant difference between grayscale and color, but for practical purposes (e.g., when specifying the shapes of tensors in code), it is useful to have clarity on the difference between the *temporal* dimension and the *color* dimension.
 
-## Color Images
+### Color Images
 
 Figure 6 illustrates a 2D convolution applied to a color image. The input shape is (1, H, W, 3): the 1 corresponds to the single frame (a still image rather than a video), and the 3 is for the three 3 color channels (e.g., corresponding to an RGB image). The convolutional kernel has shape (1, h, w, 3). In spite of both tensors (input image and kernel) having three color channels, the kernel is only strided across the *two* dimensions, which makes the convolution 2D. The output has shape (1, H’, W’, 1), which means that each output feature point has information from all the three channels of a small spatial region in the input.
 
 ![Something.](/images/hugo/Fig_06_3D_conv_color_image-1643667831.png)
 _Figure 6. A 2D convolution applied to a color image. Both the input feature map and the kernel have three color channels, but the kernel is only strided along two dimensions: vertically and horizontally._
 
-## Color Video
+### Color Video
 
 Figure 7 illustrates the case of a 3D convolution applied to a very short color video containing four frames. The shape of the input is (4, H, W, 3), with 4 frames of 3 color channels each. The frames are labeled t=1, 2, 3, 4, corresponding to the four points in time captured in the video. The convolutional kernel has shape (2, h, w, 3).
 
@@ -144,13 +144,13 @@ _Figure 7. A 3D convolution applied to a short color video with four frames. The
 
 The intuition behind color video is essentially the same as for grayscale video: information is gathered from frames that are next to each other in time, and complex motion features are built when multiple layers are traversed in a CNN.
 
-# Space-Time Anisotropy
+## Space-Time Anisotropy
 
 There is one more concept in video data which we’d like to discuss: anisotropy. By "isotropy" we mean a change in the properties of a system when they are measured along different axes. In our case the axes are those of the tensors holding feature maps and convolutional kernels. Though not explicitly, we have already touched upon this concept, in the [Spatio-Temporal Hierarchical Features](#Spatio-Temporal-Hierarchical Features) subsection. Here, we take a deeper dive.
 
 To better understand the idea, it is useful to review the concept of receptive field.
 
-## Receptive Field
+### Receptive Field
 
 The receptive field of a feature (in a neural network) is the size of the region in the input (to the *network,* not the layer) that influences the value of that feature. Figure 8 illustrates the concept of a receptive field for a two-layer CNN, where the convolutions are 2D. Each feature in Layer 1 is influenced by a 3x3 region of the input feature map (in blue). However, in Layer 2, each feature is influenced by a region of size 5x5 in the input feature map (in blue and in gray).
 
@@ -166,7 +166,7 @@ _Figure 9. Illustration of the concept of temporal field of view._
 
 With this understanding of the concept of spatial and temporal receptive fields, let’s dive into the idea of space-time anisotropy.
 
-### Takeaway 3: Space-Time Anisotropy
+#### Takeaway 3: Space-Time Anisotropy
 
 When performing image classification, it makes sense that the two spatial dimensions (vertical and horizontal) are treated equally: vertical and horizontal distances in a feature map should count with equal weight. This feature helps detection of objects regardless of their orientation, and is achieved by setting the vertical and horizontal size of the convolutional kernels to the same value. Similarly, the stride size is typically the same vertically and horizontally. We can think about this as some kind of isotropy encoded in the architectural choices.
 
@@ -181,7 +181,7 @@ As an example, let's consider the case of a 2D CNN for object detection. Let us 
 
 Let's now consider the case of a 3D CNN for video classification, and that one of the classes to be detected is "clapping hands." To that end, the CNN might include a layer with a temporal field of view of, say, 25 frames (or 1 second, if the input video has a frame rate of 25 frames per second). In this case, the optimal field of view for the layer that detects clapping hands might be on the order of 25x300x300 (where the first number is the temporal size, and the remaining two numbers are the spatial size), which manifests the anisotropy in time-space.
 
-# Summary
+## Summary
 
 We hope the ideas presented in this blog post will help the reader develop an intuition about why and how convolutions work for video classification. To summarize, here are our three main takeaways:
 
@@ -189,7 +189,7 @@ We hope the ideas presented in this blog post will help the reader develop an in
 2. Translational invariance of 2D convolutions allows recognition of objects in images regardless of their position in space, whereas invariance in 3D convolutions allows recognition of actions in video regardless of their location in time or space.
 3. Space-time anisotropy is related to the fact that space differs from time, which has implications for CNN design.
 
-Resources
+## Resources
 
 These are some of the articles that influenced the content of this blog post:
 
