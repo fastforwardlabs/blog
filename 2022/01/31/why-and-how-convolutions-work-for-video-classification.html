@@ -131,8 +131,37 @@ if (!doNotTrack) {
 <li>In contrast with 2D convolutions, where the output map contains information only about the <em>spatial</em> variations in the input, 3D convolutions collect information about both <em>spatial and temporal</em> variations.</li>
 <li>In the same way as complex spatial information is built across multiple 2D convolutional layers of a CNN (which have the capability to, e.g., detect <em>objects</em>), complex spatio-temporal information is also built across multiple 3D layers (which have the capability, e.g., to detect <em>actions</em>). The different levels of complexity across layers of a CNN is often referred to as a hierarchy of features.</li>
 </ul>
-<p><a href="https://www.notion.so/bb5f81b4437b41e09f75531738367106">Untitled</a></p>
-<p>Table 1. The complexity of features in early and late layers for 2D and 3D convolutions.</p>
+<table>
+<thead>
+<tr>
+<th>Dimensionality</th>
+<th>Feature type</th>
+<th>Early layers: Low-level, simple features</th>
+<th>&hellip;</th>
+<th>Late layers: High-level, complex features</th>
+<th>Useful for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2D</td>
+<td>Spatial</td>
+<td>Edge, Corner, Blob, etc.</td>
+<td>&hellip;</td>
+<td>Dog, Cat, Person, etc.</td>
+<td>Image Classification</td>
+</tr>
+<tr>
+<td>3D</td>
+<td>Spatio-temporal</td>
+<td>Translation, Oscillation, Zigzag, etc.</td>
+<td>&hellip;</td>
+<td>Swing Dancing, Salsa Dancing, Walking, etc.</td>
+<td>Video Classification</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 1. The complexity of features in early and late layers for 2D and 3D convolutions.</em></p>
 <p>Table 1 shows the idea of going from simple, low-level features in the early layers of a CNN to the complex, high-level features of late layers — both for 2D and 3D. For 2D, the features go from simple structures (like edges, corners, or blobs) to ultimately complex object structures (like the shape of a dog, cat, or person). This is useful for image classification. In the 3D case, the features are spatio-temporal, and may in the early layers include basic types of motion (such as translation, oscillations, zigzag, etc.) Later layers would produce complex motion features (such as those that help distinguish swing dancing from salsa dancing). The spatio-temporal aspect comes from the fact that, in order to distinguish an action from another, it might be necessary to know both the <em>what</em> (a hand, the head, or the hips of a person) as well as the <em>how</em> (up and down, sideways, etc.)</p>
 <p>Let’s see how hierarchy impacts architectural design aspects. In Figure 4, had we chosen a temporal kernel length l=3 rather than l=2, information would have been gathered from <em>three</em> consecutive frames instead of two. The l=3 case is illustrated in Figure 5.</p>
 <p><img src="/images/hugo/Fig_05_3D_conv_gray_video_kernel_3-1643667823.png" alt="Something.">
