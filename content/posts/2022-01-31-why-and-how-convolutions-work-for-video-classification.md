@@ -99,9 +99,12 @@ We now point to a contrast and a similarity between 2D and 3D convolutions:
 - In contrast with 2D convolutions, where the output map contains information only about the *spatial* variations in the input, 3D convolutions collect information about both *spatial and temporal* variations.
 - In the same way as complex spatial information is built across multiple 2D convolutional layers of a CNN (which have the capability to, e.g., detect *objects*), complex spatio-temporal information is also built across multiple 3D layers (which have the capability, e.g., to detect *actions*). The different levels of complexity across layers of a CNN is often referred to as a hierarchy of features.
 
-[Untitled](https://www.notion.so/bb5f81b4437b41e09f75531738367106)
+| Dimensionality  | Feature type  | Early layers: Low-level, simple features  | ... | Late layers: High-level, complex features  | Useful for   |
+|---|---|---|---|---|---|
+| 2D  | Spatial |Edge, Corner, Blob, etc. | ... | Dog, Cat, Person, etc.  | Image Classification  |
+| 3D  | Spatio-temporal  | Translation, Oscillation, Zigzag, etc.  | ...  | Swing Dancing, Salsa Dancing, Walking, etc.  | Video Classification  |
 
-Table 1. The complexity of features in early and late layers for 2D and 3D convolutions.
+_Table 1. The complexity of features in early and late layers for 2D and 3D convolutions._
 
 Table 1 shows the idea of going from simple, low-level features in the early layers of a CNN to the complex, high-level features of late layers — both for 2D and 3D. For 2D, the features go from simple structures (like edges, corners, or blobs) to ultimately complex object structures (like the shape of a dog, cat, or person). This is useful for image classification. In the 3D case, the features are spatio-temporal, and may in the early layers include basic types of motion (such as translation, oscillations, zigzag, etc.) Later layers would produce complex motion features (such as those that help distinguish swing dancing from salsa dancing). The spatio-temporal aspect comes from the fact that, in order to distinguish an action from another, it might be necessary to know both the *what* (a hand, the head, or the hips of a person) as well as the *how* (up and down, sideways, etc.)
 
