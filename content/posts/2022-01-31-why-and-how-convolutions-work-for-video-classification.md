@@ -142,23 +142,24 @@ We can see in Figure 7 that for the kernel to collect information from all of th
 ![Something.](/images/hugo/Fig_07_3D_conv_color_video-1643667840.png)
 _Figure 7. A 3D convolution applied to a short color video with four frames. The color of the video is encoded in three channels (e.g., RGB format)._
 
-<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="50"/>
-width=50
+<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="600"/>
+width=600
 
-<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="100"/>
-width=100
+<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="800"/>
+width=800
 
-<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="150"/>
-width=150
+<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="1000"/>
+width=1000
 
-<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="200"/>
-width=200
+<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="1200"/>
+width=1200
 
-<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="300"/>
-width=300
+<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="1400"/>
+width=1400
 
-<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="400"/>
-width=400
+<img src="/images/hugo/Fig_07_3D_conv_color_video-1643667840.png" alt="drawing" width="1600"/>
+width=1600
+
 
 The intuition behind color video is essentially the same as for grayscale video: information is gathered from frames that are next to each other in time, and complex motion features are built when multiple layers are traversed in a CNN.
 
