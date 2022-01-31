@@ -30,6 +30,11 @@ In this section, we describe the machine learning task of video classification, 
 Video classification is similar to other classification tasks, in that one item is used as input to a predictive model, and one set of scores is produced as output. For video classification, as illustrated in Figure 1, the input is a video clip, and the output is typically a set of action class scores. In a way, video classification is analogous to image classification, but instead of detecting *what kind of object is present* in an image, video classification is used to detect *what* *kind of action is happening* in a video.
 
 
+
+
+![somthing.](/images/hugo/Fig_01_swing_video_classification-1643658519.png)
+_Figure 1. something._
+
 ![Video Classificationg.](/images/hugo/Fig_01_swing_video_classification-1643658519.png)
 _Figure 1. Illustration of Video Classification. On the left is the video clip being classified, and on the right are human action classes. Scores measure how likely it is that the action is performed *at any time* during the video. The images on the left were taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) (part of the [Kinetics 400](https://deepmind.com/research/open-source/kinetics) dataset)._
 
@@ -56,7 +61,8 @@ Throughout the rest of this blog post, the shapes of tensors holding feature map
 
 Figure 2 illustrates a generic tensor and its dimensions.
 
-[https://lh4.googleusercontent.com/SBMsjPOwAf_V87bifJKez-mFX0_vrLF5Q_wuu3H6GVGxCgbuJlxdhfWR-ICEjyDF0HNOfTCMMlsES-1F4CtQwgeXrac8bwJpV_bCt1SqMqW8Gz_v17jKyv8UIFgBYxnyHXUAHl3y](https://lh4.googleusercontent.com/SBMsjPOwAf_V87bifJKez-mFX0_vrLF5Q_wuu3H6GVGxCgbuJlxdhfWR-ICEjyDF0HNOfTCMMlsES-1F4CtQwgeXrac8bwJpV_bCt1SqMqW8Gz_v17jKyv8UIFgBYxnyHXUAHl3y)
+![Something.](/images/hugo/Fig_02_four_dimensional_tensor-1643658531.png)
+_Figure 2. something._
 
 Figure 2. Illustration of a 4-dimensional tensor, with shape (Length=2, Height, Width, Channels=3).
 
@@ -72,7 +78,9 @@ Figure 3 illustrates a 2D convolution applied to a grayscale image. Grayscale im
 
 The kernel spatial dimensions are typically smaller than the image spatial dimensions: h < H and w < W; this is what makes the operation local. Also, the kernel is typically applied multiple times, in a sliding fashion, through the input map. Each time the kernel is applied, a new point is produced in the output map. In this way, the kernel can be said to be *striding* along *two* dimensions: namely, along the height and along the width of the input image. Those two directions are shown in Figure 3 as arrows inside the input feature map, and are what make the convolution two-dimensional. The label t=1 refers to the fact that only one moment in time is considered, as it is an image, rather than a video.
 
-[https://lh6.googleusercontent.com/5JvuSAEB67dle51PejrndkpNwcBgeciWr5MZiMPI8pdhKE7p8tKoX46p4zg_zvkRu5HRxkhQwZMy3YxkncT_Z9LlgVuxxK8EtEyOAFw3TUBaMEyRU2C09DZ7jjoJ_e0ALwXuKTdC](https://lh6.googleusercontent.com/5JvuSAEB67dle51PejrndkpNwcBgeciWr5MZiMPI8pdhKE7p8tKoX46p4zg_zvkRu5HRxkhQwZMy3YxkncT_Z9LlgVuxxK8EtEyOAFw3TUBaMEyRU2C09DZ7jjoJ_e0ALwXuKTdC)
+
+![Something.](/images/hugo/Fig_03_2D_conv_gray_image-1643658540.png)
+_Figure 3. something._
 
 Figure 3. Illustration of a 2D convolution applied to a single-channel input feature map, e.g., a grayscale image. The kernel can only stride in two dimensions (vertically and horizontally, denoted by small arrows), which is why the convolution is termed two-dimensional.
 
@@ -86,7 +94,8 @@ Figure 4 illustrates a 3D convolution applied to a very short grayscale video of
 
 The convolutional kernel in the figure has been chosen to have shape (l=2, h, w, c=1). Just as the *spatial* dimension of the kernel is typically smaller than the spatial dimension of the feature map (h < H, and w < W), the *temporal* dimension of the kernel (l=2 in the example) is also typically smaller than the temporal dimension of the input map (L=4 in the example).
 
-[https://lh6.googleusercontent.com/TEVe-IHP4cbngIrZvo655TtqU4m5gaptoIcdrq_ZmvL_FbUzBEFKlGz9zZPHGEDIgYzMhcI0UfTdtDTjpWEwmUW0oO-M1InnGA3ZjPC2UaJxl64hPZRN5R7AScHuxFUrNVt_Z8XY](https://lh6.googleusercontent.com/TEVe-IHP4cbngIrZvo655TtqU4m5gaptoIcdrq_ZmvL_FbUzBEFKlGz9zZPHGEDIgYzMhcI0UfTdtDTjpWEwmUW0oO-M1InnGA3ZjPC2UaJxl64hPZRN5R7AScHuxFUrNVt_Z8XY)
+![Something.](/images/hugo/Fig_04_3D_conv_gray_video_kernel_2-1643658549.png)
+_Figure 4. something._
 
 Figure 4. 3D convolution applied to a grayscale video with four frames. The kernel is strided along three dimensions: vertical, horizontal, and temporal.
 
@@ -109,7 +118,8 @@ Table 1 shows the idea of going from simple, low-level features in the early lay
 
 Let’s see how hierarchy impacts architectural design aspects. In Figure 4, had we chosen a temporal kernel length l=3 rather than l=2, information would have been gathered from *three* consecutive frames instead of two. The l=3 case is illustrated in Figure 5.
 
-[https://lh3.googleusercontent.com/VSNiiZbV1D5uUBtYg1iPlqIrDq8mLbrrvMXVdzPTIbdV3iRFu86G-Z9o9vicU3gr2ittTFMtCKHhY332QGQk2FshC6llq_pXEFK627EHJan7Pnh__KB3COm2eyMCCs44qY3h44ey](https://lh3.googleusercontent.com/VSNiiZbV1D5uUBtYg1iPlqIrDq8mLbrrvMXVdzPTIbdV3iRFu86G-Z9o9vicU3gr2ittTFMtCKHhY332QGQk2FshC6llq_pXEFK627EHJan7Pnh__KB3COm2eyMCCs44qY3h44ey)
+![Something.](/images/hugo/Fig_05_3D_conv_gray_video_kernel_3-1643658556.png)
+_Figure 5. something._
 
 Figure 5. Similar to Figure 4, but with a larger kernel length along the temporal dimension (l=3).
 
@@ -130,7 +140,8 @@ We will expand on those insights in later sections, but first we will present th
 
 Figure 6 illustrates a 2D convolution applied to a color image. The input shape is (1, H, W, 3): the 1 corresponds to the single frame (a still image rather than a video), and the 3 is for the three 3 color channels (e.g., corresponding to an RGB image). The convolutional kernel has shape (1, h, w, 3). In spite of both tensors (input image and kernel) having three color channels, the kernel is only strided across the *two* dimensions, which makes the convolution 2D. The output has shape (1, H’, W’, 1), which means that each output feature point has information from all the three channels of a small spatial region in the input.
 
-[https://lh4.googleusercontent.com/McLYkEKvdiwAw6fEjk7xv7xNnz29pVWd_BECQtpK6WmvU0GFXQ4rtAeG3Gx-BAgnIqnb7yhMDuKxJ5CQtjIHFwAbEnduAcT7FQe8o0j7F9vxfKVvFL2179aOwj1MchIoFpbvlDrg](https://lh4.googleusercontent.com/McLYkEKvdiwAw6fEjk7xv7xNnz29pVWd_BECQtpK6WmvU0GFXQ4rtAeG3Gx-BAgnIqnb7yhMDuKxJ5CQtjIHFwAbEnduAcT7FQe8o0j7F9vxfKVvFL2179aOwj1MchIoFpbvlDrg)
+![Something.](/images/hugo/Fig_06_3D_conv_color_image-1643658562.png)
+_Figure 6. something._
 
 Figure 6. A 2D convolution applied to a color image. Both the input feature map and the kernel have three color channels, but the kernel is only strided along two dimensions: vertically and horizontally.
 
@@ -140,7 +151,8 @@ Figure 7 illustrates the case of a 3D convolution applied to a very short color 
 
 We can see in Figure 7 that for the kernel to collect information from all of the video, it has to be strided along three directions: two spatial, and one temporal. Every time the kernel is applied at one location (in space-time) of the input, information is collected from all three channels of two consecutive frames.
 
-[https://lh4.googleusercontent.com/nCHZCeKOYnBEt5JUQKTfgThzHdWt0lQyLdW_HE74hxin8YAt2ji3Zl165nxi-eUwu0r1LUhXiB-6kf6lRiN7UDLH7pFRP-MG1ls7VMVpMf9_acFz5jGs1rvmxs7dfSmIlcNBdXIQ](https://lh4.googleusercontent.com/nCHZCeKOYnBEt5JUQKTfgThzHdWt0lQyLdW_HE74hxin8YAt2ji3Zl165nxi-eUwu0r1LUhXiB-6kf6lRiN7UDLH7pFRP-MG1ls7VMVpMf9_acFz5jGs1rvmxs7dfSmIlcNBdXIQ)
+![Something.](/images/hugo/Fig_07_3D_conv_color_video-1643658571.png)
+_Figure 7. something._
 
 Figure 7. A 3D convolution applied to a short color video with four frames. The color of the video is encoded in three channels (e.g., RGB format).
 
@@ -156,7 +168,8 @@ To better understand the idea, it is useful to review the concept of receptive f
 
 The receptive field of a feature (in a neural network) is the size of the region in the input (to the *network,* not the layer) that influences the value of that feature. Figure 8 illustrates the concept of a receptive field for a two-layer CNN, where the convolutions are 2D. Each feature in Layer 1 is influenced by a 3x3 region of the input feature map (in blue). However, in Layer 2, each feature is influenced by a region of size 5x5 in the input feature map (in blue and in gray).
 
-[https://lh5.googleusercontent.com/fFvm0z-GJN2detkE_KivyrDLCG5K9_GPN2eYj8tBe3kjvuybUXovxmqT-aklWS_qdxZ1vs9bWNvv_VfeFZ-lhI1heJdBX8Otb6iqWyUoojp8Rj2yhCsPczO3opinUN2lLm46UlCf](https://lh5.googleusercontent.com/fFvm0z-GJN2detkE_KivyrDLCG5K9_GPN2eYj8tBe3kjvuybUXovxmqT-aklWS_qdxZ1vs9bWNvv_VfeFZ-lhI1heJdBX8Otb6iqWyUoojp8Rj2yhCsPczO3opinUN2lLm46UlCf)
+![Something.](/images/hugo/Fig_08_receptive_field_spatial-1643658583.png)
+_Figure 8. something._
 
 Figure 8. Illustration of the concept of receptive field. Layer 1 has a receptive field of size 3x3. Layer 2 has a receptive field of size 5x5 (all of the input layer).
 
@@ -164,7 +177,8 @@ Generally speaking, the deeper the layer, the larger the receptive field. This i
 
 Figure 9 illustrates the idea of a temporal receptive field for 3D convolutions. The temporal receptive field is the *number of frames* in the input feature map (the first column of frames, on the left of the figure) that influences a feature in a given layer. After convolution 1, there are three feature maps; feature points on each of those maps are influenced by two frames [t=(1,2), t=(2,3), or t=(3,4), respectively]. After convolution 2, there are two maps, and feature points on each of them are influenced by three frames [e.g., t=(1,2,3), and t=(2,3,4)]. After convolution 3, there is only one map; each feature in that map is influenced by all four input frames [t=(1,2,3,4)]. In this artificial example, features in the last layer have "looked" at all of the input frames, and could, in principle, detect an action anywhere in the video.
 
-[https://lh3.googleusercontent.com/1H1JoTTbs6UTJnH9kZYB8YyKsSnknBE7AYuSVlEEO_12nbiNTZ4Z0rcL3pwa8WqYmj3tshs6KVuYIACtn9uCk14KOcG0bNUOiZ1iodfOt8m4F-sEDAXzVdfKtE7w0LcpUED8XJiD](https://lh3.googleusercontent.com/1H1JoTTbs6UTJnH9kZYB8YyKsSnknBE7AYuSVlEEO_12nbiNTZ4Z0rcL3pwa8WqYmj3tshs6KVuYIACtn9uCk14KOcG0bNUOiZ1iodfOt8m4F-sEDAXzVdfKtE7w0LcpUED8XJiD)
+![Something.](/images/hugo/Fig_09_receptive_field_temporal-1643658591.png)
+_Figure 9. something._
 
 Figure 9. Illustration of the concept of temporal field of view.
 
@@ -178,7 +192,8 @@ But what happens when we go from 2D to 3D convolutions, which have a temporal di
 
 This is illustrated in Figure 10, where a 3D convolutional kernel is depicted. It has spatial size w=h=3, and temporal size l=4.
 
-[https://lh3.googleusercontent.com/2Xvj_OBwXhOJweKQC0dd0FZAvkCVKguMfr-JsgpAfg66pdJBpT1PDh466KMacI9xwEBf5Hv93eDQDGTu2bwbKK2jtq3bQvqjSVVNuTMiAe8WkoEWlBGCP0hbDzVqap73dESugzxY](https://lh3.googleusercontent.com/2Xvj_OBwXhOJweKQC0dd0FZAvkCVKguMfr-JsgpAfg66pdJBpT1PDh466KMacI9xwEBf5Hv93eDQDGTu2bwbKK2jtq3bQvqjSVVNuTMiAe8WkoEWlBGCP0hbDzVqap73dESugzxY)
+![Something.](/images/hugo/Fig_10_kernel_different_space_time_size-1643658599.png)
+_Figure 10. something._
 
 Figure 10. Illustration of a kernel that has the same spatial size horizontally and vertically (h=w=3), but different size temporally (l=4).
 
