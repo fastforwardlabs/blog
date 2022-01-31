@@ -30,7 +30,7 @@ In this section, we describe the machine learning task of video classification, 
 Video classification is similar to other classification tasks, in that one item is used as input to a predictive model, and one set of scores is produced as output. For video classification, as illustrated in Figure 1, the input is a video clip, and the output is typically a set of action class scores. In a way, video classification is analogous to image classification, but instead of detecting *what kind of object is present* in an image, video classification is used to detect *what* *kind of action is happening* in a video.
 
 
-![Video Classificationg.](/static/images/hugo/Fig_01_swing_video_classification-1643667789.png)
+![Video Classificationg.](/images/hugo/Fig_01_swing_video_classification-1643667789.png)
 _Figure 1. Illustration of Video Classification. On the left is the video clip being classified, and on the right are human action classes. Scores measure how likely it is that the action is performed *at any time* during the video. The images on the left were taken from a [YouTube video](https://www.youtube.com/watch?v=das8v6ybddE) (part of the [Kinetics 400](https://deepmind.com/research/open-source/kinetics) dataset)._
 
 ## Approaches to Video Classification
