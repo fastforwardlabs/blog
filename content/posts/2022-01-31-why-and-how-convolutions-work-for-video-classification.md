@@ -164,7 +164,7 @@ The intuition behind color video is essentially the same as for grayscale video:
 
 ## Space-Time Anisotropy
 
-There is one more concept in video data which we’d like to discuss: anisotropy. By "isotropy" we mean a change in the properties of a system when they are measured along different axes. In our case the axes are those of the tensors holding feature maps and convolutional kernels. Though not explicitly, we have already touched upon this concept, in the [Spatio-Temporal Hierarchical Features](#Spatio-Temporal-Hierarchical Features) subsection. Here, we take a deeper dive.
+There is one more concept in video data which we’d like to discuss: anisotropy. By "anisotropy" we mean a change in the properties of a system when they are measured along different axes. In our case the axes are those of the tensors holding feature maps and convolutional kernels. Though not explicitly, we have already touched upon this concept, in the [Spatio-Temporal Hierarchical Features](#Spatio-Temporal-Hierarchical Features) subsection. Here, we take a deeper dive.
 
 To better understand the idea, it is useful to review the concept of receptive field.
 
