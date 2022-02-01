@@ -13,13 +13,14 @@ Video classification is perhaps the simplest and most fundamental of the tasks i
 
 To accomplish this goal, we will take the following approach
 
-- [**Preliminaries:**](#Preliminaries) description of the video classification task, the types of approaches to video understanding, general aspects of convolutions, and notation used in the rest of the post.
-- [**Why and How Convolutional Neural Networks Work:**](#Why-and-How-Convolutional-Neural-Networks-Work) discussion of spatio-temporal hierarchical features, and spatio-temporal invariance.
-- [**Space-time Anisotropy:**](#Space-time-Anisotropy) explanation of why spatial directions are treated similarly in convolutional networks, why time is treated differently, and what that all means for the design of video classification architectures.
-- [**Summary:**](#Summary) a synopsis of the three main takeaways from this blog post.
+- [Preliminaries:](#Preliminaries) description of the video classification task, the types of approaches to video understanding, general aspects of convolutions, and notation used in the rest of the post.
+- [Why and How Convolutional Neural Networks Work:](#Why-and-How-Convolutional-Neural-Networks-Work) discussion of spatio-temporal hierarchical features, and spatio-temporal invariance.
+- [Space-time Anisotropy:](#Space-time-Anisotropy) explanation of why spatial directions are treated similarly in convolutional networks, why time is treated differently, and what that all means for the design of video classification architectures.
+- [Summary:](#Summary) a synopsis of the three main takeaways from this blog post.
 
+**Related blog**: For a broad and introductory view of the field of video understanding please see our [previous blog post](https://blog.fastforwardlabs.com/2021/12/14/an-introduction-to-video-understanding-capabilities-and-applications.html), in which we discuss the many tasks associated with this field, including video classification, as well as their applications in the real world.
 
-For a broad and introductory view of the field of video understanding please see our [previous blog post](https://blog.fastforwardlabs.com/2021/12/14/an-introduction-to-video-understanding-capabilities-and-applications.html), in which we discuss the many tasks associated with this field, including video classification, as well as their applications in the real world.
+**Related code**: Concurrent with the publication of this blog post, Cloudera Fast Forward Labs is also releasing an [applied prototype](https://github.com/cloudera/CML_AMP_Video_Classification) focused on video classification.
 
 ## Preliminaries
 
