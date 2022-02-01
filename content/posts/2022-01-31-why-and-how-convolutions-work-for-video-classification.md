@@ -1,11 +1,10 @@
 ---
 title: "Why and How Convolutions Work for Video Classification"
-date: 2022-01-31T10:33:50
+date: 2022-01-31
 author: Daniel Valdez-Balderas
 author_link: https://uk.linkedin.com/in/daniel-valdez-balderas-9051323b
 preview_image: /images/hugo/Fig_04_3D_conv_gray_video_kernel_2-1643658549.png
 post_type: Post
-external_url: 
 ---
 
 
