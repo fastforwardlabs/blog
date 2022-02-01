@@ -6,17 +6,17 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 31 Jan 2022 10:33:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 Jan 2022 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Why and How Convolutions Work for Video Classification</title>
+       
+      <link>https://blog.fastforwardlabs.com/2022/01/31/why-and-how-convolutions-work-for-video-classification.html</link>
       
-      <link></link>
-      
-      <pubDate>Mon, 31 Jan 2022 10:33:50 +0000</pubDate>
+      <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2022/01/31/why-and-how-convolutions-work-for-video-classification.html</guid>
       <description>Video classification is perhaps the simplest and most fundamental of the tasks in the field of video understanding. In this blog post, we’ll take a deep dive into why and how convolutions work for video classification. Our goal is to help the reader develop an intuition about the relationship between space (the image part of video) and time (the sequence part of video), and pave the way to a deep understanding of video classification algorithms.</description>
