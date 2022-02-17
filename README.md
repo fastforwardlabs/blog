@@ -53,6 +53,18 @@ Go to `localhost:1314` to use a form for uploading an image to use in a post. Th
 
 ## Publishing your post
 
+Before publishing your post, double check the YAML frontmatter and ensure that it does not end in an empty field. An empty field in the last entry will cause the build to be a little wonky: the blog post will only be accessible from the main Blog page when clicking the preview image. If you have nothing to add to the `external_url` field (the final YAML field in the frontmatter), either remove that field altogther or comment it out like in the example below. 
+
+```
+---
+title: "Deep Learning for Automatic Offline Signature Verification: An Introduction"
+date: 2021-05-26T17:04:38  
+preview_image: /images/hugo/metricblog/signature_pipeline.png
+post_type: Post
+# external_url: 
+---
+```
+
 To publish your post commit your changes and do `git push origin master`, an automatic Github action will rebuild the site and automatically deploy it. It usually takes around two minutes. You can look under the Github action tab to check its status.
 
 # Adding a prototype link
