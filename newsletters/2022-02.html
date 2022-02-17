@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2022-02.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="february-2022">February 2022</h1>
+<p>Welcome to the February edition of the Cloudera Fast Forward Labs newsletter.  This month we dive deeper into the world of video convolutions, share some applied machine learning prototypes we’ve built, and discuss our top reads.</p>
+<hr>
+<h2 id="new-research">New Research!</h2>
+<p>We have another entry in the world of a newly-emerging capability: Video Understanding! While working with video data has considerable overlap with image understanding, information extraction from video presents a new level of complexity and a new world of possibilities. This month we look at the connection between image and video through convolutions.</p>
+<p><strong><a href="https://blog.fastforwardlabs.com/2022/01/31/why-and-how-convolutions-work-for-video-classification.html">Why and How Convolutions Work for Video Classification</a></strong></p>
+<p>Video classification is perhaps the simplest and most fundamental of the tasks in the field of video understanding. In this blog post, we’ll take a deep dive into why and how convolutions work for video classification. Our goal is to help the reader develop an intuition about the relationship between space (the image part of video) and time (the sequence part of video), and pave the way to a deep understanding of video classification algorithms.</p>
+<p><img src="/images/hugo/video_convolution_example-1645140017.png" alt="Video convolution example"></p>
+<h2 id="new-applied-ml-prototypes-amps">New Applied ML Prototypes (AMPs)!</h2>
+<p>Those familiar with our work know that here at CFFL, we don&rsquo;t just write about the latest ML, we also love to <em>build</em> things with it!  Our applied machine learning prototypes (AMPs) provide reference example machine learning projects in Cloudera’s data science products, but the content in these repos can often be explored in any environment. They range from in-depth Jupyter Notebook examples to full-scale web or Streamlit applications, and everything in between.</p>
+<p><a href="https://github.com/cloudera/CML_AMP_Continuous_Model_Monitoring">Continuous Model Monitoring</a></p>
+<p>To combat concept drift in production systems, it&rsquo;s important to have robust monitoring capabilities that alert stakeholders when relationships in the incoming data or model have changed. In this Applied Machine Learning Prototype (AMP), we demonstrate how this can be achieved on CML. Specifically, we leverage CML&rsquo;s <a href="https://docs.cloudera.com/machine-learning/cloud/model-metrics/topics/ml-enabling-model-metrics.html">Model Metrics feature</a> in combination with <a href="https://evidentlyai.com/">Evidently.ai&rsquo;s</a> Data Drift, Numerical Target Drift, and Regression Performance reports to monitor a simulated production model that predicts housing prices over time.</p>
+<p><a href="https://github.com/cloudera/CML_AMP_Video_Classification">Video Classification</a></p>
+<p>Video footage constitutes a significant portion of all data in the world. The 30 thousand hours of video uploaded to Youtube every hour is a part of that data; another portion is produced by 770 million surveillance cameras globally. The vastness of video, along with its tremendous capacity to store information, makes video understanding a key technology. This Applied ML Prototype (AMP) introduces Video Classification through an exploration of a key dataset and a pretrained model. The AMP demonstrates how to download, organize, explore, pre-process, and visualize the Kinetics Human Action Video Dataset, and how to test a pretrained model on both small and large data samples.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from last year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>Our research engineers share their favorite reads of the month.</p>
+<p><a href="https://arxiv.org/abs/2201.03545">A ConvNet for the 2020s</a></p>
+<p>After powering through the NLP community, the modern Transformer architecture has marched its way onto the computer vision main stage. Hierarchical vision transformers (namely the <a href="https://arxiv.org/abs/2103.14030">Swin Transformer</a>) have recently demonstrated the potential for transformer-based models to serve as generic vision backbones by achieving state-of-the-art (SOTA) performance across a variety of computer vision tasks.</p>
+<p>This excellent paper investigates architectural distinctions between traditional ConvNets and Transformers, and attempts to “modernize” a standard ResNet towards the design of a vision Transformer. For example, the authors find that a significant portion of the performance discrepancy between the two may be attributed simply to the enhanced training procedure of Transformers alone. In the end, the paper proposes ConvNeXt, a pure ConvNet model that can compete favorably with SOTA vision Transformers. — <a href="https://twitter.com/andrewrreed"><em>Andrew</em></a></p>
+<p><a href="http://jalammar.github.io/illustrated-retrieval-transformer/">The Illustrated Retrieval Transformer</a></p>
+<p>Last month I recommended a blog post about WebGPT, a new NLP model that answers open-ended questions by essentially performing a Google search. This month’s offering is in a similar vein: a blog post by Jay Alammar (of <a href="http://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a> fame) that illustrates DeepMind’s recent RETRO model. Both RETRO and WebGPT are examples of a new breed of Transformer language models that are augmented with the ability to <em>look up</em> the information they need to perform the task required. WebGPT looked up information by literally searching the internet. RETRO, on the other hand, is augmented with a database. Because these models can look up the information they need, they no longer need to memorize the entire internet.  This allows them to achieve results on par with some of the mega-models (like GPT3) but at a fraction of the parameters! Turns out bigger isn’t always better.  - <em><a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></em></p>
+<p><a href="https://arxiv.org/abs/2104.14294">Emerging Properties in Self-Supervised Vision Transformers</a></p>
+<p>Image object segmentation has up to recently relied heavily both on convolutions and labeled data. This paper presents a method which can perform segmentation without either of those mechanisms. It shows that self-supervised Vision Transformers (ViT) provide object segmentation information, which is accessible in the self-attention modules of the last block of the architecture. Both self-supervision (rather than supervision) and Transformers (rather than convolutions) are key to producing clearly defined segmentation. Another aspect of the self-supervised ViT features is that they are strong k-NN image classifiers. And a third interesting point is training efficiency: among self-supervised approaches, training ViT is argued to require less computational resources than training convolutional architectures for a given performance. <em><a href="https://www.linkedin.com/in/daniel-valdez-balderas-9051323b/">-Daniel.</a></em></p>
+
+  </div>
+
+
