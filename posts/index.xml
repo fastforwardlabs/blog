@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 31 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Mar 2022 09:50:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An Introduction to Text Style Transfer</title>
+       
+      <link>https://blog.fastforwardlabs.com/2022/03/22/an-introduction-to-text-style-transfer.html</link>
+      
+      <pubDate>Tue, 22 Mar 2022 09:50:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2022/03/22/an-introduction-to-text-style-transfer.html</guid>
+      <description>Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &amp;ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &amp;ndash; style.</description>
+    </item>
     
     <item>
       <title>Why and How Convolutions Work for Video Classification</title>
