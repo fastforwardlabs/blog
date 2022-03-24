@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2022-03.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="march-2022">March 2022</h1>
+<p>Welcome to the March edition of the Cloudera Fast Forward Labs newsletter.  This month we scratch the surface on one of the most cutting-edge natural language processing capabilities and share some of our favorite reads.</p>
+<hr>
+<h2 id="new-research">New Research!</h2>
+<p>In January’s newsletter we shared a sneak peek of our next research endeavor, and this month we’re excited to share an update.</p>
+<h3 id="an-introduction-to-text-style-transferhttpsblogfastforwardlabscom20220322an-introduction-to-text-style-transferhtml"><a href="https://blog.fastforwardlabs.com/2022/03/22/an-introduction-to-text-style-transfer.html"><strong>An Introduction to Text Style Transfer</strong></a></h3>
+<p><img src="/images/hugo/tst_definition-1647958795.png" alt="TST"></p>
+<p>As humans, we understand that language is <em>situational</em> — not only is the <em>context</em> of written or spoken words important, but the <em>style</em> of text itself depends heavily on the user, environment, and scenario. As such, style is a vital consideration in making NLP more user centric. For this reason, the task of text style transfer aims to automatically control the style attributes of a given piece of text while preserving its content.</p>
+<p>Text style transfer is an exciting task that’s gaining attention in the NLP research community due to its challenging nature and numerous real-world applications. We offer this introduction to the topic as <em>Part 1</em> of a multi-part blog series where we will be experimenting with text style transfer by training and evaluating our own models. Along the way we plan to discuss our approach, implementation details, challenges, and learnings – stay tuned!</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from last year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><a href="https://youtu.be/o4gQLVzIm5U"><strong>Representation Learning for Software Engineers</strong></a></p>
+<hr>
+<h2 id="recommended-reading">Recommended reading</h2>
+<p>CFFLers share their favorite reads of the month.</p>
+<p>Controversies around organisations&rsquo; use of machine learning applications has resulted in significant backlash driven by affected groups as the introduction of a raft of legislation to force greater transparency and accountability. This has forced many organisations to, rightly, consider avenues for assessing the socio-technical impact of their applications – not just the performance metrics of the underlying models. This isn&rsquo;t a minor undertaking. For one thing, it requires organisations to consider impacted groups that aren&rsquo;t the primary target users of the product. For another, it requires them to work out ways of mitigating the negative impact as well offering avenues of redress. Often, these considerations aren&rsquo;t accommodated within the development and operational processes of many organisations. Algorithmic audits and AI Bias bounties are two approaches that have emerged to fill this gap. This month I have been reading two reports exploring these approaches – <a href="https://www.ajl.org/bugs">Bug Bounties for Algorithmic Bias?</a> by Algorithmic Justice League (AJL) and <a href="https://www.adalovelaceinstitute.org/report/algorithmic-accountability-public-sector/">Algorithmic Accountability for the Public Sector</a> by the Ada Lovelace Institute.  — <em>Ade</em></p>
+<p><a href="https://huyenchip.com/2022/02/07/data-distribution-shifts-and-monitoring.html">Data Distribution Shifts and Monitoring</a></p>
+<p>Chip Huyen is at it again with another fantastic piece focused on ML system failure types, model &amp; data drift, and observability. The article details the fact that most production ML failures are actually not specific to ML, but rather are attributed to general software system issues — “Because of the importance of traditional software engineering skills in deploying ML systems, the majority of ML engineering is engineering, not ML”.</p>
+<p>Even though they account for just a small portion of all production failures, ML-specific failures can be more dangerous than non-ML failures because they’re harder to detect and correct. Chip goes on to provide a comprehensive and detailed review of production ML failure modes that I wish I had available when researching and writing our report on <a href="https://concept-drift.fastforwardlabs.com/"><em>Inferring Concept Drift Without Labeled Data</em></a>. This is a must read for anyone interested in or responsible for managing models in production. — <a href="https://twitter.com/andrewrreed"><em>Andrew</em></a></p>
+<p><a href="https://openai.com/blog/language-model-safety-and-misuse/">Lessons Learned on Language Model Safety and Misuse</a></p>
+<p>When it first emerged from the academic world in 2020, GPT-3, then the largest language model ever trained, was kept behind closed doors for fear that its uncannily human-sounding generated text could cause irreparable harms. Due to these safety concerns, the model’s developers at OpenAI provided only limited access to the model’s outputs through an API. During this beta period, the OpenAI team has continuously evaluated their approach to deployment, as well as the model and its usage. This post summarizes some of the lessons their team has learned around safely deploying large language models and mitigating their misuse (<em>spoiler alert: there’s no silver bullet</em>).  They also recently ended the waitlist for access to the OpenAI API (which includes GPT-3 and Codex), allowing more researchers and developers access to these technologies. OpenAI has a track record for being thoughtful about AI stewardship so this development will surely yield a new round of lessons to learn in responsible deployment. — <em><a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></em></p>
+
+  </div>
+
+
