@@ -62,6 +62,13 @@ img = "ff12-combo.png"
 link = "https://ff12.fastforwardlabs.com"
 
 [[entries]]
+number = "FF11"
+name = "Transfer Learning for Natural Language Processing"
+blurb = "Natural language processing (NLP) technologies using deep learning can translate language, answer questions, and generate human-like text But these deep learning techniques require large, costly labeled datasets, expensive infrastructure, and scarce expertise. Transfer learning lifts these constraints by reusing and adapting a model’s understanding of language. Transfer learning is a good fit for any NLP application. In this report, we show how to use transfer learning to build high-performance NLP systems with minimal resources."
+img = "ff11-combo.png"
+link = "https://transfer-learning.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF10"
 name = "Learning with Limited Labeled Data"
 blurb = "Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. This report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly. Active learning reduces the number of labeled examples required to train a model, saving time and money while obtaining comparable performance to models trained with much more data. With active learning, enterprises can leverage their large pool of unlabeled data to open up new product possibilities."
