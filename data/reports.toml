@@ -83,6 +83,13 @@ img = "ff09-combo.png"
 link = "https://federated.fastforwardlabs.com/"
 
 [[entries]]
+number = "FF07"
+name = "Semantic Recommendations"
+blurb = "The internet has given us an avalanche of options for what to read, watch and buy. Because of this, recommendation algorithms, which find items that will interest a particular person, are more important than ever. In this report we explore recommendation systems that make use of the semantic content of items and users to deliver richer recommendations across multiple industries."
+img = "ff07-combo.png"
+link = "https://semantic-recommendations.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF04"
 name = "Summarization"
 blurb = "This report explores methods for extractive summarization, a capability that allows one to automatically summarize documents.  This technique has a wealth of applications: from the ability to distill thousands of product reviews, extract the most important content from long news articles, or automatically cluster customer bios into personas."
