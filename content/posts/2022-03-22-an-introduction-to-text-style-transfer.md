@@ -8,6 +8,21 @@ post_type: Post
 # external_url:
 ---
 
+<div  class="tldr"> 
+  <span class="textbold">Blog Series</span>
+  This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <ul>
+        <li> <a href="/2022/03/22/an-introduction-to-text-style-transfer.html" class=""> Part 1: An Introduction to Text Style Transfer </a> 
+        </li>
+        <li> <a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html" class="">  Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers </a>
+        </li>
+        <li> <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class=""> Part 3: Automated Metrics for Evaluating Text Style Transfer </a>
+        </li>
+    </ul>
+  </div>
+</div>
+
 Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text -- of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language -- _style_.
 
 Consider the fictitious scenario where you engage an AI-powered chatbot to assist you with a shopping return for a damaged item. After sharing your intent with the bot, it responds with either of the following generated messages:
