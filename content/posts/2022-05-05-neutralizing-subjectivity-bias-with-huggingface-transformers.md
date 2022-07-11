@@ -198,8 +198,8 @@ We look forward to exploring these ideas, documenting our progress, and releasin
 
 ## References
 
-[^1]: https://arxiv.org/pdf/1911.09709.pdf "Automatically Neutralizing Subjective Bias in Text"
-[^2]: https://en.wikipedia.org/wiki/Wikipedia:Neutral_point_of_view "Wikipedia:Neutral point of view"
-[^3]: https://en.wikipedia.org/wiki/Wikipedia:NPOV_means_neutral_editing,_not_neutral_content "Wikipedia:NPOV means neutral editing, not neutral content"
-[^4]: https://aclanthology.org/P13-1162.pdf "Linguistic Models for Analyzing and Detecting Biased Language"
-[^5]: https://arxiv.org/pdf/1910.13461.pdf "BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension"
+[^1]: [Automatically Neutralizing Subjective Bias in Text](https://arxiv.org/pdf/1911.09709.pdf)
+[^2]: [Wikipedia:Neutral point of view](https://en.wikipedia.org/wiki/Wikipedia:Neutral_point_of_view)
+[^3]: [Wikipedia: NPOV means neutral editing, not neutral content](https://en.wikipedia.org/wiki/Wikipedia:NPOV_means_neutral_editing,_not_neutral_content)
+[^4]: [Linguistic Models for Analyzing and Detecting Biased Language](https://aclanthology.org/P13-1162.pdf)
+[^5]: [BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension](https://arxiv.org/pdf/1910.13461.pdf)
