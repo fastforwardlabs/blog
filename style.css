@@ -301,10 +301,10 @@ code.has-jax {
 }
 
 div.tldr{
-  border-bottom: 1px dashed grey; 
+  border: 1px dashed grey; 
   background-color:#E5E5E5; 
-  padding: 10px; 
-  margin-bottom:10px
+  padding: 10px;
+  margin-bottom:10px;
 }
 
 a.postlink{
@@ -321,4 +321,5 @@ a.postlink:hover{
 
 span.textbold{
   font-weight: bold;
+  font-style: italic;
 }

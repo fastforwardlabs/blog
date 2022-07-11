@@ -9,8 +9,8 @@
     
 <title>An Introduction to Text Style Transfer</title>
 <meta property="og:title" content="An Introduction to Text Style Transfer">
-<meta property="description" content="Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &ndash; style.">
-<meta property="og:description" content="Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &ndash; style.">
+<meta property="description" content="Blog Series This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success.">
+<meta property="og:description" content="Blog Series This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success.">
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/parallel_nonparallel-1647959058.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2022/03/22/an-introduction-to-text-style-transfer.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -76,7 +76,21 @@ if (!doNotTrack) {
       </span>
     </h5>
     <h1>An Introduction to Text Style Transfer</h1>
-    <p>Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &ndash; <em>style</em>.</p>
+    <div  class="tldr"> 
+  <span class="textbold">Blog Series</span>
+  This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <ul>
+        <li> <a href="/2022/03/22/an-introduction-to-text-style-transfer.html" class=""> Part 1: An Introduction to Text Style Transfer </a> 
+        </li>
+        <li> <a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html" class="">  Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers </a>
+        </li>
+        <li> <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class=""> Part 3: Automated Metrics for Evaluating Text Style Transfer </a>
+        </li>
+    </ul>
+  </div>
+</div>
+<p>Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &ndash; <em>style</em>.</p>
 <p>Consider the fictitious scenario where you engage an AI-powered chatbot to assist you with a shopping return for a damaged item. After sharing your intent with the bot, it responds with either of the following generated messages:</p>
 <ol>
 <li>“Give me a picture of the damage.”</li>
@@ -101,19 +115,19 @@ if (!doNotTrack) {
 <h2 id="what-is-style">What is style?</h2>
 <p>In order to frame a discussion around methods for automatically transferring style between two pieces of text, we must first establish some shared understanding of what <em>style</em> actually is and its distinction from <em>content</em>. In general, there are two schools of thought for teasing these apart - a <em>linguistic</em> definition of style and a <em>data-driven</em> definition of style.</p>
 <p>The basic idea from a linguistic point-of-view is that a text’s style may be defined as <em>how</em> the author chose to express their content, from among many possible ways of doing so. We can therefore contrast the <em>how</em> of a text (style) from the <em>what</em> (content). Linguists look at hand-selected sets of content-independent features (stylistic devices) such as parts-of-speech, syntactic structures, and clause/sentence complexity measures, that in aggregate, can convey a particular style<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. For example, the style attribute of <em>formality</em> is often associated with complex sentence structure, proper punctuation, use of third-person voice, and exclusion of contractions (e.g. you’re, won’t) and abbreviations (e.g TV, photos, SKU). While straightforward to interpret, this “rules-based” definition of style actually constrains what can constitute a style (or not a style) to the known set of stylistic devices that exist.</p>
-<p>In contrast, the data-driven definition of style assumes a more generalized approach. In this paradigm, given any two corpora, content is the invariance between them, whereas style is the variance<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. If we think of the linguistic definition of style as a <em>handcrafted</em> set of features, then the data-driven definition is a <em>learned</em> set of features. This simple definition of style opens the door to a broader range of indicators that may comprise style outside of just those that linguists have terms for. Of course, this comes with a tradeoff in interpretability as we lose the ability to attribute aspects of style to meaningful, explainable linguistic devices (like use of contractions or abbreviations).</p>
+<p>In contrast, the data-driven definition of style assumes a more generalized approach. In this paradigm, given any two corpora, content is the invariance between them, whereas style is the variance<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. If we think of the linguistic definition of style as a <em>handcrafted</em> set of features, then the data-driven definition is a <em>learned</em> set of features. This simple definition of style opens the door to a broader range of indicators that may comprise style outside of just those that linguists have terms for. Of course, this comes with a tradeoff in interpretability as we lose the ability to attribute aspects of style to meaningful, explainable linguistic devices (like use of contractions or abbreviations).</p>
 <p>This data-driven definition also encompasses more diverse style attribute types including those where style itself is determined not just by linguistic devices, but also by actual words and topic preferences. For instance, if we analyze our chatbot example from earlier, we could intuit that formulating a sentence as a question rather than a statement lends itself to politeness - something that both the linguistic <em>and</em> data-driven definitions of style could model. However, we could also correctly intuit that the use of the word “please” is indicative of more polite expression &ndash; something that the linguistic approach would exclude (because the word “please” isn’t a content-independent feature), but the data-driven approach would capture.</p>
 <p>Deep learning architectures commonly used for language modeling today excel at distilling semantic meaning in generalized ways. For that reason, most recent TST work adopts this more encompassing, data-driven definition of style.</p>
 <h2 id="use-cases">Use cases</h2>
 <p>Text style transfer has many immediate applications in real world use cases today. It also has the potential to support various adjacent NLP tasks like improving data augmentation. Please refer to <a href="https://arxiv.org/pdf/2011.00416.pdf">this survey paper</a> that expands upon the following use cases and more.</p>
 <h3 id="persona-consistent-dialog-generation">Persona-consistent dialog generation</h3>
-<p>As we’ve already seen, text style transfer can play a critical role in making human-computer interaction more user-centric. People prefer a distinct and consistent persona (e.g. polite, empathetic, etc.) instead of emotionless or inconsistent persona<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>. Some people appeal more to humor vs. candor vs. drama. TST models could augment NLG pipelines to deliver personalized dialog on an individual user basis.</p>
+<p>As we’ve already seen, text style transfer can play a critical role in making human-computer interaction more user-centric. People prefer a distinct and consistent persona (e.g. polite, empathetic, etc.) instead of emotionless or inconsistent persona<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Some people appeal more to humor vs. candor vs. drama. TST models could augment NLG pipelines to deliver personalized dialog on an individual user basis.</p>
 <h3 id="intelligent-writing-assistants">Intelligent writing assistants</h3>
 <p>Another industrial application of TST is to enhance the human writing experience. Authors could draft once, but automatically restyle that content to appeal to a variety of audiences - making their ideas more Shakespearean, polite, objective, humorous, or professional.</p>
 <h3 id="text-simplification">Text simplification</h3>
-<p>An inspiring use case for TST is to facilitate better communication between expert and non-expert individuals in certain knowledge domains. For example, automatically simplifying complicated legal, medical, or technical jargon into digestible terminology that a layperson can comprehend, or even lowering language barriers for non-native speakers<sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup>.</p>
+<p>An inspiring use case for TST is to facilitate better communication between expert and non-expert individuals in certain knowledge domains. For example, automatically simplifying complicated legal, medical, or technical jargon into digestible terminology that a layperson can comprehend, or even lowering language barriers for non-native speakers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
 <h3 id="neutralizing-subjectivity">Neutralizing subjectivity</h3>
-<p>Subjective messaging in the form of framing, presupposing truth, and casting doubt is ubiquitous in all forms of writing. For certain texts where objectivity is strongly desired - like news, encyclopedias, textbooks - text style transfer could potentially offer a means to neutralize subjective attitudes<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>.</p>
+<p>Subjective messaging in the form of framing, presupposing truth, and casting doubt is ubiquitous in all forms of writing. For certain texts where objectivity is strongly desired - like news, encyclopedias, textbooks - text style transfer could potentially offer a means to neutralize subjective attitudes<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
 <h2 id="challenges-and-considerations">Challenges and considerations</h2>
 <p>While the idea of modeling the style of text is not new, it has regained attention in the NLP research community with the advent of Transformer models, and consequently a variety of neural methods for automating the task have been recently proposed. This section will explore some of these approaches, along with the challenges and considerations associated with text style transfer in practice.</p>
 <h3 id="availability-of-usable-data">Availability of usable data</h3>
@@ -128,8 +142,8 @@ if (!doNotTrack) {
 <li><strong>Pseudo-parallel corpus construction</strong> - tries to reformulate the problem in a supervised manner by creating pseudo-parallel examples from the non-parallel dataset using various tricks such as extracting/matching similar sentences from each corpora as pairs</li>
 </ol>
 <p>At the core of all these approaches lies a fundamental question about TST: <em>Is it actually possible to disentangle style from content? Or is content itself a factor that makes up style?</em></p>
-<p>It seems the answer somewhat depends on the style attribute being considered and the definition of style adopted. For example, it has been argued that <em>politeness</em> is an interpersonal style that can be decoupled from content<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>. In contrast, it feels misguided to say that the style of <em>sentiment</em> can be separated from content when altering a sentence’s polarity from positive to negative directly changes its semantic meaning.</p>
-<p>Overall, this idea of disentangling style from content has been widely discussed in the TST community and remains an open research question<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup>.</p>
+<p>It seems the answer somewhat depends on the style attribute being considered and the definition of style adopted. For example, it has been argued that <em>politeness</em> is an interpersonal style that can be decoupled from content<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. In contrast, it feels misguided to say that the style of <em>sentiment</em> can be separated from content when altering a sentence’s polarity from positive to negative directly changes its semantic meaning.</p>
+<p>Overall, this idea of disentangling style from content has been widely discussed in the TST community and remains an open research question<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>.</p>
 <h3 id="evaluation">Evaluation</h3>
 <p>While the descriptions of parallel and non-parallel methods above may be oversimplifications of the actual approaches, it remains apparent how difficult such a task is. To add to the complexity of the problem, TST adopts all of the evaluation challenges faced in general natural language generation tasks, plus some.</p>
 <p>To fundamentally evaluate the effectiveness of a NLG output, we must quantify how semantically accurate the generated text was (i.e Did the model say the right thing?), and also how fluent the output is (i.e. Was the thing comprehensible in native language?). The accuracy metric here needs to determine how well the semantic meaning was preserved in the output. For TST specifically, we also need to ensure the target style was achieved. In the end, comprehensive TST evaluation should consider three criteria - transferred style strength, semantic preservation, and fluency - which often requires human evaluation because automated metrics alone do not adequately characterize these complex properties.</p>
@@ -145,31 +159,19 @@ if (!doNotTrack) {
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2004.14257.pdf">https://arxiv.org/pdf/2004.14257.pdf</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/pdf/2004.14257.pdf">Politeness Transfer: A Tag and Generate Approach</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2011.00416.pdf">https://arxiv.org/pdf/2011.00416.pdf</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/pdf/2011.00416.pdf">Deep Learning for Text Style Transfer: A Survey</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3" role="doc-endnote">
-<p><a href="https://www.researchgate.net/publication/253250805_The_Rest_of_the_Story_Finding_Meaning_in_Stylistic_Variation">https://www.researchgate.net/publication/253250805_The_Rest_of_the_Story_Finding_Meaning_in_Stylistic_Variation</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://www.researchgate.net/publication/253250805_The_Rest_of_the_Story_Finding_Meaning_in_Stylistic_Variation">The Rest of the Story: Finding Meaning in Stylistic Variation</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:4" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2011.00416.pdf">https://arxiv.org/pdf/2011.00416.pdf</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/pdf/1911.09709.pdf">Automatically Neutralizing Subjective Bias in Text</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:5" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2011.00416.pdf">https://arxiv.org/pdf/2011.00416.pdf</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:6" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2011.00416.pdf">https://arxiv.org/pdf/2011.00416.pdf</a> <a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:7" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/1911.09709.pdf">https://arxiv.org/pdf/1911.09709.pdf</a> <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:8" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2004.14257.pdf">https://arxiv.org/pdf/2004.14257.pdf</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:9" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/2010.12742.pdf">https://arxiv.org/pdf/2010.12742.pdf</a> <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/pdf/2010.12742.pdf">Text Style Transfer: A Review and Experimental Evaluation</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
@@ -248,6 +250,49 @@ if (!doNotTrack) {
   
     <div class="post-link" style="position: relative">
   <h5 style="margin-bottom: 4px;">
+    <span>Jul 11, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/image3-tst3.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html"
+       ><h2 style="margin-bottom: 4px;">Automated Metrics for Evaluating Text Style Transfer</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/andrewrreed">Andrew Reed</a>
+        &middot; </span
+      >
+    </span>
+    Blog Series This post serves as Part 3 of a three part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Automated Metrics for Evaluating Text Style Transfer In our previous blog post, we took an in-depth look at how to neutralize subjectivity bias in text using HuggingFace transformers.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
     <span>May 5, 2022</span> &middot;
     <span style="text-transform: capitalize;">
       post
@@ -274,7 +319,7 @@ if (!doNotTrack) {
         &middot; </span
       >
     </span>
-    Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples. From a young age, we are taught the power of rhetoric as a means to influence others with our ideas and enact change in the world. As a result, this has become society’s default tone for broadcasting ideas. And while the ultimate morality of our rhetoric depends on the underlying intent (benevolent vs.
+    Blog Series This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we'll explore text style transfer and discuss our modeling approach.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -317,7 +362,7 @@ if (!doNotTrack) {
         &middot; </span
       >
     </span>
-    Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &ndash; style.
+    Blog Series This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -453,50 +498,6 @@ if (!doNotTrack) {
     >
     
       <a href="/2021/09/22/automatic-summarization-from-textrank-to-transformers.html">...read more</a>
-    
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-  
-    <div class="post-link" style="position: relative">
-  <h5 style="margin-bottom: 4px;">
-    <span>Sep 21, 2021</span> &middot;
-    <span style="text-transform: capitalize;">
-      post
-    </span>
-  </h5>
-  
-  <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html" class="preview-image-holder">
-    <img class="preview-image" src="/images/hugo/extractabert_blog/extractivesummodel.png" />
-  </a>
-  
-  <div>
-    
-    <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html"
-       ><h2 style="margin-bottom: 4px;">Extractive Summarization with Sentence-BERT</h2></a
-     >
-     
-  </div>
-  <div class="small" style="height: 4.5em; overflow: hidden;">
-    
-    <span>
-      by 
-      <span
-        ><a href="https://twitter.com/vykthur">Victor Dibia</a>
-        &middot; </span
-      >
-    </span>
-    In extractive summarization, the task is to identify a subset of text (e.g., sentences) from a document that can then be assembled into a summary. Overall, we can treat extractive summarization as a recommendation problem. That is, given a query, recommend a set of sentences that are relevant. The query here is the document, relevance is a measure of whether a given sentence belongs in the document summary.
-How we go about obtaining this measure of relevance varies (a common dilemma for any recommendation system).
-  </div>
-  <div
-    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-    
-      <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html">...read more</a>
     
   </div>
   <div class="spacer"></div>

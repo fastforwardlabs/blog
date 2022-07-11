@@ -9,8 +9,8 @@
     
 <title>Neutralizing Subjectivity Bias with HuggingFace Transformers</title>
 <meta property="og:title" content="Neutralizing Subjectivity Bias with HuggingFace Transformers">
-<meta property="description" content="Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples. From a young age, we are taught the power of rhetoric as a means to influence others with our ideas and enact change in the world. As a result, this has become society’s default tone for broadcasting ideas. And while the ultimate morality of our rhetoric depends on the underlying intent (benevolent vs.">
-<meta property="og:description" content="Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples. From a young age, we are taught the power of rhetoric as a means to influence others with our ideas and enact change in the world. As a result, this has become society’s default tone for broadcasting ideas. And while the ultimate morality of our rhetoric depends on the underlying intent (benevolent vs.">
+<meta property="description" content="Blog Series This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we&#39;ll explore text style transfer and discuss our modeling approach.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples.">
+<meta property="og:description" content="Blog Series This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we&#39;ll explore text style transfer and discuss our modeling approach.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples.">
 <meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/fig7-tst2.png">
 <meta property="og:url" content="https://blog.fastforwardlabs.com/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html">
 <meta property="twitter:card" content="summary_large_image">
@@ -76,7 +76,21 @@ if (!doNotTrack) {
       </span>
     </h5>
     <h1>Neutralizing Subjectivity Bias with HuggingFace Transformers</h1>
-    <p>Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples. From a young age, we are taught the power of rhetoric as a means to influence others with our ideas and enact change in the world. As a result, this has become society’s default tone for broadcasting ideas. And while the ultimate morality of our rhetoric depends on the underlying intent (benevolent vs. malevolent), it is all inherently subjective.</p>
+    <div  class="tldr"> 
+  <span class="textbold">Blog Series</span>
+  This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we'll explore text style transfer and discuss our modeling approach.
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <ul>
+        <li> <a href="/2022/03/22/an-introduction-to-text-style-transfer.html" class=""> Part 1: An Introduction to Text Style Transfer </a> 
+        </li>
+        <li> <a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html" class="">  Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers </a>
+        </li>
+        <li> <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class=""> Part 3: Automated Metrics for Evaluating Text Style Transfer </a>
+        </li>
+    </ul>
+  </div>
+</div>
+<p>Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples. From a young age, we are taught the power of rhetoric as a means to influence others with our ideas and enact change in the world. As a result, this has become society’s default tone for broadcasting ideas. And while the ultimate morality of our rhetoric depends on the underlying intent (benevolent vs. malevolent), it is all inherently subjective.</p>
 <p>However, there are certain modes of communication today like textbooks, encyclopedias, and [some] news outlets that do strive for objectivity. In these contexts, bias in the form of subjectivity is considered inappropriate, yet it remains prevalent because it is our rooted, societal tone. Subjectivity bias occurs when language that should be neutral and fair is skewed by feeling, opinion, or taste (whether consciously or unconsciously)<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The presence of this type of bias concealed within a supposedly objective mode of communication has the potential to wear down our collective trust and incite social animosity as opinions are incorrectly perceived as fact.</p>
 <p>Since maintaining a neutral tone of voice is challenging and unnatural for humans, successful automation of this task has the potential to be useful for neutrality-striving authors and editors. Of course, this is no easy feat. In this blog post, we introduce our approach to automatically neutralizing subjectivity bias in text using HuggingFace transformers. Let’s dive in!</p>
 <h2 id="neutralizing-subjectivity-bias">Neutralizing Subjectivity Bias</h2>
@@ -183,19 +197,19 @@ if (!doNotTrack) {
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/1911.09709.pdf">https://arxiv.org/pdf/1911.09709.pdf</a> &ldquo;Automatically Neutralizing Subjective Bias in Text&rdquo; <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/pdf/1911.09709.pdf">Automatically Neutralizing Subjective Bias in Text</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p><a href="https://en.wikipedia.org/wiki/Wikipedia:Neutral_point_of_view">https://en.wikipedia.org/wiki/Wikipedia:Neutral_point_of_view</a> &ldquo;Wikipedia:Neutral point of view&rdquo; <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Wikipedia:Neutral_point_of_view">Wikipedia:Neutral point of view</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3" role="doc-endnote">
-<p><a href="https://en.wikipedia.org/wiki/Wikipedia:NPOV_means_neutral_editing,_not_neutral_content">https://en.wikipedia.org/wiki/Wikipedia:NPOV_means_neutral_editing,_not_neutral_content</a> &ldquo;Wikipedia:NPOV means neutral editing, not neutral content&rdquo; <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Wikipedia:NPOV_means_neutral_editing,_not_neutral_content">Wikipedia: NPOV means neutral editing, not neutral content</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:4" role="doc-endnote">
-<p><a href="https://aclanthology.org/P13-1162.pdf">https://aclanthology.org/P13-1162.pdf</a> &ldquo;Linguistic Models for Analyzing and Detecting Biased Language&rdquo; <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://aclanthology.org/P13-1162.pdf">Linguistic Models for Analyzing and Detecting Biased Language</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:5" role="doc-endnote">
-<p><a href="https://arxiv.org/pdf/1910.13461.pdf">https://arxiv.org/pdf/1910.13461.pdf</a> &ldquo;BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension&rdquo; <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/pdf/1910.13461.pdf">BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension</a> <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
@@ -215,6 +229,22 @@ if (!doNotTrack) {
   <div class="spacer"></div>
   <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
     <div>
+      
+      <div class="small">Newer</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Jul 11, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+    <div><a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html"><strong>Automated Metrics for Evaluating Text Style Transfer</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
       
     </div>
     <div>
@@ -258,6 +288,49 @@ if (!doNotTrack) {
   
     <div class="post-link" style="position: relative">
   <h5 style="margin-bottom: 4px;">
+    <span>Jul 11, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      
+    </span>
+  </h5>
+  
+  <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/image3-tst3.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html"
+       ><h2 style="margin-bottom: 4px;">Automated Metrics for Evaluating Text Style Transfer</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/andrewrreed">Andrew Reed</a>
+        &middot; </span
+      >
+    </span>
+    Blog Series This post serves as Part 3 of a three part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Automated Metrics for Evaluating Text Style Transfer In our previous blog post, we took an in-depth look at how to neutralize subjectivity bias in text using HuggingFace transformers.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
     <span>May 5, 2022</span> &middot;
     <span style="text-transform: capitalize;">
       post
@@ -284,7 +357,7 @@ if (!doNotTrack) {
         &middot; </span
       >
     </span>
-    Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples. From a young age, we are taught the power of rhetoric as a means to influence others with our ideas and enact change in the world. As a result, this has become society’s default tone for broadcasting ideas. And while the ultimate morality of our rhetoric depends on the underlying intent (benevolent vs.
+    Blog Series This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we'll explore text style transfer and discuss our modeling approach.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Subjective language is all around us &ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -327,7 +400,7 @@ if (!doNotTrack) {
         &middot; </span
       >
     </span>
-    Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success. Success here is typically measured by the accuracy (Did the model produce a correct response?) and fluency (Is the output coherent in the native language?) of the generated text. While these two measures of success are of top priority, they neglect a fundamental aspect of language &ndash; style.
+    Blog Series This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &ndash; of course, with varying degrees of success.
   </div>
   <div
     style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -463,50 +536,6 @@ if (!doNotTrack) {
     >
     
       <a href="/2021/09/22/automatic-summarization-from-textrank-to-transformers.html">...read more</a>
-    
-  </div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-</div>
-
-
-  
-    <div class="post-link" style="position: relative">
-  <h5 style="margin-bottom: 4px;">
-    <span>Sep 21, 2021</span> &middot;
-    <span style="text-transform: capitalize;">
-      post
-    </span>
-  </h5>
-  
-  <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html" class="preview-image-holder">
-    <img class="preview-image" src="/images/hugo/extractabert_blog/extractivesummodel.png" />
-  </a>
-  
-  <div>
-    
-    <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html"
-       ><h2 style="margin-bottom: 4px;">Extractive Summarization with Sentence-BERT</h2></a
-     >
-     
-  </div>
-  <div class="small" style="height: 4.5em; overflow: hidden;">
-    
-    <span>
-      by 
-      <span
-        ><a href="https://twitter.com/vykthur">Victor Dibia</a>
-        &middot; </span
-      >
-    </span>
-    In extractive summarization, the task is to identify a subset of text (e.g., sentences) from a document that can then be assembled into a summary. Overall, we can treat extractive summarization as a recommendation problem. That is, given a query, recommend a set of sentences that are relevant. The query here is the document, relevance is a measure of whether a given sentence belongs in the document summary.
-How we go about obtaining this measure of relevance varies (a common dilemma for any recommendation system).
-  </div>
-  <div
-    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-    >
-    
-      <a href="/2021/09/21/extractive-summarization-with-sentence-bert.html">...read more</a>
     
   </div>
   <div class="spacer"></div>
