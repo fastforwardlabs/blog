@@ -1,12 +1,14 @@
 ---
 title: "Automated Metrics for Evaluating Text Style Transfer"
 date: 2022-07-11T15:29:52
-author: Andrew Reed
-author_link: https://twitter.com/andrewrreed
+author: Andrew & Melanie
+author_link:
 preview_image: /images/hugo/image3-tst3.png
 post_type:
 # external_url:
 ---
+
+By _[Andrew Reed](https://twitter.com/andrewrreed)_ and _[Melanie Beck](https://www.linkedin.com/in/melanierbeck/)_
 
 <div  class="tldr"> 
   <span class="textbold">Blog Series</span>
