@@ -61,7 +61,7 @@ In order to frame a discussion around methods for automatically transferring sty
 
 The basic idea from a linguistic point-of-view is that a text’s style may be defined as _how_ the author chose to express their content, from among many possible ways of doing so. We can therefore contrast the _how_ of a text (style) from the _what_ (content). Linguists look at hand-selected sets of content-independent features (stylistic devices) such as parts-of-speech, syntactic structures, and clause/sentence complexity measures, that in aggregate, can convey a particular style[^3]. For example, the style attribute of _formality_ is often associated with complex sentence structure, proper punctuation, use of third-person voice, and exclusion of contractions (e.g. you’re, won’t) and abbreviations (e.g TV, photos, SKU). While straightforward to interpret, this “rules-based” definition of style actually constrains what can constitute a style (or not a style) to the known set of stylistic devices that exist.
 
-In contrast, the data-driven definition of style assumes a more generalized approach. In this paradigm, given any two corpora, content is the invariance between them, whereas style is the variance[^4]. If we think of the linguistic definition of style as a _handcrafted_ set of features, then the data-driven definition is a _learned_ set of features. This simple definition of style opens the door to a broader range of indicators that may comprise style outside of just those that linguists have terms for. Of course, this comes with a tradeoff in interpretability as we lose the ability to attribute aspects of style to meaningful, explainable linguistic devices (like use of contractions or abbreviations).
+In contrast, the data-driven definition of style assumes a more generalized approach. In this paradigm, given any two corpora, content is the invariance between them, whereas style is the variance[^2]. If we think of the linguistic definition of style as a _handcrafted_ set of features, then the data-driven definition is a _learned_ set of features. This simple definition of style opens the door to a broader range of indicators that may comprise style outside of just those that linguists have terms for. Of course, this comes with a tradeoff in interpretability as we lose the ability to attribute aspects of style to meaningful, explainable linguistic devices (like use of contractions or abbreviations).
 
 This data-driven definition also encompasses more diverse style attribute types including those where style itself is determined not just by linguistic devices, but also by actual words and topic preferences. For instance, if we analyze our chatbot example from earlier, we could intuit that formulating a sentence as a question rather than a statement lends itself to politeness - something that both the linguistic _and_ data-driven definitions of style could model. However, we could also correctly intuit that the use of the word “please” is indicative of more polite expression -- something that the linguistic approach would exclude (because the word “please” isn’t a content-independent feature), but the data-driven approach would capture.
 
@@ -73,7 +73,7 @@ Text style transfer has many immediate applications in real world use cases toda
 
 ### Persona-consistent dialog generation
 
-As we’ve already seen, text style transfer can play a critical role in making human-computer interaction more user-centric. People prefer a distinct and consistent persona (e.g. polite, empathetic, etc.) instead of emotionless or inconsistent persona[^5]. Some people appeal more to humor vs. candor vs. drama. TST models could augment NLG pipelines to deliver personalized dialog on an individual user basis.
+As we’ve already seen, text style transfer can play a critical role in making human-computer interaction more user-centric. People prefer a distinct and consistent persona (e.g. polite, empathetic, etc.) instead of emotionless or inconsistent persona[^2]. Some people appeal more to humor vs. candor vs. drama. TST models could augment NLG pipelines to deliver personalized dialog on an individual user basis.
 
 ### Intelligent writing assistants
 
@@ -81,7 +81,7 @@ Another industrial application of TST is to enhance the human writing experience
 
 ### Text simplification
 
-An inspiring use case for TST is to facilitate better communication between expert and non-expert individuals in certain knowledge domains. For example, automatically simplifying complicated legal, medical, or technical jargon into digestible terminology that a layperson can comprehend, or even lowering language barriers for non-native speakers[^6].
+An inspiring use case for TST is to facilitate better communication between expert and non-expert individuals in certain knowledge domains. For example, automatically simplifying complicated legal, medical, or technical jargon into digestible terminology that a layperson can comprehend, or even lowering language barriers for non-native speakers[^2].
 
 ### Neutralizing subjectivity
 
@@ -109,7 +109,7 @@ Because of the difficulties with parallel data, much of the ongoing research in 
 
 At the core of all these approaches lies a fundamental question about TST: _Is it actually possible to disentangle style from content? Or is content itself a factor that makes up style?_
 
-It seems the answer somewhat depends on the style attribute being considered and the definition of style adopted. For example, it has been argued that _politeness_ is an interpersonal style that can be decoupled from content[^8]. In contrast, it feels misguided to say that the style of _sentiment_ can be separated from content when altering a sentence’s polarity from positive to negative directly changes its semantic meaning.
+It seems the answer somewhat depends on the style attribute being considered and the definition of style adopted. For example, it has been argued that _politeness_ is an interpersonal style that can be decoupled from content[^1]. In contrast, it feels misguided to say that the style of _sentiment_ can be separated from content when altering a sentence’s polarity from positive to negative directly changes its semantic meaning.
 
 Overall, this idea of disentangling style from content has been widely discussed in the TST community and remains an open research question[^9].
 
@@ -135,15 +135,8 @@ Text style transfer is an exciting task that's gaining attention in the NLP rese
 
 ## References
 
-[^1]: https://arxiv.org/pdf/2004.14257.pdf
-[^2]: https://arxiv.org/pdf/2011.00416.pdf 
-[^3]: https://www.researchgate.net/publication/253250805_The_Rest_of_the_Story_Finding_Meaning_in_Stylistic_Variation 
-[^4]: https://arxiv.org/pdf/2011.00416.pdf
-[^5]: https://arxiv.org/pdf/2011.00416.pdf 
-[^6]: https://arxiv.org/pdf/2011.00416.pdf 
-[^7]: https://arxiv.org/pdf/1911.09709.pdf 
-[^8]: https://arxiv.org/pdf/2004.14257.pdf 
-[^9]:  https://arxiv.org/pdf/2010.12742.pdf 
-
-
-
+[^1]: [Politeness Transfer: A Tag and Generate Approach](https://arxiv.org/pdf/2004.14257.pdf)
+[^2]: [Deep Learning for Text Style Transfer: A Survey](https://arxiv.org/pdf/2011.00416.pdf)
+[^3]: [The Rest of the Story: Finding Meaning in Stylistic Variation](https://www.researchgate.net/publication/253250805_The_Rest_of_the_Story_Finding_Meaning_in_Stylistic_Variation)
+[^7]: [Automatically Neutralizing Subjective Bias in Text](https://arxiv.org/pdf/1911.09709.pdf)
+[^9]: [Text Style Transfer: A Review and Experimental Evaluation](https://arxiv.org/pdf/2010.12742.pdf)
