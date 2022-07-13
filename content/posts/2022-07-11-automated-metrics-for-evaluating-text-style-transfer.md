@@ -2,7 +2,7 @@
 title: "Automated Metrics for Evaluating Text Style Transfer"
 date: 2022-07-11T15:29:52
 author: Andrew & Melanie
-author_link:
+# author_link:
 preview_image: /images/hugo/image3-tst3.png
 post_type:
 # external_url:
@@ -136,7 +136,7 @@ Next (3), the content-only texts are passed through a generic, pre-trained Sente
 
 ### Considerations
 
-While the high-level reasoning behind our implementations of STI and CPS make logical sense, there are nuances to the implementation that create room for error and jeopardize their effectiveness in measuring text style transfer. We discuss these considerations below and recognize their importance as focus areas for future research.
+While the high-level reasoning behind our implementations of STI and CPS make logical sense, there are nuances to the implementation that create room for error and jeopardize their effectiveness in measuring text style transfer. This is true of all automated metrics, and so we discuss these considerations below and recognize their importance as focus areas for future research.
 
 #### Experimentally determining CPS parameters
 
@@ -145,7 +145,7 @@ To determine a default attribution threshold and masking strategy for our CPS me
 ![](/images/hugo/image2-tst3.png)
 **Figure 5:** Content preservation score distributions across various experimental settings for _style threshold_ and _masking strategy_.
 
-We found that for each incremental threshold value, token removal produces a slightly higher CPS score than replacement with “[PAD]” token. We also see that regardless of the parameter combination, all cases result in a lower median similarity score than had no style-masking been applied at all. This makes sense because the more tokens we mask, the more opportunity there is to erroneously remove a piece of content instead of a stylistic element.
+We found that for each incremental threshold value, token removal produces a slightly higher average CPS score than replacement with “[PAD]” token. We also see that regardless of the parameter combination, all cases result in a lower median similarity score than had no style-masking been applied at all (see far right column in Figure 5). This makes sense because the more tokens we mask, the more opportunity there is to erroneously remove a piece of content instead of a stylistic element.
 
 The only true way to determine the “best” parameter combination is to look at how CPS correlates with human evaluated scores. However, since we don’t have access to manual evaluation scores, we select the combination that produces the highest outright CPS, which happens to be the case with no-style masking. For this reason, our CPS metric logic boils down to simply comparing SentenceBERT embeddings with cosine similarity, a similar landing place that others[^1][^5][^7] have also arrived at.
 
@@ -155,9 +155,9 @@ Manual error analysis has revealed that our classifier-based attribution scores 
 
 Both of the metrics we’ve implemented depend on the availability of a well-fit style classification model. This requirement translates to the need for labeled data. And while this isn’t an issue for parallel TST tasks, it becomes a non-starter for the vast majority of style attributes where parallel data isn’t available.
 
-Even when parallel data is available, it's imperative that the trained model is performant. As we’ll see in a later section, data quality issues can result in a poorly fit model. Since the STI metric is built directly on classifier distribution outputs, it is apparent that errors with the model will surface as errors in the style metric.
+Even when parallel data is available, it's imperative that the trained model is performant. As we’ll see in a later section, data quality issues can lead to a classifier that learns patterns that are unrepresentative of the true target attribute and result in an error-prone model. Since the STI metric is built directly on classifier distribution outputs, it is apparent that errors with the model will surface as errors in the style metric.
 
-Similarly, the CPS metric uses the word attributions that are derived from the classifier as the basis for style token masking. If the model learns incorrect relationships between features and style classes, errors in word attribution scores cause the wrong tokens to be masked. Unfortunately, there is minimal tolerance for error in style masking because incorrectly masking a content-related token (e.g. proper noun) can completely alter the semantics, producing a very low similarity score.
+Similarly, the CPS metric uses the word attributions that are derived from the classifier as the basis for style token masking. If the model learns incorrect relationships between features and style classes, errors in word attribution scores can cause the wrong tokens to be masked. Unfortunately, there is minimal tolerance for error in style masking because incorrectly masking a content-related token (e.g. proper noun) can completely alter the semantics, producing a very low similarity score.
 
 #### Style token selection
 
@@ -200,14 +200,14 @@ We analyze edge cases of mismatched performance between the model outputs and gr
 
 ![](/images/hugo/image7-tst3.png)
 
-**Figure 7:** Sample WNC pairs that demonstrate cases where target_cps >> predicted_cps (1-3) and target_cps << predicted_cps (4).
+**Figure 7:** Sample WNC pairs that demonstrate common themes around the CPS metric. Specifically, cases where target_cps >> predicted_cps (1-3) and target_cps << predicted_cps (4).
 
-From Figure 7, we see that examples 1-3 highlight the scenario where the ground truth annotation preserves content much better (as defined by CPS) than the model’s output, and the opposite for example 4. These examples demonstrate common themes we’ve found through our error analysis:
+From Figure 7, we see that examples 1-3 highlight the scenario where the ground truth annotation preserves content much better (as defined by CPS) than the model’s output, and the opposite for example 4. These examples demonstrate common themes (numerically matched below) that we’ve found through our error analysis.
 
 1. **_The BART model tends toward brevity -_** The trained seq2seq model has learned that omission of content is generally a good tactic for reducing subjectivity. This is seen in the example above where the model selects an abbreviated version of the input. Because the model omits part of the content (i.e. “being the most successful club”), our CPS metric punishes the score relative to the ground truth.
 2. **_SentenceBERT penalizes missing content -_** As expected, SentenceBERT embedding similarity captures the omission of important words. In this example, the prediction is penalized for dropping the important subject “Denmark”.
-3. **_CPS fails when style tokens are the difference -_** In contrast with example #2, our CPS metric fails when the omitted words are actually style related. In this example, CPS produces a disagreeably low score for the prediction as compared to the ground truth despite it largely retaining the semantic meaning. This example demonstrates the imperative of isolating style elements from content.
-4. **_Factual edits are unfair -_** In this example, our model generated text produces a much higher CPS than the ground truth. This is due to the annotator's introduction of new facts, or out-of-context information, that the model should not be expected to produce. We consider edits of this type to be outside the scope of our intended modeling task.
+3. **_CPS fails when style tokens are the difference -_** In contrast with example #2, our CPS metric fails when the omitted words (“most serious”) are actually style related. In this example, CPS produces a disagreeably low score for the prediction as compared to the ground truth despite it largely retaining the semantic meaning. This example demonstrates the imperative of isolating style elements from content. Had we removed the subject modifier “most serious”, our CPS would better reflect the high semantic overlap.
+4. **_Factual edits are out-of-scope -_** In this example, our model generated text produces a much higher CPS than the ground truth. This is due to the annotator's introduction of new facts, or out-of-context information, that the model should not be expected to produce. We consider edits of this type to be outside the scope of our intended modeling task.
 
 Overall, we see that our CPS metric has its strengths and weaknesses. We believe this metric is useful for providing a general indication of content preservation because low scores truly mark dissimilar content. However, this metric lacks marginal specificity and struggles to quantify small differences in content with accuracy.
 
@@ -221,12 +221,12 @@ Unlike CPS, style transfer intensity ranges from -1 to 1 because movements away 
 However, there is a clear discrepancy between the distributions at STI value of 0. Here we see a significant number of generations that result in no change in style -- meaning the model simply repeats the input as output. This implies that model is conservative in nature (i.e. refrains from making unsure edits) and explains the lower median STI score for the source-to-target population (0.19 vs. 0.24)
 
 ![](/images/hugo/image1-tst3.png)
-**Figure 9:** Sample WNC pairs that demonstrate cases where target_sti << 0 (1), target_sti >> pred_sti (2-3), and target_sti << pred_sti (4).
+**Figure 9:** Sample WNC pairs that demonstrate common themes around the STI metric. Specifcally, cases where target_sti < 0 (1), target_sti >> pred_sti (2-3), and target_sti << pred_sti (4).
 
-Like in the CPS analysis, we can look at edge cases shown in Figure 9 to draw conclusions about model and metric quality.
+Like in the CPS analysis, we can look at edge cases shown in Figure 9 to highlight themes about model and metric quality.
 
 1. **_Incorrect target annotations -_** Figure 8 reveals that there are examples where the ground truth STI score is negative -- implying that the ground truth annotation is more subjective than the source, which we can verify by looking at this first example. We see that the target text introduces the subjective modifier “flawed”, which is clearly a labeling error. There are quite a few of these data quality issues that should be investigated and corrected in the dataset for future work.
-2. **_BART can be partially correct -_** As shown here, there are many instances where the style transfer model correctly edits one instance of subjectivity in a sentence, but misses additional occurrences.
+2. **_BART can be partially correct -_** As shown here, there are many instances where the style transfer model correctly edits one instance of subjectivity in a sentence (e.g. removes “prestigious”), but misses additional occurrences (e.g. “moving”).
 3. **_Classifier error surfaces in STI metric -_** As discussed previously, STI depends on the quality of the style classification model. This example shows where the classifier incorrectly associates “grammy nominated” as a subjective modifier, when in fact the modifier phrase consists of neutral content.
 4. **_BART sometimes does better than ground truth -_** By inspecting cases where target_sti &lt;< pred_sti, we find examples where the fine-tuned style transfer model legitimately outperforms the ground truth -- a hopeful insight into the potential usefulness of the model.
 
