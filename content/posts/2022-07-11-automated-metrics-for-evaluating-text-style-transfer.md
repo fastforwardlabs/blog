@@ -4,7 +4,7 @@ date: 2022-07-11T15:29:52
 author: Andrew & Melanie
 # author_link:
 preview_image: /images/hugo/image3-tst3.png
-post_type:
+post_type: Post
 # external_url:
 ---
 
