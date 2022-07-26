@@ -230,6 +230,12 @@ Like in the CPS analysis, we can look at edge cases shown in Figure 9 to highlig
 3. **_Classifier error surfaces in STI metric -_** As discussed previously, STI depends on the quality of the style classification model. This example shows where the classifier incorrectly associates “grammy nominated” as a subjective modifier, when in fact the modifier phrase consists of neutral content.
 4. **_BART sometimes does better than ground truth -_** By inspecting cases where target_sti &lt;< pred_sti, we find examples where the fine-tuned style transfer model legitimately outperforms the ground truth -- a hopeful insight into the potential usefulness of the model.
 
+#### Interpreting the STI metric
+
+Style transfer intensity, as defined above, produces a directional magnitude indicating the distributional shift between style classifications from an input and output text. While this is a useful metric, it is difficult to compare across examples because the value is not normalized. For example, an STI score of 0.1 appears to be a weak indication of style transfer. But if that score corresponds to a distribution shift from [0.1, 0.9] to [0.0, 1.0], it actually represents the maximum possible shift in style because the distribution only had little room for improvement. Therefore, what appears to be a low STI score actually captured 100% of the possible target style gap. It would make little sense to put this example on the same footing as a distribution shift from [0.9, 0.1] to [0.8, 0.2].
+
+This highlights the fact that STI should be measured relative to the total _potential_ for style transfer. For this reason, we recommend representing STI as a percentage of the total possible, directionally corrected STI gain. If the output text distribution moves closer towards the target style class, the metric represents the percentage of the possible _target_ style distribution that was captured. If output text distribution moves further from the target style class, the metric represents the percentage of the possible _source_ style distribution that was captured.
+
 ## Wrapping up
 
 In this post, we took a close look at what it means to comprehensively evaluate text style transfer and the associated challenges in doing so. We proposed a set of metrics that aim to quantify transferred style strength and content preservation. Through our metric development process, we got a first hand look at the tradeoffs that exist when substituting manual, human evaluation for an automated proxy.
