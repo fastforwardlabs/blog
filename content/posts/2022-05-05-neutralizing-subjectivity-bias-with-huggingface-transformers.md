@@ -10,7 +10,7 @@ post_type: Post
 
 <div  class="tldr"> 
   <span class="textbold">Blog Series</span>
-  This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we'll explore text style transfer and discuss our modeling approach.
+  This post serves as Part 2 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.
   <div style="margin-top:10px; border-top: 1px dashed grey"> 
     <ul>
         <li> <a href="/2022/03/22/an-introduction-to-text-style-transfer.html" class=""> Part 1: An Introduction to Text Style Transfer </a> 
@@ -18,6 +18,8 @@ post_type: Post
         <li> <a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html" class="">  Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers </a>
         </li>
         <li> <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class=""> Part 3: Automated Metrics for Evaluating Text Style Transfer </a>
+        </li>
+        <li> <a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html" class=""> Part 4: Ethical Considerations When Designing an NLG System </a>
         </li>
     </ul>
   </div>

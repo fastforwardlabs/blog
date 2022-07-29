@@ -12,7 +12,7 @@ By _[Andrew Reed](https://twitter.com/andrewrreed)_ and _[Melanie Beck](https://
 
 <div  class="tldr"> 
   <span class="textbold">Blog Series</span>
-  This post serves as Part 3 of a three part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.
+  This post serves as Part 3 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.
   <div style="margin-top:10px; border-top: 1px dashed grey"> 
     <ul>
         <li> <a href="/2022/03/22/an-introduction-to-text-style-transfer.html" class=""> Part 1: An Introduction to Text Style Transfer </a> 
@@ -21,11 +21,11 @@ By _[Andrew Reed](https://twitter.com/andrewrreed)_ and _[Melanie Beck](https://
         </li>
         <li> <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class=""> Part 3: Automated Metrics for Evaluating Text Style Transfer </a>
         </li>
+        <li> <a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html" class=""> Part 4: Ethical Considerations When Designing an NLG System </a>
+        </li>
     </ul>
   </div>
 </div>
-
-# Automated Metrics for Evaluating Text Style Transfer
 
 In [our previous blog post](https://blog.fastforwardlabs.com/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html), we took an in-depth look at how to neutralize subjectivity bias in text using HuggingFace transformers. Specifically, we saw how to fine-tune a conditional language model ([BART-base](https://huggingface.co/facebook/bart-base)) on the [Wiki Neutrality Corpus (WNC)](https://arxiv.org/pdf/1911.09709.pdf) and benchmarked its performance against the WNC paper authors’ modeling approach on a subset of the dataset which only included one-word edits.
 
