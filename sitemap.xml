@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2022-07.html</loc>
-    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2022-07-29T10:43:48+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/</loc>
+    <loc>https://blog.fastforwardlabs.com/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html</loc>
+    <lastmod>2022-07-29T10:43:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2022-07-29T10:43:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2022-07.html</loc>
     <lastmod>2022-07-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -19,11 +29,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html</loc>
-    <lastmod>2022-07-11T15:29:52+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2022-07-11T15:29:52+00:00</lastmod>
   </url>
   

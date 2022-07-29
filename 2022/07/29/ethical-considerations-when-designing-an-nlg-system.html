@@ -7,14 +7,12 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     
-<title>New research: Deep Learning for Image Analysis</title>
-<meta property="og:title" content="New research: Deep Learning for Image Analysis">
-<meta property="description" content="We discussed this research as part of our virtual event on Wednesday, July 24th; you can watch the replay here!
-Convolutional Neural Networks (CNNs or ConvNets) excel at learning meaningful representations of features and concepts within images. These capabilities make CNNs extremely valuable for solving problems in the image analysis domain. We can automatically identify defects in manufactured items, reducing costs associated with quality assurance processes; we can now infer depth information and reconstruct 3D maps from 2D images without additional metadata, giving new potential to urban planning as well as entertainment experiences; we can perform pixel level separation of objects in images and video with applications ranging from public safety to medical robotics; and we can perform &ldquo;super resolution&rdquo; on photo images (upscale an image up to 10x) with a trained deep-learning system reconstructing, filling in, and thus sharpening images with information that would be omitted and lost using a standard digital zoom.">
-<meta property="og:description" content="We discussed this research as part of our virtual event on Wednesday, July 24th; you can watch the replay here!
-Convolutional Neural Networks (CNNs or ConvNets) excel at learning meaningful representations of features and concepts within images. These capabilities make CNNs extremely valuable for solving problems in the image analysis domain. We can automatically identify defects in manufactured items, reducing costs associated with quality assurance processes; we can now infer depth information and reconstruct 3D maps from 2D images without additional metadata, giving new potential to urban planning as well as entertainment experiences; we can perform pixel level separation of objects in images and video with applications ranging from public safety to medical robotics; and we can perform &ldquo;super resolution&rdquo; on photo images (upscale an image up to 10x) with a trained deep-learning system reconstructing, filling in, and thus sharpening images with information that would be omitted and lost using a standard digital zoom.">
-<meta property="og:image" content="https://blog.fastforwardlabs.com/images/2019/07/Screen_Shot_2019_07_30_at_11_48_40_AM-1564575247422.png">
-<meta property="og:url" content="https://blog.fastforwardlabs.com/2019/07/22/new-research-deep-learning-for-image-analysis.html">
+<title>Ethical Considerations When Designing an NLG System</title>
+<meta property="og:title" content="Ethical Considerations When Designing an NLG System">
+<meta property="description" content="Blog Series This post serves as Part 4 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      At last, we’ve made it to the final chapter of this blog series.">
+<meta property="og:description" content="Blog Series This post serves as Part 4 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      At last, we’ve made it to the final chapter of this blog series.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/image1-tst4.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html">
 <meta property="twitter:card" content="summary_large_image">
 <script>
   MathJax = {
@@ -72,26 +70,89 @@ if (!doNotTrack) {
   <div class="spacer"></div>
   <div class="post">
     <h5 class="clear">
-      <span>Jul 22, 2019</span> &middot;
+      <span>Jul 29, 2022</span> &middot;
       <span style="text-transform: capitalize;">
-        featured post
+        post
       </span>
     </h5>
-    <h1>New research: Deep Learning for Image Analysis</h1>
-    <p><em>We discussed this research as part of our virtual event on Wednesday, July 24th; you can watch the replay <a href="https://www.cloudera.com/content/dam/www/marketing/resources/webinars/advancing-ml-with-deep-learning-and-transfer-learning.landing.html?utm_source=blog&amp;utm_medium=organic&amp;utm_term=ml&amp;utm_campaign=FFL_Showcase_Recording_AMER_Webinar_2019&amp;cid=7012H000001l3cz">here</a>!</em></p>
-<p>Convolutional Neural Networks (CNNs or ConvNets) excel at learning meaningful representations of features and concepts within images. These capabilities make CNNs extremely valuable for solving problems in the image analysis domain. We can automatically identify defects in manufactured items, reducing costs associated with quality assurance processes; we can now infer depth information and reconstruct 3D maps from 2D images without additional metadata, giving new potential to urban planning as well as entertainment experiences; we can perform pixel level separation of objects in images and video with applications ranging from public safety to medical robotics; and we can perform &ldquo;super resolution&rdquo; on photo images (upscale an image up to 10x) with a trained deep-learning system reconstructing, filling in, and thus sharpening images with information that would be omitted and lost using a standard digital zoom. It’s a long list.</p>
-<p>Historically, CNN models have been manually designed (e.g Vgg16, ResNet50, InceptionV4 etc). While these models have demonstrated accuracy beyond human capabilities for many tasks, they tend to be large (parameters, floating point operations) and inefficient.  More recently, approaches which enable the automatic discovery of model architectures (a field that is becoming known as neural architecture search or autoML) has shown promise for the discovery of high accuracy, high efficiency models. These autoML architectures, when applied to a broad range of tasks (e.g., object detection, segmentation, image generation et.c), are a recommended approach to unlock even more value for businesses.</p>
-<p><img src="/images/editor_uploads/2019-07-23-174120-graph.png" alt=""></p>
-<h5 id="the-landscape-of-competitive-deep-learning-models-for-image-analysis-we-observe-that--neural-architecture-search-automl-has-resulted-in-the-discovery-of-highly-accurate-model-architectures-at-a-fraction-of-the-costs-trainable-parameters-these-models-are-able-to-achieve-more-with-less">The landscape of competitive deep learning models for image analysis. We observe that  neural architecture search (AutoML) has resulted in the discovery of highly accurate model architectures at a fraction of the costs (trainable parameters). These models are able to achieve more with less.</h5>
-<p>In our upcoming report, we cover a variety of practical considerations relevant to deploying deep learning models for image analysis. We begin by discussing a set of image analysis tasks and offer recommendations on which models to use and why. We also explore a set of approaches for interpreting models, tools/libraries, and ethical concerns that arise.</p>
-<h3 id="prototype">Prototype</h3>
-<p><img src="/images/editor_uploads/2019-07-27-190524-convnetplayground.gif" alt=""></p>
-<h5 id="convnet-playgroundhttpsconvnetplaygroundfastforwardlabscom-is-an-interactive-visualization-for-exploring-convolutional-neural-networks-applied-to-the-task-of-semantic-image-search"><a href="https://convnetplayground.fastforwardlabs.com/#/">ConvNet Playground</a> is an interactive visualization for exploring Convolutional Neural Networks applied to the task of semantic image search.</h5>
-<p>Along with this report, we have created a prototype - <a href="https://convnetplayground.fastforwardlabs.com/#/">ConvNet Playground</a> - an interactive visualization for exploring Convolutional Neural Networks, applied to the task of semantic image search. The prototype allows users to select search configurations (datasets, models, layers, distance metrics) and interactively explore how these impact search query performance.  It allows users to ask questions such as: How does semantic search (with pretrained models) perform for given datasets? How well does each model/layer configuration capture “semantic meaning” for a given dataset? For a given search query, how does search performance compare for each model/layer configuration? What type of features/patterns are detected by various layers in a pretrained model?</p>
-<p>The  approach in this prototype is implemented in two stages (i.) we extract features from all images in our datasets using a pre-trained CNN (think VGG16, InceptionV3, etc. pre-trained on imageNet) (ii.) We compute similarity as a measure of the distance between these features.</p>
-<p><img src="/images/editor_uploads/2019-07-32-121714-semanticsmall.png" alt=""></p>
-<h5 id="to-implement-semantic-search-we-start-by-extracting-features-from-images-in-our-dataset-using-pre-trained-cnn-models-similarity-is-computed-as-the-distance-between-these-features">To implement semantic search, we start by extracting features from images in our dataset using pre-trained CNN models. Similarity is computed as the distance between these features.</h5>
-<p>Interested in a walkthrough of this prototype and learning more about other recent advances in deep learning for image analysis? We discussed this research as part of our virtual event on Wednesday, July 24th; you can watch the replay <a href="https://www.cloudera.com/content/dam/www/marketing/resources/webinars/advancing-ml-with-deep-learning-and-transfer-learning.landing.html?utm_source=blog&amp;utm_medium=organic&amp;utm_term=ml&amp;utm_campaign=FFL_Showcase_Recording_AMER_Webinar_2019&amp;cid=7012H000001l3cz">here</a>!</p>
+    <h1>Ethical Considerations When Designing an NLG System</h1>
+    <div  class="tldr"> 
+  <span class="textbold">Blog Series</span>
+  This post serves as Part 4 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.
+  <div style="margin-top:10px; border-top: 1px dashed grey"> 
+    <ul>
+        <li> <a href="/2022/03/22/an-introduction-to-text-style-transfer.html" class=""> Part 1: An Introduction to Text Style Transfer </a> 
+        </li>
+        <li> <a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html" class="">  Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers </a>
+        </li>
+        <li> <a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html" class=""> Part 3: Automated Metrics for Evaluating Text Style Transfer </a>
+        </li>
+        <li> <a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html" class=""> Part 4: Ethical Considerations When Designing an NLG System </a>
+        </li>
+    </ul>
+  </div>
+</div>
+<p>At last, we’ve made it to the final chapter of this blog series. We started by broadly introducing the NLP task of text style transfer and discussing the often overlooked, but important role that style plays in the successful adoption of NLP technologies. We then explored how conditional language modeling approaches can be applied to the task of automatically neutralizing subjectivity bias. In doing so, we were faced with the nuanced difficulty of evaluating natural language generation (NLG), and implemented automated metrics to quantify style transfer strength and content preservation for our model outputs.</p>
+<p>In this final post, we’ll discuss some ethical considerations when working with natural language generation systems and describe the design of our prototype application: <a href="https://huggingface.co/spaces/cffl/Exploring_Intelligent_Writing_Assistance"><em>Exploring Intelligent Writing Assistance</em></a>.</p>
+<h2 id="ethics-as-a-criteria-for-topic-selection-in-research">Ethics as a criteria for topic selection in research</h2>
+<p>Standard practices for “responsible research” in the field of machine learning have begun to take hold. We now have datasheets for novel datasets, which are intended to document a dataset’s motivation, composition, collection process, source of bias, and intended use<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Similarly, we have model cards that encourage transparent model reporting by detailing expected usage, performance characteristics, and model lineage<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. While adoption of these practices still has room to grow, the seed is planted and has laid the foundation for increased transparency and accountability within the machine learning community.</p>
+<p>However, both of these artifacts are backward looking &ndash; describing considerations of work products that have already been created. It is equally as important to consider ethical implications at the genesis of a project, before any research effort is underway. Similar to datasheets and model cards, <em>ethics sheets</em> have been proposed to encourage researchers to think about ethical considerations not just at the level of individual models and datasets, but also at the level of ML/AI tasks prior to engaging in a research endeavor<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. An ethics sheet for an AI task is a semi-standardized article that aggregates and organizes a wide variety of ethical considerations relevant for that task. Creating an ethically focused document before researching or building an AI system opens discussion channels, creates accountability, and may even discourage project pursuance based on the supporting analysis.</p>
+<p>For these reasons, our team engaged in brainstorming activity prior to researching the task of “automatically neutralizing subjectivity bias in text” to consider potential benefits and harms of exploring and modeling the style attribute of subjectivity. We review some of our considerations below.</p>
+<h3 id="potential-benefits">Potential benefits</h3>
+<p>As discussed in the <a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html">second post</a> of this series, subjective language is all around us. It makes for a useful style of communication by which we express ourselves and influence others. However, there are certain modes of communication today like textbooks and encyclopedias that strive for neutrality. A neutral tone is what this type of audience expects and demands.</p>
+<p>In this context, a tool to automatically detect subjectively-toned language and suggest neutrally-toned counterparts could be helpful for several parties. For authors and editors, a tool of this kind could enable more efficient and comprehensive review of new and existing content &ndash; resulting in a higher standard of quality throughout published material. For content consumers, this type of tool could provide reading assistance to help alert readers when subjectivity bias is concealed within content they perceive to be neutrally-toned and factual.</p>
+<h3 id="potential-risks">Potential risks</h3>
+<p>Most modern language models used for generative tasks today build representations based on massive, uncensored datasets, which are subsequently fine-tuned on a smaller, focused corpora for a particular task. Therefore, these fine-tuned models inherit all of the potential risks associated with the large foundation models, plus any application specific concerns.</p>
+<p>In this sense, our task adopts the risk of a model unintentionally reflecting unjust, toxic, and oppressive speech present in the training data. The consequences of this are that learning and projecting unknown biases can perpetuate social exclusion, discrimination, and hate speech<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. Language models also risk introducing factually false, misleading, or sensitive information into generated outputs.</p>
+<p>There is also the potential for malicious actors to intentionally cause harm with such a tool. While our efforts focus only on modeling the <em>subjective-to-neutral</em> style attribute direction, successful methods for generating neutral-toned text could be reverse engineered to model the opposite. Generating subjectively biased text, automatically and at scale, could be used to undermine public discourse.</p>
+<p>Similarly, adapting a successful modeling approach to a tangentially related style transfer task (e.g. political slant) could be used to exploit the [political] views of the masses if used for a malevolent social agenda. And finally, what is a world without opinion? A model that can silence the expressiveness of individual language could numb our ability to convey thoughts and feelings in online channels.</p>
+<h3 id="should-these-risks-discourage-research">Should these risks discourage research</h3>
+<p>An upfront discussion of ethics is intended to capture various considerations that should be taken into account when deciding whether to develop a certain system, how it should be built, and how to assess its societal impact<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. Ultimately, the concerns we’ve raised above do not simply “go away” by not exploring them. Instead, given the existing maturity of this field of NLP, we view this as an opportunity to increase transparency by surfacing the risks, along with our findings, best practices, and mitigating strategies.</p>
+<h2 id="designing-an-intelligent-writing-assistant">Designing an intelligent writing assistant</h2>
+<p>To highlight the potential of this NLP task, we’ve bundled together our research artifacts into an <em>intelligent writing assistance</em> application that demonstrates how text style transfer can be used to enhance the human writing experience.</p>
+<p>We emphasize the imperative for a human-in-the-loop user experience as a risk-mitigation strategy when designing natural language generation systems. We believe text style transfer has the potential to empower writers to better express themselves, but not by blindly generating text. Rather, generative models, in conjunction with interpretability methods, should be combined to help writers understand the nuances of linguistic style and suggest stylistic edits that <em>may</em> improve their writing.</p>
+<p><img src="/images/hugo/image1-tst4.png" alt="">
+<strong>Figure 1:</strong> Screenshot of our prototype application: <em>Exploring Intelligent Writing Assistance</em>.</p>
+<p>The goal of this application is to peel back the curtains on how an intelligent writing assistant might function — walking through the logical steps needed to automatically re-style a piece of text while building up confidence in the model output.</p>
+<p>The user can choose to transfer style between two style attributes: <em>subjective-to-neutral</em> or <em>informal-to-formal</em>. After entering some text (or selecting a preset option), the input is classified to detect if a style transfer is actually needed. Then, an interpretability technique called <a href="https://arxiv.org/pdf/1703.01365.pdf">Integrated Gradients</a> is used to explain the classifier’s predictions in terms of its features, giving the user a look at what lexical components constitute a particular style. Next, the user can generate a style transfer while toggling the sequence-to-sequence model’s decoding parameters. Finally, the generated suggestion is evaluated to provide the user with a measure of quality via two automated metrics: <em>Style Transfer Intensity (STI)</em> and <em>Content Preservation Score (CPS)</em>.</p>
+<h2 id="wrapping-up">Wrapping up</h2>
+<p>Thanks for tagging along on this NLP journey - we hope you’ve enjoyed following along just as much as we’ve enjoyed researching and writing about this exciting topic. We’ll close out this series with a listing of all project outputs for quick reference.</p>
+<p><strong>✍️ Blog Series:</strong></p>
+<ul>
+<li><a href="/2022/03/22/an-introduction-to-text-style-transfer.html">Part 1: An Introduction to Text Style Transfer</a></li>
+<li><a href="/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html">Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers</a></li>
+<li><a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html">Part 3: Automated Metrics for Evaluating Text Style Transfer</a></li>
+<li><a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html">Part 4: Ethical Considerations When Designing NLG Systems</a></li>
+</ul>
+<p><strong>🧑‍💻 Code:</strong></p>
+<ul>
+<li>Research Code - <a href="https://github.com/fastforwardlabs/text-style-transfer">Text Style Transfer: Neutralizing Subjectivity Bias with Huggingface Transformers</a></li>
+<li>Applied ML Prototype (AMP) - <a href="https://github.com/cloudera/CML_AMP_Intelligent_Writing_Assistance">Exploring Intelligent Writing Assistance</a></li>
+</ul>
+<p><strong>🤗 HuggingFace Artifacts:</strong></p>
+<ul>
+<li>Model: <a href="https://huggingface.co/cffl/bert-base-styleclassification-subjective-neutral">Subjective-neutral Style Classification</a></li>
+<li>Model: <a href="https://huggingface.co/cffl/bart-base-styletransfer-subjective-to-neutral">Subjective-to-neutral Style Transfer</a></li>
+<li>Space: <a href="https://huggingface.co/spaces/cffl/Exploring_Intelligent_Writing_Assistance">Exploring Intelligent Writing Assistance</a></li>
+</ul>
+<h2 id="references">References</h2>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://arxiv.org/pdf/1803.09010.pdf">Datasheets for Datasets</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://arxiv.org/pdf/1810.03993.pdf">Model Cards for Model Reporting</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p><a href="https://aclanthology.org/2022.acl-long.573.pdf">Ethics Sheets for AI Tasks</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://dl.acm.org/doi/pdf/10.1145/3531146.3533088">Taxonomy of Risks posed by Language Models</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 
     <div class="spacer"></div>
     <div>
@@ -109,35 +170,19 @@ if (!doNotTrack) {
   <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
     <div>
       
-      <div class="small">Newer</div>
-      <div>
-  <h5 style="margin-bottom: 0px;">
-    <span>Aug 28, 2019</span> &middot;
-    <span style="text-transform: capitalize;">
-      newsletter
-    </span>
-  </h5>
-  
-    <div><a href="/2019/08/28/is-machine-learning-research-moving-in-the-right-direction.html"><strong> Is machine learning research moving in the right direction</strong></a></div>
-  
-  <div class="spacer"></div>
-</div>
-
-
-      
     </div>
     <div>
       
       <div class="small">Older</div>
       <div>
   <h5 style="margin-bottom: 0px;">
-    <span>Jul 17, 2019</span> &middot;
+    <span>Jul 11, 2022</span> &middot;
     <span style="text-transform: capitalize;">
       post
     </span>
   </h5>
   
-    <div><a href="/2019/07/17/new-research-transfer-learning-for-natural-language-processing.html"><strong>New research: transfer learning for natural language processing</strong></a></div>
+    <div><a href="/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html"><strong>Automated Metrics for Evaluating Text Style Transfer</strong></a></div>
   
   <div class="spacer"></div>
 </div>

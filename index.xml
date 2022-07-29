@@ -6,10 +6,21 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 Jul 2022 10:43:48 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ethical Considerations When Designing an NLG System</title>
+       
+      <link>https://blog.fastforwardlabs.com/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html</link>
+      
+      <pubDate>Fri, 29 Jul 2022 10:43:48 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html</guid>
+      <description>Blog Series This post serves as Part 4 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      At last, we’ve made it to the final chapter of this blog series.</description>
+    </item>
     
     <item>
       <title>Automated Metrics for Evaluating Text Style Transfer</title>
@@ -20,7 +31,7 @@
       
       <guid>https://blog.fastforwardlabs.com/2022/07/11/automated-metrics-for-evaluating-text-style-transfer.html</guid>
       <description>By Andrew Reed and Melanie Beck
-Blog Series This post serves as Part 3 of a three part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Automated Metrics for Evaluating Text Style Transfer In our previous blog post, we took an in-depth look at how to neutralize subjectivity bias in text using HuggingFace transformers.</description>
+Blog Series This post serves as Part 3 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      In our previous blog post, we took an in-depth look at how to neutralize subjectivity bias in text using HuggingFace transformers.</description>
     </item>
     
     <item>
@@ -31,7 +42,7 @@ Blog Series This post serves as Part 3 of a three part blog series on the NLP ta
       <pubDate>Thu, 05 May 2022 14:41:50 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2022/05/05/neutralizing-subjectivity-bias-with-huggingface-transformers.html</guid>
-      <description>Blog Series This post serves as Part 2 of a three part blog series on the NLP task of Text Style Transfer. In this post, we introduce the applied use case through which we&#39;ll explore text style transfer and discuss our modeling approach.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Subjective language is all around us &amp;ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples.</description>
+      <description>Blog Series This post serves as Part 2 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      Subjective language is all around us &amp;ndash; product advertisements, social marketing campaigns, personal opinion blogs, political propaganda, and news media, just to name a few examples.</description>
     </item>
     
     <item>
@@ -42,7 +53,7 @@ Blog Series This post serves as Part 3 of a three part blog series on the NLP ta
       <pubDate>Tue, 22 Mar 2022 09:50:00 +0000</pubDate>
       
       <guid>https://blog.fastforwardlabs.com/2022/03/22/an-introduction-to-text-style-transfer.html</guid>
-      <description>Blog Series This post serves as Part 1 of a three part blog series on the NLP task of Text Style Transfer. In this post, we provide a broad introduction to the topic and tee up the direction of our research.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer      Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &amp;ndash; of course, with varying degrees of success.</description>
+      <description>Blog Series This post serves as Part 1 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      Today’s world of natural language processing (NLP) is driven by powerful transformer-based models that can automatically caption images, answer open-ended questions, engage in free dialog, and summarize long-form bodies of text &amp;ndash; of course, with varying degrees of success.</description>
     </item>
     
     <item>
