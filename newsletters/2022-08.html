@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2022-08.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="august-2022">August 2022</h1>
+<p>Welcome to the August edition of the Cloudera Fast Forward Labs newsletter. This month we’re thrilled to introduce a new member of the FFL team, share TWO new applied machine learning prototypes we’ve built, and, as always, offer up some intriguing reads.</p>
+<hr>
+<h2 id="new-research-engineer">New Research Engineer!</h2>
+<p>If you’re a regular reader of our newsletter, you likely noticed that we’ve been searching for new research engineers to join the Cloudera Fast Forward Labs team. This month we’re thrilled to introduce the Mike Gallaspy!</p>
+<p>Michael Gallaspy has approved the release of the following vital details:</p>
+<ul>
+<li>I live and die by one immutable rule: stay cool.</li>
+<li>I hail from the harsh desert planet of Las Vegas.</li>
+<li>My preferred form of communication is sketching.</li>
+<li>My favorite album right now is All Hail West Texas by the Mountain Goats.</li>
+<li>My favorite food today is yogurt.</li>
+</ul>
+<p>A picture is worth one thousand words, so please enjoy the following self portrait:</p>
+<p><img src="/images/hugo/self_portrait-1660863172.jpeg" style="width:60.0%" alt="MG self portrait." /></p>
+<p>He has a great recommended reading suggestion toward the bottom of this newsletter and you’ll be hearing more from him in the near future.</p>
+<h2 id="new-applied-ml-prototypes">New Applied ML Prototypes!</h2>
+<p>This month we have some new projects to share. These prototypes are now included in the Cloudera Machine Learning AMP catalog and they demonstrate several features of the platform. However these repos are open source and you can explore many aspects of them on your own laptop!</p>
+<h3 id="distributed-xgboost-with-dask-on-cmlhttpsgithubcomclouderacml_amp_dask_on_cml"><strong><strong><a href="https://github.com/cloudera/CML_AMP_Dask_on_CML">Distributed XGBoost with Dask on CML</a></strong></strong></h3>
+<p>In this Applied ML Prototype, we go beyond what we can achieve with a single laptop and use the Cloudera Machine Learning Workers API to spin up an on-demand Dask cluster to distribute the training of an XGBoost model for a credit card fraud detection use case.</p>
+<p>This Jupyter Notebook AMP demonstrates a scenario in which the data is larger than can comfortably fit into memory and must instead be distributed across the nodes of your cluster. This necessitates distributing your ML model across those same nodes, a feature of ensemble models like XGBoost. This sets us up for machine learning at scale!</p>
+<h3 id="exploring-intelligent-writing-assistancehttpsgithubcomclouderacml_amp_intelligent_writing_assistance"><strong><strong><a href="https://github.com/cloudera/CML_AMP_Intelligent_Writing_Assistance">Exploring Intelligent Writing Assistance</a></strong></strong></h3>
+<p>This prototype provides a demonstration of how the NLP task of <em>text style transfer</em> can enhance the human writing experience using <a href="https://huggingface.co/">HuggingFace Transformers</a> and <a href="https://streamlit.io/">Streamlit</a>.  Specifically, this project peels back the curtains on how an intelligent writing assistant might function — walking through the logical steps needed to automatically re-style a piece of text (from informal-to-formal <strong>or</strong> subjective-to-neutral) — while building up confidence in the model output.</p>
+<p><img src="/images/hugo/tst_amp_screenshot-1660863179.png" alt="Exploring Intelligent Writing Assistance"></p>
+<h2 id="cffl-is-now-on-huggingfacehttpshuggingfacecocffl"><a href="https://huggingface.co/cffl">CFFL is now on HuggingFace!</a></h2>
+<p>Our recent exploration into the natural language processing task of <em>text style transfer</em> was an incredibly fruitful endeavor and we wanted to ensure that others could benefit from our experience, which is why we created the Applied Machine Learning Prototype above. While you can take this prototype for a spin on CML or even on your own laptop, we wanted to make it even easier!</p>
+<p><img src="/images/hugo/cffl_hf_screenshot-1660863158.png" alt="cffl on huggingface"></p>
+<p>To that end, we added our <em>Exploring Intelligent Writing Assistance</em> application to the new  HuggingFace <a href="https://huggingface.co/spaces">Spaces</a> — a place to build, host, and share ML demos. We also added the models we trained during our research initiative to the HuggingFace <a href="https://huggingface.co/models">Model Repo</a>.  And all of these artifacts can be found right <a href="https://huggingface.co/cffl">here</a> - on our very own Cloudera Fast Forward Labs HuggingFace landing page.  We’ll continue to add new Transformer models we train, along with NLP datasets we construct and applications we build so stay tuned!</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from last year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended Reading</h2>
+<p>CFFLers share their favorite reads of the month.</p>
+<h3 id="picking-on-the-same-person-does-algorithmic-monoculture-homogenize-outcomeshttpshaistanfordedueventshai-weekly-seminar-kathleen-creel-0"><strong><a href="https://hai.stanford.edu/events/hai-weekly-seminar-kathleen-creel-0">Picking on the Same Person: Does Algorithmic Monoculture Homogenize Outcomes?</a></strong></h3>
+<p>This topic was recently presented at Stanford University’s HAI (Human-centered Artificial Intelligence) Weekly Seminar. The discussion focuses on a potential by-product of the rise of reusable massive datasets and models — an algorithmic monoculture — and the implications this can have for individuals.  When an individual encounters the same model again and again (say, when submitting their resume to companies that all use the same resume filtering model), or even different models that have all been trained on the same massive datasets (hello, <a href="https://commoncrawl.org/">Common Crawl</a>), that individual could face consistent ill-treatment due to the fact that the similarities in these models cause them all to make the same (potentially unwarranted) decisions.  This talk explores and formalizes this idea of “outcome homogenization” and reviews ethical arguments for why and when this is wrong.  — <a href="https://www.linkedin.com/in/melanierbeck/">*Melanie</a>*</p>
+<h3 id="rethinking-style-transfer-from-pixels-to-parameterized-brushstrokeshttpsopenaccessthecvfcomcontentcvpr2021htmlkotovenko_rethinking_style_transfer_from_pixels_to_parameterized_brushstrokes_cvpr_2021_paperhtml"><a href="https://openaccess.thecvf.com//content/CVPR2021/html/Kotovenko_Rethinking_Style_Transfer_From_Pixels_to_Parameterized_Brushstrokes_CVPR_2021_paper.html">Rethinking Style Transfer: From Pixels to Parameterized Brushstrokes</a></h3>
+<p>While writing my first blog post, I came across this remarkable paper. I think it speaks for itself, so I’ve copied the abstract below:</p>
+<blockquote>
+<p>There have been many successful implementations of neural style transfer in recent years. In most of these works, the stylization process is confined to the pixel domain. However, we argue that this representation is unnatural because paintings usually consist of brushstrokes rather than pixels. We propose a method to stylize images by optimizing parameterized brushstrokes instead of pixels and further introduce a simple differentiable rendering mechanism. Our approach significantly improves visual quality and enables additional control over the stylization process such as controlling the flow of brushstrokes through user input. We provide qualitative and quantitative evaluations that show the efficacy of the proposed parameterized representation.</p>
+</blockquote>
+<p>— <a href="https://www.linkedin.com/in/michael-gallaspy-65a492a5/"><em>Mike</em></a></p>
+<h3 id="introduction-to-streaming-for-data-scientistshttpshuyenchipcom20220803stream-processing-for-data-scientistshtml"><a href="https://huyenchip.com/2022/08/03/stream-processing-for-data-scientists.html">Introduction to streaming for data scientists</a></h3>
+<p>In this excellent blog post, <a href="https://twitter.com/chipro">Chip Huyen</a> makes the case for why and where streaming capability is needed in machine learning, and then lays out some of the core concepts and associated challenges. Namely, when a use case demands online prediction, real-time performance monitoring, or validating models developed via continual learning, there will be a necessary streaming component to the system.</p>
+<p>One of the hardest parts of streaming ML is the infrastructure and compute engine needed to account for point-in-time data when comparing two models on historical logs — known as “time travel”. Time travel is difficult because it requires timestamp metadata to keep track of state, which is often not collected in traditional data ingest pipelines.</p>
+<p>These issues hint at a need for a larger paradigm shift in organizations that demand realtime ML — the need to adopt “production-first” vs “development-first” workflows (and mindset). As Chip describes:</p>
+<ul>
+<li><strong>Development-first ML workflows:</strong> features are written for training and adapted for online prediction.</li>
+<li><strong>Production-first ML workflows:</strong> features are written for online prediction and backfilled for training.</li>
+</ul>
+<p>There is a long road ahead for the streaming ML ecosystem — I look forward to following along with its development. <a href="https://twitter.com/andrewrreed"><em>— Andrew</em></a></p>
+
+  </div>
+
+

@@ -3,8 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2022-08.html</loc>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.fastforwardlabs.com/</loc>
-    <lastmod>2022-07-29T10:43:48+00:00</lastmod>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters.html</loc>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -19,11 +29,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/newsletters/2022-07.html</loc>
-    <lastmod>2022-07-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters.html</loc>
     <lastmod>2022-07-22T00:00:00+00:00</lastmod>
   </url>
   
