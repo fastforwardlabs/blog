@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/newsletters/2022-08.html</loc>
-    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
+    <loc>https://blog.fastforwardlabs.com/</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.fastforwardlabs.com/</loc>
+    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/2022/09/08/thought-experiment-human-centric-machine-learning-for-comic-book-creation.html</loc>
+    <lastmod>2022-09-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.fastforwardlabs.com/newsletters/2022-08.html</loc>
     <lastmod>2022-08-18T00:00:00+00:00</lastmod>
   </url>
   
@@ -19,11 +29,6 @@
   
   <url>
     <loc>https://blog.fastforwardlabs.com/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html</loc>
-    <lastmod>2022-07-29T10:43:48+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.fastforwardlabs.com/posts.html</loc>
     <lastmod>2022-07-29T10:43:48+00:00</lastmod>
   </url>
   
