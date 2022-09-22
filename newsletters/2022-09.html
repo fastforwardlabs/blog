@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2022-09.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="september-2022">September 2022</h1>
+<p>Welcome to the September edition of the Cloudera Fast Forward Labs newsletter. This month we’re talking about <em>ethics</em> and we have all kinds of goodies to share including the final installment of our Text Style Transfer series and a couple of offerings from our newest research engineer.   Throw in some choice must-reads and an ASR demo, and you’ve got yourself an action-packed newsletter!</p>
+<hr>
+<h2 id="new-research">New Research!</h2>
+<h3 id="ethical-considerations-when-designing-an-nlg-systemhttpsblogfastforwardlabscom20220729ethical-considerations-when-designing-an-nlg-systemhtml"><a href="https://blog.fastforwardlabs.com/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html">Ethical Considerations When Designing an NLG System</a></h3>
+<p>In the final post of our blog series on Text Style Transfer, we discuss some ethical considerations when working with natural language generation systems, and describe the design of our prototype application: <a href="https://huggingface.co/spaces/cffl/Exploring_Intelligent_Writing_Assistance"><em>Exploring Intelligent Writing Assistance</em></a>.</p>
+<p><img src="/images/hugo/tst_bart_cover-1663888335.png" alt="TST"></p>
+<p>Here we emphasize the imperative for a human-in-the-loop user experience as a risk mitigation strategy when designing NLG tools. We believe text style transfer has the potential to empower writers to better express themselves, but not by blindly generating text. Rather, generative models, in conjunction with interpretability methods, should be combined to help writers understand the nuances of linguistic style and suggest stylistic edits that <em>may</em> improve their writing.</p>
+<h3 id="thought-experiment-human-centric-machine-learning-for-comic-book-creationhttpsblogfastforwardlabscom20220908thought-experiment-human-centric-machine-learning-for-comic-book-creationhtml"><a href="https://blog.fastforwardlabs.com/2022/09/08/thought-experiment-human-centric-machine-learning-for-comic-book-creation.html">Thought experiment: Human-centric machine learning for comic book creation</a></h3>
+<p>Our new research engineer, Mike Gallaspy, lightheartedly speculates on using machine learning techniques for creating comic book art in his first blog post. Take a peek and enjoy some of his hand-drawn illustrations!</p>
+<p><img src="/images/hugo/comic_book_mike-1663888400.png" alt="ComicBookMike"></p>
+<h3 id="ethics-sheet-for-ai-assisted-comic-book-art-generationhttpsblogclouderacomethics-sheet-for-ai-assisted-comic-book-art-generation"><a href="https://blog.cloudera.com/ethics-sheet-for-ai-assisted-comic-book-art-generation/">Ethics Sheet for AI-assisted Comic Book Art Generation</a></h3>
+<p>And in keeping with the ethics theme this month, a companion piece to the blog above. This article is our simplified take on an ethics sheet for the task of AI-assisted comic book art generation, inspired by “<a href="https://arxiv.org/abs/2107.01183">Ethics Sheets for AI Tasks</a>.” In it, we take a look at some of the ethical considerations involved in the creation and utilization of a state-of-the-art AI system for generative art creation.</p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from last year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended Reading</h2>
+<p>CFFLers share their favorite reads of the month.</p>
+<h3 id="3d-human-shape-style-transferhttpsarxivorgabs210901587"><a href="https://arxiv.org/abs/2109.01587">3D Human Shape Style Transfer</a></h3>
+<p>I am interested in style transfer. My first blog post speculates about a style transfer use case, and I believe there are many interesting applications yet to be discovered in that problem domain. The very concepts of “style” and “content” that underlie the task of style transfer are hard to pin down in a mathematically precise way, but are very intuitive to humans. I find this dichotomy fascinating.</p>
+<p>The paper I’m recommending, Regateiro and Boyer, “3D Human Shape Style Transfer,” examines the use of style transfer to render human characters in novel poses, without an explicit pose or shape model. This application stimulates my imagination by suggesting new creative applications. For example, if one could create some character art by hand and learn a 3D model of that character by some method,* then Regateiro and Boyer’s method could allow you to generate plausible renderings of novel poses by reference. Given the rise in prominence of models like <a href="https://arxiv.org/abs/2103.00020">CLIP</a>, a “reference” could conceivably be another image, a text prompt, or both.</p>
+<p>*My honorable mention paper for this month speaks to learning 3D models: <a href="https://openaccess.thecvf.com/content_cvpr_2018/html/Kanazawa_End-to-End_Recovery_of_CVPR_2018_paper.html">Kanazawa et al., “End-to-End Recovery of Human Shape and Pose.”</a> — <a href="https://www.linkedin.com/in/michael-gallaspy-65a492a5/"><em>Mike</em></a></p>
+<h3 id="boosting-monocular-depth-estimation-models-to-high-resolution-via-content-adaptive-multi-resolution-merginghttpsarxivorgabs210514021"><a href="https://arxiv.org/abs/2105.14021">Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging</a></h3>
+<p>Despite the intimidating title (it&rsquo;s a mouthful, I know), this paper is a great read. Monocular (or single-image) depth estimation aims to extract the structure of a scene from a single image — an important task for applications like 3D scene reconstruction, autonomous driving, and augmented reality. While deep learning has proven effective at the task, the inferred depth maps are often of low resolution and therefore lack fine-grained details which limits their usefulness in real world applications.</p>
+<p>This paper introduces a novel technique that makes use of depth predictions from pre-trained models by varying the input image resolution, and combines the resulting depth maps. By merging high and low resolution estimations, the authors are able to generate multi-megapixel depth maps with a high level of detail using purely pre-trained models. <em><a href="https://twitter.com/andrewrreed">— Andrew</a></em></p>
+<h3 id="introducing-whisperhttpsopenaicomblogwhisper"><a href="https://openai.com/blog/whisper/">Introducing Whisper</a></h3>
+<p>OpenAI have done it again! Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data collected from the web. Whisper is unique because this dataset is one of the largest and most diverse ever used. Furthermore, Whisper was not fine-tuned to any specific ASR task or portion of the dataset. This means that it does not beat models that have been specialized for certain competitive ASR benchmarks. However, Whisper’s zero-shot performance across many diverse datasets and tasks is far more robust and makes 50% fewer errors than these more specialized models.</p>
+<p>Whisper is multilingual and can perform all kinds of tasks:</p>
+<p><img src="/images/hugo/whisper-tasks-1663888435.svg" alt="whisper-tasks.svg"></p>
+<p>In addition to their blog, OpenAI have published a paper and open-sourced their code so you can try Whisper for yourself!  You can access all these great artifacts through their blog. I created a bare-bones <a href="https://github.com/fastforwardlabs/whisper-openai/blob/master/WhisperDemo.ipynb">WhisperDemo</a> Colab notebook (using their <a href="https://colab.research.google.com/github/openai/whisper/blob/master/notebooks/LibriSpeech.ipynb">Colab example</a> as a starting point) that allows you to record your own audio and transcribe it with Whisper. Enjoy! &ndash; <em><a href="https://www.linkedin.com/in/melanierbeck/">Melanie</a></em></p>
+
+  </div>
+
+
