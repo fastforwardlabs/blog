@@ -109,3 +109,10 @@ name = "Deep Learning: Image Analysis"
 blurb = "Deep learning, or highly-connected neural networks, offers fascinating new capabilities for image analysis. Using deep learning, computers can now learn to identify objects in images. This report explores the history and current state of the field, predicts future developments, and explains how to apply deep learning today."
 img = "ff03-classic-combo.png"
 link = "https://deep-learning-image-classic.fastforwardlabs.com/"
+
+[[entries]]
+number = "FF02"
+name = "Probabilistic Methods for Realtime Streams"
+blurb = "Since the days of analog computers built on cams and gears, we’ve been engineering systems around the flow of data and the critical calculations we must perform. While the philosophy of our designs has remained consistent, our engineering constraints are constantly evolving. In the past five years we’ve seen the emergence of “big data,” or the ability to use commodity infrastructure to analyze very large data sets in a batch. We’re currently in the midst of a significant step forward in the tools, methods, and technologies available for working with realtime streams of data."
+img = "ffl-probabilistic-methods-report-thumb-1661363289.png"
+link = "https://probabilistic-methods.fastforwardlabs.com/"
