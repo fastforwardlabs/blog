@@ -1,4 +1,11 @@
 [[entries]]
+number = "FF24"
+name = "Text Style Transfer"
+blurb = "The NLP task of text style transfer (TST) aims to automatically control the style attributes of a piece of text while preserving the content, which is an important consideration for making NLP more user-centric. In this report, we explore text style transfer through an applied use case — neutralizing subjectivity bias in free text. Along the way, we describe our sequence-to-sequence modeling approach leveraging HuggingFace Transformers, and present a set of custom, reference-free evaluation metrics for quantifying model performance. Finally, we conclude with a discussion of ethics centered around our prototype: Exploring Intelligent Writing Assistance."
+img = "ff24-combo.png"
+link = "https://text-style-transfer.fastforwardlabs.com/"
+
+[[entries]]
 number = "FF22"
 name = "Inferring Concept Drift Without Labeled Data"
 blurb = "Concept drift occurs when the statistical properties of a target domain change overtime causing model performance to degrade. Drift detection is generally achieved by monitoring a performance metric of interest and triggering a retraining pipeline when that metric falls below some designated threshold. However, this approach assumes ample labeled data is available at prediction time - an unrealistic constraint for many production systems. In this report, we explore various approaches for dealing with concept drift when labeled data is not readily accessible."
