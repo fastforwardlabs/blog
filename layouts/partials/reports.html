@@ -3,9 +3,28 @@
   <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
 </div>
 <div class="spacer"></div>
-<div style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
-  {{ range .Site.Data.reports.entries }}
-    {{ partial "report_link.html" . }}
+<div id="reports-holder" style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  {{ range first 4 .Site.Data.reports.entries }}
+  {{ partial "report_link.html" . }}
   {{ end }}
 </div>
+<div class="container">
+  <div ><button id="load_all_reports" style="width: 100%;">load all</button></div>
+</div>
 
+<script>
+  // TODO add reports page, get html by fetching that
+  window.addEventListener('load', () => {
+    let $reports_holder = document.getElementById('reports-holder')
+    let $load_more = document.getElementById('load_all_reports')
+    $load_more.addEventListener('click', () => {
+      fetch(`/reports.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#reports-holder')
+        $reports_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
