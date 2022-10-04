@@ -1,4 +1,4 @@
-{{ $pages := where .Site.RegularPages.ByDate.Reverse "Section" "posts" }}
+{{ $pages := .Site.RegularPages.ByDate.Reverse}}
 
 <h2 class="clear">Latest posts</h2>
 <div class="spacer"></div>
@@ -21,7 +21,7 @@
     let $load_more = document.getElementById('load_more')
     let next_page = 2
     $load_more.addEventListener('click', () => {
-      fetch(`/posts/page/${next_page}.html`).then(r =>r.text()).then(r => {
+      fetch(`/newsletters/page/${next_page}.html`).then(r =>r.text()).then(r => {
         let el = document.createElement('html')
         el.innerHTML = r
         next_page += 1
