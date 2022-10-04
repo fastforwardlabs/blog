@@ -21,6 +21,7 @@
       <guid>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
       <description>This article is available as a notebook on Github. Please refer to that notebook for a more detailed discussion and code fixes and updates. Despite all the recent excitement around deep learning, neural networks have a reputation among non-specialists as complicated to build and difficult to interpret.
 And while interpretability remains an issue, there are now high-level neural network libraries that enable developers to quickly build neural network models without worrying about the numerical details of floating point operations and linear algebra.</description>
+      <imglink>http://68.media.tumblr.com/a4cf05aa664f57b54fe5021ce966f5d6/tumblr_inline_o30qnzlyxi1qcg73w_540.png</imglink>
     </item>
     
   </channel>

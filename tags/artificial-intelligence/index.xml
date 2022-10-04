@@ -20,6 +20,7 @@
       
       <guid>https://blog.fastforwardlabs.com/2016/07/08/what-we-liked-at-ainow.html</guid>
       <description>Over the past two months, the White House ran a series of workshops geared to “prepare for the future of artificial intelligence.” At each session, technologists, academics, policy makers, and social scientists discussed social and economic issues stemming from data technologies, which will feed into the development of a public report later this year (likely similar to the FTC’s January report on the social impact of big data). The last session took place yesterday in NYC.</description>
+      <imglink>http://68.media.tumblr.com/bbb5c0978c75c9e2e36e04e770b6ccd5/tumblr_inline_oa065reL0V1ta78fg_540.png</imglink>
     </item>
     
     <item>
@@ -32,6 +33,7 @@
       <guid>https://blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</guid>
       <description>This week, we had the pleasure of hosting an online talk with the team from Agolo, an NYC-based startup with a great product that automatically summarizes articles (and can even generate new titles for a group of summarized articles). During the event, we discussed:
 why summarization has suddenly become interestinghow different industries are applying the technologyhow algorithms work (LDA, word2vec, and recurrent neural networks)related applications (realtime translation, speech recognition)what’s next in the fieldCheck out the recording below!</description>
+      <imglink>https://images.pexels.com/photos/159621/open-book-library-education-read-159621.jpeg?w=1260&amp;h=750&amp;auto=compress&amp;cs=tinysrgb</imglink>
     </item>
     
     <item>
@@ -44,6 +46,7 @@ why summarization has suddenly become interestinghow different industries are ap
       <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
       <description>Neural networks are generating a lot of excitement, as they are quickly proving to be a promising and practical form of machine intelligence. At Fast Forward Labs, we just finished a project researching and building systems that use neural networks for image analysis, as shown in our toy applicationPictograph. Our companion deep learning report explains this technology in depth and explores applications and opportunities across industries.
 As we built Pictograph, we came to appreciate just how challenging it is to understand how neural networks work.</description>
+      <imglink>http://68.media.tumblr.com/402a5e41ab09be86b8c43ce7f1e147a0/tumblr_inline_nv72twppMF1ta78fg_540.png</imglink>
     </item>
     
   </channel>

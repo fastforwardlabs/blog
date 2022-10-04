@@ -21,6 +21,7 @@
       <guid>https://blog.fastforwardlabs.com/2016/05/27/online-talk-summarization-algorithms.html</guid>
       <description>This week, we had the pleasure of hosting an online talk with the team from Agolo, an NYC-based startup with a great product that automatically summarizes articles (and can even generate new titles for a group of summarized articles). During the event, we discussed:
 why summarization has suddenly become interestinghow different industries are applying the technologyhow algorithms work (LDA, word2vec, and recurrent neural networks)related applications (realtime translation, speech recognition)what’s next in the fieldCheck out the recording below!</description>
+      <imglink>https://images.pexels.com/photos/159621/open-book-library-education-read-159621.jpeg?w=1260&amp;h=750&amp;auto=compress&amp;cs=tinysrgb</imglink>
     </item>
     
     <item>
@@ -32,6 +33,7 @@ why summarization has suddenly become interestinghow different industries are ap
       
       <guid>https://blog.fastforwardlabs.com/2016/05/23/evaluating-summarization-systems.html</guid>
       <description>We’re excited for tomorrow’s online discussion about automatic text summarization! You can register here. During the event, Mohamed AlTantawy, CTO of Agolo, will explain the tech behind their summarization tool. In this blog post, he describes how his team evaluates the quality of summaries produced by their system. Join us tomorrow to learn more and ask questions about the approach! Evaluating the quality of algorithmically created summaries is a very hard task.</description>
+      <imglink>http://68.media.tumblr.com/d879f22c1b7be3467b606c8aa8f7cfb6/tumblr_inline_o7n3a6bf5R1ta78fg_540.jpg</imglink>
     </item>
     
     <item>
@@ -44,6 +46,7 @@ why summarization has suddenly become interestinghow different industries are ap
       <guid>https://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
       <description>Last Thursday Hilary and I headed to Clarifai’s offices in the Flatiron District to ask CEO Matt Zeiler about using deep learning for image analysis. A few highlights from the interview:
 1) The success of a deep learning project depends on the quality of the initial training data set. Deep learning algorithms start by scanning massive data sets to identify features (inputs) that can be correlated with categories (outputs) to make sense of the data.</description>
+      <imglink>http://fastforwardlabs.github.io/report_images/ff03/pictograph-dogs.png</imglink>
     </item>
     
   </channel>

@@ -20,6 +20,7 @@
       
       <guid>https://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>
       <description>Probabilistic data structures store data compactly with low memory and provide approximate answers to queries about stored data. They are designed to answer queries in a space-efficient manner, which can mean sacrificing accuracy. However, they typically provide guarantees and bounds on error rates depending on specifications of the data structure in question. Because they provide low memory footprints, probabilisitic data structures are particularly useful ink streaming and low power settings.</description>
+      <imglink>/tumblr_files/pmrs-test.png</imglink>
     </item>
     
     <item>
@@ -31,6 +32,7 @@
       
       <guid>https://blog.fastforwardlabs.com/2016/08/26/exploring-deep-learning-on-satellite-data.html</guid>
       <description>This is a guest post featuring a project Patrick Doupe, now a Senior Data Analyst at Icahn School of Medicine at Mount Sinai, completed as a fellow in the Insight Data Science program. In our partnership with Insight, we occassionally advise fellows on month-long projects and how to build a career in data science. Machines are getting better at identifying objects in images. These technologies are used to do more than organise your photos or chat your family and friends with snappy augmented pictures and movies.</description>
+      <imglink>http://fastforwardlabs.github.io/blog-images/geo/empty_satellite_image.png</imglink>
     </item>
     
     <item>
@@ -53,6 +55,7 @@
 &lt;img src=&#34;http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif&#34; title=&#34;Generatively morphing digits&#34;/&gt;&lt;/div&gt;
 &lt;p&gt;In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in &lt;a href=&#34;http://fastforwardlabs.github.io/2016/08/12/introducing-variational-autoencoders-in-prose-and.html&#34;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Along the way, we’ll show how to implement a VAE in &lt;a href=&#34;http://tensorflow.org/&#34;&gt;TensorFlow&lt;/a&gt;—a library for efficient numerical computation using data flow graphs, with key features like &lt;a href=&#34;http://alexey.radul.name/ideas/2013/introduction-to-automatic-differentiation/&#34;&gt;automatic differentiation&lt;/a&gt; and parallelizability (across clusters, CPUs, GPUs…and &lt;a href=&#34;https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html&#34;&gt;TPUs&lt;/a&gt; if you’re lucky). You can find (and tinker with!) the full implementation &lt;a href=&#34;https://github.com/fastforwardlabs/vae-tf/tree/master&#34;&gt;here&lt;/a&gt;, along with a couple &lt;a href=&#34;https://github.com/fastforwardlabs/vae-tf/tree/master/out&#34;&gt;pre-trained models&lt;/a&gt;.&lt;/p&gt;</description>
+      <imglink>http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif</imglink>
     </item>
     
     <item>
@@ -66,6 +69,7 @@
       <description>Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
 Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
 This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.</description>
+      <imglink>http://fastforwardlabs.github.io/blog-images/miriam/160727_1340_explore.gray_del11_492x490.slower40.gif</imglink>
     </item>
     
     <item>
@@ -78,6 +82,7 @@ This challenge is compounded when working in a limited data setting—especially
       <guid>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
       <description>The Fast Forward Labs research team is developing our next prototype, which will demonstrate an application of probabilistic programming. Probabilistic programming languages are a set of high-level languages that lower the barrier to entry for Bayesian data analysis.
 Bayesian data analysis is often seen as the best approach to machine learning. Models derived by this process are highly interpretable, in contrast to other modern models like neural networks and support vector machines.</description>
+      <imglink>http://68.media.tumblr.com/1d842739c4ecb115ce586049dd552f48/tumblr_inline_o6kjvaPgBs1ta78fg_540.jpg</imglink>
     </item>
     
     <item>
@@ -90,6 +95,7 @@ Bayesian data analysis is often seen as the best approach to machine learning. M
       <guid>https://blog.fastforwardlabs.com/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html</guid>
       <description>This article is available as a notebook on Github. Please refer to that notebook for a more detailed discussion and code fixes and updates. Despite all the recent excitement around deep learning, neural networks have a reputation among non-specialists as complicated to build and difficult to interpret.
 And while interpretability remains an issue, there are now high-level neural network libraries that enable developers to quickly build neural network models without worrying about the numerical details of floating point operations and linear algebra.</description>
+      <imglink>http://68.media.tumblr.com/a4cf05aa664f57b54fe5021ce966f5d6/tumblr_inline_o30qnzlyxi1qcg73w_540.png</imglink>
     </item>
     
     <item>
@@ -102,6 +108,7 @@ And while interpretability remains an issue, there are now high-level neural net
       <guid>https://blog.fastforwardlabs.com/2015/10/26/hello-deep-learning.html</guid>
       <description>Deep learning is a hot and fascinating research area, particularly when applied to classifying images. While researching the Fast Forward Labs Deep Learning: Image Analysis report, we played with a lot of very cool technology. In this blog post, we offer a guide to getting started with deep learning by using APIs from some of the most interesting deep-learning-as-a-service startups.
 These APIs accept images and/or video, and quickly classify objects, ideas, and items shown in the images and video.</description>
+      <imglink>http://fastforwardlabs.github.io/report_images/ff03/neural_net_overview.png</imglink>
     </item>
     
     <item>
@@ -114,6 +121,7 @@ These APIs accept images and/or video, and quickly classify objects, ideas, and 
       <guid>https://blog.fastforwardlabs.com/2015/09/24/how-do-neural-networks-learn.html</guid>
       <description>Neural networks are generating a lot of excitement, as they are quickly proving to be a promising and practical form of machine intelligence. At Fast Forward Labs, we just finished a project researching and building systems that use neural networks for image analysis, as shown in our toy applicationPictograph. Our companion deep learning report explains this technology in depth and explores applications and opportunities across industries.
 As we built Pictograph, we came to appreciate just how challenging it is to understand how neural networks work.</description>
+      <imglink>http://68.media.tumblr.com/402a5e41ab09be86b8c43ce7f1e147a0/tumblr_inline_nv72twppMF1ta78fg_540.png</imglink>
     </item>
     
     <item>
@@ -126,6 +134,7 @@ As we built Pictograph, we came to appreciate just how challenging it is to unde
       <guid>https://blog.fastforwardlabs.com/2015/05/19/designing-the-tech-graph.html</guid>
       <description>We launched a redesign of the Fast Forward Labs website today. There are lots of parts of the design I’d like to write someday about but for this post I want to focus on the thinking behind the “Tech Graph” force-directed graph display in the Intro section.
 Dramatizing Information Work The response I want the intro section to provoke is something like: “Wow, there is some really interesting work being done here that I would like to be involved with it.</description>
+      <imglink>http://i.imgur.com/bJjtxok.png</imglink>
     </item>
     
     <item>
@@ -139,6 +148,7 @@ Dramatizing Information Work The response I want the intro section to provoke is
       <description>DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!
 Check out the code at code at github.com/mynameisfiber/pytailcall
 As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas love to hate - tail call optimization! This isn&amp;rsquo;t novel at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode.</description>
+      <imglink>http://i.imgur.com/OodCK0c.png</imglink>
     </item>
     
   </channel>

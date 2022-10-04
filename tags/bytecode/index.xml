@@ -22,6 +22,7 @@
       <description>DO NOT TRY THIS AT HOME! NO PYTHONS WERE HURT IN THE CREATION OF THIS BLOG POST!
 Check out the code at code at github.com/mynameisfiber/pytailcall
 As an exercise into learning more about python 2.7 bytecode, I wanted to implement the thing that pythonistas love to hate - tail call optimization! This isn&amp;rsquo;t novel at all, but I chose to implement this only using the standard library so that I could understand more about generating and modifying bytecode.</description>
+      <imglink>http://i.imgur.com/OodCK0c.png</imglink>
     </item>
     
   </channel>

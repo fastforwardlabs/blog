@@ -20,6 +20,7 @@
       
       <guid>https://blog.fastforwardlabs.com/2016/06/02/welcome-friederike.html</guid>
       <description>Alongside our research on emerging machine learning techniques, Fast Forward Labs advises organizations on data science issues like technical architecture, new product development, models and algorithms, and even hiring the right talent. Our client base is growing fast, and we’re excited to support many large financial services, insurance, and media companies, as well as startups building cutting-edge AI products. We work closely with our clients to identify opportunities where they can apply our research and take our prototypes the next mile by implementing them on their own data.</description>
+      <imglink>http://68.media.tumblr.com/48ec558f89fc83dbf3e1770639cf6404/tumblr_inline_o85byoZHrx1ta78fg_540.jpg</imglink>
     </item>
     
     <item>
@@ -32,6 +33,7 @@
       <guid>https://blog.fastforwardlabs.com/2015/11/03/ffl-in-the-bay-area-chicago-and-dc.html</guid>
       <description>We’ve got three events on the horizon. Join us, or contact us with questions if you’d like to learn more but are unable to attend!
 Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H2O World, where participants discuss how to use machine learning to build intelligent applications. Hilary will explain how Fast Forward Labs helps companies discover and build exciting new products from their existing data assets.</description>
+      <imglink>http://68.media.tumblr.com/c9c72b3fe440442ba7cf9e27cfea2f9e/tumblr_inline_nx954t5Jfv1ta78fg_540.png</imglink>
     </item>
     
     <item>
@@ -44,6 +46,7 @@ Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H
       <guid>https://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
       <description>Last Thursday Hilary and I headed to Clarifai’s offices in the Flatiron District to ask CEO Matt Zeiler about using deep learning for image analysis. A few highlights from the interview:
 1) The success of a deep learning project depends on the quality of the initial training data set. Deep learning algorithms start by scanning massive data sets to identify features (inputs) that can be correlated with categories (outputs) to make sense of the data.</description>
+      <imglink>http://fastforwardlabs.github.io/report_images/ff03/pictograph-dogs.png</imglink>
     </item>
     
     <item>
@@ -55,6 +58,7 @@ Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H
       
       <guid>https://blog.fastforwardlabs.com/2015/09/15/pictograph-unlock-your-images.html</guid>
       <description>Have you ever wondered what your photos say about how you look at the world and who you are? Your images won’t say much about what types of things you tend to post unless you routinely tag them. Our new toy application, Pictograph, catalogs the objects that make up your Instagram identity. Pictograph analyzes your Instagram photos and creates a visualization, or pictograph, of what you like to photograph. It’s a fun way to play with new deep learning algorithms for image analysis, and it makes some pretty hilarious mistakes.</description>
+      <imglink>http://fastforwardlabs.github.io/report_images/ff03/pictograph.png</imglink>
     </item>
     
     <item>
@@ -67,6 +71,7 @@ Wednesday, November 11 | Mountain View, CA Hilary Mason will give a keynote at H
       <guid>https://blog.fastforwardlabs.com/2014/12/19/our-next-topic-realtime-stream-analysis.html</guid>
       <description>We&amp;rsquo;re very pleased to announce our second research report topic will be realtime stream analysis, with a focus on probabilistic data structures. Using these techniques, we&amp;rsquo;re able to build systems that enable extremely fast and memory efficient computation over very large data sets. For example, imagine being able to do comparisons between two sets of billions of items in milliseconds using only a few megabytes of memory.
 We&amp;rsquo;re exploring applications with partners in marketing, healthcare, and science.</description>
+      <imglink>http://fastforwardlabs.github.io/report_images/ff02/19.png</imglink>
     </item>
     
     <item>
@@ -80,6 +85,7 @@ We&amp;rsquo;re exploring applications with partners in marketing, healthcare, a
       <description>I’m very pleased to introduce Fast Forward Labs.
 Fast Forward Labs is an independent data technology research lab. We focus on taking technologies that are just becoming possible, and making them useful.
 We believe that the existing research structures are failing in 2014. We offer companies a new approach to applied research that helps them find those product and business opportunities that exist at the intersection of their existing business and new data and technology capabilities.</description>
+      <imglink>http://fastforwardlabs.github.io/resources/images/logos/ff-logo-white-bg.png</imglink>
     </item>
     
   </channel>

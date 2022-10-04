@@ -11,5 +11,381 @@
     <atom:link href="https://blog.fastforwardlabs.com/newsletters/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>CFFL September Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-09.html</link>
+      
+      <pubDate>Wed, 21 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-09.html</guid>
+      <description>September 2022 Welcome to the September edition of the Cloudera Fast Forward Labs newsletter. This month we’re talking about ethics and we have all kinds of goodies to share including the final installment of our Text Style Transfer series and a couple of offerings from our newest research engineer. Throw in some choice must-reads and an ASR demo, and you’ve got yourself an action-packed newsletter!
+ New Research! Ethical Considerations When Designing an NLG System In the final post of our blog series on Text Style Transfer, we discuss some ethical considerations when working with natural language generation systems, and describe the design of our prototype application: Exploring Intelligent Writing Assistance.</description>
+      <imglink>/images/hugo/tst_bart_cover-1663888335.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL August Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-08.html</link>
+      
+      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-08.html</guid>
+      <description>August 2022 Welcome to the August edition of the Cloudera Fast Forward Labs newsletter. This month we’re thrilled to introduce a new member of the FFL team, share TWO new applied machine learning prototypes we’ve built, and, as always, offer up some intriguing reads.
+ New Research Engineer! If you’re a regular reader of our newsletter, you likely noticed that we’ve been searching for new research engineers to join the Cloudera Fast Forward Labs team.</description>
+      <imglink>/images/hugo/self_portrait-1660863172.jpeg</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL July Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-07.html</link>
+      
+      <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-07.html</guid>
+      <description>July 2022 Welcome to the July edition of the Cloudera Fast Forward Labs newsletter. This month we share the latest installment in our Text Style Transfer series and chat about the good reads we’ve recently come across.
+ New Research! We’re nearing the end of our journey into the burgeoning world of Text Style Transfer. But no foray would be complete without a thorough discussion on model evaluation — an absolute must for any practical application.</description>
+      <imglink>/images/hugo/image3-tst3.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL June Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-06.html</link>
+      
+      <pubDate>Thu, 23 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-06.html</guid>
+      <description>June 2022 Welcome to the June edition of the Cloudera Fast Forward Labs newsletter. This month we take a trip down memory lane: re-releasing another gem from the research vault and revisiting two of our recent applied ML prototypes. Then we snap back to the present with some recommended reading.
+ We’re hiring! Research Engineer (US/UK/Canada - Remote)
+As a Research Engineer on the Cloudera Fast Forwards Labs team, much of your time will be spent developing new applied research and sharing it with the community via reports and blog posts.</description>
+      <imglink>/images/hugo/recommendation_models-1656022871.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL May Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-05.html</link>
+      
+      <pubDate>Wed, 18 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-05.html</guid>
+      <description>May 2022 Welcome to the May edition of the Cloudera Fast Forward Labs newsletter. This month we share the next chapter in our current research endeavor and chat about some great reads.
+ We’re hiring! Research Engineer (US/UK/Canada - Remote)
+As a Research Engineer on the Cloudera Fast Forwards Labs team, much of your time will be spent developing new applied research and sharing it with the community via reports and blog posts.</description>
+      <imglink>/images/hugo/fig4-tst2.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL April Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-04.html</link>
+      
+      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-04.html</guid>
+      <description>April 2022 Welcome to the April edition of the Cloudera Fast Forward Labs newsletter. This month we share some exciting team news, open the FFL research vault, and talk about a recent initiative.
+ We’re hiring! Research Engineer (US/UK/Canada - Remote)
+As a Research Engineer on the Cloudera Fast Forwards Labs team, much of your time will be spent developing new applied research and sharing it with the community via reports and blog posts.</description>
+      <imglink>/images/hugo/transfer-learning-pipeline-1649637022.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL March Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-03.html</link>
+      
+      <pubDate>Tue, 22 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-03.html</guid>
+      <description>March 2022 Welcome to the March edition of the Cloudera Fast Forward Labs newsletter. This month we scratch the surface on one of the most cutting-edge natural language processing capabilities and share some of our favorite reads.
+ New Research! In January’s newsletter we shared a sneak peek of our next research endeavor, and this month we’re excited to share an update.
+An Introduction to Text Style Transfer As humans, we understand that language is situational — not only is the context of written or spoken words important, but the style of text itself depends heavily on the user, environment, and scenario.</description>
+      <imglink>/images/hugo/tst_definition-1647958795.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL February Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-02.html</link>
+      
+      <pubDate>Thu, 17 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-02.html</guid>
+      <description>February 2022 Welcome to the February edition of the Cloudera Fast Forward Labs newsletter. This month we dive deeper into the world of video convolutions, share some applied machine learning prototypes we’ve built, and discuss our top reads.
+ New Research! We have another entry in the world of a newly-emerging capability: Video Understanding! While working with video data has considerable overlap with image understanding, information extraction from video presents a new level of complexity and a new world of possibilities.</description>
+      <imglink>/images/hugo/video_convolution_example-1645140017.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL January Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-01.html</link>
+      
+      <pubDate>Fri, 21 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-01.html</guid>
+      <description>January 2022 Welcome to the January edition of the Cloudera Fast Forward Labs newsletter. This month we provide a glimpse of our next research topic, talk about the uniqueness of snowflakes, and share what we’ve been reading this month.
+ It’s the start of a new year and the CFFL team is shaking off the holiday fog and ramping up with some awesome new research. While we don’t have results to share yet, we thought we could give a sneak peek at what we’re digging into — work that we’ll share more fully in the coming months!</description>
+      <imglink>/images/hugo/snowflakes-1642805048.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL December Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-12.html</link>
+      
+      <pubDate>Thu, 09 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-12.html</guid>
+      <description>December 2021 Welcome to the December edition of the Cloudera Fast Forward Labs newsletter. This month we dive into the world of Video Understanding and share our favorite reads.
+ New research! For the past few months, we&amp;rsquo;ve been diligently digging into a newly-emerging capability: Video Understanding! While working with video data has considerable overlap with image understanding, information extraction from video presents a new level of complexity and a new world of possibilities.</description>
+      <imglink>/images/hugo/action_forecasting_example-1639168656.png</imglink>
+    </item>
+    
+    <item>
+      <title>CFFL November Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-11.html</link>
+      
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-11.html</guid>
+      <description>November 2021 Welcome to the November Cloudera Fast Forward Labs newsletter. Today we talk about old research blending into new, the rise of unstructured data, and what we&amp;rsquo;ve been reading this month.
+ New research! We have two great original pieces for you this month — one from the vault and another fresh off the presses.
+Old research meets new Much of our earlier research endeavors are still ensconced behind a paywall but we&amp;rsquo;ve been working hard to re-release these gems, making them publicly available to anyone.</description>
+      <imglink>/images/hugo/extractive_summarization_pipeline-1637184569.png</imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-10.html</link>
+      
+      <pubDate>Wed, 20 Oct 2021 12:40:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-10.html</guid>
+      <description>Welcome to the October Cloudera Fast Forward Labs newsletter. This month, some old research, and new recommended reading.
+ New (old) research! This month, we&amp;rsquo;re opening the vault and releasing a report from back in April 2019 from behind the paywall.
+Learning with Limited Labeled Data Being able to learn with limited labeled data relaxes the stringent labeled data requirement for supervised machine learning. This report focuses on active learning, a technique that relies on collaboration between machines and humans to label smartly.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-09.html</link>
+      
+      <pubDate>Tue, 21 Sep 2021 12:40:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-09.html</guid>
+      <description>Welcome to the September Cloudera Fast Forward Labs newsletter.
+ New research! We like to build things. In the past couple of months we&amp;rsquo;ve been hard at work on a new prototype, as well as wrapping up a few loose threads from various research directions that we&amp;rsquo;ve touched on so far this year. Our efforts have culminated in a fun new application and blog posts.
+Summarize. Automatic summarization is a task in which a machine distills a large amount of data into a subset (the summary) that retains the most relevant and important information from the whole.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-08.html</link>
+      
+      <pubDate>Wed, 25 Aug 2021 10:11:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-08.html</guid>
+      <description>Welcome to the August Cloudera Fast Forward Labs newsletter. This month, new research, a new webinar, and we welcomed Daniel, a new research engineer 🎉
+ New research! Inferring Concept Drift Without Labeled Data After iterations of development and testing, deploying a well-fit machine learning model often feels like the final hurdle for an eager data science team. In practice however, a trained model is never final because the complex relationships that it abstracts are likely to evolve over time causing the model&amp;rsquo;s performance to deteriorate if not accounted for.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-07.html</link>
+      
+      <pubDate>Mon, 26 Jul 2021 10:55:10 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-07.html</guid>
+      <description>Welcome to the July Cloudera Fast Forward Labs newsletter! This month, we have some new research, livestream recordings, and some recommended reading.
+ New research! Multi-objective Hyperparameter Optimization The machine learning life cycle is more than data + model = API. We know there is a wealth of subtlety and finesse involved in data cleaning and feature engineering. Similarly, there is more to model-building than feeding data in and reading off a prediction.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-06.html</link>
+      
+      <pubDate>Fri, 25 Jun 2021 14:49:47 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-06.html</guid>
+      <description>Welcome to the June edition of the Cloudera Fast Forward Labs newsletter. This month, we have some new research, livestream recordings, and our recommended reading.
+New research! Deep Metric Learning: Applications in Automatic Offline Signature Verification The past couple of months, we&amp;rsquo;ve been tackling the forensic task of offline signature verification using modern deep learning techniques. Handwritten signature verification aims to automatically discriminate between genuine and forged signatures, and is a particularly important challenge due to the ubiquity of handwritten signatures as a form of identification in legal, financial, and administrative domains.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-05.html</link>
+      
+      <pubDate>Mon, 24 May 2021 10:53:41 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-05.html</guid>
+      <description>Welcome to the May Cloudera Fast Forward Labs newsletter. This month, we have some new research, a livestream you&amp;rsquo;re invited to, and some recommended reading.
+New research: Session-Based Recommendations Recommendation systems have become a cornerstone of modern life, spanning sectors that include online retail, music and video streaming, and even content publishing. These systems help us navigate the sheer volume of content on the internet, allowing us to discover what’s interesting or important to us.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-04.html</link>
+      
+      <pubDate>Mon, 26 Apr 2021 11:01:16 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-04.html</guid>
+      <description>Welcome to the April Cloudera Fast Forward Labs newsletter, covering our latest research, livestream, and recommended reading.
+New research: Session-Based Recommendations Having taken a short break to work on Applied ML Prototypes, our first research cycle of 2021 is just now wrapping up, and we&amp;rsquo;re excited to share it soon. Here&amp;rsquo;s a preview:
+ Recommendation systems have become a cornerstone of modern life, from online retail to music and video streaming.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-03.html</link>
+      
+      <pubDate>Thu, 25 Mar 2021 19:11:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-03.html</guid>
+      <description>Welcome to the March Cloudera Fast Forward Labs newsletter.
+It&amp;rsquo;s been a busy month for us here in the virtual Fast Forward lab. Supporting our launch of Applied ML Prototypes (read more on the Cloudera blog: Change The Way You Do ML With Applied ML Prototypes), working on growing the team, and starting our first research cycle of 2021. More on that soon! We&amp;rsquo;re also excited to announce our latest hijinks:</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-02.html</link>
+      
+      <pubDate>Mon, 22 Feb 2021 12:35:42 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-02.html</guid>
+      <description>Welcome to Cloudera Fast Forward Labs&amp;rsquo; February newsletter. Three exciting things this month.
+ We&amp;rsquo;re open sourcing a whole raft of applied ML applications. We&amp;rsquo;re hiring. Recommended reading.  Applied Machine Learning Prototypes Deep in the underground (virtual) Fast Forward lab, we&amp;rsquo;ve been very busy working away in secrecy for months. We&amp;rsquo;re super excited to announce ten open source Applied ML Prototypes.
+These prototypes (we call &amp;lsquo;em AMPs) are inspired by both our own research and our front row seats to the challenges enterprises face when developing ML applications.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2021-01.html</link>
+      
+      <pubDate>Wed, 20 Jan 2021 16:14:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2021-01.html</guid>
+      <description>Welcome to the January edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter.
+ Top ML research developments of 2020 In lieu of new research of our own this month, we asked each of our research engineers to take a look back at their top research developments of 2020.
+The prevalence of MLOps Andrew
+It has long been known that world of machine learning lacks the rigor and discipline of traditional software engineering practices.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-12.html</link>
+      
+      <pubDate>Thu, 10 Dec 2020 16:22:30 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-12.html</guid>
+      <description>Welcome to the December edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. We have a bumper pack of releases for the holiday season: a new research release, the open sourcing of three previous reports, and, as usual, our team&amp;rsquo;s recommended reading for the month.
+ New research release! Few-Shot Text Classification Text classification is a ubiquitous capability with a wealth of use cases including sentiment analysis, topic assignment, document identification, article recommendation, and more.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-11.html</link>
+      
+      <pubDate>Fri, 20 Nov 2020 16:22:30 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-11.html</guid>
+      <description>Welcome to the November edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. This month we have some refreshed research in the computer vision space, a preview of our final report of the year on zero-shot text classification, and our curated best reads and watches of the month from the research team.
+ New research release! Semantic Image Search Within this research cycle, we revisited the topic of semantic search on data. We explore two critical requirements for semantic search at scale - a review of strategies for creating semantic representations of images (supervised, self supervised, unsupervised methods) and provide an implementation of semantic search using fast approximate nearest neighbor search (FAISS).</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-10.html</link>
+      
+      <pubDate>Fri, 23 Oct 2020 21:15:01 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-10.html</guid>
+      <description>Welcome to the October edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. We&amp;rsquo;re happy to share some our latest research, and invite you to our next webinar: tomorrow!
+ New research release! Structural Time Series Time series data is ubiquitous, and forecasting has a long history. Generalized additive models give us a simple, flexible and interpretable means for modeling some kinds of time series, especially where there is seasonality. We look at the benefits and trade-offs of taking a curve-fitting approach to time series, and demonstrate its use via Facebook&amp;rsquo;s Prophet library on a demand forecasting problem.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-09.html</link>
+      
+      <pubDate>Thu, 24 Sep 2020 19:53:36 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-09.html</guid>
+      <description>Welcome to the September edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. This month, we&amp;rsquo;re happy to share some new research! This is the first example of a new research format we&amp;rsquo;re experimenting with: more focussed and more frequent. Let us know what you think!
+ New research release today! Meta-Learning In contrast to how humans learn, deep learning algorithms need vast amounts of data and compute and may yet struggle to generalize.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-07.html</link>
+      
+      <pubDate>Thu, 23 Jul 2020 12:28:14 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-07.html</guid>
+      <description>Welcome to the July edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. This month, we have new research, new blog posts, new recommended reading, and we&amp;rsquo;re very excited to invite you to our next research webinar tomorrow &amp;ndash; Deep Learning for Automated Question Answering!
+ New research: NLP for Question Answering We&amp;rsquo;re rounding out our blog series on Question Answering with these three recent posts.
+Evaluating QA: the Retriever &amp;amp; the Full QA System</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-06.html</link>
+      
+      <pubDate>Tue, 16 Jun 2020 17:57:24 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-06.html</guid>
+      <description>Welcome to the June edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. This month, alongside our regular recommended reading, we have two exciting research announcements!
+ New research: NLP for Question Answering Here in the Fast Forward lab, we&amp;rsquo;re always asking ourselves a lot of questions. Now we&amp;rsquo;re asking BERT a lot of questions too! Our current research focus is question answering systems. In place of a report with all our learnings at the end of our research, we&amp;rsquo;re inviting you to follow along as we explore building a question answering system using modern neural architectures.</description>
+      <imglink></imglink>
+    </item>
+    
+    <item>
+      <title></title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2020-08.html</link>
+      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2020-08.html</guid>
+      <description>Welcome to the August edition of Cloudera Fast Forward&amp;rsquo;s monthly newsletter. Our team have been taking some well-deserved vacation this month, but we have several new research projects underway that we&amp;rsquo;re excited to share with you soon. In the meantime, several of our recent webinars are available to watch on-demand, and our research engineers have some new recommended reading to share.
+ Our Recent Research NLP for Question Answering What if you could ask your email client, “Who sent me the link with the latest financial report?</description>
+      <imglink></imglink>
+    </item>
+    
   </channel>
 </rss>

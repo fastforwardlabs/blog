@@ -31,6 +31,7 @@
 &lt;img src=&#34;http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif&#34; title=&#34;Generatively morphing digits&#34;/&gt;&lt;/div&gt;
 &lt;p&gt;In this post, we’ll take a look under the hood at the math and technical details that allow us to optimize the VAE model we sketched in &lt;a href=&#34;http://fastforwardlabs.github.io/2016/08/12/introducing-variational-autoencoders-in-prose-and.html&#34;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Along the way, we’ll show how to implement a VAE in &lt;a href=&#34;http://tensorflow.org/&#34;&gt;TensorFlow&lt;/a&gt;—a library for efficient numerical computation using data flow graphs, with key features like &lt;a href=&#34;http://alexey.radul.name/ideas/2013/introduction-to-automatic-differentiation/&#34;&gt;automatic differentiation&lt;/a&gt; and parallelizability (across clusters, CPUs, GPUs…and &lt;a href=&#34;https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html&#34;&gt;TPUs&lt;/a&gt; if you’re lucky). You can find (and tinker with!) the full implementation &lt;a href=&#34;https://github.com/fastforwardlabs/vae-tf/tree/master&#34;&gt;here&lt;/a&gt;, along with a couple &lt;a href=&#34;https://github.com/fastforwardlabs/vae-tf/tree/master/out&#34;&gt;pre-trained models&lt;/a&gt;.&lt;/p&gt;</description>
+      <imglink>http://fastforwardlabs.github.io/blog-images/miriam/imgs_code/160816_1754_reloaded_latent_784_500_500_50_round_65536_morph_4730816952.gif</imglink>
     </item>
     
     <item>
@@ -44,6 +45,7 @@
       <description>Effective machine learning means building expressive models that sift out signal from noise—that simplify the complexity of real-world data, yet accurately intuit and capture its subtle underlying patterns.
 Whatever the downstream application, a primary challenge often boils down to this: How do we represent, or even synthesize, complex data in the context of a tractable model?
 This challenge is compounded when working in a limited data setting—especially when samples are in the form of richly-structured, high-dimensional observations like natural images, audio waveforms, or gene expression data.</description>
+      <imglink>http://fastforwardlabs.github.io/blog-images/miriam/160727_1340_explore.gray_del11_492x490.slower40.gif</imglink>
     </item>
     
     <item>
@@ -56,6 +58,7 @@ This challenge is compounded when working in a limited data setting—especially
       <guid>https://blog.fastforwardlabs.com/2016/05/03/probabilistic-programming-for-anomaly-detection.html</guid>
       <description>The Fast Forward Labs research team is developing our next prototype, which will demonstrate an application of probabilistic programming. Probabilistic programming languages are a set of high-level languages that lower the barrier to entry for Bayesian data analysis.
 Bayesian data analysis is often seen as the best approach to machine learning. Models derived by this process are highly interpretable, in contrast to other modern models like neural networks and support vector machines.</description>
+      <imglink>http://68.media.tumblr.com/1d842739c4ecb115ce586049dd552f48/tumblr_inline_o6kjvaPgBs1ta78fg_540.jpg</imglink>
     </item>
     
   </channel>

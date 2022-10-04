@@ -21,6 +21,7 @@
       <guid>https://blog.fastforwardlabs.com/2015/09/22/fast-forward-labs-interviews-clarifai-about-deep-learning.html</guid>
       <description>Last Thursday Hilary and I headed to Clarifai’s offices in the Flatiron District to ask CEO Matt Zeiler about using deep learning for image analysis. A few highlights from the interview:
 1) The success of a deep learning project depends on the quality of the initial training data set. Deep learning algorithms start by scanning massive data sets to identify features (inputs) that can be correlated with categories (outputs) to make sense of the data.</description>
+      <imglink>http://fastforwardlabs.github.io/report_images/ff03/pictograph-dogs.png</imglink>
     </item>
     
   </channel>

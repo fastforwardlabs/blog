@@ -20,6 +20,7 @@
       
       <guid>https://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo-filters-vs.-bloom-filters.html</guid>
       <description>Probabilistic data structures store data compactly with low memory and provide approximate answers to queries about stored data. They are designed to answer queries in a space-efficient manner, which can mean sacrificing accuracy. However, they typically provide guarantees and bounds on error rates depending on specifications of the data structure in question. Because they provide low memory footprints, probabilisitic data structures are particularly useful ink streaming and low power settings.</description>
+      <imglink>/tumblr_files/pmrs-test.png</imglink>
     </item>
     
   </channel>
