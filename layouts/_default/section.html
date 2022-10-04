@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $pages := where .Site.RegularPages.ByDate.Reverse "Section" "posts" }}
+{{ $pages := .Site.RegularPages.ByDate.Reverse}}
 {{ $paginator := .Paginate $pages }}
 
 <div class="container">
