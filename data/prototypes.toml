@@ -1,4 +1,11 @@
 [[experiments]]
+name = "ASR with Whisper"
+head = "Notebook"
+description = "Explore the capabilities of OpenAI's Whisper for automatic speech recognition by creating your own voice recordings!"
+url = "https://colab.research.google.com/github/fastforwardlabs/whisper-openai/blob/master/WhisperDemo.ipynb"
+image = "/images/hugo/whisper_screenshot-1666368542.png"
+
+[[experiments]]
 name = "NeuralQA"
 head = "Library"
 description = "A usable library for question answering on large datasets."
