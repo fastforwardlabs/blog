@@ -6,10 +6,22 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 14 Nov 2022 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Implementing CycleGAN</title>
+       
+      <link>https://blog.fastforwardlabs.com/2022/11/14/implementing-cyclegan.html</link>
+      
+      <pubDate>Mon, 14 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/2022/11/14/implementing-cyclegan.html</guid>
+      <description>Introduction This post documents the first part of a research effort to quantify the impact of synthetic data augmentation in training a deep learning model for detecting manufacturing defects on steel surfaces. We chose to generate synthetic data using CycleGAN,1 an architecture involving several networks that jointly learn a mapping between two image domains from unpaired examples (I’ll elaborate below). Research from recent years has demonstrated improvement on tasks like defect detection2 and image segmentation3 by augmenting real image data sets with synthetic data, since deep learning algorithms require massive amounts of data, and data collection can easily become a bottleneck.</description>
+      <imglink>/images/hugo/Screen_Shot_2022-10-18_at_3.06.46_PM-1668023835.png</imglink>
+    </item>
     
     <item>
       <title>CFFL October Newsletter</title>

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    
+<title>Implementing CycleGAN</title>
+<meta property="og:title" content="Implementing CycleGAN">
+<meta property="description" content="Introduction This post documents the first part of a research effort to quantify the impact of synthetic data augmentation in training a deep learning model for detecting manufacturing defects on steel surfaces. We chose to generate synthetic data using CycleGAN,1 an architecture involving several networks that jointly learn a mapping between two image domains from unpaired examples (I’ll elaborate below). Research from recent years has demonstrated improvement on tasks like defect detection2 and image segmentation3 by augmenting real image data sets with synthetic data, since deep learning algorithms require massive amounts of data, and data collection can easily become a bottleneck.">
+<meta property="og:description" content="Introduction This post documents the first part of a research effort to quantify the impact of synthetic data augmentation in training a deep learning model for detecting manufacturing defects on steel surfaces. We chose to generate synthetic data using CycleGAN,1 an architecture involving several networks that jointly learn a mapping between two image domains from unpaired examples (I’ll elaborate below). Research from recent years has demonstrated improvement on tasks like defect detection2 and image segmentation3 by augmenting real image data sets with synthetic data, since deep learning algorithms require massive amounts of data, and data collection can easily become a bottleneck.">
+<meta property="og:image" content="https://blog.fastforwardlabs.com/images/hugo/Screen_Shot_2022-10-18_at_3.06.46_PM-1668023835.png">
+<meta property="og:url" content="https://blog.fastforwardlabs.com/2022/11/14/implementing-cyclegan.html">
+<meta property="twitter:card" content="summary_large_image">
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-53030428-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </head>
+  <body>
+      <div class="container">
+        <div class="spacer"></div>
+        <div style="height: 2.5rem; padding-top: 0.35rem;">
+          <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">
+            <img style="height: 2rem;" src="/images/cloudera-fast-forward-logo.png" />
+          </a>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <main id="main">
+        
+<div class="container">
+  <div>
+    <h3 class="clear"><a href="/">Blog</a></h3>
+  </div>
+  <div class="spacer"></div>
+  <div class="post">
+    <h5 class="clear">
+      <span>Nov 14, 2022</span> &middot;
+      <span style="text-transform: capitalize;">
+        post
+      </span>
+    </h5>
+    <h1>Implementing CycleGAN</h1>
+    <h2 id="introduction">Introduction</h2>
+<p>This post documents the first part of a research effort to quantify the impact of synthetic data augmentation in training a deep learning model for detecting manufacturing defects on steel surfaces. We chose to generate synthetic data using CycleGAN,<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> an architecture involving several networks that jointly learn a mapping between two image domains from unpaired examples (I’ll elaborate below). Research from recent years has demonstrated improvement on tasks like defect detection<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and image segmentation<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> by augmenting real image data sets with synthetic data, since deep learning algorithms require massive amounts of data, and data collection can easily become a bottleneck. CycleGAN in particular has been explored in this capacity for medical image segmentation in increasingly sophisticated ways.<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup><sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup><sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
+<p>We wanted to know what (if any) performance improvement we could expect by incorporating synthetic data when training a deep neural network for detecting manufacturing defects on steel surfaces with an imbalanced data set, an application we hadn’t seen CycleGAN applied to. In order to generate the synthetic data to answer this question, I implemented CycleGAN “from scratch” using PyTorch. My motivation for writing from scratch instead of using a pre-built solution are selfishly personal - I wanted to learn PyTorch in order to compare it with other deep learning frameworks I have used, and because I feel that engaging with subject matter at a “low level” builds insight and intuition.<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></p>
+<p>In the context of computer vision, real data are images that are collected from physical systems, with their quality and variability arising from the rich set of physical conditions abounding in the real world. Synthetic data are produced using an imperfect model of physical systems. Sometimes that means modeling the physical interactions occurring in real imaging systems<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup> but often (as with CycleGAN) the models are based on heuristics or metrics that have no easy physical interpretation - CycleGAN for instance uses a “cycle consistency loss” that is not explicitly based on the interaction of light and materials, but rather by exploiting mathematical properties of the abstract “domain translation” task. The use of synthetic data for training machine learning models for computer vision is an active area of research.</p>
+<p>In real data sets one often sees class imbalance. For our manufacturing defect data set, there are a number of different defect classes that appear at very different frequencies. With imbalanced datasets there is a risk that a machine learning model will overfit on the majority class, and exhibit poor performance on the minority classes. Consider for example a binary classification problem where one class represents 99% of the training samples - maybe detecting fraud in financial transactions, where most examples are not fraudulent. A classifier that simply predicts the majority class every time will get “good” accuracy, but completely fail on the minority class. There are a number of techniques commonly used to address overfitting for imbalanced data, including under-sampling the majority class, over-sampling the minority class, sample weighting, and of course the use of synthetic data. None of the techniques are silver bullets, and all have significant caveats that may impact their suitability for one application or another.</p>
+<p>As with many endeavors rooted in curiosity and playfulness, an unexpected but very interesting and practically useful thread appeared:<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> when implementing a nontrivial algorithm over a new data set (a scenario rife with uncertainty) how do you disambiguate performance issues that arise from your implementation from those that arise due to your data or problem formulation? Industry researchers typically have a limited amount of time, information, and compute resources with which to develop software and make a determination about the viability of an algorithm for their problem domain. At the outset of this research effort it wasn’t exactly clear that we would even be able to generate plausible steel surface manufacturing defects at all (spoiler: we did). We hope by illustrating our own iterative journey through the fog of uncertainty to provide a case study for others interested in synthetic data generation.</p>
+<h3 id="the-data">The data</h3>
+<p>The primary data set of interest comes from the Kaggle competition “<a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a>.” The competition introduces a multi-class semantic segmentation problem to locate manufacturing defects on images of steel surfaces. This is an imbalanced problem with one class exhibiting many more examples than the others, and so a very natural question is whether synthetic data can be used to augment the minority classes of the training set and prevent overfitting on the majority class - a very common occurrence when considering imbalanced data sets.</p>
+<p>There are many images of non-defective surfaces, as well as ground truth segmentation masks for four classes of defects. The defect instances have a lot of variation in their size and position, and many images show only part of a steel surface along with completely dark regions that are seemingly extraneous.</p>
+<p><img src="/images/hugo/Screen_Shot_2022-10-21_at_12.03.22_PM-1668023377.png" alt="Example steel surfaces with manufacturing defects and segmentation masks overlaid."></p>
+<h5 id="example-steel-surfaces-with-manufacturing-defects-and-segmentation-masks-overlaid">Example steel surfaces with manufacturing defects and segmentation masks overlaid.</h5>
+<p>As a rule of thumb increased variance in a data set necessitates more examples for robust learning, and this data set shows lots of variance. Given the relative spatial sparsity of defects, this data set also lends itself well to being formulated as a more coarse-grained image classification problem (”For a given region, is there a defect or not?”), which is generally understood to be a simpler task than segmentation. Therefore in order to have the best shot at both generating plausible synthetic data and understanding its impact, we opted to formulate a new classification task and analyze the impact of synthetic data on that, instead of considering the original segmentation problem.</p>
+<p>The classification problem considers crops of the original data set. The crops were chosen according to some heuristics that were intended primarily to reduce the variance in size and position of defects, namely:</p>
+<ul>
+<li>Defect instances must fit entirely in the crop.</li>
+<li>Defect instances must be approximately centered in the crop.</li>
+<li>Crops must not overlap the edge of the image, or include any portion of the above mentioned dark regions.</li>
+<li>The crop dimensions were selected to include the majority of defects, excluding only the largest ones that were extraordinarily wide. (Smaller images ease the compute burden significantly.)</li>
+</ul>
+<p>We also dropped three of the four original defect classes entirely, so the resulting task is a binary classification problem to identify whether a crop exhibits a defect or not. This remains an imbalanced problem with orders of magnitude more examples of non-defective crops than defective crops. By varying the number of defective and non-defective crops we consider, we can artificially construct either a perfectly balanced data set where the number of non-defective and defective crops are equal, or one that is higly imbalanced in favor of non-defective crops. This spectrum of data sets and the classification task defined on it will ultimately be the playground on which we evaluate the quality of our synthetic data generation models, but first we needed to convince ourselves that we could generate plausible synthetic data at all.</p>
+<p>We also incorporated a subset of ImageNet, namely the same images of horses and zebras that were used in Zhu et al., “Unpaired Image-To-Image Translation Using Cycle-Consistent Adversarial Networks,” in order to qualitatively validate our implementation.</p>
+<h3 id="what-is-cyclegan-why-use-it-for-this-problem">What is CycleGAN? Why use it for this problem?</h3>
+<p>A “vanilla” GAN is a set of two parameterized networks, typically called the generator and discriminator, that alternately seek to minimize and maximize some objective function with respect to their weights.<sup id="fnref:10"><a href="#fn:10" class="footnote-ref" role="doc-noteref">10</a></sup> CycleGAN consists of two “vanilla” GANs that learn mappings that are each other’s inverse, and this relationship is used to define a new <em>cycle-consistency</em> loss term that is minimized when this inverse relationship is learned perfectly. For example Zhu et al. learn a pair of such mappings that turn images of horses into zebras, as well as the opposite:</p>
+<p><img src="/images/hugo/Screen_Shot_2022-10-17_at_2.24.26_PM-1668023553.png" alt=""></p>
+<h5 id="image-from-zhu-et-al">Image from Zhu et al.</h5>
+<p>The notion of cycle-consistency arises from the observation that if you turn an image of a horse into a zebra, then back to a horse, this round trip could plausibly yield the same exact horse image. The cycle-consitency loss measures the extent to which it does not.</p>
+<p>This problem is intuitively appealing because horses and zebras already kinda look alike. As a human if you wanted to turn zebras into horses for some reason<sup id="fnref:11"><a href="#fn:11" class="footnote-ref" role="doc-noteref">11</a></sup> a “simple” procedure to do it could be to erase the zebra’s stripes with your magic eraser, then fill in the erased part with brownish colors. And that’s it. Horses and zebras tend to be in similar looking backgrounds, so we don’t have to change that to produce a plausible result. We know more or less what the ideal solution is, it just happens to be currently impossible to create a program that does it well without deep learning.</p>
+<p>The steel defect classification problem we formulated is analogous. As a human, if you wanted to turn images of defect-free steel surfaces into images of defective steel surfaces, a “simple” procedure to do it would be to draw some pitting or scratches on top of the defect-free surface, if you knew what they looked like. And that’s it. Once again, we know more or less what the ideal solution is, it just happens to be currently impossible to create a program that does it well without deep learning.</p>
+<h2 id="iteration-0">Iteration 0</h2>
+<p>First I needed to “bootstrap” my implementation of CycleGAN. Supposing I wrote an implementation but found I couldn’t create plausible synthetic manufacturing defects, how would I determine whether the fault was in my implementation, or if we simply didn’t have enough data? I cannot possibly hope to disentangle these considerations by examining results on the manufacturing defect data set alone. A logical step then is to recreate some previously published result, so I chose to focus on the horse-to-zebra object transfiguration task (henceforth horse2zebra).</p>
+<p>Sparing the details, my implementation strategy was to closely read Zhu et al. and carefully implement what is described in that paper. I expected to make mistakes at this point - there are so many moving parts that it would be a wonder if I didn’t. After training for 200 epochs, taking about 5 hours on the V100 GPU available to me, here’s one result:</p>
+<p>
+<img style="display:inline; width:49%" src="/images/hugo/Screen_Shot_2022-10-18_at_3.06.18_PM-1668023825.png" alt="Source image of horses">
+<img style="display:inline; width:49%" src="/images/hugo/Screen_Shot_2022-10-18_at_3.06.46_PM-1668023835.png" alt="Learned image of zebras">
+</p>
+<h5 id="left-source-image-of-horses-right-learned-image-of-zebras">Left: source image of horses. Right: learned image of zebras.</h5>
+<p>Intriguing, but not very plausible.</p>
+<p>There is a <a href="https://github.com/Lornatang/CycleGAN-PyTorch">generously open-source implementation of CycleGAN</a><sup id="fnref:12"><a href="#fn:12" class="footnote-ref" role="doc-noteref">12</a></sup> that had qualitatively far better results early in training:</p>
+<p>
+<img style="display:inline; width:49%" src="/images/hugo/Screen_Shot_2022-10-18_at_3.06.18_PM-1668023825.png" alt="Source image of horses">
+<img style="display:inline; width:49%; transform: scale(-1, 1);" src="/images/hugo/Screen_Shot_2022-10-18_at_3.12.11_PM-1668024574.png" alt="Learned image of zebras">
+</p>
+<h5 id="left-same-source-image-of-horses-right-improved-learned-image-of-zebras">Left: same source image of horses. Right: improved learned image of zebras.</h5>
+<p>The evaluation is summarized in the following matrix:</p>
+<style>
+table, th, tbody, tr, thead, td {
+    border: 1px solid black;
+}
+table {
+    margin-bottom: 1em;
+}
+</style>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>…on my best horse2zebra result so far, on its own merits.</th>
+<th>…on my best horse2zebra result so far, compared to reference implementation.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mike’s opinion…</td>
+<td>Not plausible.</td>
+<td>Obvious quality differences.</td>
+</tr>
+</tbody>
+</table>
+<p>You might ask, “Why don’t you use the open source implementation?” if you forgot that I was doing this for self-indulgent reasons.</p>
+<h2 id="iteration-1">Iteration 1</h2>
+<p>Of course after reviewing the paper I made a number of changes to my implementation to match what was described. Even after that, I found some notable differences between my implementation and the open source implementation, including that the open source implementation used a generator model with more layers. Additionally, Zhu et al. describe an identity loss term that I didn’t notice at first, but that has a significant impact on the results:</p>
+<p><img src="/images/hugo/Screen_Shot_2022-10-04_at_8.44.27_AM-1668025421.png" alt="Screen_Shot_2022-10-04_at_8.44.27_AM.png"></p>
+<h5 id="left-overall-generator-loss-middle-right-two-cycle-consistency-loss-terms">Left: overall generator loss. Middle, right: two cycle consistency loss terms.</h5>
+<p>The three graphs depict the overall generator loss (left) and two cycle consistency loss terms (middle and right). The purple line depicts a model trained with an identity loss term, and the orange without. Finally the darker lines are smoothed versions of the lighter lines - the losses oscillate rapidly during training, and smoothing can help identify coarse trends.</p>
+<p>With identity loss included the overall generator loss is higher since we are adding a new nonnegative term, as depicted in the leftmost graph. Notably however, the introduction of the identity loss term has an additional effect of pushing the cycle consistency loss down, illustrated by the purple line trending lower than the orange in the middle and right graphs. Here’s an example source horse image and the resulting zebra from my horse2zebra model at this point:</p>
+<p>
+<img style="display:inline; width:49%" src="/images/hugo/Screen_Shot_2022-10-19_at_3.22.29_PM-1668035925.png" alt="Source image of horses">
+<img style="display:inline; width:49%" src="/images/hugo/Screen_Shot_2022-10-19_at_3.22.43_PM-1668035947.png" alt="Learned image of zebras">
+</p>
+<p>The evaluation is summarized in the following matrix:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>…on my best horse2zebra result so far, on its own merits.</th>
+<th>…on my best horse2zebra result so far, compared to reference implementation.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mike’s opinion…</td>
+<td>Still not plausible, but a little bit improved from the previous iteration.</td>
+<td>Obvious quality differences - severe distortion/noise around the horse in the foreground, and an unusual texture on the rest of the image.</td>
+</tr>
+</tbody>
+</table>
+<p>Note that I am not training these models to “completion” for two reason:</p>
+<ul>
+<li>Given that the loss oscillates so much, it was not clear to me that it would converge, which begs the question of what “training to completion” even means in this context. Zhu et al., for example, report training for a fixed number of epochs regardless of the loss achieved.</li>
+<li>The training times on the compute resources available to me could already be measured in hours. Before committing resources for a longer training protocol, I wanted to convince myself that I had eliminated any obvious errors.</li>
+</ul>
+<h2 id="iteration-2">Iteration 2</h2>
+<p>In the final horse2zebra iteration I did indeed discover some more discrepancies in my implementation compared to the description in Zhu et al. - I needed to change some hyperparameters and scale a loss term differently. Consider the following two sets of fake zebras:</p>
+<p>
+<a href="/images/hugo/alternate_a-1668036075.png"><img style="display:inline; width:49%; border-right: 1px solid black" src="/images/hugo/alternate_a-1668036075.png" alt="Fake zebras from one model."></a>
+<a href="/images/hugo/fake_zebras_b-1668036080.png"><img style="display:inline; width:49%; border-left: 1px solid black" src="/images/hugo/fake_zebras_b-1668036080.png" alt="Fake zebras from a different model."></a>
+</p>
+<h5 id="two-sets-of-fake-zebras-generated-by-two-different-cyclegan-models-click-to-see-full-size-versions">Two sets of fake zebras, generated by two different CycleGAN models. Click to see full-size versions.</h5>
+<p>One is generated from the reference implementation and the other from my implementation, trained for the same number of epochs. To my eye, they are qualitatively similar, and I wanted to conclude that my implementation was able to reproduce the published results. I polled my coworkers on which set of images they felt was more plausible in order to hedge against my personal bias. We all used different methodologies, including one “sophisticated point system.”</p>
+<p>The evaluation is summarized in the following matrix:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>…on my best horse2zebra result so far, on its own merits.</th>
+<th>…on my best horse2zebra result so far, compared to reference implementation.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mike’s opinion…</td>
+<td>Plausible in several cases, however with obvious distortions in many cases.</td>
+<td>Comparable.</td>
+</tr>
+<tr>
+<td>Melanie’s opinion…</td>
+<td></td>
+<td>Right hand side is more plausible.</td>
+</tr>
+<tr>
+<td>Andrew’s opinion…</td>
+<td></td>
+<td>Right hand side is slightly more plausible.</td>
+</tr>
+<tr>
+<td>Juno’s opinion…</td>
+<td></td>
+<td>Zebra quality is comparable, but background quality is less plausible on the left hand side.</td>
+</tr>
+</tbody>
+</table>
+<p>Your bonus assignment is to pick out which set of images you think I generated and which set was generated with the reference implementation.
+Then select the following text to reveal the answer: <style>
+.spoiler::selection {
+color: white;
+};
+</style>
+<span class="spoiler" style="color:black;background-color:black;">the right hand side is my implementation and the left hand side is the reference implementation. </span></p>
+<p>The only loose thread now is how to know when to stop training. Should I train for a fixed number of iterations, or stop if the the loss doesn’t decrease for a certain number of epochs? Or perhaps use some more sophisticated heuristic? In general for supervised learning one may stop training early once loss has converged, but that is not a reliable criterion when the loss oscillates rapidly as with CycleGAN. In fact my qualitatively best horse2zebra result is not from the model that achieved minimum loss, as one might expect - the model with minimum loss tended to have very distorted backgrounds. Heusel et al.<sup id="fnref:13"><a href="#fn:13" class="footnote-ref" role="doc-noteref">13</a></sup> show that under certain conditions Frechet Inception Distance (FID) will converge for GANs, and so I began to monitor FID during training, observing that it did indeed converge. However FID and loss did not achieve their minimums simultaneously, which complicated the analysis. I started to use FID convergence as a necessary but not sufficient condition for training to be “complete.”</p>
+<h2 id="synthetic-manufacturing-defects">Synthetic Manufacturing Defects</h2>
+<p>Now that we have a CycleGAN implementation we’re pleased with and a
+strategy for our training protocol, we turn back to our steel data set. On the left are real manufacturing defects, and the right are non-defective regions:</p>
+<p>
+<a href="/images/hugo/real_nondefects-1668105916.png"><img style="display:inline; width:49%; border-right: 1px solid black" src="/images/hugo/real_nondefects-1668105916.png" alt="Fake zebras from one model."></a>
+<a href="/images/hugo/real_defects-1668105922.png"><img style="display:inline; width:49%; border-left: 1px solid black" src="/images/hugo/real_defects-1668105922.png" alt="Fake zebras from a different model."></a>
+</p>
+<h5 id="left-non-defective-crops-right-defective-crops-click-to-view-an-enlarged-version">Left: non-defective crops. Right: defective crops. Click to view an enlarged version.</h5>
+<p>All the defects are of the same class according to the ground truth segmentation masks. Within this class though one can distinguish two different kinds of defects - for example compare columns 1 and 3 in row 4 (green overlay). The image in column 1 row 4 shows what look like small gouges that are relatively wide, and that appear in discontinuous streaks. The image in column 3 row 4 shows what looks like long parallel scratches that tend to span the whole y axis.</p>
+<p>Now compare to synthetic defects from a model trained for 100 epochs:</p>
+<p><img src="/images/hugo/100_epochs_lrx5-1668107844.png" alt="100_epochs_lrx5.png"></p>
+<p>Not all the images are plausible - especially those derived from non-defective images with unusual textures or metal shavings in the crop (red overlays) - but many of them are to my eye, and both kinds of defects are exhibited (green overlays). Once again FID apparently converged but does not achieve its minimum simultaneously with the loss:</p>
+<p><img src="/images/hugo/Screen_Shot_2022-10-10_at_2.36.30_PM-1668108507.png" alt="Screen Shot 2022-10-10 at 2.36.30 PM.png"></p>
+<p>Huzzah! I’m calling this a success. While it certainly would be possible to pursue better results, qualitatively they’re pretty ok. Since this is only one part of an overarching research effort, we actually have a plan to evaluate the results quantitatively in the near future.</p>
+<h3 id="what-comes-next">What comes next?</h3>
+<p>Ok, we satisfied ourselves that we can plausibly produce synthetic manufacturing defects, but so what? Given that we have an imbalanced (read: challenging) classification problem motivating this research effort, we’d obviously like to understand what impact incorporating synthetic data has on that task. We expect inferior performance on the minority class of defects, and so the basic recipe is to incorporate synthetic examples of the minority class and observe how it changes task performance by class. There are many dimensions of possible improvement to consider, including:</p>
+<ul>
+<li>Does incorporating synthetic data along with all available real data in training improve task performance? In other words, can we get more out of the data we collect by “simply” using it to generate synthetic data?</li>
+<li>Can we achieve comparable performance using a model that is trained on only a subset of the available real data, augmented with synthetic data? In other words, if we use synthetic data can we avoid collecting more real data in the first place, which is often a costly and challenging aspect to developing deep learning models?</li>
+<li>Assuming that incorporating synthetic data in training does improve task performance, one can also ask how much real data is needed to bootstrap the synthetic data generation model.</li>
+</ul>
+<p>Look to a future post for results!</p>
+<h2 id="references">References</h2>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Zhu, Jun-Yan, Taesung Park, Phillip Isola, and Alexei A. Efros. “Unpaired Image-To-Image Translation Using Cycle-Consistent Adversarial Networks,” 2223–32, 2017. <a href="https://openaccess.thecvf.com/content_iccv_2017/html/Zhu_Unpaired_Image-To-Image_Translation_ICCV_2017_paper.html">https://openaccess.thecvf.com/content_iccv_2017/html/Zhu_Unpaired_Image-To-Image_Translation_ICCV_2017_paper.html</a>. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Fang, Qiang, Clemente Ibarra-Castanedo, and Xavier Maldague. “Automatic Defects Segmentation and Identification by Deep Learning Algorithm with Pulsed Thermography: Synthetic and Experimental Data.” <em>Big Data and Cognitive Computing</em> 5, no. 1 (March 2021): 9. <a href="https://doi.org/10.3390/bdcc5010009">https://doi.org/10.3390/bdcc5010009</a>. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>Park, Deokhwan, Joosoon Lee, Junseok Lee, and Kyoobin Lee. “Deep Learning Based Food Instance Segmentation Using Synthetic Data.” In <em>2021 18th International Conference on Ubiquitous Robots (UR)</em>, 499–505, 2021. <a href="https://doi.org/10.1109/UR52253.2021.9494704">https://doi.org/10.1109/UR52253.2021.9494704</a>. <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>Zhang, Zizhao, Lin Yang, and Yefeng Zheng. “Translating and Segmenting Multimodal Medical Volumes With Cycle- and Shape-Consistency Generative Adversarial Network,” 9242–51, 2018. <a href="https://openaccess.thecvf.com/content_cvpr_2018/html/Zhang_Translating_and_Segmenting_CVPR_2018_paper.html">https://openaccess.thecvf.com/content_cvpr_2018/html/Zhang_Translating_and_Segmenting_CVPR_2018_paper.html</a>. <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p>Huo, Yuankai, Zhoubing Xu, Hyeonsoo Moon, Shunxing Bao, Albert Assad, Tamara K. Moyo, Michael R. Savona, Richard G. Abramson, and Bennett A. Landman. “SynSeg-Net: Synthetic Segmentation Without Target Modality Ground Truth.” <em>IEEE Transactions on Medical Imaging</em> 38, no. 4 (April 2019): 1016–25. <a href="https://doi.org/10.1109/TMI.2018.2876633">https://doi.org/10.1109/TMI.2018.2876633</a>. <a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6" role="doc-endnote">
+<p>Mahmood, Faisal, Daniel Borders, Richard J. Chen, Gregory N. Mckay, Kevan J. Salimian, Alexander Baras, and Nicholas J. Durr. “Deep Adversarial Training for Multi-Organ Nuclei Segmentation in Histopathology Images.” <em>IEEE Transactions on Medical Imaging</em> 39, no. 11 (November 2020): 3257–67. <a href="https://doi.org/10.1109/TMI.2019.2927182">https://doi.org/10.1109/TMI.2019.2927182</a>. <a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7" role="doc-endnote">
+<p>Writing from scratch is admittedly not always the best engineering decision to make, though. <a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8" role="doc-endnote">
+<p>For example, 3D rendering technology achieves impressive results when informed by the physics of optics. See <a href="https://pbrt.org/">https://pbrt.org/</a> <a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9" role="doc-endnote">
+<p>Employers take note: there <strong>is</strong> a place for fun and games at work. <a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:10" role="doc-endnote">
+<p>Goodfellow, Ian J., Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. “Generative Adversarial Networks.” arXiv, June 10, 2014. <a href="https://doi.org/10.48550/arXiv.1406.2661">https://doi.org/10.48550/arXiv.1406.2661</a>. <a href="#fnref:10" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:11" role="doc-endnote">
+<p>Drop me a line if you have a reason, I’d love to learn about it. <a href="#fnref:11" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:12" role="doc-endnote">
+<p><a href="https://github.com/Lornatang/CycleGAN-PyTorch">https://github.com/Lornatang/CycleGAN-PyTorch</a> <a href="#fnref:12" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:13" role="doc-endnote">
+<p>Heusel, Martin, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. “GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium.” In <em>Advances in Neural Information Processing Systems</em>, Vol. 30. Curran Associates, Inc., 2017. <a href="https://papers.nips.cc/paper/2017/hash/8a1d694707eb0fefe65871369074926d-Abstract.html">https://papers.nips.cc/paper/2017/hash/8a1d694707eb0fefe65871369074926d-Abstract.html</a>. <a href="#fnref:13" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    <div class="spacer"></div>
+    <div>
+      <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="spacer"></div>
+  <h2 class="clear">Read more</h2>
+  <div class="spacer"></div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2ch;">
+    <div>
+      
+    </div>
+    <div>
+      
+      <div class="small">Older</div>
+      <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Sep 8, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2022/09/08/thought-experiment-human-centric-machine-learning-for-comic-book-creation.html"><strong>Thought experiment: Human-centric machine learning for comic book creation</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="spacer"></div>
+<div>
+  <div style="width: 100%; height: 2px; background: #ccc; margin-top: -1px; margin-bottom: -1px;"></div>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</div>
+
+<div class="container">
+  
+
+<h2 class="clear">Latest posts</h2>
+<div class="spacer"></div>
+
+<div id="posts-holder"> 
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Nov 14, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2022/11/14/implementing-cyclegan.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/Screen_Shot_2022-10-18_at_3.06.46_PM-1668023835.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2022/11/14/implementing-cyclegan.html"
+       ><h2 style="margin-bottom: 4px;">Implementing CycleGAN</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="mailto:mgallaspy@cloudera.com">Michael Gallaspy</a>
+        &middot; </span
+      >
+    </span>
+    Introduction This post documents the first part of a research effort to quantify the impact of synthetic data augmentation in training a deep learning model for detecting manufacturing defects on steel surfaces. We chose to generate synthetic data using CycleGAN,1 an architecture involving several networks that jointly learn a mapping between two image domains from unpaired examples (I’ll elaborate below). Research from recent years has demonstrated improvement on tasks like defect detection2 and image segmentation3 by augmenting real image data sets with synthetic data, since deep learning algorithms require massive amounts of data, and data collection can easily become a bottleneck.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2022/11/14/implementing-cyclegan.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Oct 20, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/newsletters/2022-10.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/tst_bart_cover-1663888335.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/newsletters/2022-10.html"
+       ><h2 style="margin-bottom: 4px;">CFFL October Newsletter</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    October 2022 We’ve got another action-packed newsletter for October! Highlights this month include the re-release of a classic CFFL research report, an example-heavy tutorial on Dask for distributed ML, and our picks for the best reads of the month.
+ Open Data Science Conference Cloudera Fast Forward Labs will be at ODSC West near San Fransisco on November 1st-3rd, 2022! If you’ll be in the Bay Area, don’t miss Andrew and Melanie who will be presenting our recent research on Neutralizing Subjectivity Bias with HuggingFace Transformers.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/newsletters/2022-10.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 21, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/newsletters/2022-09.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/tst_bart_cover-1663888335.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/newsletters/2022-09.html"
+       ><h2 style="margin-bottom: 4px;">CFFL September Newsletter</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    September 2022 Welcome to the September edition of the Cloudera Fast Forward Labs newsletter. This month we’re talking about ethics and we have all kinds of goodies to share including the final installment of our Text Style Transfer series and a couple of offerings from our newest research engineer. Throw in some choice must-reads and an ASR demo, and you’ve got yourself an action-packed newsletter!
+ New Research! Ethical Considerations When Designing an NLG System In the final post of our blog series on Text Style Transfer, we discuss some ethical considerations when working with natural language generation systems, and describe the design of our prototype application: Exploring Intelligent Writing Assistance.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/newsletters/2022-09.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Sep 8, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2022/09/08/thought-experiment-human-centric-machine-learning-for-comic-book-creation.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/making_comic_books_diagram-1661792770.jpg" />
+  </a>
+  
+  <div>
+    
+    <a href="/2022/09/08/thought-experiment-human-centric-machine-learning-for-comic-book-creation.html"
+       ><h2 style="margin-bottom: 4px;">Thought experiment: Human-centric machine learning for comic book creation</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="mailto:mgallaspy@cloudera.com">Michael Gallaspy</a>
+        &middot; </span
+      >
+    </span>
+    This post has a companion piece: Ethics Sheet for AI-assisted Comic Book Art Generation  I want to make a comic book. Actually, I want to make tools for making comic books. See, the problem is, I can’t draw too good. I mean, I’m working on it. Check out these self portraits drawn 6 months apart:
+Left: “Sad Face”. February 2022. Right: “Eyyyy”. August 2022. But I have a long way to go until my illustrations would be considered professional quality, notwithstanding the time it would take me to develop the many other skills needed for making comic books.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2022/09/08/thought-experiment-human-centric-machine-learning-for-comic-book-creation.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Aug 18, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+  <a href="/newsletters/2022-08.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/self_portrait-1660863172.jpeg" />
+  </a>
+  
+  <div>
+    
+    <a href="/newsletters/2022-08.html"
+       ><h2 style="margin-bottom: 4px;">CFFL August Newsletter</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    August 2022 Welcome to the August edition of the Cloudera Fast Forward Labs newsletter. This month we’re thrilled to introduce a new member of the FFL team, share TWO new applied machine learning prototypes we’ve built, and, as always, offer up some intriguing reads.
+ New Research Engineer! If you’re a regular reader of our newsletter, you likely noticed that we’ve been searching for new research engineers to join the Cloudera Fast Forward Labs team.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/newsletters/2022-08.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div class="post-link" style="position: relative">
+  <h5 style="margin-bottom: 4px;">
+    <span>Jul 29, 2022</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+  <a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html" class="preview-image-holder">
+    <img class="preview-image" src="/images/hugo/image1-tst4.png" />
+  </a>
+  
+  <div>
+    
+    <a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html"
+       ><h2 style="margin-bottom: 4px;">Ethical Considerations When Designing an NLG System</h2></a
+     >
+     
+  </div>
+  <div class="small" style="height: 4.5em; overflow: hidden;">
+    
+    <span>
+      by 
+      <span
+        ><a href="https://twitter.com/andrewrreed">Andrew Reed</a>
+        &middot; </span
+      >
+    </span>
+    Blog Series This post serves as Part 4 of a four part blog series on the NLP task of Text Style Transfer. In this post, we expand our modeling efforts to a more challenging dataset and propose a set of custom evaluation metrics specific to our task.   Part 1: An Introduction to Text Style Transfer    Part 2: Neutralizing Subjectivity Bias with HuggingFace Transformers    Part 3: Automated Metrics for Evaluating Text Style Transfer    Part 4: Ethical Considerations When Designing an NLG System      At last, we’ve made it to the final chapter of this blog series.
+  </div>
+  <div
+    style="width:100%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    >
+    
+      <a href="/2022/07/29/ethical-considerations-when-designing-an-nlg-system.html">...read more</a>
+    
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+<div>
+  <button id="load_more" style="width: 100%;">load more</button>
+</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<script>
+  window.addEventListener('load', () => {
+    let $posts_holder = document.getElementById('posts-holder')
+    let $load_more = document.getElementById('load_more')
+    let next_page = 2
+    $load_more.addEventListener('click', () => {
+      fetch(`/newsletters/page/${next_page}.html`).then(r =>r.text()).then(r => {
+        let el = document.createElement('html')
+        el.innerHTML = r
+        next_page += 1
+        let $posts = el.querySelector('#posts-holder').children
+        for (let i=0; i< $posts.length; i++) {
+          let $post = $posts[i].cloneNode(true)
+          $posts_holder.appendChild($post)
+        }
+      })
+    })
+  })
+</script>
+
+
+  <h3 class="clear">Popular posts</h3>
+<div class="spacer"></div>
+<div>
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 30, 2019</span> &middot;
+    <span style="text-transform: capitalize;">
+      newsletter
+    </span>
+  </h5>
+  
+    <div><a href="/2019/10/30/exciting-applications-of-graph-neural-networks.html"><strong>Exciting Applications of Graph Neural Networks</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Nov 14, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/11/14/federated-learning-distributed-machine-learning-with-data-locality-and-privacy.html"><strong>Federated learning: distributed machine learning with data locality and privacy</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Apr 10, 2018</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2018/04/10/pytorch-for-recommenders-101.html"><strong>PyTorch for Recommenders 101</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Oct 4, 2017</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2017/10/04/first-look-using-three.js-for-2d-data-visualization.html"><strong>First Look: Using Three.js for 2D Data Visualization</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Aug 22, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      whitepaper
+    </span>
+  </h5>
+  
+    <div><a href="/2016/08/22/under-the-hood-of-the-variational-autoencoder-in-prose-and-code.html"><strong>Under the Hood of the Variational Autoencoder (in Prose and Code)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+    <div>
+  <h5 style="margin-bottom: 0px;">
+    <span>Feb 24, 2016</span> &middot;
+    <span style="text-transform: capitalize;">
+      post
+    </span>
+  </h5>
+  
+    <div><a href="/2016/02/24/hello-world-in-keras-or-scikit-learn-versus-keras.html"><strong>&#34;Hello world&#34; in Keras (or, Scikit-learn versus Keras)</strong></a></div>
+  
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+
+</div>
+
+<div class="spacer"></div>
+<div style="background: #efefef;">
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="container">
+  <h1 class="clear">Reports</h1>
+  <div style="color: #444;">In-depth guides to specific machine learning capabilities</div>
+</div>
+<div class="spacer"></div>
+<div id="reports-holder" style="max-width: 96ch; margin: 0 auto; padding-left: 1ch; padding-right: 1ch;">
+  
+  <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF24</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://text-style-transfer.fastforwardlabs.com/" target="_blank">Text Style Transfer</a></h2>
+  <a class="report-image" href="https://text-style-transfer.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff24-combo.png" />
+  </a>
+  <div class="small">The NLP task of text style transfer (TST) aims to automatically control the style attributes of a piece of text while preserving the content, which is an important consideration for making NLP more user-centric. In this report, we explore text style transfer through an applied use case — neutralizing subjectivity bias in free text. Along the way, we describe our sequence-to-sequence modeling approach leveraging HuggingFace Transformers, and present a set of custom, reference-free evaluation metrics for quantifying model performance. Finally, we conclude with a discussion of ethics centered around our prototype: Exploring Intelligent Writing Assistance.</div>
+  <div><a href="https://text-style-transfer.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF22</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://concept-drift.fastforwardlabs.com/" target="_blank">Inferring Concept Drift Without Labeled Data</a></h2>
+  <a class="report-image" href="https://concept-drift.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff22-combo.png" />
+  </a>
+  <div class="small">Concept drift occurs when the statistical properties of a target domain change overtime causing model performance to degrade. Drift detection is generally achieved by monitoring a performance metric of interest and triggering a retraining pipeline when that metric falls below some designated threshold. However, this approach assumes ample labeled data is available at prediction time - an unrealistic constraint for many production systems. In this report, we explore various approaches for dealing with concept drift when labeled data is not readily accessible.</div>
+  <div><a href="https://concept-drift.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF19</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://session-based-recommenders.fastforwardlabs.com/" target="_blank">Session-based Recommender Systems</a></h2>
+  <a class="report-image" href="https://session-based-recommenders.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff19-combo.png" />
+  </a>
+  <div class="small">Being able to recommend an item of interest to a user (based on their past preferences) is a highly relevant problem in practice. A key trend over the past few years has been session-based recommendation algorithms that provide recommendations solely based on a user’s interactions in an ongoing session, and which do not require the existence of user profiles or their entire historical preferences. This report explores a simple, yet powerful, NLP-based approach (word2vec) to recommend a next item to a user. While NLP-based approaches are generally employed for linguistic tasks, here we exploit them to learn the structure induced by a user’s behavior or an item’s nature.</div>
+  <div><a href="https://session-based-recommenders.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div class="report-link" style="position: relative;">
+  <h5 style="margin-bottom: 0">FF18</h5>
+  <h2 style="padding-top: 0; margin-bottom: 4px;"><a href="https://few-shot-text-classification.fastforwardlabs.com/" target="_blank">Few-Shot Text Classification</a></h2>
+  <a class="report-image" href="https://few-shot-text-classification.fastforwardlabs.com/" target="_blank" style="display: block;">
+    <img style="max-width: 31ch; display: block;" src="/images/reports/ff18-combo.png" />
+  </a>
+  <div class="small">Text classification can be used for sentiment analysis, topic assignment, document identification, article recommendation, and more. While dozens of techniques now exist for this fundamental task, many of them require massive amounts of labeled data in order to be useful. Collecting annotations for your use case is typically one of the most costly parts of any machine learning application. In this report, we explore how latent text embeddings can be used with few (or even zero) training examples and provide insights into best practices for implementing this method.</div>
+  <div><a href="https://few-shot-text-classification.fastforwardlabs.com/" target="_blank">Read the report&nbsp; →</a></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_reports" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $reports_holder = document.getElementById('reports-holder')
+    let $load_more = document.getElementById('load_all_reports')
+    $load_more.addEventListener('click', () => {
+      fetch(`/reports.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#reports-holder')
+        $reports_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+ 
+<div class="container">
+  <h1 class="clear">Prototypes</h1>
+  <div style="color: #444;">Machine learning prototypes and interactive notebooks</div>
+  <div class="spacer"></div>
+</div>
+<div id="prototypes-holder">
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/github/fastforwardlabs/whisper-openai/blob/master/WhisperDemo.ipynb" target="_blank">ASR with Whisper</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/github/fastforwardlabs/whisper-openai/blob/master/WhisperDemo.ipynb" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/whisper_screenshot-1666368542.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Explore the capabilities of OpenAI&#39;s Whisper for automatic speech recognition by creating your own voice recordings!</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/github/fastforwardlabs/whisper-openai/blob/master/WhisperDemo.ipynb" target="_blank">https://colab.research.google.com/github/fastforwardlabs/whisper-openai/blob/master/WhisperDemo.ipynb</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Library</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">NeuralQA</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://neuralqa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/neuralqa-1596123511.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">A usable library for question answering on large datasets.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://neuralqa.fastforwardlabs.com" target="_blank">https://neuralqa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebook</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">Explain BERT for Question Answering Models</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/hugo/distilexplanation-1592852137.jpg'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Tensorflow 2.0 notebook to explain and visualize a HuggingFace BERT for Question Answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing" target="_blank">https://colab.research.google.com/drive/1tTiOgJ7xvy3sjfiFC9OozbjAX1ho8WN9?usp=sharing</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+  <div style="display: flex; flex-direction: column; position: relative; padding-left: 1ch; padding-right: 1ch; height: 360px;">
+  <div>
+    <h5 style="margin-bottom: 0">Notebooks</h5>
+    <h2 style="padding-top: 0; margin-bottom: 0;"><a href="https://qa.fastforwardlabs.com" target="_blank">NLP for Question Answering</a></h2>
+  </div>
+  <div style="flex: 1 1 auto; position: relative;">
+    <a href="https://qa.fastforwardlabs.com" target="_blank" style="display: block; position: absolute; top: 0.375rem; width: 100%; height: calc(100% - 0.875rem); background-image: url('/images/uploads/qa.png'); background-size: contain; background-position: center left; background-repeat: no-repeat;"></a>
+  </div>
+  <div>
+    <div class="small">Ongoing posts and code documenting the process of building a question answering model.</div>
+    <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="https://qa.fastforwardlabs.com" target="_blank">https://qa.fastforwardlabs.com</a></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+</div>
+
+
+  
+</div>
+<div class="container">
+  <div ><button id="load_all_prototypes" style="width: 100%;">load all</button></div>
+</div>
+
+<script>
+  
+  window.addEventListener('load', () => {
+    let $prototypes_holder = document.getElementById('prototypes-holder')
+    let $load_more = document.getElementById('load_all_prototypes')
+    $load_more.addEventListener('click', () => {
+      fetch(`/prototypes.html`).then(r =>r.text()).then(r => {
+        $load_more.remove()
+        let el = document.createElement('html')
+        el.innerHTML = r
+        let $posts = el.querySelector('#prototypes-holder')
+        $prototypes_holder.innerHTML = $posts.innerHTML
+      })
+    })
+  })
+</script>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+<div class="container">
+  <div>
+    <h1 class="clear">Cloudera Fast Forward Labs</h1>
+    <div>
+      <i>Making the recently possible useful.</i><br />
+      <p></p>
+      <p>Cloudera Fast Forward Labs is an applied machine learning research group. Our mission is to empower enterprise data science practitioners to apply emergent academic research to production machine learning use cases in practical and socially responsible ways, while also driving innovation through the Cloudera ecosystem.  Our team brings thoughtful, creative, and diverse perspectives to deeply researched work. In this way, we strive to help organizations make the most of their ML investment as well as educate and inspire the broader machine learning and data science community.</p>
+      <a
+        href="https://www.cloudera.com/products/fast-forward-labs-research.html"
+        >Cloudera</a
+      >&nbsp;&nbsp;
+      <a
+        href="https://blog.fastforwardlabs.com"
+        >Blog</a
+      >&nbsp;&nbsp;
+      <a href="https://twitter.com/fastforwardlabs">Twitter</a>
+      <p></p>
+      <p>©2022 Cloudera, Inc. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+
+      </main>
+ </body>
+</html>
