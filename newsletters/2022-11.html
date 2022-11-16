@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body{font-family:sans-serif;font-size:16px;line-height:1.5}
+    img{max-width:100%; display:block}
+    h5{font-style:italic}
+    blockquote{border-left:.25em solid #dfe2e5;padding:0 1em;color:#666;margin:1em 0}
+    #logo{display: block; height: 1.75rem; margin-top: 20px; margin-bottom: 24px;}
+  </style>
+  <body>
+  <div style="max-width: 660px; margin: 0 auto; padding: 0 12px 24px;">
+
+    <div style="overflow: hidden; font-size: 14px; margin-top: 14px;">
+      <div style="float: left; width: 46%;">Updates from Cloudera Fast Forward on new research, prototypes, and exciting developments</div>
+        <div style="float: right; width: 46%; text-align: right;"><a href="https://blog.fastforwardlabs.com/newsletters/2022-11.html">View this email in browser</a></div>
+      </div>
+      <div>
+      <img id="logo" src="https://blog.fastforwardlabs.com/images/cloudera-fast-forward-logo.png" />
+      </div>
+    <h1 id="november-2022">November 2022</h1>
+<p>Perhaps November conjures thoughts of holiday feasts and festivities, but for us, it’s the perfect time to chew the fat about machine learning! Make room on your plate for a peek behind the scenes into our current research on harnessing synthetic image generation to improve classification tasks. And, as usual, we reflect on our favorite reads of the month.</p>
+<hr>
+<h2 id="new-research">New Research!</h2>
+<p>In the first half of this year, we focused on natural language processing with our Text Style Transfer blog series. But for the past couple of months, we’ve turned our attention back to topics in computer vision. Specifically, we’ve been digging into how synthetic data can be used to augment imbalanced datasets for image classification and segmentation tasks. While we’re still in the midst of experimentation, we thought we’d share a peek behind the scenes at how we built and trained our own CycleGAN model. Enjoy!</p>
+<h3 id="implementing-cycleganhttpsblogfastforwardlabscom20221114implementing-cycleganhtml"><strong><a href="https://blog.fastforwardlabs.com/2022/11/14/implementing-cyclegan.html">Implementing CycleGAN</a></strong></h3>
+<p>This post documents the first part of a research effort to quantify what (if any) performance improvement we could expect by incorporating synthetic data when training a deep neural network for detecting manufacturing defects on steel surfaces.  In order to generate the synthetic data to answer this question, we implemented CycleGAN “from scratch” using PyTorch. This blog covers our initial journey of iteration and trial-and-error, where we had to answer questions like:</p>
+<ul>
+<li>How do you set up a research problem like this?</li>
+<li>How can you simplify that problem into its most basic components for experimentation?</li>
+<li>How do you know if your “from scratch” model implementation is achieving reasonable results?</li>
+<li>And what do zebras have to do with any of this? 🦓</li>
+</ul>
+<p><img src="/images/hugo/horse_zebra_combo-1668558267.png" alt="Where did these zebras come from?"></p>
+<hr>
+<h2 id="fast-forward-live">Fast Forward Live!</h2>
+<p>Check out replays of livestreams covering some of our research from last year.</p>
+<p><a href="https://youtu.be/7_MlFxyPYSg"><strong>Deep Learning for Automatic Offline Signature Verification</strong></a></p>
+<p><a href="https://www.youtube.com/watch?v=JoRx6udpnbI"><strong>Session-based Recommender Systems</strong></a></p>
+<p><a href="https://youtu.be/oLFqTj5FcEA"><strong>Few-Shot Text Classification</strong></a></p>
+<p><strong><a href="https://youtu.be/o4gQLVzIm5U">Representation Learning for Software Engineers</a></strong></p>
+<hr>
+<h2 id="recommended-reading">Recommended Reading</h2>
+<p>CFFLers share their favorite reads of the month.</p>
+<h3 id="a-recipe-for-training-neural-networkshttpskarpathygithubio20190425recipe"><a href="https://karpathy.github.io/2019/04/25/recipe/">A Recipe for Training Neural Networks</a></h3>
+<p>Who can relate — you approach a new deep learning problem, get excited, and jump off to the races training some fancy model architecture + state-of-the-art loss function combo that you <em>know</em> will perform well because you read a blog where it worked on some “similar” task? The model is training, but the results just aren’t quite what you anticipate… <em>something</em> is off. If you’re lucky, an exception will be thrown. But most likely, the model trains just fine, and silently accepts the degraded performance. You’re left staring at a seemingly infinite number of possible loose ends deciding where to begin debugging…if you even come to realize there’s an issue at all.</p>
+<p>As Andrej Karpathy describes, this is the beginning of the long, arduous road to suffering, and I too am guilty of marching down this “fast and furious” path. Luckily, Andrej has compiled some excellent tidbits of knowledge into a recipe that I often reference to help steer clear of this treacherous path. His recipe calls for patience, attention to detail, and a methodical process in an effort to prevent the introduction of “unverified complexity” which is bound to introduce bugs that take an enormous amount of time/suffering to root cause.</p>
+<p>I <strong><strong><strong><strong><strong><strong><strong>highly</strong></strong></strong></strong></strong></strong></strong> recommend giving this quick blog post a read and bookmarking it for any time you approach a new modeling problem. <a href="https://twitter.com/andrewrreed"><em>— Andrew</em></a></p>
+<h3 id="learning-semantic-segmentation-from-synthetic-data-a-geometrically-guided-input-output-adaptation-approachhttpsopenaccessthecvfcomcontent_cvpr_2019htmlchen_learning_semantic_segmentation_from_synthetic_data_a_geometrically_guided_input-output_cvpr_2019_paperhtml"><a href="https://openaccess.thecvf.com/content_CVPR_2019/html/Chen_Learning_Semantic_Segmentation_From_Synthetic_Data_A_Geometrically_Guided_Input-Output_CVPR_2019_paper.html">Learning Semantic Segmentation From Synthetic Data: A Geometrically Guided Input-Output Adaptation Approach</a></h3>
+<p>Continuing the theme of synthetic data for computer vision problems, I wanted to share this paper. The authors exploit ground-truth semantic and depth information from photo-realistic simulations to train a network that jointly learns semantic segmentation and depth estimation. The method does not require ground-truth segmentation or depth maps for the real data. Instead, the training procedure adapts the network to achieve similar outputs on synthetic and real images, and also demonstrates an improvement from jointly learning the two related tasks. — <a href="https://www.linkedin.com/in/michael-gallaspy-65a492a5/"><em>Mike</em></a></p>
+<h3 id="chain-of-thought-prompting-elicits-reasoning-in-large-language-modelshttpsarxivorgabs220111903"><a href="https://arxiv.org/abs/2201.11903">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</a></h3>
+<p>While the work and results within this paper are fascinating, I’m miffed by the authors’ chosen title, which implies they have succeeded in training a model to “reason.”  This is pure sensationalism, especially when considering the paper’s final paragraph in which the authors state quite plainly:</p>
+<blockquote>
+<p>…although chain-of-thought emulates the thought processes of human reasoners, this does not answer whether the neural network is actually “reasoning,” which we leave as an open question.</p>
+</blockquote>
+<p>But I suppose “Chain-of-Thought Prompting Elicits the <em>Emulation</em> of Reasoning in Large Language Models” just doesn’t have the same ring.</p>
+<p>Regardless, the results are intriguing! Take a gander at this example, which provides a succinct summary of the whole paper:</p>
+<p><img src="/images/hugo/chain_of_thought_prompt-1668558308.png" alt="CoT Prompt example"></p>
+<p>Essentially, providing a rationale as part of the language model’s input prompt encourages the model to provide a rationale of its own when answering reasoning questions, leading to far better results. The authors explore and compare chain-of-thought prompting to other methodologies on a range of arithmetic, commonsense, and symbolic reasoning tasks. This technique also lends itself well to few-shot regimes. For example, the authors find that priming a PaLM 540B model with just 8 chain-of-thought prompts surpasses a fine-tuned GPT-3+verifier on a benchmark dataset. Although the PaLM model has 3x more parameters to learn from, fine-tuning a GPT-3 model <em><strong>and</strong></em> training a verifier can be costly. The scalability of this technique could have far-reaching implications for how future language models are developed. — <a href="https://www.linkedin.com/in/melanierbeck/"><em>Melanie</em></a></p>
+
+  </div>
+
+

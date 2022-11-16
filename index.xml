@@ -6,10 +6,23 @@
     <description>Recent content on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Nov 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 15 Nov 2022 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.fastforwardlabs.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CFFL November Newsletter</title>
+       
+      <link>https://blog.fastforwardlabs.com/newsletters/2022-11.html</link>
+      
+      <pubDate>Tue, 15 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.fastforwardlabs.com/newsletters/2022-11.html</guid>
+      <description>November 2022 Perhaps November conjures thoughts of holiday feasts and festivities, but for us, it’s the perfect time to chew the fat about machine learning! Make room on your plate for a peek behind the scenes into our current research on harnessing synthetic image generation to improve classification tasks. And, as usual, we reflect on our favorite reads of the month.
+ New Research! In the first half of this year, we focused on natural language processing with our Text Style Transfer blog series.</description>
+      <imglink>/images/hugo/horse_zebra_combo-1668558267.png</imglink>
+    </item>
     
     <item>
       <title>Implementing CycleGAN</title>
@@ -33,7 +46,7 @@
       <guid>https://blog.fastforwardlabs.com/newsletters/2022-10.html</guid>
       <description>October 2022 We’ve got another action-packed newsletter for October! Highlights this month include the re-release of a classic CFFL research report, an example-heavy tutorial on Dask for distributed ML, and our picks for the best reads of the month.
  Open Data Science Conference Cloudera Fast Forward Labs will be at ODSC West near San Fransisco on November 1st-3rd, 2022! If you’ll be in the Bay Area, don’t miss Andrew and Melanie who will be presenting our recent research on Neutralizing Subjectivity Bias with HuggingFace Transformers.</description>
-      <imglink>/images/hugo/tst_bart_cover-1663888335.png</imglink>
+      <imglink>https://blog.fastforwardlabs.com/images/hugo/datastream-1666304289.svg</imglink>
     </item>
     
     <item>
